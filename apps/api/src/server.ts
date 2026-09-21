@@ -17,9 +17,7 @@ const app = createApp({
   env,
   logger,
   version,
-  checkDatabase: async () => {
-    await prisma.$queryRaw`SELECT 1`;
-  },
+  db: prisma,
 });
 
 const server = app.listen(env.PORT, () => {

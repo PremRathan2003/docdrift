@@ -3,12 +3,21 @@ import { describe, expect, it } from 'vitest';
 import { healthResponseSchema } from '@docdrift/shared';
 import { createApp, type AppDeps } from '../src/app.js';
 import { createLogger } from '../src/lib/logger.js';
+import { createPrismaClient } from '../src/lib/prisma.js';
+
+// Never connects: these tests replace checkDatabase and don't touch other routes.
+const unusedDb = createPrismaClient('postgresql://unused:unused@localhost:1/unused');
 
 function buildApp(overrides: Partial<AppDeps> = {}) {
   return createApp({
-    env: { WEB_ORIGIN: 'http://localhost:5173', NODE_ENV: 'test' },
+    env: {
+      WEB_ORIGIN: 'http://localhost:5173',
+      NODE_ENV: 'test',
+      SESSION_SECRET: 'test-only-secret-that-is-at-least-32-characters',
+    },
     logger: createLogger('silent'),
     version: 'test',
+    db: unusedDb,
     checkDatabase: async () => {},
     ...overrides,
   });
