@@ -37,6 +37,16 @@ export function createApp(deps: AppDeps) {
         res.setHeader('x-request-id', id);
         return id;
       },
+      // One short line per request. Full headers are noise and can contain secrets.
+      serializers: {
+        req: (req) => ({ id: req.id, method: req.method, url: req.url }),
+        res: (res) => ({ statusCode: res.statusCode }),
+      },
+      customLogLevel: (_req, res, err) =>
+        err || res.statusCode >= 500 ? 'error' : res.statusCode >= 400 ? 'warn' : 'info',
+      // The web app polls /api/health every 30s. Failures are still logged by
+      // the health route itself, so skip the per-request line for it.
+      autoLogging: { ignore: (req) => req.url === '/api/health' },
     }),
   );
   app.use(helmet());

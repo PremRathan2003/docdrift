@@ -20,8 +20,8 @@
     "format:check": "prettier --check .",
     "db:up": "docker compose up -d db",
     "db:down": "docker compose down",
-    "db:migrate": "npm run db:migrate -w @docdrift/api",
-    "db:seed": "npm run db:seed -w @docdrift/api",
+    "db:migrate": "npm run db:migrate -w @docdrift/api --",
+    "db:seed": "npm run db:seed -w @docdrift/api --",
     "check": "npm run lint && npm run format:check && npm run typecheck && npm test"
   },
   "devDependencies": {

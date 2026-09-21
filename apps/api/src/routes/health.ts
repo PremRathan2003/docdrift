@@ -10,12 +10,14 @@ export interface HealthDeps {
 export function healthRouter({ version, checkDatabase }: HealthDeps) {
   const router = Router();
 
-  router.get('/health', async (_req, res) => {
+  router.get('/health', async (req, res) => {
     let database: HealthResponse['checks']['database'] = 'ok';
     try {
       await checkDatabase();
-    } catch {
+    } catch (err) {
       database = 'error';
+      // The real cause goes to the server log; the public response stays generic.
+      req.log.warn({ err }, 'Health check: database unreachable');
     }
 
     const body: HealthResponse = {

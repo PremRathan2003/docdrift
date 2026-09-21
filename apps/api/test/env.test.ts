@@ -14,6 +14,15 @@ describe('loadEnv', () => {
     expect(env.NODE_ENV).toBe('development');
   });
 
+  it('rejects the placeholder secret from .env.example', () => {
+    expect(() =>
+      loadEnv({
+        ...base,
+        SESSION_SECRET: 'replace-me-with-a-long-random-string-at-least-32-chars',
+      }),
+    ).toThrow(/still the example value/);
+  });
+
   it('fails fast with a readable message and does not leak values', () => {
     expect(() => loadEnv({ ...base, SESSION_SECRET: 'short-secret-value' })).toThrow(
       /SESSION_SECRET: SESSION_SECRET must be at least 32 characters/,

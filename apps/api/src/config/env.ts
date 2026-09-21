@@ -11,7 +11,12 @@ const envSchema = z.object({
   LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent']).default('info'),
   DATABASE_URL: z.string().url(),
   WEB_ORIGIN: z.string().url(),
-  SESSION_SECRET: z.string().min(32, 'SESSION_SECRET must be at least 32 characters'),
+  SESSION_SECRET: z
+    .string()
+    .min(32, 'SESSION_SECRET must be at least 32 characters')
+    .refine((s) => !s.startsWith('replace-me'), {
+      message: 'SESSION_SECRET is still the example value from .env.example; generate a real one',
+    }),
 });
 
 export type Env = z.infer<typeof envSchema>;
