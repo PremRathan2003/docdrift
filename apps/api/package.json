@@ -16,7 +16,8 @@
     "db:seed": "tsx --env-file=.env prisma/seed.ts",
     "db:studio": "prisma studio",
     "postinstall": "prisma generate",
-    "test:integration": "vitest run -c vitest.integration.config.ts"
+    "test:integration": "vitest run -c vitest.integration.config.ts",
+    "github:check": "tsx --env-file=.env scripts/github-check.ts"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.10",

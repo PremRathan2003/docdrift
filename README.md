@@ -37,6 +37,12 @@ npm run dev                              # shared (watch) + API :4000 + web :517
 Open http://localhost:5173 — the landing page should show **API ok**.
 Or: `curl http://localhost:4000/api/health`.
 
+## GitHub integration setup
+
+Create your own development GitHub App and configure it: [docs/GITHUB_APP_SETUP.md](docs/GITHUB_APP_SETUP.md).
+Then verify it with `npm run github:check -w @docdrift/api`. Without it the app still runs;
+GitHub features are simply unavailable.
+
 ## Scripts
 
 | Command              | What it does                                                   |

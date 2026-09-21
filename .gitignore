@@ -9,3 +9,6 @@ coverage/
 apps/api/src/generated/
 playwright-report/
 test-results/
+
+# Private keys never go in the repo
+*.pem
