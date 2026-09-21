@@ -18,6 +18,7 @@ export function createTestApp(
   db: Db,
   authRateLimits: AuthRateLimits = RELAXED_LIMITS,
   github: AppDeps['github'] = null,
+  extra: Partial<AppDeps> = {},
 ) {
   return createApp({
     env: {
@@ -30,5 +31,8 @@ export function createTestApp(
     db,
     authRateLimits,
     github,
+    // Retries wait for real time in production; tests skip the waiting.
+    analysisConfig: { sleep: async () => {} },
+    ...extra,
   });
 }

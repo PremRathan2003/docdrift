@@ -18,6 +18,9 @@ import type { GitHubAppConfig } from './modules/github/config.js';
 import { createGitHubClient } from './modules/github/github-client.js';
 import { githubRouter } from './modules/github/github.routes.js';
 import { createGitHubService } from './modules/github/github.service.js';
+import type { AIProvider } from './modules/ai/provider.js';
+import { analysisRouter } from './modules/analysis/analysis.routes.js';
+import { createAnalysisService, type AnalysisConfig } from './modules/analysis/analysis.service.js';
 import { pullRequestsRouter } from './modules/pull-requests/pull-requests.routes.js';
 import { repositoriesRouter } from './modules/repositories/repositories.routes.js';
 import { healthRouter } from './routes/health.js';
@@ -43,6 +46,10 @@ export interface AppDeps {
   authRateLimits?: AuthRateLimits;
   /** Null/undefined: GitHub features answer 503 GITHUB_NOT_CONFIGURED. */
   github?: { config: GitHubAppConfig; fetchImpl?: typeof fetch } | null;
+  /** Null/undefined: analysis answers 503 AI_NOT_CONFIGURED. */
+  ai?: AIProvider | null;
+  analysisConfig?: Partial<AnalysisConfig>;
+  maxAnalysesPerHour?: number;
 }
 
 /**
@@ -103,6 +110,13 @@ export function createApp(deps: AppDeps) {
         oauthFetch: deps.github.fetchImpl,
       })
     : null;
+  const analysis = createAnalysisService({
+    db,
+    github,
+    ai: deps.ai ?? null,
+    logger: deps.logger,
+    config: { timeoutMs: 90_000, maxInputTokens: 30_000, ...deps.analysisConfig },
+  });
   const checkDatabase =
     deps.checkDatabase ??
     (async () => {
@@ -119,9 +133,14 @@ export function createApp(deps: AppDeps) {
   app.use('/api/repositories', repositoriesRouter({ db, github, sessions, audit, cookie }));
 
   app.use('/api', pullRequestsRouter({ db, github, sessions, cookie }));
+  app.use(
+    '/api',
+    analysisRouter({ db, analysis, sessions, cookie, maxRunsPerHour: deps.maxAnalysesPerHour }),
+  );
 
   app.use(notFoundHandler);
   app.use(errorHandler);
 
-  return app;
+  // Exposed for server startup (recovering interrupted runs) and for tests.
+  return Object.assign(app, { services: { analysis } });
 }

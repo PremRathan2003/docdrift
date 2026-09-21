@@ -6,6 +6,7 @@ import type { GitHubAppConfig } from './config.js';
 import { GitHubError, type GitHubClient } from './github-client.js';
 import { createInstallationTokenProvider } from './installation-tokens.js';
 import { fetchPullRequestFiles, fetchPullRequests } from './pull-requests.github.js';
+import { fetchTextFile, fetchTreePaths } from './repo-content.github.js';
 import { exchangeCodeForUserToken, listUserInstallations } from './user-oauth.js';
 
 /** The subset of GitHub's repository object we rely on, checked at runtime. */
@@ -79,6 +80,22 @@ export function createGitHubService({ db, config, client, oauthFetch }: GitHubSe
         db.repository.update({ where: { id: repo.id }, data: { lastSyncedAt: syncedAt } }),
       ]);
       return prs.length;
+    },
+
+    /** Paths of all files at a commit. */
+    async treePaths(repo: { owner: string; name: string; installationId: bigint }, sha: string) {
+      const token = await tokens.get(repo.installationId);
+      return fetchTreePaths(client, token, repo.owner, repo.name, sha);
+    },
+
+    /** One text file at a commit, or null if missing/too large/binary. */
+    async textFile(
+      repo: { owner: string; name: string; installationId: bigint },
+      path: string,
+      sha: string,
+    ) {
+      const token = await tokens.get(repo.installationId);
+      return fetchTextFile(client, token, repo.owner, repo.name, path, sha);
     },
 
     /** Changed files of a PR, fetched live (diffs change with every push, so they aren't stored). */

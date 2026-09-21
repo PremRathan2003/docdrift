@@ -112,6 +112,23 @@ once a minute (or on demand); if GitHub fails, the cached list is shown with a w
 files and patches are fetched live via REST, classified by path (`classifyFile` in
 `packages/shared`), and huge patches are truncated before reaching the browser.
 
+**D11 — The analysis pipeline.** `POST /api/pull-requests/:id/analyses` creates an
+`AnalysisRun` (202) and an in-process queue (2 at a time) runs it:
+
+```
+changed files (GitHub) ─► select: skip sensitive / generated / binary, redact secrets, token budget
+repo tree at head SHA  ─► doc candidates (path rules) ─► fetch ─► rank by changed identifiers
+                         └──────────────► prompt v1 (repository content fenced as <untrusted>)
+AIProvider.generateJson (JSON schema) ─► retry: malformed output ×3, rate limit/timeout with backoff
+Zod schema check ─► semantic check (doc path was provided? evidence file was changed?) ─► store
+```
+
+Every run stores provider, model, prompt version, schema version, tokens, latency, attempts,
+cost (only if prices are configured) and an _input manifest_ of what was sent and skipped. If no
+reviewable code or no docs exist, the model is not called. Runs cut off by a restart are marked
+`INTERRUPTED` at startup (single-instance assumption; pg-boss if that changes). Starting runs is
+rate-limited per user because each costs tokens.
+
 ## Technical risks and how we handle them
 
 | #   | Risk                                                                                                                    | Mitigation                                                                                                                                                    |

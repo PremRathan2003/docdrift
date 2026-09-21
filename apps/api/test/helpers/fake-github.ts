@@ -23,6 +23,8 @@ export interface FakeGitHubState {
   down?: boolean;
   /** "owner/name" -> pull requests */
   pulls?: Record<string, FakePull[]>;
+  /** "owner/name" -> file path -> content (same for every ref, which is enough for tests) */
+  files?: Record<string, Record<string, string>>;
 }
 
 export interface FakePull {
@@ -161,6 +163,31 @@ export function createFakeGitHub(state: FakeGitHubState) {
           ...(f.patch === null ? {} : { patch: f.patch ?? '@@ -1 +1 @@\n-a\n+b' }),
         })),
       );
+    }
+
+    const tree = /^\/repos\/([^/]+)\/([^/]+)\/git\/trees\/[^/]+$/.exec(url.pathname);
+    if (method === 'GET' && tree) {
+      const full = `${tree[1]}/${tree[2]}`;
+      if (!canRead(full)) return json(404, { message: 'Not Found' });
+      const paths = Object.keys(state.files?.[full] ?? {});
+      return json(200, {
+        tree: paths.map((path) => ({ path, type: 'blob', size: 10 })),
+        truncated: false,
+      });
+    }
+
+    const contents = /^\/repos\/([^/]+)\/([^/]+)\/contents\/(.+)$/.exec(url.pathname);
+    if (method === 'GET' && contents) {
+      const full = `${contents[1]}/${contents[2]}`;
+      const path = contents[3]!.split('/').map(decodeURIComponent).join('/');
+      const content = state.files?.[full]?.[path];
+      if (!canRead(full) || content === undefined) return json(404, { message: 'Not Found' });
+      return json(200, {
+        type: 'file',
+        encoding: 'base64',
+        size: content.length,
+        content: Buffer.from(content).toString('base64'),
+      });
     }
 
     return json(404, { message: 'Not Found' });
