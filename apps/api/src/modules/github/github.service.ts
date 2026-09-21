@@ -5,6 +5,7 @@ import { createAppJwt } from './app-jwt.js';
 import type { GitHubAppConfig } from './config.js';
 import { GitHubError, type GitHubClient } from './github-client.js';
 import { createInstallationTokenProvider } from './installation-tokens.js';
+import { fetchPullRequestFiles, fetchPullRequests } from './pull-requests.github.js';
 import { exchangeCodeForUserToken, listUserInstallations } from './user-oauth.js';
 
 /** The subset of GitHub's repository object we rely on, checked at runtime. */
@@ -56,6 +57,38 @@ export function createGitHubService({ db, config, client, oauthFetch }: GitHubSe
 
   const service = {
     config,
+
+    /** Refreshes the cached PR list of one connected repository from GitHub. */
+    async syncPullRequests(repo: {
+      id: string;
+      owner: string;
+      name: string;
+      installationId: bigint;
+    }) {
+      const token = await tokens.get(repo.installationId);
+      const prs = await fetchPullRequests(client, token, repo.owner, repo.name);
+      const syncedAt = new Date();
+      await db.$transaction([
+        ...prs.map((pr) =>
+          db.pullRequest.upsert({
+            where: { repositoryId_number: { repositoryId: repo.id, number: pr.number } },
+            update: { ...pr, syncedAt },
+            create: { ...pr, repositoryId: repo.id, syncedAt },
+          }),
+        ),
+        db.repository.update({ where: { id: repo.id }, data: { lastSyncedAt: syncedAt } }),
+      ]);
+      return prs.length;
+    },
+
+    /** Changed files of a PR, fetched live (diffs change with every push, so they aren't stored). */
+    async pullRequestFiles(
+      repo: { owner: string; name: string; installationId: bigint },
+      number: number,
+    ) {
+      const token = await tokens.get(repo.installationId);
+      return fetchPullRequestFiles(client, token, repo.owner, repo.name, number);
+    },
 
     /**
      * Links every installation of our app that this GitHub user can access —
@@ -167,7 +200,7 @@ export function createGitHubService({ db, config, client, oauthFetch }: GitHubSe
         isPrivate: repo.isPrivate,
         htmlUrl: repo.htmlUrl,
         installationId: repo.installationRowId,
-        lastSyncedAt: new Date(),
+        // lastSyncedAt means "pull requests last synced"; it stays null until the first sync.
       };
       return db.repository.upsert({
         where: { userId_githubRepoId: { userId, githubRepoId: BigInt(githubRepoId) } },

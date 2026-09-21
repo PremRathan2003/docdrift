@@ -1,6 +1,6 @@
 import type { AvailableRepository } from '@docdrift/shared';
 import { useMemo, useState } from 'react';
-import { useSearchParams } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
 import { Alert } from '../components/ui/Alert';
 import { Button, buttonClass } from '../components/ui/Button';
 import { formErrorMessage } from '../lib/form-errors';
@@ -211,14 +211,22 @@ function RepositoryRow({ repo }: { repo: AvailableRepository }) {
         )}
       </div>
       {connected ? (
-        <Button
-          variant="secondary"
-          loading={disconnect.isPending}
-          onClick={() => disconnect.mutate(repo.connectedRepositoryId!)}
-          aria-label={`Disconnect ${repo.fullName}`}
-        >
-          Disconnect
-        </Button>
+        <div className="flex gap-2">
+          <Link
+            to={`/repositories/${repo.connectedRepositoryId}`}
+            className={buttonClass('primary')}
+          >
+            Pull requests
+          </Link>
+          <Button
+            variant="secondary"
+            loading={disconnect.isPending}
+            onClick={() => disconnect.mutate(repo.connectedRepositoryId!)}
+            aria-label={`Disconnect ${repo.fullName}`}
+          >
+            Disconnect
+          </Button>
+        </div>
       ) : (
         <Button
           loading={connect.isPending}

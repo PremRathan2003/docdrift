@@ -18,6 +18,7 @@ import type { GitHubAppConfig } from './modules/github/config.js';
 import { createGitHubClient } from './modules/github/github-client.js';
 import { githubRouter } from './modules/github/github.routes.js';
 import { createGitHubService } from './modules/github/github.service.js';
+import { pullRequestsRouter } from './modules/pull-requests/pull-requests.routes.js';
 import { repositoriesRouter } from './modules/repositories/repositories.routes.js';
 import { healthRouter } from './routes/health.js';
 
@@ -116,6 +117,8 @@ export function createApp(deps: AppDeps) {
 
   app.use('/api/github', githubRouter({ github, sessions, audit, cookie }));
   app.use('/api/repositories', repositoriesRouter({ db, github, sessions, audit, cookie }));
+
+  app.use('/api', pullRequestsRouter({ db, github, sessions, cookie }));
 
   app.use(notFoundHandler);
   app.use(errorHandler);

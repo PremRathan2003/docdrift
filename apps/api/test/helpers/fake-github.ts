@@ -21,6 +21,24 @@ export interface FakeGitHubState {
   installations: Record<number, { login: string; type: string; repos: FakeRepo[] }>;
   /** Make api.github.com answer 503 */
   down?: boolean;
+  /** "owner/name" -> pull requests */
+  pulls?: Record<string, FakePull[]>;
+}
+
+export interface FakePull {
+  number: number;
+  title: string;
+  state?: 'OPEN' | 'CLOSED' | 'MERGED';
+  author?: string | null;
+  updatedAt?: string;
+  headSha?: string;
+  files?: {
+    filename: string;
+    status?: string;
+    additions?: number;
+    deletions?: number;
+    patch?: string | null;
+  }[];
 }
 
 const { privateKey } = generateKeyPairSync('rsa', { modulusLength: 2048 });
@@ -87,6 +105,62 @@ export function createFakeGitHub(state: FakeGitHubState) {
         html_url: `https://github.com/${r.owner}/${r.name}`,
       }));
       return json(200, { total_count: repositories.length, repositories });
+    }
+
+    // Installation tokens look like ghs_<installationId>; they may read repos of that installation.
+    const instOfToken = state.installations[Number(token.replace(/^ghs_/, ''))];
+    const canRead = (full: string) =>
+      !!instOfToken?.repos.some((r) => `${r.owner}/${r.name}` === full);
+
+    if (method === 'POST' && url.pathname === '/graphql') {
+      const { variables } = JSON.parse(String(init.body)) as {
+        variables: { owner: string; name: string };
+      };
+      const full = `${variables.owner}/${variables.name}`;
+      if (!canRead(full)) {
+        return json(200, {
+          data: { repository: null },
+          errors: [{ type: 'NOT_FOUND', message: 'Could not resolve' }],
+        });
+      }
+      const nodes = (state.pulls?.[full] ?? []).map((p, i) => ({
+        fullDatabaseId: String(5_000_000_000 + p.number),
+        number: p.number,
+        title: p.title,
+        body: `Body of #${p.number}`,
+        author: p.author === null ? null : { login: p.author ?? 'PremRathan2003' },
+        state: p.state ?? 'OPEN',
+        isDraft: false,
+        headRefName: `feature-${p.number}`,
+        baseRefName: 'main',
+        headRefOid: p.headSha ?? `sha${p.number}`,
+        additions: (p.files ?? []).reduce((a, f) => a + (f.additions ?? 1), 0),
+        deletions: (p.files ?? []).reduce((a, f) => a + (f.deletions ?? 0), 0),
+        changedFiles: (p.files ?? []).length,
+        url: `https://github.com/${full}/pull/${p.number}`,
+        createdAt: '2026-09-01T10:00:00Z',
+        updatedAt: p.updatedAt ?? `2026-09-${String(10 + i).padStart(2, '0')}T10:00:00Z`,
+        mergedAt: p.state === 'MERGED' ? '2026-09-20T10:00:00Z' : null,
+      }));
+      return json(200, { data: { repository: { pullRequests: { nodes } } } });
+    }
+
+    const files = /^\/repos\/([^/]+)\/([^/]+)\/pulls\/(\d+)\/files$/.exec(url.pathname);
+    if (method === 'GET' && files) {
+      const full = `${files[1]}/${files[2]}`;
+      if (!canRead(full)) return json(404, { message: 'Not Found' });
+      const pr = state.pulls?.[full]?.find((p) => p.number === Number(files[3]));
+      if (!pr) return json(404, { message: 'Not Found' });
+      return json(
+        200,
+        (pr.files ?? []).map((f) => ({
+          filename: f.filename,
+          status: f.status ?? 'modified',
+          additions: f.additions ?? 1,
+          deletions: f.deletions ?? 0,
+          ...(f.patch === null ? {} : { patch: f.patch ?? '@@ -1 +1 @@\n-a\n+b' }),
+        })),
+      );
     }
 
     return json(404, { message: 'Not Found' });

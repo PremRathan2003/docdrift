@@ -105,6 +105,13 @@ A claimed `installation_id` that isn't in GitHub's list is rejected and audited.
 repository sends only its GitHub id; the server looks it up through the user's installations,
 so metadata can't be forged and inaccessible repositories can't be connected.
 
+**D10 — Pull requests: GraphQL for lists, REST for files, diffs never stored.** The REST list
+endpoint lacks additions/deletions/changed-file counts (one extra call per PR); a single GraphQL
+query returns 50 PRs with all of them. The list is cached in PostgreSQL and refreshed at most
+once a minute (or on demand); if GitHub fails, the cached list is shown with a warning. Changed
+files and patches are fetched live via REST, classified by path (`classifyFile` in
+`packages/shared`), and huge patches are truncated before reaching the browser.
+
 ## Technical risks and how we handle them
 
 | #   | Risk                                                                                                                    | Mitigation                                                                                                                                                    |

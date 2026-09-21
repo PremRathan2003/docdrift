@@ -3,10 +3,11 @@
 DocDrift analyses GitHub pull requests, identifies documentation that may no longer match
 the code, and drafts documentation updates that a human reviews before anything changes.
 
-> **Status: Phase 1, milestone 1.3 (GitHub repositories) complete.** Working today: accounts
-> (register, sign in/out, rate limiting, audit log), connecting GitHub through a GitHub App with
-> verified installations, choosing repositories to connect, `/api/health`, dark/light theme, CI.
-> Not built yet: pull request views, AI analysis, review workflow — see [docs/ROADMAP.md](docs/ROADMAP.md).
+> **Status: Phase 1, milestone 1.4 (pull requests) complete.** Working today: accounts (register,
+> sign in/out, rate limiting, audit log), connecting GitHub through a GitHub App with verified
+> installations, connecting repositories, pull request list (filters, search) and detail pages with
+> classified changed files and a diff viewer, CI. Not built yet: AI analysis, review workflow —
+> see [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Architecture
 
@@ -42,6 +43,17 @@ Or: `curl http://localhost:4000/api/health`.
 Create your own development GitHub App and configure it: [docs/GITHUB_APP_SETUP.md](docs/GITHUB_APP_SETUP.md).
 Then verify it with `npm run github:check -w @docdrift/api`. Without it the app still runs;
 GitHub features are simply unavailable.
+
+## Sandbox repository
+
+`tools/seed-sandbox.sh` fills a test repository (e.g. your `docdrift-sandbox`) with a small
+Express API, its docs, and three branches whose pull requests exercise DocDrift: an API change
+that leaves the README stale, a pure refactor, and a renamed config variable.
+
+```bash
+git clone https://github.com/<you>/docdrift-sandbox.git ~/docdrift-sandbox
+bash tools/seed-sandbox.sh ~/docdrift-sandbox
+```
 
 ## Scripts
 

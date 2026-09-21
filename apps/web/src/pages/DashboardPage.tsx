@@ -48,7 +48,9 @@ export function DashboardPage() {
               <ul className="mt-2 space-y-1 text-sm text-zinc-600 dark:text-zinc-400">
                 {repos.data.slice(0, 5).map((r) => (
                   <li key={r.id} className="truncate">
-                    {r.fullName}
+                    <Link to={`/repositories/${r.id}`} className="hover:underline">
+                      {r.fullName}
+                    </Link>
                   </li>
                 ))}
               </ul>
