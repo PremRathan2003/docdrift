@@ -1,0 +1,23 @@
+# Local development database only. Never use these credentials in production.
+# The pgvector image is plain PostgreSQL 16 plus the pgvector extension,
+# which we will need in Phase 2 (documentation retrieval / RAG).
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: docdrift-db
+    environment:
+      POSTGRES_USER: docdrift
+      POSTGRES_PASSWORD: docdrift_local_only
+      POSTGRES_DB: docdrift
+    ports:
+      - '5432:5432'
+    volumes:
+      - docdrift-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U docdrift -d docdrift']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  docdrift-pgdata:

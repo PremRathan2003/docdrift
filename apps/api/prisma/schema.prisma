@@ -1,0 +1,274 @@
+// DocDrift — Phase 1 schema.
+// Design notes and the full entity-relationship explanation: docs/DATABASE.md
+// Tables for later phases (DocumentationFile, DocumentationChunk, WebhookEvent,
+// EvaluationRun) are added by their own migrations when those features are built.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ---------------------------------------------------------------- enums
+
+enum PullRequestState {
+  OPEN
+  CLOSED
+  MERGED
+}
+
+enum AnalysisTrigger {
+  MANUAL
+  WEBHOOK
+}
+
+enum AnalysisStatus {
+  QUEUED
+  RUNNING
+  SUCCEEDED
+  FAILED
+}
+
+enum SuggestionStatus {
+  PENDING
+  IN_REVIEW
+  EDITED
+  APPROVED
+  REJECTED
+  APPLIED
+  FAILED
+}
+
+enum ReviewDecision {
+  START_REVIEW
+  EDIT
+  REQUEST_CHANGES
+  APPROVE
+  REJECT
+}
+
+// ---------------------------------------------------------------- identity
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  /// scrypt hash with per-user salt — never the password itself.
+  passwordHash String
+  displayName  String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  sessions      Session[]
+  installations GithubInstallation[]
+  repositories  Repository[]
+  analysisRuns  AnalysisRun[]
+  reviews       Review[]
+  auditLogs     AuditLog[]
+}
+
+/// Server-side session. The cookie holds a random token; we store only its
+/// SHA-256 hash, so a leaked database cannot be used to hijack sessions.
+model Session {
+  id         String   @id @default(cuid())
+  tokenHash  String   @unique
+  userId     String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  lastUsedAt DateTime @default(now())
+  userAgent  String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+// ---------------------------------------------------------------- GitHub
+
+/// A GitHub App installation the user linked. We never store GitHub access
+/// tokens: short-lived installation tokens are minted on demand from the
+/// App's private key (kept in server env vars) and cached in memory only.
+model GithubInstallation {
+  id             String   @id @default(cuid())
+  installationId BigInt   @unique
+  accountLogin   String
+  accountType    String // "User" | "Organization"
+  userId         String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  repositories Repository[]
+
+  @@index([userId])
+}
+
+model Repository {
+  id             String    @id @default(cuid())
+  githubRepoId   BigInt
+  owner          String
+  name           String
+  fullName       String
+  defaultBranch  String
+  isPrivate      Boolean
+  htmlUrl        String
+  userId         String
+  installationId String
+  lastSyncedAt   DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  user         User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  installation GithubInstallation @relation(fields: [installationId], references: [id], onDelete: Cascade)
+  pullRequests PullRequest[]
+
+  @@unique([userId, githubRepoId])
+  @@index([installationId])
+}
+
+/// Cached PR metadata. Diffs are NOT stored here — they are fetched from
+/// GitHub on demand (they can be large and go stale on every push).
+model PullRequest {
+  id              String           @id @default(cuid())
+  repositoryId    String
+  githubPrId      BigInt
+  number          Int
+  title           String
+  body            String?
+  authorLogin     String
+  state           PullRequestState
+  isDraft         Boolean          @default(false)
+  headSha         String
+  headRef         String
+  baseRef         String
+  additions       Int
+  deletions       Int
+  changedFiles    Int
+  htmlUrl         String
+  githubCreatedAt DateTime
+  githubUpdatedAt DateTime
+  mergedAt        DateTime?
+  syncedAt        DateTime         @default(now())
+
+  repository   Repository    @relation(fields: [repositoryId], references: [id], onDelete: Cascade)
+  analysisRuns AnalysisRun[]
+
+  @@unique([repositoryId, number])
+  @@index([repositoryId, githubUpdatedAt(sort: Desc)])
+}
+
+// ---------------------------------------------------------------- AI analysis
+
+/// One execution of the analysis pipeline against one commit (headSha) of a PR.
+/// Runs are immutable history: re-analysing creates a new run.
+model AnalysisRun {
+  id            String          @id @default(cuid())
+  pullRequestId String
+  triggeredById String?
+  trigger       AnalysisTrigger
+  status        AnalysisStatus  @default(QUEUED)
+  headSha       String
+
+  // Reproducibility metadata
+  promptVersion String
+  schemaVersion String
+  provider      String
+  model         String
+  /// Which files were sent to the model, which were skipped and why.
+  inputManifest Json?
+
+  // Usage & cost (null when the provider doesn't report it — never guessed)
+  inputTokens  Int?
+  outputTokens Int?
+  costUsd      Decimal? @db.Decimal(12, 6)
+  latencyMs    Int?
+  attemptCount Int      @default(0)
+
+  // Results
+  summary      String?
+  /// Validated model output, kept verbatim for auditing and evaluation.
+  rawOutput    Json?
+  /// Semantic validation warnings, e.g. "evidence file not in diff".
+  warnings     Json?
+  errorCode    String?
+  errorMessage String?
+
+  createdAt  DateTime  @default(now())
+  startedAt  DateTime?
+  finishedAt DateTime?
+
+  pullRequest PullRequest  @relation(fields: [pullRequestId], references: [id], onDelete: Cascade)
+  triggeredBy User?        @relation(fields: [triggeredById], references: [id], onDelete: SetNull)
+  suggestions Suggestion[]
+
+  @@index([pullRequestId, createdAt(sort: Desc)])
+  @@index([status])
+}
+
+model Suggestion {
+  id                String           @id @default(cuid())
+  analysisRunId     String
+  documentationPath String
+  reason            String
+  /// [{ filePath, detail }]
+  evidence          Json
+  /// The AI's suggestion exactly as generated. Never modified.
+  originalContent   String
+  /// What the reviewer is working on / approved. Starts equal to originalContent.
+  currentContent    String
+  /// Model-generated estimate in [0,1] — not a calibrated probability.
+  modelConfidence   Float
+  uncertainty       String?
+  status            SuggestionStatus @default(PENDING)
+  /// Optimistic locking: incremented on every change, so two reviewers
+  /// editing at once cannot silently overwrite each other.
+  version           Int              @default(1)
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  analysisRun AnalysisRun @relation(fields: [analysisRunId], references: [id], onDelete: Cascade)
+  reviews     Review[]
+
+  @@index([analysisRunId])
+  @@index([status])
+}
+
+/// Append-only log of human decisions on a suggestion.
+model Review {
+  id            String         @id @default(cuid())
+  suggestionId  String
+  reviewerId    String?
+  decision      ReviewDecision
+  note          String?
+  /// Snapshot of currentContent at the moment of the decision.
+  contentAtTime String?
+  createdAt     DateTime       @default(now())
+
+  suggestion Suggestion @relation(fields: [suggestionId], references: [id], onDelete: Cascade)
+  reviewer   User?      @relation(fields: [reviewerId], references: [id], onDelete: SetNull)
+
+  @@index([suggestionId, createdAt])
+}
+
+// ---------------------------------------------------------------- audit
+
+/// Security-relevant events (login, repo connected, suggestion approved, PR
+/// created...). Deliberately has no foreign key to the target entity, so the
+/// audit trail survives when that entity is deleted.
+model AuditLog {
+  id         String   @id @default(cuid())
+  actorId    String?
+  action     String
+  entityType String
+  entityId   String
+  metadata   Json?
+  createdAt  DateTime @default(now())
+
+  actor User? @relation(fields: [actorId], references: [id], onDelete: SetNull)
+
+  @@index([entityType, entityId])
+  @@index([actorId, createdAt])
+}
