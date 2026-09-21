@@ -71,6 +71,8 @@ trusted from the client.
 ## Data retention
 
 - Sessions: expired rows deleted by a daily cleanup job.
+- AuditLog: contains IP addresses (personal data under GDPR). Keep 90 days by default, then
+  delete or anonymise. Failed logins for unknown emails never store the typed email.
 - `AnalysisRun.rawOutput` can be large; keep 90 days by default (configurable), keep summaries forever.
 - No source code is stored except short evidence excerpts inside suggestions.
 - Deleting a repository removes all derived data (cascade).

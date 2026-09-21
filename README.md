@@ -68,11 +68,26 @@ Or: `curl http://localhost:4000/api/health`.
 API (`apps/api/.env`): see [`apps/api/.env.example`](apps/api/.env.example). The web app has
 no secrets; anything prefixed `VITE_` would be public, so secrets never go there.
 
+## Security notes
+
+- Sessions: random 256-bit token in an httpOnly, SameSite=Lax cookie (`__Host-` + Secure in
+  production); the database stores only an HMAC of it.
+- Passwords: scrypt (N=2^15, r=8, p=3), upgraded automatically on login if parameters change.
+- CSRF: SameSite cookies plus an `Origin` check on every state-changing request.
+- Brute force: per-IP limit on `/login` and `/register` (20 per 15 min) and per-account lock
+  after 5 failed logins (15 min). Both return `429` with `Retry-After`.
+- Audit log: register, login success/failure (with reason) and logout events.
+
 ## Limitations
 
-AI-generated analysis can be wrong. Confidence values are the model's own estimate, not a
-calibrated probability. Every suggestion requires human review. Parts of a PR diff are sent
-to the configured LLM provider — only connect repositories you're allowed to share with it.
+- Rate-limit counters live in memory: they reset on restart and aren't shared between server
+  instances. Fine for a single instance; a shared store (PostgreSQL/Redis) is needed to scale out.
+- Registering with an existing email returns `409 EMAIL_TAKEN`, which reveals that the account
+  exists (a deliberate usability trade-off, slowed down by the rate limit).
+- Audit writes are best-effort: a failed audit write is logged but doesn't fail the request.
+- AI-generated analysis can be wrong. Confidence values are the model's own estimate, not a
+  calibrated probability. Every suggestion requires human review. Parts of a PR diff are sent
+  to the configured LLM provider — only connect repositories you're allowed to share with it.
 
 ## Deployment · Screenshots · Demo
 

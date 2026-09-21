@@ -9,7 +9,8 @@ import type { Logger } from './lib/logger.js';
 import type { Db } from './lib/prisma.js';
 import { errorHandler, notFoundHandler } from './middleware/error-handler.js';
 import { originCheck } from './middleware/origin-check.js';
-import { authRouter } from './modules/auth/auth.routes.js';
+import { createAuditService } from './modules/audit/audit.service.js';
+import { authRouter, type AuthRateLimits } from './modules/auth/auth.routes.js';
 import { createAuthService } from './modules/auth/auth.service.js';
 import { sessionCookieConfig } from './modules/auth/cookie.js';
 import { createSessionService } from './modules/auth/session.service.js';
@@ -22,6 +23,8 @@ export interface AppDeps {
   db: Db;
   /** Defaults to `SELECT 1`. Tests override it to simulate a database outage. */
   checkDatabase?: () => Promise<void>;
+  /** Defaults to DEFAULT_AUTH_RATE_LIMITS. Tests raise them so unrelated tests aren't throttled. */
+  authRateLimits?: AuthRateLimits;
 }
 
 /**
@@ -73,6 +76,7 @@ export function createApp(deps: AppDeps) {
   const cookie = sessionCookieConfig(env.NODE_ENV);
   const sessions = createSessionService({ db, secret: env.SESSION_SECRET });
   const auth = createAuthService({ db });
+  const audit = createAuditService({ db, logger: deps.logger });
   const checkDatabase =
     deps.checkDatabase ??
     (async () => {
@@ -80,7 +84,10 @@ export function createApp(deps: AppDeps) {
     });
 
   app.use('/api', healthRouter({ version: deps.version, checkDatabase }));
-  app.use('/api/auth', authRouter({ auth, sessions, cookie }));
+  app.use(
+    '/api/auth',
+    authRouter({ auth, sessions, audit, cookie, rateLimits: deps.authRateLimits }),
+  );
 
   app.use(notFoundHandler);
   app.use(errorHandler);

@@ -171,3 +171,72 @@ describe('CSRF protection', () => {
       .expect(201);
   });
 });
+
+describe('POST /api/auth/logout-all', () => {
+  it('ends every session of the user, on every device', async () => {
+    const laptop = browser();
+    const phone = browser();
+    await laptop.post('/api/auth/register').send(creds).expect(201);
+    await phone.post('/api/auth/login').send(creds).expect(200);
+
+    await phone.post('/api/auth/logout-all').expect(204);
+
+    await laptop.get('/api/auth/me').expect(401);
+    await phone.get('/api/auth/me').expect(401);
+    expect(await db.session.count()).toBe(0);
+  });
+
+  it('requires a session', async () => {
+    await browser().post('/api/auth/logout-all').expect(401);
+  });
+});
+
+describe('audit log', () => {
+  const actions = async () =>
+    (await db.auditLog.findMany({ orderBy: { createdAt: 'asc' } })).map((a) => ({
+      action: a.action,
+      entityId: a.entityId,
+      reason: (a.metadata as { reason?: string } | null)?.reason,
+    }));
+
+  it('records register, login success/failure and logout', async () => {
+    const tab = browser();
+    const { body } = await tab.post('/api/auth/register').send(creds).expect(201);
+    const userId = body.user.id as string;
+
+    await browser()
+      .post('/api/auth/login')
+      .send({ ...creds, password: 'wrong-password!' })
+      .expect(401);
+    await browser()
+      .post('/api/auth/login')
+      .send({ ...creds, email: 'ghost@example.com' })
+      .expect(401);
+    await tab.post('/api/auth/login').send(creds).expect(200);
+    await tab.post('/api/auth/logout').expect(204);
+
+    expect(await actions()).toEqual([
+      { action: 'auth.register', entityId: userId, reason: undefined },
+      { action: 'auth.login.failure', entityId: userId, reason: 'wrong_password' },
+      { action: 'auth.login.failure', entityId: 'unknown', reason: 'unknown_email' },
+      { action: 'auth.login.success', entityId: userId, reason: undefined },
+      { action: 'auth.logout', entityId: userId, reason: undefined },
+    ]);
+  });
+
+  it('never stores passwords or the typed email of unknown accounts', async () => {
+    await browser().post('/api/auth/register').send(creds).expect(201);
+    await browser()
+      .post('/api/auth/login')
+      .send({ ...creds, password: 'wrong-password!' })
+      .expect(401);
+    await browser()
+      .post('/api/auth/login')
+      .send({ email: 'ghost@example.com', password: 'guess-1234' });
+
+    const everything = JSON.stringify(await db.auditLog.findMany());
+    for (const secret of [creds.password, 'wrong-password!', 'guess-1234', 'ghost@example.com']) {
+      expect(everything).not.toContain(secret);
+    }
+  });
+});
