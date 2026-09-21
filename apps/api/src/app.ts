@@ -21,6 +21,16 @@ import { createGitHubService } from './modules/github/github.service.js';
 import { repositoriesRouter } from './modules/repositories/repositories.routes.js';
 import { healthRouter } from './routes/health.js';
 
+/**
+ * OAuth callbacks carry a one-time `code` and our CSRF `state` in the query
+ * string. They're short-lived, but credentials don't belong in logs at all.
+ */
+export function redactUrl(url: string): string {
+  const i = url.indexOf('?');
+  if (i === -1 || !url.startsWith('/api/github/callback')) return url;
+  return `${url.slice(0, i)}?[redacted]`;
+}
+
 export interface AppDeps {
   env: Pick<Env, 'WEB_ORIGIN' | 'NODE_ENV' | 'SESSION_SECRET'>;
   logger: Logger;
@@ -58,7 +68,7 @@ export function createApp(deps: AppDeps) {
       },
       // One short line per request. Full headers are noise and can contain secrets.
       serializers: {
-        req: (req) => ({ id: req.id, method: req.method, url: req.url }),
+        req: (req) => ({ id: req.id, method: req.method, url: redactUrl(req.url) }),
         res: (res) => ({ statusCode: res.statusCode }),
       },
       customLogLevel: (_req, res, err) =>

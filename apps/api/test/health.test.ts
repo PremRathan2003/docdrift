@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { describe, expect, it } from 'vitest';
 import { healthResponseSchema } from '@docdrift/shared';
-import { createApp, type AppDeps } from '../src/app.js';
+import { createApp, redactUrl, type AppDeps } from '../src/app.js';
 import { createLogger } from '../src/lib/logger.js';
 import { createPrismaClient } from '../src/lib/prisma.js';
 
@@ -71,5 +71,14 @@ describe('error handling', () => {
       .set('Origin', 'https://evil.example');
     expect(blocked.headers['access-control-allow-origin']).not.toBe('https://evil.example');
     expect(blocked.headers['access-control-allow-origin']).not.toBe('*');
+  });
+});
+
+describe('redactUrl', () => {
+  it('removes OAuth codes and state from logged callback URLs', () => {
+    expect(redactUrl('/api/github/callback?code=abc&state=xyz')).toBe(
+      '/api/github/callback?[redacted]',
+    );
+    expect(redactUrl('/api/repositories?x=1')).toBe('/api/repositories?x=1');
   });
 });

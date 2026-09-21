@@ -34,6 +34,15 @@ describe('form error helpers', () => {
     expect(retryAfterSeconds(new ApiError(401, 'INVALID_CREDENTIALS', 'x'))).toBeNull();
   });
 
+  it('shows deliberate 5xx messages (e.g. GitHub down) but hides unexpected ones', () => {
+    expect(
+      formErrorMessage(new ApiError(502, 'GITHUB_UNAVAILABLE', 'GitHub could not be reached')),
+    ).toBe('GitHub could not be reached');
+    expect(formErrorMessage(new ApiError(500, 'INTERNAL_ERROR', 'x', 'abcdef123456'))).toContain(
+      '(ref abcdef12)',
+    );
+  });
+
   it('never shows raw server errors for 5xx', () => {
     expect(formErrorMessage(new ApiError(500, 'INTERNAL_ERROR', 'stack trace here'))).not.toContain(
       'stack',

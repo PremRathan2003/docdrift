@@ -40,7 +40,14 @@ export function retryAfterSeconds(error: unknown): number | null {
 export function formErrorMessage(error: unknown): string {
   if (error instanceof ApiError) {
     if (error.code === 'VALIDATION_ERROR') return 'Please fix the highlighted fields.';
-    if (error.status >= 500) return 'Something went wrong on our side. Please try again.';
+    // Unexpected server bugs get a generic text; deliberate 5xx answers such as
+    // GITHUB_UNAVAILABLE or GITHUB_NOT_CONFIGURED carry a safe, useful message.
+    if (
+      error.status >= 500 &&
+      ['INTERNAL_ERROR', 'HTTP_ERROR', 'INVALID_RESPONSE'].includes(error.code)
+    ) {
+      return `Something went wrong on our side. Please try again.${error.requestId ? ` (ref ${error.requestId.slice(0, 8)})` : ''}`;
+    }
     return error.message;
   }
   return 'Could not reach the server. Check your connection and try again.';
