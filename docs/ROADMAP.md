@@ -8,7 +8,7 @@ Estimates are rough and assume you type and understand the code, not just paste 
 | #   | Milestone                       | Done when                                                                                                             | Est. sessions |
 | --- | ------------------------------- | --------------------------------------------------------------------------------------------------------------------- | ------------- |
 | 1.1 | **Scaffold** ✅                 | Monorepo, health check, web ↔ API via proxy, schema, CI, 15 tests                                                     | 2–3           |
-| 1.2 | Auth                            | Register/login/logout, sessions, protected routes, rate-limited login, tests                                          | 4–5           |
+| 1.2 | **Auth** ✅                     | Register/login/logout, sessions, protected routes, rate-limited login, tests                                          | 4–5           |
 | 1.3 | GitHub App + connect repository | Install App, list installation repos, connect one, repo page                                                          | 4–5           |
 | 1.4 | Pull requests                   | Sync + list PRs with filters, PR detail, file list, diff viewer                                                       | 4–5           |
 | 1.5 | Analysis v1                     | Diff filtering, heuristic doc lookup, one LLM provider, structured output, validation, retries, stored run with usage | 6–8           |

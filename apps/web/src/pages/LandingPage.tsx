@@ -1,4 +1,7 @@
+import { Link } from 'react-router';
 import { ApiStatus } from '../components/ApiStatus';
+import { buttonClass } from '../components/ui/Button';
+import { useCurrentUser } from '../lib/auth';
 import { ThemeToggle } from '../components/ThemeToggle';
 
 const steps = [
@@ -17,11 +20,28 @@ const steps = [
 ];
 
 export function LandingPage() {
+  const { data: user } = useCurrentUser();
   return (
     <div className="min-h-screen bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
       <header className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
         <span className="font-mono text-lg font-semibold">docdrift</span>
-        <ThemeToggle />
+        <nav aria-label="Account" className="flex items-center gap-2">
+          <ThemeToggle />
+          {user ? (
+            <Link to="/dashboard" className={buttonClass('primary')}>
+              Open dashboard
+            </Link>
+          ) : (
+            <>
+              <Link to="/login" className={buttonClass('ghost')}>
+                Sign in
+              </Link>
+              <Link to="/register" className={buttonClass('primary')}>
+                Get started
+              </Link>
+            </>
+          )}
+        </nav>
       </header>
 
       <main className="mx-auto max-w-5xl px-4">

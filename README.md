@@ -3,10 +3,10 @@
 DocDrift analyses GitHub pull requests, identifies documentation that may no longer match
 the code, and drafts documentation updates that a human reviews before anything changes.
 
-> **Status: Phase 1, milestone 1.1 (scaffold).** What works today: monorepo, validated
-> config, structured logging, `/api/health` with a real database check, landing page
-> showing live API status, dark/light theme, Phase 1 database schema, CI.
-> Nothing else is implemented yet — see [docs/ROADMAP.md](docs/ROADMAP.md).
+> **Status: Phase 1, milestone 1.2 (authentication) complete.** Working today: register, sign in,
+> sign out (this device or all devices), protected dashboard, rate limiting, audit log, `/api/health`,
+> dark/light theme, CI. Not built yet: GitHub integration, AI analysis, review workflow —
+> see [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Architecture
 

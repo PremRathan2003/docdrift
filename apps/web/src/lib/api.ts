@@ -7,10 +7,44 @@ export class ApiError extends Error {
     public readonly code: string,
     message: string,
     public readonly requestId?: string,
+    public readonly details?: unknown,
   ) {
     super(message);
     this.name = 'ApiError';
   }
+}
+
+type ErrorEnvelope = {
+  error?: { code?: string; message?: string; requestId?: string; details?: unknown };
+} | null;
+
+async function send(path: string, init: RequestInit, fetchImpl: typeof fetch) {
+  const res = await fetchImpl(path, {
+    ...init,
+    // Session cookies are only sent to our own origin (/api is proxied).
+    credentials: 'same-origin',
+    headers: { 'Content-Type': 'application/json', ...init.headers },
+  });
+  let body: unknown = null;
+  if (res.status !== 204) {
+    try {
+      body = await res.json();
+    } catch {
+      // Non-JSON body (e.g. a proxy error page). Handled by the callers.
+    }
+  }
+  return { res, body };
+}
+
+function toApiError(status: number, body: unknown): ApiError {
+  const err = (body as ErrorEnvelope)?.error;
+  return new ApiError(
+    status,
+    err?.code ?? 'HTTP_ERROR',
+    err?.message ?? `Request failed with status ${status}`,
+    err?.requestId,
+    err?.details,
+  );
 }
 
 /**
@@ -24,33 +58,27 @@ export async function apiFetch<S extends z.ZodType>(
   init: RequestInit = {},
   fetchImpl: typeof fetch = fetch,
 ): Promise<z.infer<S>> {
-  const res = await fetchImpl(path, {
-    ...init,
-    credentials: 'same-origin',
-    headers: { 'Content-Type': 'application/json', ...init.headers },
-  });
-
-  let body: unknown = null;
-  try {
-    body = await res.json();
-  } catch {
-    // Non-JSON body (e.g. a proxy error page). Handled below.
-  }
+  const { res, body } = await send(path, init, fetchImpl);
 
   // The health endpoint legitimately returns a valid body with 503, so we try
   // the success schema first and only then treat the response as an error.
   const parsed = schema.safeParse(body);
   if (parsed.success) return parsed.data;
-
-  const err = (body as { error?: { code?: string; message?: string; requestId?: string } } | null)
-    ?.error;
-  if (!res.ok) {
-    throw new ApiError(
-      res.status,
-      err?.code ?? 'HTTP_ERROR',
-      err?.message ?? `Request failed with status ${res.status}`,
-      err?.requestId,
-    );
-  }
+  if (!res.ok) throw toApiError(res.status, body);
   throw new ApiError(res.status, 'INVALID_RESPONSE', 'The server returned an unexpected response');
 }
+
+/** For endpoints that answer 204 No Content (logout, …). */
+export async function apiSend(
+  path: string,
+  init: RequestInit = {},
+  fetchImpl: typeof fetch = fetch,
+) {
+  const { res, body } = await send(path, init, fetchImpl);
+  if (!res.ok) throw toApiError(res.status, body);
+}
+
+export const postJson = (body: unknown): RequestInit => ({
+  method: 'POST',
+  body: JSON.stringify(body),
+});
