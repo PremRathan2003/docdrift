@@ -47,6 +47,22 @@ Or: `curl http://localhost:4000/api/health`.
 | `npm run build`      | Production builds of all packages                              |
 | `npm run db:migrate` | Create/apply a migration after editing `schema.prisma`         |
 
+## Testing
+
+- **Unit tests** (`npm test`) need nothing running.
+- **Integration tests** (`npm run test:integration`) use a separate database whose name must
+  end in `_test`, because every run wipes it. Create it once:
+
+  ```bash
+  psql -d postgres -c "CREATE DATABASE docdrift_test OWNER docdrift;"
+  ```
+
+  and set `DATABASE_URL_TEST` in `apps/api/.env` (see `.env.example`). Each run rebuilds the
+  schema from the committed migrations, so the tests also prove the migrations work.
+
+- No test ever calls GitHub or an LLM provider. Live integration tests, when added, will be
+  a separate, opt-in command.
+
 ## Environment variables
 
 API (`apps/api/.env`): see [`apps/api/.env.example`](apps/api/.env.example). The web app has

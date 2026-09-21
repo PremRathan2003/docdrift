@@ -1,20 +1,12 @@
 /**
- * Local development seed. Creates one demo user so you can log in once auth
- * lands in the next milestone. Safe to run repeatedly (upsert).
- *
- * The password hash format here must match src/modules/auth (next milestone).
+ * Local development seed. Creates (or resets) one demo user so you can log in.
+ * Safe to run repeatedly.
  */
-import { randomBytes, scryptSync } from 'node:crypto';
 import { createPrismaClient } from '../src/lib/prisma.js';
+import { hashPassword } from '../src/modules/auth/password.js';
 
 const DEMO_EMAIL = 'demo@docdrift.local';
 const DEMO_PASSWORD = 'demo-password-change-me';
-
-function hashPassword(password: string) {
-  const salt = randomBytes(16);
-  const hash = scryptSync(password, salt, 64);
-  return `scrypt$${salt.toString('base64')}$${hash.toString('base64')}`;
-}
 
 async function main() {
   if (process.env.NODE_ENV === 'production') {
@@ -25,14 +17,12 @@ async function main() {
 
   const prisma = createPrismaClient(url);
   try {
+    const passwordHash = await hashPassword(DEMO_PASSWORD);
     const user = await prisma.user.upsert({
       where: { email: DEMO_EMAIL },
-      update: {},
-      create: {
-        email: DEMO_EMAIL,
-        passwordHash: hashPassword(DEMO_PASSWORD),
-        displayName: 'Demo User',
-      },
+      // Re-seeding resets the demo password (and upgrades old hash formats).
+      update: { passwordHash },
+      create: { email: DEMO_EMAIL, passwordHash, displayName: 'Demo User' },
     });
     console.warn(`Seeded user ${user.email} (password: ${DEMO_PASSWORD}) — local development only`);
   } finally {
