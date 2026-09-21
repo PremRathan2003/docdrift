@@ -1,4 +1,4 @@
-import { Link, Outlet } from 'react-router';
+import { Link, NavLink, Outlet } from 'react-router';
 import { useCurrentUser } from '../lib/auth';
 import { ThemeToggle } from './ThemeToggle';
 import { UserMenu } from './UserMenu';
@@ -16,9 +16,31 @@ export function AppLayout() {
       </a>
       <header className="border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-          <Link to="/dashboard" className="font-mono text-lg font-semibold">
-            docdrift
-          </Link>
+          <div className="flex items-center gap-6">
+            <Link to="/dashboard" className="font-mono text-lg font-semibold">
+              docdrift
+            </Link>
+            <nav aria-label="Main" className="flex gap-1 text-sm">
+              {[
+                ['/dashboard', 'Dashboard'],
+                ['/repositories', 'Repositories'],
+              ].map(([to, label]) => (
+                <NavLink
+                  key={to}
+                  to={to!}
+                  className={({ isActive }) =>
+                    `rounded-md px-3 py-1.5 ${
+                      isActive
+                        ? 'bg-zinc-100 font-medium text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
+                        : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100'
+                    }`
+                  }
+                >
+                  {label}
+                </NavLink>
+              ))}
+            </nav>
+          </div>
           <div className="flex items-center gap-2">
             <ThemeToggle />
             {user && <UserMenu user={user} />}

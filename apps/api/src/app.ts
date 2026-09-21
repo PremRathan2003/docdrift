@@ -14,6 +14,11 @@ import { authRouter, type AuthRateLimits } from './modules/auth/auth.routes.js';
 import { createAuthService } from './modules/auth/auth.service.js';
 import { sessionCookieConfig } from './modules/auth/cookie.js';
 import { createSessionService } from './modules/auth/session.service.js';
+import type { GitHubAppConfig } from './modules/github/config.js';
+import { createGitHubClient } from './modules/github/github-client.js';
+import { githubRouter } from './modules/github/github.routes.js';
+import { createGitHubService } from './modules/github/github.service.js';
+import { repositoriesRouter } from './modules/repositories/repositories.routes.js';
 import { healthRouter } from './routes/health.js';
 
 export interface AppDeps {
@@ -25,6 +30,8 @@ export interface AppDeps {
   checkDatabase?: () => Promise<void>;
   /** Defaults to DEFAULT_AUTH_RATE_LIMITS. Tests raise them so unrelated tests aren't throttled. */
   authRateLimits?: AuthRateLimits;
+  /** Null/undefined: GitHub features answer 503 GITHUB_NOT_CONFIGURED. */
+  github?: { config: GitHubAppConfig; fetchImpl?: typeof fetch } | null;
 }
 
 /**
@@ -77,6 +84,14 @@ export function createApp(deps: AppDeps) {
   const sessions = createSessionService({ db, secret: env.SESSION_SECRET });
   const auth = createAuthService({ db });
   const audit = createAuditService({ db, logger: deps.logger });
+  const github = deps.github
+    ? createGitHubService({
+        db,
+        config: deps.github.config,
+        client: createGitHubClient({ fetchImpl: deps.github.fetchImpl }),
+        oauthFetch: deps.github.fetchImpl,
+      })
+    : null;
   const checkDatabase =
     deps.checkDatabase ??
     (async () => {
@@ -88,6 +103,9 @@ export function createApp(deps: AppDeps) {
     '/api/auth',
     authRouter({ auth, sessions, audit, cookie, rateLimits: deps.authRateLimits }),
   );
+
+  app.use('/api/github', githubRouter({ github, sessions, audit, cookie }));
+  app.use('/api/repositories', repositoriesRouter({ db, github, sessions, audit, cookie }));
 
   app.use(notFoundHandler);
   app.use(errorHandler);

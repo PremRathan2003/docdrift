@@ -5,15 +5,15 @@ Estimates are rough and assume you type and understand the code, not just paste 
 
 ## Phase 1 — MVP (≈ 4–5 weeks)
 
-| #   | Milestone                       | Done when                                                                                                             | Est. sessions |
-| --- | ------------------------------- | --------------------------------------------------------------------------------------------------------------------- | ------------- |
-| 1.1 | **Scaffold** ✅                 | Monorepo, health check, web ↔ API via proxy, schema, CI, 15 tests                                                     | 2–3           |
-| 1.2 | **Auth** ✅                     | Register/login/logout, sessions, protected routes, rate-limited login, tests                                          | 4–5           |
-| 1.3 | GitHub App + connect repository | Install App, list installation repos, connect one, repo page                                                          | 4–5           |
-| 1.4 | Pull requests                   | Sync + list PRs with filters, PR detail, file list, diff viewer                                                       | 4–5           |
-| 1.5 | Analysis v1                     | Diff filtering, heuristic doc lookup, one LLM provider, structured output, validation, retries, stored run with usage | 6–8           |
-| 1.6 | Review workflow                 | Suggestion page, edit/approve/reject, state machine, review history, patch preview                                    | 4–5           |
-| 1.7 | Dashboard + E2E                 | Real stats from DB, Playwright happy path with mocked LLM                                                             | 3–4           |
+| #   | Milestone                              | Done when                                                                                                             | Est. sessions |
+| --- | -------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | ------------- |
+| 1.1 | **Scaffold** ✅                        | Monorepo, health check, web ↔ API via proxy, schema, CI, 15 tests                                                     | 2–3           |
+| 1.2 | **Auth** ✅                            | Register/login/logout, sessions, protected routes, rate-limited login, tests                                          | 4–5           |
+| 1.3 | **GitHub App + connect repository** ✅ | Install App, list installation repos, connect one, repo page                                                          | 4–5           |
+| 1.4 | Pull requests                          | Sync + list PRs with filters, PR detail, file list, diff viewer                                                       | 4–5           |
+| 1.5 | Analysis v1                            | Diff filtering, heuristic doc lookup, one LLM provider, structured output, validation, retries, stored run with usage | 6–8           |
+| 1.6 | Review workflow                        | Suggestion page, edit/approve/reject, state machine, review history, patch preview                                    | 4–5           |
+| 1.7 | Dashboard + E2E                        | Real stats from DB, Playwright happy path with mocked LLM                                                             | 3–4           |
 
 **MVP scope cut (deliberately out of Phase 1):** webhooks, RAG/embeddings, automatic docs
 PR creation, multiple AI providers, background queue, org/team roles. The MVP still tells

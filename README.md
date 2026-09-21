@@ -3,10 +3,10 @@
 DocDrift analyses GitHub pull requests, identifies documentation that may no longer match
 the code, and drafts documentation updates that a human reviews before anything changes.
 
-> **Status: Phase 1, milestone 1.2 (authentication) complete.** Working today: register, sign in,
-> sign out (this device or all devices), protected dashboard, rate limiting, audit log, `/api/health`,
-> dark/light theme, CI. Not built yet: GitHub integration, AI analysis, review workflow —
-> see [docs/ROADMAP.md](docs/ROADMAP.md).
+> **Status: Phase 1, milestone 1.3 (GitHub repositories) complete.** Working today: accounts
+> (register, sign in/out, rate limiting, audit log), connecting GitHub through a GitHub App with
+> verified installations, choosing repositories to connect, `/api/health`, dark/light theme, CI.
+> Not built yet: pull request views, AI analysis, review workflow — see [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Architecture
 

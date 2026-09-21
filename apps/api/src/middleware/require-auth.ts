@@ -1,4 +1,4 @@
-import type { RequestHandler } from 'express';
+import type { Request, RequestHandler, Response } from 'express';
 import { AppError } from '../lib/errors.js';
 import {
   readSessionCookie,
@@ -17,19 +17,41 @@ declare global {
   }
 }
 
-/**
- * Protects a route: responds 401 unless the request has a valid session cookie.
- * If the session's expiry slid forward, the cookie's expiry is refreshed too.
- */
+/** Validates the session cookie and sets req.auth. Returns false if signed out. */
+async function authenticate(
+  req: Request,
+  res: Response,
+  sessions: SessionService,
+  cookie: SessionCookieConfig,
+) {
+  const token = readSessionCookie(req.cookies, cookie);
+  const session = await sessions.validate(token);
+  if (!session || !token) return false;
+  // If the session's expiry slid forward, refresh the cookie's expiry too.
+  setSessionCookie(res, cookie, token, session.expiresAt);
+  req.auth = { sessionId: session.sessionId, user: session.user };
+  return true;
+}
+
+/** For JSON API routes: responds 401 unless the request has a valid session. */
 export function requireAuth(sessions: SessionService, cookie: SessionCookieConfig): RequestHandler {
   return async (req, res, next) => {
-    const token = readSessionCookie(req.cookies, cookie);
-    const session = await sessions.validate(token);
-    if (!session || !token) {
-      return next(new AppError(401, 'UNAUTHENTICATED', 'You need to sign in'));
-    }
-    setSessionCookie(res, cookie, token, session.expiresAt);
-    req.auth = { sessionId: session.sessionId, user: session.user };
-    next();
+    if (await authenticate(req, res, sessions, cookie)) return next();
+    next(new AppError(401, 'UNAUTHENTICATED', 'You need to sign in'));
+  };
+}
+
+/**
+ * For routes the browser *navigates* to (e.g. the GitHub redirect): a JSON
+ * 401 would be a dead end, so signed-out users are sent to the login page.
+ */
+export function requireAuthOrRedirect(
+  sessions: SessionService,
+  cookie: SessionCookieConfig,
+  loginPath = '/login?next=%2Frepositories',
+): RequestHandler {
+  return async (req, res, next) => {
+    if (await authenticate(req, res, sessions, cookie)) return next();
+    res.redirect(303, loginPath);
   };
 }

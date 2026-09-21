@@ -3,6 +3,7 @@ import { createApp } from './app.js';
 import { loadEnv } from './config/env.js';
 import { createLogger } from './lib/logger.js';
 import { createPrismaClient } from './lib/prisma.js';
+import { loadGitHubConfig } from './modules/github/config.js';
 
 // Works from both src/ (dev) and dist/ (prod): package.json is one level up.
 const { version } = JSON.parse(
@@ -12,16 +13,19 @@ const { version } = JSON.parse(
 const env = loadEnv();
 const logger = createLogger(env.LOG_LEVEL);
 const prisma = createPrismaClient(env.DATABASE_URL);
+const githubConfig = loadGitHubConfig(env);
 
 const app = createApp({
   env,
   logger,
   version,
   db: prisma,
+  github: githubConfig ? { config: githubConfig } : null,
 });
 
 const server = app.listen(env.PORT, () => {
   logger.info({ port: env.PORT }, `API listening on http://localhost:${env.PORT}`);
+  if (!githubConfig) logger.warn('GitHub App not configured: GitHub features are disabled');
 });
 
 // Graceful shutdown: stop accepting requests, finish in-flight ones, close DB.

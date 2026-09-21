@@ -93,7 +93,7 @@ model Session {
 /// App's private key (kept in server env vars) and cached in memory only.
 model GithubInstallation {
   id             String   @id @default(cuid())
-  installationId BigInt   @unique
+  installationId BigInt
   accountLogin   String
   accountType    String // "User" | "Organization"
   userId         String
@@ -103,7 +103,10 @@ model GithubInstallation {
   user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   repositories Repository[]
 
-  @@index([userId])
+  /// One row per (DocDrift user, installation): two DocDrift users who can both
+  /// access the same GitHub organisation each get their own link to it.
+  /// The composite index also serves "installations of this user" lookups.
+  @@unique([userId, installationId])
 }
 
 model Repository {

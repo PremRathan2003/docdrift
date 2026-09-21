@@ -7,7 +7,15 @@ import { Prisma } from '../../generated/prisma/client.js';
  * counted reliably ("how many failed logins yesterday?").
  */
 export type AuditAction =
-  'auth.register' | 'auth.login.success' | 'auth.login.failure' | 'auth.logout' | 'auth.logout_all';
+  | 'auth.register'
+  | 'auth.login.success'
+  | 'auth.login.failure'
+  | 'auth.logout'
+  | 'auth.logout_all'
+  | 'github.link'
+  | 'github.installation.rejected'
+  | 'repository.connect'
+  | 'repository.disconnect';
 
 export interface AuditEvent {
   action: AuditAction;

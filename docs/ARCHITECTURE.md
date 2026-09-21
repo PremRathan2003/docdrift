@@ -88,6 +88,23 @@ an `inputManifest` (files sent, files skipped and why) for reproducibility inste
 adds Postgres full-text search and pgvector embeddings, and the evaluation set decides
 whether vectors actually beat keywords for this problem.
 
+**D9 — Connecting GitHub never trusts the redirect URL.** After an installation GitHub
+redirects back with an `installation_id`, which its docs say can be spoofed, and it doesn't
+reliably return our OAuth `state` on that path. So:
+
+```
+/api/github/install ──► GitHub install page ──► /api/github/callback (no state)
+                                                   │ not trusted: bounce ▼
+/api/github/authorize (sets state cookie) ──► GitHub OAuth ──► /api/github/callback?code&state
+   state matches cookie (timing-safe, single use)
+   └► exchange code → short-lived user token → GET /user/installations (as that user)
+      └► store only installations GitHub lists for this user; discard the user token
+```
+
+A claimed `installation_id` that isn't in GitHub's list is rejected and audited. Connecting a
+repository sends only its GitHub id; the server looks it up through the user's installations,
+so metadata can't be forged and inaccessible repositories can't be connected.
+
 ## Technical risks and how we handle them
 
 | #   | Risk                                                                                                                    | Mitigation                                                                                                                                                    |
