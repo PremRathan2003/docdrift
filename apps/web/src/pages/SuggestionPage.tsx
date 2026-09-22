@@ -48,6 +48,8 @@ export function SuggestionPage() {
   const s = data?.suggestion;
   // Start the editor from the saved text whenever a new version arrives.
   useEffect(() => setDraft(null), [s?.version]);
+  // Bumped to give the (uncontrolled) editor fresh text, e.g. after "Discard".
+  const [editorResets, setEditorResets] = useState(0);
   const editorValue = draft ?? s?.currentContent ?? '';
 
   const patch = useMemo(
@@ -235,7 +237,8 @@ export function SuggestionPage() {
                   <>
                     <Suspense fallback={<p className="text-sm text-zinc-500">Loading editor…</p>}>
                       <MarkdownEditor
-                        value={editorValue}
+                        key={`${s.version}-${editorResets}`}
+                        initialValue={editorValue}
                         onChange={setDraft}
                         dark={dark}
                         label={`Edit ${s.documentationPath}`}
@@ -255,7 +258,13 @@ export function SuggestionPage() {
                         Save changes
                       </Button>
                       {dirty && (
-                        <Button variant="ghost" onClick={() => setDraft(null)}>
+                        <Button
+                          variant="ghost"
+                          onClick={() => {
+                            setDraft(null);
+                            setEditorResets((n) => n + 1);
+                          }}
+                        >
                           Discard
                         </Button>
                       )}

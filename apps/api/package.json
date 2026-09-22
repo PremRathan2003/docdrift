@@ -17,6 +17,7 @@
     "db:studio": "prisma studio",
     "postinstall": "prisma generate",
     "test:integration": "vitest run -c vitest.integration.config.ts",
+    "e2e:server": "tsx test/e2e/server.ts",
     "github:check": "tsx --env-file=.env scripts/github-check.ts",
     "ai:check": "tsx --env-file=.env scripts/ai-check.ts",
     "ai:diagnose": "tsx --env-file=.env scripts/ai-diagnose.ts"

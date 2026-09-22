@@ -1,9 +1,12 @@
 import { Link } from 'react-router';
 import { AnalysisBadge } from '../components/Badges';
+import { GettingStarted } from '../components/GettingStarted';
 import { SuggestionStatusBadge } from '../components/SuggestionStatusBadge';
 import { Alert } from '../components/ui/Alert';
 import { useCurrentUser } from '../lib/auth';
 import { formErrorMessage } from '../lib/form-errors';
+import { gettingStartedSteps } from '../lib/getting-started';
+import { useGitHubStatus } from '../lib/github';
 import { formatDateTime } from '../lib/pull-requests';
 import { useDashboard } from '../lib/suggestions';
 
@@ -14,6 +17,7 @@ const link = 'text-sm font-medium text-indigo-600 hover:underline dark:text-indi
 export function DashboardPage() {
   const { data: user } = useCurrentUser();
   const { data, isPending, isError, error } = useDashboard();
+  const github = useGitHubStatus();
   const name = user?.displayName ?? user?.email;
 
   return (
@@ -27,6 +31,16 @@ export function DashboardPage() {
       )}
       {data && (
         <>
+          {github.data && (
+            <GettingStarted
+              steps={gettingStartedSteps({
+                githubInstallations: github.data.installations.length,
+                repositoryCount: data.repositoryCount,
+                analysisCount: data.recentAnalyses.length,
+                decidedSuggestions: data.suggestionCounts.APPROVED + data.suggestionCounts.REJECTED,
+              })}
+            />
+          )}
           <dl className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
             {(
               [

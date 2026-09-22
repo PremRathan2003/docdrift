@@ -12,13 +12,19 @@ import EditorWorker from 'monaco-editor/editor/editor.worker?worker';
 self.MonacoEnvironment = { getWorker: () => new EditorWorker() };
 loader.config({ monaco });
 
+/**
+ * Uncontrolled on purpose: Monaco owns the text while you type and reports
+ * changes up. Feeding every keystroke back in as a `value` prop can race with
+ * fast typing and drop characters. To replace the text (discard, or a newer
+ * version arrives), the parent changes the component's `key`.
+ */
 export default function MarkdownEditor({
-  value,
+  initialValue,
   onChange,
   dark,
   label,
 }: {
-  value: string;
+  initialValue: string;
   onChange: (v: string) => void;
   dark: boolean;
   label: string;
@@ -28,7 +34,7 @@ export default function MarkdownEditor({
       height="60vh"
       language="markdown"
       theme={dark ? 'vs-dark' : 'light'}
-      value={value}
+      defaultValue={initialValue}
       onChange={(v) => onChange(v ?? '')}
       options={{
         ariaLabel: label,

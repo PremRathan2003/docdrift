@@ -3,12 +3,13 @@
 DocDrift analyses GitHub pull requests, identifies documentation that may no longer match
 the code, and drafts documentation updates that a human reviews before anything changes.
 
-> **Status: Phase 1 core complete through milestone 1.6 (review workflow).** Working today:
+> **Status: Phase 1 complete (milestones 1.1–1.7).** Working today:
 > accounts (sessions, rate limiting, audit log), GitHub App connection with verified installations,
 > repositories and pull requests with a diff viewer, AI analysis that suggests documentation updates
 > with evidence, and a human review workflow — diff against the current doc, edit in Monaco,
-> approve/reject/request changes with history, and an approved-patch download. Next: dashboard polish
-> and an end-to-end test (1.7) — see [docs/ROADMAP.md](docs/ROADMAP.md).
+> approve/reject/request changes with history, and an approved-patch download. A dashboard with a
+> getting-started checklist built from real data, and Playwright end-to-end tests of the whole flow.
+> Next: Phase 2 (evaluation and retrieval) — see [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Architecture
 
@@ -21,7 +22,7 @@ Database design: [docs/DATABASE.md](docs/DATABASE.md).
 **Web:** React 19, TypeScript, Vite, Tailwind CSS 4, React Router, TanStack Query
 **API:** Node 22, Express 5, TypeScript, Zod, Prisma 7, pino
 **DB:** PostgreSQL 16 (pgvector image, used from Phase 2)
-**Testing:** Vitest, Supertest (Playwright from milestone 1.7)
+**Testing:** Vitest, Supertest, Playwright
 
 ## Local setup
 
@@ -63,13 +64,15 @@ bash tools/seed-sandbox.sh ~/docdrift-sandbox
 
 ## Scripts
 
-| Command              | What it does                                                   |
-| -------------------- | -------------------------------------------------------------- |
-| `npm run dev`        | Run everything in watch mode                                   |
-| `npm test`           | Unit + integration tests (no network, no real DB, no real LLM) |
-| `npm run check`      | Lint + format check + typecheck + tests (what CI runs)         |
-| `npm run build`      | Production builds of all packages                              |
-| `npm run db:migrate` | Create/apply a migration after editing `schema.prisma`         |
+| Command                    | What it does                                                |
+| -------------------------- | ----------------------------------------------------------- |
+| `npm run dev`              | Run everything in watch mode                                |
+| `npm test`                 | Unit tests (no network, no database, no real LLM)           |
+| `npm run test:integration` | API tests against the `_test` database                      |
+| `npm run test:e2e`         | Browser tests of the whole flow (fake GitHub + scripted AI) |
+| `npm run check`            | Lint + format check + typecheck + tests (what CI runs)      |
+| `npm run build`            | Production builds of all packages                           |
+| `npm run db:migrate`       | Create/apply a migration after editing `schema.prisma`      |
 
 ## Testing
 
@@ -83,6 +86,13 @@ bash tools/seed-sandbox.sh ~/docdrift-sandbox
 
   and set `DATABASE_URL_TEST` in `apps/api/.env` (see `.env.example`). Each run rebuilds the
   schema from the committed migrations, so the tests also prove the migrations work.
+
+- **End-to-end tests** (`npm run test:e2e`) drive a real Chromium through the real web app
+  and API: register, connect GitHub, analyse pull requests, edit, approve, reject, reopen,
+  a stale-tab conflict and the patch download. GitHub and the AI are deterministic fakes
+  (`apps/api/test/e2e/server.ts`), so they're free and need no secrets. They use the same
+  `_test` database. First time only: `npx playwright install chromium`. To watch them run:
+  `npm run test:e2e:ui`.
 
 - No test ever calls GitHub or an LLM provider. Live integration tests, when added, will be
   a separate, opt-in command.

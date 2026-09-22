@@ -16,6 +16,21 @@ jobs:
   check:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    # Throwaway PostgreSQL for integration tests (CI-only credentials).
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: docdrift
+          POSTGRES_PASSWORD: docdrift_ci_only
+          POSTGRES_DB: docdrift_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U docdrift -d docdrift_test"
+          --health-interval 5s --health-timeout 3s --health-retries 10
+    env:
+      DATABASE_URL_TEST: postgresql://docdrift:docdrift_ci_only@localhost:5432/docdrift_test?schema=public
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -28,4 +43,43 @@ jobs:
       - run: npm run format:check
       - run: npm run typecheck
       - run: npm test
+      - run: npm run test:integration
       - run: npm run build
+
+  e2e:
+    # Browser tests: real web app + API + database, fake GitHub and scripted AI.
+    # No secrets needed and no AI cost.
+    needs: check
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: docdrift
+          POSTGRES_PASSWORD: docdrift_ci_only
+          POSTGRES_DB: docdrift_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U docdrift -d docdrift_test"
+          --health-interval 5s --health-timeout 3s --health-retries 10
+    env:
+      DATABASE_URL_TEST: postgresql://docdrift:docdrift_ci_only@localhost:5432/docdrift_test?schema=public
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: |
+            e2e/playwright-report
+            e2e/test-results
+          retention-days: 7
