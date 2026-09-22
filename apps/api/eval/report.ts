@@ -53,6 +53,19 @@ export function toMarkdown(r: EvalReport): string {
       `| Latency median / max | ${num(m.latencyMs.median === null ? null : m.latencyMs.median / 1000, 1)} s / ${num(m.latencyMs.max === null ? null : m.latencyMs.max / 1000, 1)} s |`,
     );
   }
+  if (r.reused.length) {
+    const dates = r.reused.map((x) => x.savedAt.slice(0, 16).replace('T', ' ')).sort();
+    lines.push(
+      '',
+      `Resumed run: ${r.reused.length} of ${r.outcomes.length} answers were saved by an earlier, interrupted run of the same detector, model and prompt (${dates[0]}${dates.length > 1 && dates.at(-1) !== dates[0] ? ` – ${dates.at(-1)}` : ''} UTC) and not asked again.`,
+    );
+  }
+  if (r.retries.length) {
+    lines.push(
+      '',
+      `Re-run after a temporary provider error: ${r.retries.map((x) => `${x.caseId} (${x.code})`).join(', ')}. Only the final attempt is scored.`,
+    );
+  }
   if (r.repeat > 1) {
     lines.push(
       '',

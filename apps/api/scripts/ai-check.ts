@@ -27,7 +27,8 @@ async function main() {
         'A code change renamed the JSON field "done" to "completed". The README (docs path: README.md) still shows "done". ' +
         'The changed file is src/store.js. Return one recommendation.',
       jsonSchema: z.toJSONSchema(analysisOutputSchema) as Record<string, unknown>,
-      maxOutputTokens: 8192, // room for "thinking" tokens on reasoning models
+      // Room for "thinking" tokens, within the configured limit (free tiers may count it).
+      maxOutputTokens: Math.min(8192, env.AI_MAX_OUTPUT_TOKENS),
       timeoutMs: env.AI_TIMEOUT_MS,
     });
   };

@@ -51,13 +51,15 @@ export interface PullRequestInfo {
 export interface PipelineConfig {
   timeoutMs: number;
   maxInputTokens: number;
+  /** Defaults to 16 384: thinking models need room. */
+  maxOutputTokens?: number;
   /** Test hook: replaces real waiting between retries. */
   sleep?: (ms: number) => Promise<void>;
 }
 
 export const MAX_ATTEMPTS = 3;
 // Thinking models count their reasoning tokens against this limit, so leave generous room.
-const MAX_OUTPUT_TOKENS = 16_384;
+const DEFAULT_MAX_OUTPUT_TOKENS = 16_384;
 const MAX_DOCS_FETCHED = 15;
 const MAX_CHARS_PER_DOC = 12_000;
 const CHARS_PER_TOKEN = 4; // rough rule of thumb for English text and code
@@ -174,7 +176,7 @@ export async function callModel(
         system: SYSTEM_PROMPT,
         user: prompt,
         jsonSchema: JSON_SCHEMA,
-        maxOutputTokens: MAX_OUTPUT_TOKENS,
+        maxOutputTokens: config.maxOutputTokens ?? DEFAULT_MAX_OUTPUT_TOKENS,
         timeoutMs: config.timeoutMs,
       });
       inputTokens = add(inputTokens, result.usage.inputTokens);

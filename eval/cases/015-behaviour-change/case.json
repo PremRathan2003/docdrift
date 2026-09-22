@@ -11,7 +11,7 @@
         "priority"
       ],
       "mustNotContain": [
-        "oldest first"
+        "Returns tasks, oldest first."
       ]
     }
   ],
@@ -19,6 +19,6 @@
     "README.md"
   ],
   "added": [],
-  "notes": "No identifier in the docs changes; the documented ordering does. README shows the task JSON (without priority), so updating it is reasonable too.",
+  "notes": "No identifier in the docs changes; the documented ordering does. README shows the task JSON (without priority), so updating it is reasonable too. The check bans the old sentence, not the phrase \"oldest first\": with equal priority, tasks are still returned oldest first (label corrected after a model answered this correctly).",
   "source": "synthetic"
 }

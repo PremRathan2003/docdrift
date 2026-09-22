@@ -72,3 +72,47 @@ for private company code.
 - Its "confidence" is self-reported, not a measured accuracy.
 - Phase 1 finds candidate docs with path rules and keyword matching; semantic retrieval
   arrives in Phase 2, and real accuracy numbers come from the evaluation dataset, not claims.
+
+## Choosing another model
+
+`npm run ai:models` lists the Gemini models your key can call. Free-tier limits are per model and
+per project (see your limits at https://aistudio.google.com/rate-limit), so when one model is
+overloaded or out of quota, another may still work. To try one without editing `.env`:
+`npm run eval -- --model <id>`. To switch the app, change `AI_MODEL` and run `npm run ai:check`.
+
+## Other providers (OpenAI-compatible)
+
+`AI_PROVIDER=openai-compatible` works with any service that speaks OpenAI's Chat Completions
+API. The base URL decides which one:
+
+| Service        | `AI_BASE_URL`                    | Notes                                            |
+| -------------- | -------------------------------- | ------------------------------------------------ |
+| Groq           | `https://api.groq.com/openai/v1` | Free tier, no card; e.g. `openai/gpt-oss-120b`   |
+| OpenRouter     | `https://openrouter.ai/api/v1`   | Free models end in `:free`; low daily limit      |
+| Cerebras       | `https://api.cerebras.ai/v1`     | Free tier                                        |
+| OpenAI         | `https://api.openai.com/v1`      | Paid                                             |
+| Ollama (local) | `http://localhost:11434/v1`      | Runs on your machine; the only allowed `http://` |
+
+JSON output is requested with `response_format: json_object` and the schema is described in the
+system message; Zod validation and retries apply exactly as for Gemini. Check each provider's
+current free-tier terms, including whether prompts may be used for training, before sending
+private code.
+
+### Groq setup
+
+1. Create a free account at https://console.groq.com and an API key under **API Keys**. Copy it
+   (it's shown once). Don't paste it into chats or commit it.
+2. From the repository root, back up your Gemini settings and switch (the key is typed hidden):
+
+   ```bash
+   cp apps/api/.env apps/api/.env.gemini          # ignored by git; restore with cp back
+   read -rs "GROQ_KEY?Groq API key: "; echo       # zsh; in bash: read -rsp "Groq API key: " GROQ_KEY
+   sed -i '' -E '/^(AI_PROVIDER|AI_API_KEY|AI_MODEL|AI_BASE_URL|AI_MAX_OUTPUT_TOKENS|AI_NATIVE_SCHEMA)=/d' apps/api/.env
+   printf 'AI_PROVIDER=openai-compatible\nAI_BASE_URL=https://api.groq.com/openai/v1\nAI_API_KEY=%s\nAI_MODEL=openai/gpt-oss-120b\nAI_MAX_OUTPUT_TOKENS=6000\n' "$GROQ_KEY" >> apps/api/.env
+   unset GROQ_KEY
+   npm run ai:check
+   ```
+
+3. Groq's free tier limits tokens per minute, and may count the requested output limit, hence
+   `AI_MAX_OUTPUT_TOKENS=6000`. For the evaluation, leave room between calls:
+   `npm run eval -- --delay-ms 20000`.

@@ -21,7 +21,8 @@
     "github:check": "tsx --env-file=.env scripts/github-check.ts",
     "ai:check": "tsx --env-file=.env scripts/ai-check.ts",
     "ai:diagnose": "tsx --env-file=.env scripts/ai-diagnose.ts",
-    "eval": "tsx eval/cli.ts"
+    "eval": "tsx eval/cli.ts",
+    "ai:models": "tsx --env-file=.env scripts/ai-models.ts"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.10",

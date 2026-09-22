@@ -9,7 +9,16 @@ npm run eval                        # DocDrift with the AI settings in apps/api/
 npm run eval -- --repeat 3          # each case three times (models aren't deterministic)
 npm run eval -- --cases 001,021     # only some cases (id prefixes)
 npm run eval -- --no-save           # print the summary without writing a report
+npm run eval -- --model <id>        # another model than AI_MODEL (list them: npm run ai:models)
+npm run eval -- --delay-ms 15000    # more time between calls (free tiers allow few per minute)
 ```
+
+If a case hits a temporary provider error (overloaded, rate-limited, timeout), it is re-run after
+30 s and then 60 s. Three errored cases in a row stop the run without writing a report, since a
+partial run would give misleading numbers. Answers received before the stop are saved in
+`eval/.checkpoints/` (not committed): run the same command again later and it continues where it
+stopped, and the report says how many answers came from the earlier attempt. `--fresh` ignores
+them. This matters on free tiers, where one model's daily quota may not cover a full run.
 
 Each run writes `reports/<date>-<detector>-<model>.md` (the summary) and a `.json` with every
 answer, so any number in the summary can be traced back to what the model actually said.

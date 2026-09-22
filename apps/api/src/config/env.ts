@@ -44,7 +44,23 @@ const envSchema = z
     GITHUB_APP_PRIVATE_KEY_BASE64: optionalString,
 
     // AI provider (optional: without it, analysis answers 503 AI_NOT_CONFIGURED).
-    AI_PROVIDER: z.enum(['gemini', 'none']).default('none'),
+    AI_PROVIDER: z.enum(['gemini', 'openai-compatible', 'none']).default('none'),
+    /**
+     * For openai-compatible: the API base URL, e.g. https://api.groq.com/openai/v1.
+     * HTTPS only, except a local server (Ollama) on localhost.
+     */
+    AI_BASE_URL: optionalString.pipe(
+      z
+        .string()
+        .url()
+        .refine(
+          (u) => /^https:\/\//.test(u) || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?(\/|$)/.test(u),
+          {
+            message: 'must be an https:// URL (http:// only for localhost)',
+          },
+        )
+        .optional(),
+    ),
     AI_API_KEY: optionalString,
     AI_MODEL: optionalString,
     /** Send the output schema to the provider natively (only if the model accepts it; see ai:diagnose). */
@@ -55,6 +71,12 @@ const envSchema = z
     AI_TIMEOUT_MS: z.coerce.number().int().min(5_000).max(300_000).default(90_000),
     /** Rough budget for one analysis prompt; content beyond it is skipped and reported. */
     AI_MAX_INPUT_TOKENS: z.coerce.number().int().min(2_000).max(1_000_000).default(30_000),
+    /**
+     * Output limit per call, including a reasoning model's thinking. Some free
+     * tiers count the requested limit against tokens-per-minute (e.g. Groq), so
+     * lower it there (e.g. 6000).
+     */
+    AI_MAX_OUTPUT_TOKENS: z.coerce.number().int().min(1_000).max(65_536).default(16_384),
     /** Prices in USD per 1M tokens. Only if set do we compute a cost — never guessed. */
     AI_INPUT_USD_PER_MTOK: z.coerce.number().min(0).optional(),
     AI_OUTPUT_USD_PER_MTOK: z.coerce.number().min(0).optional(),
@@ -70,6 +92,12 @@ const envSchema = z
           });
       }
     }
+    if (env.AI_PROVIDER === 'openai-compatible' && !env.AI_BASE_URL)
+      ctx.addIssue({
+        code: 'custom',
+        path: ['AI_BASE_URL'],
+        message: 'required when AI_PROVIDER=openai-compatible',
+      });
     const set = GITHUB_VARS.filter((k) => env[k] !== undefined);
     if (set.length > 0 && set.length < GITHUB_VARS.length) {
       for (const k of GITHUB_VARS.filter((k) => env[k] === undefined)) {

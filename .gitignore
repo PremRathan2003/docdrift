@@ -12,3 +12,6 @@ test-results/
 
 # Private keys never go in the repo
 *.pem
+
+# Answers saved by interrupted evaluation runs (npm run eval resumes from them)
+eval/.checkpoints/

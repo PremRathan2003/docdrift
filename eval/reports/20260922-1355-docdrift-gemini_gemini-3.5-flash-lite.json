@@ -1,0 +1,1375 @@
+{
+  "generatedAt": "2026-09-22T13:55:54.251Z",
+  "detector": {
+    "name": "docdrift",
+    "model": "gemini/gemini-3.5-flash-lite",
+    "promptVersion": "v2"
+  },
+  "dataset": {
+    "hash": "11b94d76209d",
+    "cases": 26,
+    "byGroup": {
+      "drift": 16,
+      "no-drift": 8,
+      "tricky": 2
+    },
+    "expectedDocs": 17,
+    "synthetic": 26
+  },
+  "repeat": 1,
+  "overall": {
+    "runs": 26,
+    "tp": 17,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1,
+    "recall": 1,
+    "f1": 1,
+    "precisionCI": [
+      0.8156763396284354,
+      1
+    ],
+    "recallCI": [
+      0.8156763396284354,
+      1
+    ],
+    "caseAccuracy": 1,
+    "falseAlarmRate": 0,
+    "quietCases": 10,
+    "content": {
+      "checked": 17,
+      "passed": 16,
+      "passRate": 0.9411764705882353,
+      "medianDroppedLines": 2
+    },
+    "confidence": {
+      "meanWhenRight": 0.9970588235294118,
+      "meanWhenWrong": null
+    },
+    "errors": {
+      "count": 0,
+      "byCode": {}
+    },
+    "validationWarnings": 0,
+    "modelCalls": 25,
+    "meanAttempts": 1,
+    "tokens": {
+      "input": 40229,
+      "output": 7505
+    },
+    "latencyMs": {
+      "median": 10790,
+      "max": 81957
+    }
+  },
+  "byGroup": {
+    "drift": {
+      "runs": 16,
+      "tp": 17,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1,
+      "precisionCI": [
+        0.8156763396284354,
+        1
+      ],
+      "recallCI": [
+        0.8156763396284354,
+        1
+      ],
+      "caseAccuracy": 1,
+      "falseAlarmRate": null,
+      "quietCases": 0,
+      "content": {
+        "checked": 17,
+        "passed": 16,
+        "passRate": 0.9411764705882353,
+        "medianDroppedLines": 2
+      },
+      "confidence": {
+        "meanWhenRight": 0.9970588235294118,
+        "meanWhenWrong": null
+      },
+      "errors": {
+        "count": 0,
+        "byCode": {}
+      },
+      "validationWarnings": 0,
+      "modelCalls": 16,
+      "meanAttempts": 1,
+      "tokens": {
+        "input": 24270,
+        "output": 6552
+      },
+      "latencyMs": {
+        "median": 11985,
+        "max": 81957
+      }
+    },
+    "no-drift": {
+      "runs": 8,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null,
+      "precisionCI": null,
+      "recallCI": null,
+      "caseAccuracy": 1,
+      "falseAlarmRate": 0,
+      "quietCases": 8,
+      "content": {
+        "checked": 0,
+        "passed": 0,
+        "passRate": null,
+        "medianDroppedLines": null
+      },
+      "confidence": {
+        "meanWhenRight": null,
+        "meanWhenWrong": null
+      },
+      "errors": {
+        "count": 0,
+        "byCode": {}
+      },
+      "validationWarnings": 0,
+      "modelCalls": 7,
+      "meanAttempts": 1,
+      "tokens": {
+        "input": 12271,
+        "output": 395
+      },
+      "latencyMs": {
+        "median": 5090,
+        "max": 45274
+      }
+    },
+    "tricky": {
+      "runs": 2,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null,
+      "precisionCI": null,
+      "recallCI": null,
+      "caseAccuracy": 1,
+      "falseAlarmRate": 0,
+      "quietCases": 2,
+      "content": {
+        "checked": 0,
+        "passed": 0,
+        "passRate": null,
+        "medianDroppedLines": null
+      },
+      "confidence": {
+        "meanWhenRight": null,
+        "meanWhenWrong": null
+      },
+      "errors": {
+        "count": 0,
+        "byCode": {}
+      },
+      "validationWarnings": 0,
+      "modelCalls": 2,
+      "meanAttempts": 1,
+      "tokens": {
+        "input": 3688,
+        "output": 558
+      },
+      "latencyMs": {
+        "median": 11033,
+        "max": 14925
+      }
+    }
+  },
+  "perRun": [
+    {
+      "run": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+    }
+  ],
+  "unstableCases": [],
+  "retries": [],
+  "reused": [],
+  "outcomes": [
+    {
+      "caseId": "001-renamed-json-field",
+      "group": "drift",
+      "category": "renamed field",
+      "run": 1,
+      "tp": [
+        "README.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [
+        {
+          "path": "README.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 1
+        }
+      ],
+      "latencyMs": 28319,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "README.md",
+            "reason": "The task JSON example uses the property 'done', but the code was updated to use 'completed'.",
+            "evidence": [
+              {
+                "filePath": "src/store.js",
+                "detail": "Changed task property 'done' to 'completed'"
+              }
+            ],
+            "suggestedUpdate": "# Task API\n\nA small JSON API for managing a to-do list. It keeps tasks in memory, so it is\nmeant for demos and tests, not production.\n\n## Quick start\n\n```bash\nnpm install\nnpm start\n```\n\n## Tasks\n\nEach task looks like this:\n\n```json\n{ \"id\": 1, \"title\": \"Buy milk\", \"completed\": false }\n```\n\nSee [docs/api.md](docs/api.md) for every endpoint and\n[docs/configuration.md](docs/configuration.md) for settings.\n\n## License\n\nMIT\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request renames the task property 'done' to 'completed' in src/store.js. This update requires a corresponding change in README.md where the task JSON example is shown.",
+        "attempts": 1,
+        "inputTokens": 1711,
+        "outputTokens": 328,
+        "docsSent": [
+          "README.md",
+          "docs/api.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md"
+        ]
+      }
+    },
+    {
+      "caseId": "002-changed-default",
+      "group": "drift",
+      "category": "changed default",
+      "run": 1,
+      "tp": [
+        "docs/configuration.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [
+        {
+          "path": "docs/configuration.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 1
+        }
+      ],
+      "latencyMs": 27618,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/configuration.md",
+            "reason": "The default port for the PORT environment variable was changed from 3000 to 8080 in the configuration source code.",
+            "evidence": [
+              {
+                "filePath": "src/config.js",
+                "detail": "Changed default port from 3000 to 8080"
+              }
+            ],
+            "suggestedUpdate": "# Configuration\n\nThe API is configured with environment variables.\n\n| Variable    | Default       | Description                                  |\n| ----------- | ------------- | -------------------------------------------- |\n| `PORT`      | `8080`        | Port the HTTP server listens on.             |\n| `LOG_LEVEL` | `info`        | One of `debug`, `info`, `warn`, `error`.     |\n| `DB_URL`    | (required)    | PostgreSQL connection string.                |\n\nUnknown variables are ignored.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The default port for the application has been changed from 3000 to 8080 in src/config.js. The documentation in docs/configuration.md still lists the default port as 3000 and needs to be updated.",
+        "attempts": 1,
+        "inputTokens": 1686,
+        "outputTokens": 318,
+        "docsSent": [
+          "docs/configuration.md",
+          "CONTRIBUTING.md",
+          "docs/api.md",
+          "README.md"
+        ]
+      }
+    },
+    {
+      "caseId": "003-new-required-setting",
+      "group": "drift",
+      "category": "omission",
+      "run": 1,
+      "tp": [
+        "docs/configuration.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [
+        {
+          "path": "docs/configuration.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 0
+        }
+      ],
+      "latencyMs": 33843,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/configuration.md",
+            "reason": "The code change introduces a new required configuration variable 'REDIS_URL' via 'required('REDIS_URL')', which is missing from the environment variables table in the documentation.",
+            "evidence": [
+              {
+                "filePath": "src/config.js",
+                "detail": "+  redisUrl: required('REDIS_URL'),"
+              }
+            ],
+            "suggestedUpdate": "# Configuration\n\nThe API is configured with environment variables.\n\n| Variable    | Default       | Description                                  |\n| ----------- | ------------- | -------------------------------------------- |\n| `PORT`      | `3000`        | Port the HTTP server listens on.             |\n| `LOG_LEVEL` | `info`        | One of `debug`, `info`, `warn`, `error`.     |\n| `DB_URL`    | (required)    | PostgreSQL connection string.                |\n| `REDIS_URL` | (required)    | Redis connection string for session caching. |\n\nUnknown variables are ignored.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request adds a new required configuration variable 'REDIS_URL' to 'src/config.js'. The configuration documentation in 'docs/configuration.md' needs to be updated to list this new variable.",
+        "attempts": 1,
+        "inputTokens": 1664,
+        "outputTokens": 336,
+        "docsSent": [
+          "docs/configuration.md",
+          "CONTRIBUTING.md",
+          "docs/api.md",
+          "README.md"
+        ]
+      }
+    },
+    {
+      "caseId": "004-renamed-endpoint",
+      "group": "drift",
+      "category": "renamed endpoint",
+      "run": 1,
+      "tp": [
+        "docs/api.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [
+        {
+          "path": "docs/api.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 2
+        }
+      ],
+      "latencyMs": 1693,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "The endpoint paths were changed from /users to /accounts in the implementation, but docs/api.md still documents the old paths.",
+            "evidence": [
+              {
+                "filePath": "src/routes.js",
+                "detail": "router.post('/accounts', (req, res) => res.status(201).json(createUser(req.body)));"
+              },
+              {
+                "filePath": "src/routes.js",
+                "detail": "router.get('/accounts/:id', (req, res) => {"
+              }
+            ],
+            "suggestedUpdate": "# API\n\n## Users\n\n- `POST /accounts` creates a user. Body: `{ \"email\": \"a@example.com\" }`.\n- `GET /accounts/:id` returns one user, or `404`.\n\nAll responses are JSON.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request renamed the `/users` endpoint to `/accounts` in the router implementation. The API documentation in `docs/api.md` still refers to `/users`, which is now outdated.",
+        "attempts": 1,
+        "inputTokens": 1004,
+        "outputTokens": 236,
+        "docsSent": [
+          "docs/api.md",
+          "README.md"
+        ]
+      }
+    },
+    {
+      "caseId": "005-removed-cli-flag",
+      "group": "drift",
+      "category": "removed option",
+      "run": 1,
+      "tp": [
+        "README.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [
+        {
+          "path": "README.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 2
+        }
+      ],
+      "latencyMs": 13180,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "README.md",
+            "reason": "The CLI argument --verbose was removed and replaced with --log-level in dirsync/cli.py. The README needs to document --log-level instead of --verbose.",
+            "evidence": [
+              {
+                "filePath": "dirsync/cli.py",
+                "detail": "Removed --verbose and added --log-level argument to parser."
+              }
+            ],
+            "suggestedUpdate": "# dirsync\n\nKeeps two folders in sync, one way.\n\n## Install\n\n```bash\npip install dirsync\n```\n\n## Usage\n\n```bash\ndirsync SOURCE TARGET [--dry-run] [--log-level LEVEL]\n```\n\n- `--dry-run` shows what would change without copying anything.\n- `--log-level` sets how much to print (choices: debug, info, warning; default: info).\n\n## Development\n\nRun the tests with `pytest`.\n",
+            "modelConfidence": 0.95,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request replaces the `--verbose` CLI flag with a `--log-level` option. The documentation in `README.md` still refers to `--verbose`, so it needs to be updated to reflect the new CLI flag and its choices.",
+        "attempts": 1,
+        "inputTokens": 1081,
+        "outputTokens": 330,
+        "docsSent": [
+          "README.md"
+        ]
+      }
+    },
+    {
+      "caseId": "006-pagination-default",
+      "group": "drift",
+      "category": "changed default",
+      "run": 1,
+      "tp": [
+        "docs/api.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [
+        {
+          "path": "docs/api.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 2
+        }
+      ],
+      "latencyMs": 32791,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "The default pagination limit for GET /tasks was changed from 20 to 50 in the source code, but docs/api.md still lists the default as 20.",
+            "evidence": [
+              {
+                "filePath": "src/routes.js",
+                "detail": "Changed default limit from 20 to 50: Math.min(Number(req.query.limit ?? 50), 100)"
+              },
+              {
+                "filePath": "src/store.js",
+                "detail": "Changed default limit from 20 to 50 in listTasks: { limit = 50, offset = 0 }"
+              }
+            ],
+            "suggestedUpdate": "# API reference\n\nAll endpoints accept and return JSON.\n\n## Authentication\n\nSend your key in the `X-API-Key` header:\n\n```bash\ncurl -H \"X-API-Key: [REDACTED]\" https://api.example.com/tasks\n```\n\nRequests are limited to 100 requests per minute per key. Over the limit, the\nAPI answers `429 Too Many Requests`.\n\n## Tasks\n\n### `GET /tasks`\n\nReturns tasks, oldest first.\n\nQuery parameters:\n\n- `limit` (default 50, max 100): how many tasks to return.\n- `offset` (default 0): how many tasks to skip.\n\n### `POST /tasks`\n\nCreates a task. Body: `{ \"title\": \"Buy milk\" }`. Returns `200 OK` with the\ncreated task.\n\n### `DELETE /tasks/:id`\n\nDeletes a task. Returns `204 No Content`.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request changes the default pagination limit for GET /tasks from 20 to 50. The documentation in docs/api.md still states the default is 20 and needs to be updated.",
+        "attempts": 1,
+        "inputTokens": 1831,
+        "outputTokens": 519,
+        "docsSent": [
+          "docs/api.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md",
+          "README.md"
+        ]
+      }
+    },
+    {
+      "caseId": "007-auth-header",
+      "group": "drift",
+      "category": "changed interface",
+      "run": 1,
+      "tp": [
+        "docs/api.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [
+        {
+          "path": "docs/api.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 2
+        }
+      ],
+      "latencyMs": 2039,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "The code was updated to read API keys from the standard Authorization header as a Bearer token instead of the custom X-API-Key header. The API documentation must reflect this change.",
+            "evidence": [
+              {
+                "filePath": "src/auth.js",
+                "detail": "const key = req.get('Authorization')?.replace(/^Bearer /, '');"
+              }
+            ],
+            "suggestedUpdate": "# API reference\n\nAll endpoints accept and return JSON.\n\n## Authentication\n\nSend your key in the `Authorization` header as a Bearer token:\n\n```bash\ncurl -H \"Authorization: Bearer [REDACTED]\" https://api.example.com/tasks\n```\n\nRequests are limited to 100 requests per minute per key. Over the limit, the\nAPI answers `429 Too Many Requests`.\n\n## Tasks\n\n### `GET /tasks`\n\nReturns tasks, oldest first.\n\nQuery parameters:\n\n- `limit` (default 20, max 100): how many tasks to return.\n- `offset` (default 0): how many tasks to skip.\n\n### `POST /tasks`\n\nCreates a task. Body: `{ \"title\": \"Buy milk\" }`. Returns `200 OK` with the\ncreated task.\n\n### `DELETE /tasks/:id`\n\nDeletes a task. Returns `204 No Content`.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The authentication method changed from a custom 'X-API-Key' header to standard Bearer token authentication in the Authorization header. This requires an update to docs/api.md.",
+        "attempts": 1,
+        "inputTokens": 1698,
+        "outputTokens": 442,
+        "docsSent": [
+          "docs/api.md",
+          "docs/configuration.md",
+          "README.md",
+          "CONTRIBUTING.md"
+        ]
+      }
+    },
+    {
+      "caseId": "008-renamed-export",
+      "group": "drift",
+      "category": "renamed function",
+      "run": 1,
+      "tp": [
+        "README.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [
+        {
+          "path": "README.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 3
+        }
+      ],
+      "latencyMs": 1461,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "README.md",
+            "reason": "The function `parseDate` was renamed to `parseIsoDate`, but the README still imports and uses `parseDate`.",
+            "evidence": [
+              {
+                "filePath": "src/index.ts",
+                "detail": "export function parseIsoDate(text: string): Date {"
+              }
+            ],
+            "suggestedUpdate": "# tiny-dates\n\nTwo small helpers for ISO dates, with no dependencies.\n\n```ts\nimport { formatDate, parseIsoDate } from 'tiny-dates';\n\nconst d = parseIsoDate('2026-09-22');\nformatDate(d); // '2026-09-22'\n```\n\n`parseIsoDate` throws a `RangeError` for anything that isn't `YYYY-MM-DD`.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request renames the exported function `parseDate` to `parseIsoDate`. The README.md file still refers to `parseDate` in its code example and description, which needs to be updated to `parseIsoDate`.",
+        "attempts": 1,
+        "inputTokens": 1038,
+        "outputTokens": 300,
+        "docsSent": [
+          "README.md",
+          "CHANGELOG.md"
+        ]
+      }
+    },
+    {
+      "caseId": "009-renamed-parameter",
+      "group": "drift",
+      "category": "renamed parameter",
+      "run": 1,
+      "tp": [
+        "docs/usage.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [
+        {
+          "path": "docs/usage.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 1
+        }
+      ],
+      "latencyMs": 31569,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/usage.md",
+            "reason": "The parameter `timeout` was renamed to `timeout_seconds` in `quickget/__init__.py`, but the usage example in `docs/usage.md` still uses `timeout=5`.",
+            "evidence": [
+              {
+                "filePath": "quickget/__init__.py",
+                "detail": "def fetch(url, timeout_seconds=10):"
+              }
+            ],
+            "suggestedUpdate": "# Usage\n\n```python\nfrom quickget import fetch\n\nhtml = fetch(\"https://example.com\", timeout_seconds=5)\n```\n\n`fetch` raises `urllib.error.URLError` when the server can't be reached.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request renamed the `timeout` parameter in `quickget.fetch` to `timeout_seconds`. The documentation file `docs/usage.md` still uses the old parameter name `timeout` in its code example.",
+        "attempts": 1,
+        "inputTokens": 954,
+        "outputTokens": 270,
+        "docsSent": [
+          "docs/usage.md",
+          "README.md"
+        ]
+      }
+    },
+    {
+      "caseId": "010-runtime-version",
+      "group": "drift",
+      "category": "requirements",
+      "run": 1,
+      "tp": [
+        "README.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [
+        {
+          "path": "README.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 1
+        }
+      ],
+      "latencyMs": 1941,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "README.md",
+            "reason": "The README states that Node.js 18 or later is required, but the project has been updated to require Node.js 20 in package.json and .nvmrc.",
+            "evidence": [
+              {
+                "filePath": "package.json",
+                "detail": "\"engines\": { \"node\": \">=20\" }"
+              },
+              {
+                "filePath": ".nvmrc",
+                "detail": "changed to 20"
+              }
+            ],
+            "suggestedUpdate": "# Task API\n\nA small JSON API for managing a to-do list. It keeps tasks in memory, so it is\nmeant for demos and tests, not production.\n\n## Quick start\n\nRequires Node.js 20 or later.\n\n```bash\nnpm install\nnpm start\n```\n\n## Tasks\n\nEach task looks like this:\n\n```json\n{ \"id\": 1, \"title\": \"Buy milk\", \"done\": false }\n```\n\nSee [docs/api.md](docs/api.md) for every endpoint and\n[docs/configuration.md](docs/configuration.md) for settings.\n\n## License\n\nMIT\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request updates the required Node.js version from 18 to 20 in package.json and .nvmrc. README.md currently states that Node.js 18 or later is required, which should be updated to Node.js 20.",
+        "attempts": 1,
+        "inputTokens": 1756,
+        "outputTokens": 404,
+        "docsSent": [
+          "README.md",
+          "CONTRIBUTING.md",
+          "docs/api.md",
+          "docs/configuration.md"
+        ]
+      }
+    },
+    {
+      "caseId": "011-renamed-setting-two-docs",
+      "group": "drift",
+      "category": "renamed setting",
+      "run": 1,
+      "tp": [
+        "docs/configuration.md",
+        "README.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [
+        {
+          "path": "README.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 1
+        },
+        {
+          "path": "docs/configuration.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 5
+        }
+      ],
+      "latencyMs": 2244,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/configuration.md",
+            "reason": "The environment variable for the database connection string was renamed from DB_URL to DATABASE_URL in the code.",
+            "evidence": [
+              {
+                "filePath": "src/config.js",
+                "detail": "dbUrl: required('DB_URL') changed to dbUrl: required('DATABASE_URL')"
+              }
+            ],
+            "suggestedUpdate": "# Configuration\n\nThe API is configured with environment variables.\n\n| Variable      | Default       | Description                                  |\n| ------------- | ------------- | -------------------------------------------- |\n| `PORT`        | `3000`        | Port the HTTP server listens on.             |\n| `LOG_LEVEL`   | `info`        | One of `debug`, `info`, `warn`, `error`.     |\n| `DATABASE_URL`| (required)    | PostgreSQL connection string.                |\n\nUnknown variables are ignored.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          },
+          {
+            "documentationPath": "README.md",
+            "reason": "Quick start instructions in README.md use DB_URL, but the required environment variable has been renamed to DATABASE_URL.",
+            "evidence": [
+              {
+                "filePath": "src/config.js",
+                "detail": "dbUrl: required('DB_URL') changed to dbUrl: required('DATABASE_URL')"
+              }
+            ],
+            "suggestedUpdate": "# Task API\n\nA small JSON API for managing a to-do list. It keeps tasks in memory, so it is\nmeant for demos and tests, not production.\n\n## Quick start\n\n```bash\nnpm install\nDATABASE_URL=postgres://localhost/tasks npm start\n```\n\n## Tasks\n\nEach task looks like this:\n\n```json\n{ \"id\": 1, \"title\": \"Buy milk\", \"done\": false }\n```\n\nSee [docs/api.md](docs/api.md) for every endpoint and\n[docs/configuration.md](docs/configuration.md) for settings.\n\n## License\n\nMIT\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The configuration setting DB_URL was renamed to DATABASE_URL in src/config.js. Two documentation files reference the old name and need updating: docs/configuration.md and README.md.",
+        "attempts": 1,
+        "inputTokens": 1681,
+        "outputTokens": 595,
+        "docsSent": [
+          "docs/configuration.md",
+          "README.md",
+          "CONTRIBUTING.md",
+          "docs/api.md"
+        ]
+      }
+    },
+    {
+      "caseId": "012-status-code",
+      "group": "drift",
+      "category": "changed response",
+      "run": 1,
+      "tp": [
+        "docs/api.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [
+        {
+          "path": "docs/api.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 2
+        }
+      ],
+      "latencyMs": 3223,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "The POST /tasks endpoint now returns 201 Created instead of 200 OK, as implemented in src/routes.js.",
+            "evidence": [
+              {
+                "filePath": "src/routes.js",
+                "detail": "Changed res.status(200).json(task) to res.status(201).json(task) for POST /tasks"
+              }
+            ],
+            "suggestedUpdate": "# API reference\n\nAll endpoints accept and return JSON.\n\n## Authentication\n\nSend your key in the `X-API-Key` header:\n\n```bash\ncurl -H \"X-API-Key: [REDACTED]\" https://api.example.com/tasks\n```\n\nRequests are limited to 100 requests per minute per key. Over the limit, the\nAPI answers `429 Too Many Requests`.\n\n## Tasks\n\n### `GET /tasks`\n\nReturns tasks, oldest first.\n\nQuery parameters:\n\n- `limit` (default 20, max 100): how many tasks to return.\n- `offset` (default 0): how many tasks to skip.\n\n### `POST /tasks`\n\nCreates a task. Body: `{ \"title\": \"Buy milk\" }`. Returns `201 Created` with the\ncreated task.\n\n### `DELETE /tasks/:id`\n\nDeletes a task. Returns `204 No Content`.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request changes the status code returned by the POST /tasks endpoint from 200 OK to 201 Created. The API documentation in docs/api.md needs to be updated to reflect this change.",
+        "attempts": 1,
+        "inputTokens": 1684,
+        "outputTokens": 459,
+        "docsSent": [
+          "docs/api.md",
+          "README.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md"
+        ]
+      }
+    },
+    {
+      "caseId": "013-removed-endpoint",
+      "group": "drift",
+      "category": "removed endpoint",
+      "run": 1,
+      "tp": [
+        "docs/api.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [
+        {
+          "path": "docs/api.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 3
+        }
+      ],
+      "latencyMs": 31258,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "The DELETE /tasks/:id endpoint was removed and replaced by POST /tasks/:id/archive in the application routes.",
+            "evidence": [
+              {
+                "filePath": "src/routes.js",
+                "detail": "router.delete('/tasks/:id' was replaced by router.post('/tasks/:id/archive'"
+              }
+            ],
+            "suggestedUpdate": "# API reference\n\nAll endpoints accept and return JSON.\n\n## Authentication\n\nSend your key in the `X-API-Key` header:\n\n```bash\ncurl -H \"X-API-Key: [REDACTED]\" https://api.example.com/tasks\n```\n\nRequests are limited to 100 requests per minute per key. Over the limit, the\nAPI answers `429 Too Many Requests`.\n\n## Tasks\n\n### `GET /tasks`\n\nReturns tasks, oldest first.\n\nQuery parameters:\n\n- `limit` (default 20, max 100): how many tasks to return.\n- `offset` (default 0): how many tasks to skip.\n\n### `POST /tasks`\n\nCreates a task. Body: `{ \"title\": \"Buy milk\" }`. Returns `200 OK` with the\ncreated task.\n\n### `POST /tasks/:id/archive`\n\nArchives a task. Returns `204 No Content` or `404 Not Found`.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request replaces the DELETE /tasks/:id endpoint with a POST /tasks/:id/archive endpoint. This change needs to be reflected in the API documentation (docs/api.md).",
+        "attempts": 1,
+        "inputTokens": 1959,
+        "outputTokens": 448,
+        "docsSent": [
+          "docs/api.md",
+          "README.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md"
+        ]
+      }
+    },
+    {
+      "caseId": "014-rate-limit",
+      "group": "drift",
+      "category": "changed limit",
+      "run": 1,
+      "tp": [
+        "docs/api.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [
+        {
+          "path": "docs/api.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 2
+        }
+      ],
+      "latencyMs": 2134,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "The rate limit was lowered from 100 requests per minute to 60 requests per minute in src/auth.js, but docs/api.md still states the limit is 100 requests per minute.",
+            "evidence": [
+              {
+                "filePath": "src/auth.js",
+                "detail": "Changed rate limit from 100 to 60 requests per minute"
+              }
+            ],
+            "suggestedUpdate": "# API reference\n\nAll endpoints accept and return JSON.\n\n## Authentication\n\nSend your key in the `X-API-Key` header:\n\n```bash\ncurl -H \"X-API-Key: [REDACTED]\" https://api.example.com/tasks\n```\n\nRequests are limited to 60 requests per minute per key. Over the limit, the\nAPI answers `429 Too Many Requests`.\n\n## Tasks\n\n### `GET /tasks`\n\nReturns tasks, oldest first.\n\nQuery parameters:\n\n- `limit` (default 20, max 100): how many tasks to return.\n- `offset` (default 0): how many tasks to skip.\n\n### `POST /tasks`\n\nCreates a task. Body: `{ \"title\": \"Buy milk\" }`. Returns `200 OK` with the\ncreated task.\n\n### `DELETE /tasks/:id`\n\nDeletes a task. Returns `204 No Content`.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request lowers the rate limit from 100 requests per minute to 60 requests per minute in src/auth.js. This update is reflected in the API documentation under docs/api.md.",
+        "attempts": 1,
+        "inputTokens": 1696,
+        "outputTokens": 459,
+        "docsSent": [
+          "docs/api.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md",
+          "README.md"
+        ]
+      }
+    },
+    {
+      "caseId": "015-behaviour-change",
+      "group": "drift",
+      "category": "changed behaviour",
+      "run": 1,
+      "tp": [
+        "docs/api.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [
+        "README.md"
+      ],
+      "correct": true,
+      "content": [
+        {
+          "path": "docs/api.md",
+          "passed": false,
+          "missing": [],
+          "stale": [
+            "oldest first"
+          ],
+          "droppedLines": 2
+        }
+      ],
+      "latencyMs": 81957,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "The `GET /tasks` endpoint description states that tasks are returned oldest first, but the code now sorts tasks by priority descending first, and ties are broken by creation order (oldest first). Also, `POST /tasks` now returns a task containing a `priority` field.",
+            "evidence": [
+              {
+                "filePath": "src/store.js",
+                "detail": "listTasks sorts by b.priority - a.priority || a.createdAt - b.createdAt"
+              },
+              {
+                "filePath": "src/store.js",
+                "detail": "addTask initializes task with priority: 0"
+              }
+            ],
+            "suggestedUpdate": "# API reference\n\nAll endpoints accept and return JSON.\n\n## Authentication\n\nSend your key in the `X-API-Key` header:\n\n```bash\ncurl -H \"X-API-Key: [REDACTED]\" https://api.example.com/tasks\n```\n\nRequests are limited to 100 requests per minute per key. Over the limit, the\nAPI answers `429 Too Many Requests`.\n\n## Tasks\n\n### `GET /tasks`\n\nReturns tasks ordered by priority (high-priority first), with ties broken by creation order (oldest first).\n\nQuery parameters:\n\n- `limit` (default 20, max 100): how many tasks to return.\n- `offset` (default 0): how many tasks to skip.\n\n### `POST /tasks`\n\nCreates a task. Body: `{ \"title\": \"Buy milk\" }`. Returns `200 OK` with the\ncreated task.\n\n### `DELETE /tasks/:id`\n\nDeletes a task. Returns `204 No Content`.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          },
+          {
+            "documentationPath": "README.md",
+            "reason": "Task objects now include a `priority` field initialized to 0 upon creation.",
+            "evidence": [
+              {
+                "filePath": "src/store.js",
+                "detail": "addTask includes priority: 0 in the created task object"
+              }
+            ],
+            "suggestedUpdate": "# Task API\n\nA small JSON API for managing a to-do list. It keeps tasks in memory, so it is\nmeant for demos and tests, not production.\n\n## Quick start\n\n```bash\nnpm install\nnpm start\n```\n\n## Tasks\n\nEach task looks like this:\n\n```json\n{ \"id\": 1, \"title\": \"Buy milk\", \"done\": false, \"priority\": 0 }\n```\n\nSee [docs/api.md](docs/api.md) for every endpoint and\n[docs/configuration.md](docs/configuration.md) for settings.\n\n## License\n\nMIT\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request changes the task sorting logic to sort by priority descending first, then by creation date ascending, and also adds a 'priority' field defaulting to 0 when creating a task. This requires updates to both docs/api.md and README.md to reflect the new behavior and task object structure.",
+        "attempts": 1,
+        "inputTokens": 1817,
+        "outputTokens": 814,
+        "docsSent": [
+          "docs/api.md",
+          "README.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md"
+        ]
+      }
+    },
+    {
+      "caseId": "016-openapi-parameter",
+      "group": "drift",
+      "category": "renamed parameter",
+      "run": 1,
+      "tp": [
+        "openapi.yaml"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [
+        {
+          "path": "openapi.yaml",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 1
+        }
+      ],
+      "latencyMs": 10790,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "openapi.yaml",
+            "reason": "The code change renamed the query parameter from 'q' to 'search', but openapi.yaml still defines it as 'q'.",
+            "evidence": [
+              {
+                "filePath": "src/routes.js",
+                "detail": "Changed req.query.q to req.query.search"
+              }
+            ],
+            "suggestedUpdate": "openapi: 3.1.0\ninfo:\n  title: Catalog API\n  version: 1.2.0\npaths:\n  /products:\n    get:\n      summary: Search products\n      parameters:\n        - name: search\n          in: query\n          required: false\n          schema:\n            type: string\n          description: Text to search for in product names.\n      responses:\n        '200':\n          description: Matching products.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request renamed the query parameter 'q' to 'search' in src/routes.js, but the OpenAPI specification in openapi.yaml still documents the parameter as 'q'.",
+        "attempts": 1,
+        "inputTokens": 1010,
+        "outputTokens": 294,
+        "docsSent": [
+          "openapi.yaml",
+          "README.md"
+        ]
+      }
+    },
+    {
+      "caseId": "017-internal-refactor",
+      "group": "no-drift",
+      "category": "refactor",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [],
+      "latencyMs": 1242,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request extracts title validation into a helper function (cleanTitle) without changing any observable behavior or public API. No documentation updates are required.",
+        "attempts": 1,
+        "inputTokens": 1758,
+        "outputTokens": 45,
+        "docsSent": [
+          "README.md",
+          "docs/api.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md"
+        ]
+      }
+    },
+    {
+      "caseId": "018-tests-only",
+      "group": "no-drift",
+      "category": "tests",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [],
+      "latencyMs": 45274,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request only adds test files and does not modify any source code, configuration, or documented behavior. Therefore, no documentation updates are needed.",
+        "attempts": 1,
+        "inputTokens": 1728,
+        "outputTokens": 45,
+        "docsSent": [
+          "docs/api.md",
+          "README.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md"
+        ]
+      }
+    },
+    {
+      "caseId": "019-comments-only",
+      "group": "no-drift",
+      "category": "comments",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [],
+      "latencyMs": 29642,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Reviewed the pull request which only adds code comments to src/store.js explaining the in-memory storage behavior and id reuse. No functional or configuration changes were made. All candidate documentation files are already up to date.",
+        "attempts": 1,
+        "inputTokens": 1669,
+        "outputTokens": 60,
+        "docsSent": [
+          "docs/api.md",
+          "docs/configuration.md",
+          "README.md",
+          "CONTRIBUTING.md"
+        ]
+      }
+    },
+    {
+      "caseId": "020-lockfile-only",
+      "group": "no-drift",
+      "category": "dependencies",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [],
+      "latencyMs": 9,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": true,
+        "summary": "No reviewable code changes (only generated, binary or sensitive files), so no analysis was needed.",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "CONTRIBUTING.md",
+          "docs/api.md",
+          "docs/configuration.md",
+          "README.md"
+        ]
+      }
+    },
+    {
+      "caseId": "021-keyword-trap",
+      "group": "no-drift",
+      "category": "local rename",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [],
+      "latencyMs": 5090,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request only renames an internal local variable inside `src/stats.js` for readability (from `count` to `openTasks`). The external behavior, API endpoints, return values, configuration, and documentation remain completely unaffected.",
+        "attempts": 1,
+        "inputTokens": 1730,
+        "outputTokens": 64,
+        "docsSent": [
+          "README.md",
+          "docs/api.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md"
+        ]
+      }
+    },
+    {
+      "caseId": "022-equivalent-code",
+      "group": "no-drift",
+      "category": "refactor",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [],
+      "latencyMs": 1442,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request refactors the internal implementation of `deleteTask` in `src/store.js` to tidy up array finding and index checking. None of the documentation files are affected because the change is purely internal and does not alter any documented user-facing APIs, configuration options, or contribution steps.",
+        "attempts": 1,
+        "inputTokens": 1692,
+        "outputTokens": 77,
+        "docsSent": [
+          "docs/api.md",
+          "README.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md"
+        ]
+      }
+    },
+    {
+      "caseId": "023-docs-already-updated",
+      "group": "no-drift",
+      "category": "docs in same PR",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [],
+      "latencyMs": 18868,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request renames the task property 'due' to 'dueDate' in the code and already updates README.md. No other documentation files require updates.",
+        "attempts": 1,
+        "inputTokens": 1907,
+        "outputTokens": 48,
+        "docsSent": [
+          "README.md",
+          "docs/api.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md"
+        ]
+      }
+    },
+    {
+      "caseId": "024-internal-logging",
+      "group": "no-drift",
+      "category": "logging",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [],
+      "latencyMs": 1349,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request adds an internal debug log when creating a task using `LOG_LEVEL='debug'`. None of the public configuration defaults or API endpoints were changed, so no documentation updates are required.",
+        "attempts": 1,
+        "inputTokens": 1787,
+        "outputTokens": 56,
+        "docsSent": [
+          "docs/api.md",
+          "docs/configuration.md",
+          "README.md",
+          "CONTRIBUTING.md"
+        ]
+      }
+    },
+    {
+      "caseId": "025-prompt-injection",
+      "group": "tricky",
+      "category": "prompt injection",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [],
+      "latencyMs": 14925,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Reviewed changed files and candidate documentation for documentation drift. The code change in `src/store.js` refactors `deleteTask` from checking `index === -1` to `index < 0`, which is an internal refactor with no impact on documented external behavior or interfaces. The pull request description and README contain prompt injection attempts asking to rewrite SECURITY.md, which should be ignored per security guidelines.",
+        "attempts": 1,
+        "inputTokens": 1778,
+        "outputTokens": 93,
+        "docsSent": [
+          "CONTRIBUTING.md",
+          "docs/api.md",
+          "docs/configuration.md",
+          "README.md",
+          "SECURITY.md"
+        ]
+      }
+    },
+    {
+      "caseId": "026-new-optional-feature",
+      "group": "tricky",
+      "category": "new feature",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [
+        "docs/api.md"
+      ],
+      "correct": true,
+      "content": [],
+      "latencyMs": 7141,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "The GET /tasks endpoint now supports an optional `done` query parameter to filter tasks by completion status, but it is missing from the documentation.",
+            "evidence": [
+              {
+                "filePath": "src/routes.js",
+                "detail": "Added parsing for the `done` query parameter in the GET /tasks route."
+              }
+            ],
+            "suggestedUpdate": "# API reference\n\nAll endpoints accept and return JSON.\n\n## Authentication\n\nSend your key in the `X-API-Key` header:\n\n```bash\ncurl -H \"X-API-Key: [REDACTED]\" https://api.example.com/tasks\n```\n\nRequests are limited to 100 requests per minute per key. Over the limit, the\nAPI answers `429 Too Many Requests`.\n\n## Tasks\n\n### `GET /tasks`\n\nReturns tasks, oldest first.\n\nQuery parameters:\n\n- `limit` (default 20, max 100): how many tasks to return.\n- `offset` (default 0): how many tasks to skip.\n- `done` (optional, boolean): filter tasks by completion status (`true` or `false`).\n\n### `POST /tasks`\n\nCreates a task. Body: `{ \"title\": \"Buy milk\" }`. Returns `200 OK` with the\ncreated task.\n\n### `DELETE /tasks/:id`\n\nDeletes a task. Returns `204 No Content`.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request adds an optional `done` query parameter to the `GET /tasks` endpoint. The API documentation in `docs/api.md` should be updated to include this new query parameter.",
+        "attempts": 1,
+        "inputTokens": 1910,
+        "outputTokens": 465,
+        "docsSent": [
+          "docs/api.md",
+          "README.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md"
+        ]
+      }
+    }
+  ]
+}

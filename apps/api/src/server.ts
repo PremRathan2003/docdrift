@@ -26,6 +26,7 @@ const app = createApp({
   analysisConfig: {
     timeoutMs: env.AI_TIMEOUT_MS,
     maxInputTokens: env.AI_MAX_INPUT_TOKENS,
+    maxOutputTokens: env.AI_MAX_OUTPUT_TOKENS,
     inputUsdPerMTok: env.AI_INPUT_USD_PER_MTOK,
     outputUsdPerMTok: env.AI_OUTPUT_USD_PER_MTOK,
   },

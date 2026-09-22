@@ -32,3 +32,21 @@ describe('loadEnv', () => {
     );
   });
 });
+
+describe('loadEnv: openai-compatible provider', () => {
+  const ai = { ...base, AI_PROVIDER: 'openai-compatible', AI_API_KEY: 'k', AI_MODEL: 'm' };
+
+  it('requires a base URL', () => {
+    expect(() => loadEnv(ai)).toThrow(/AI_BASE_URL: required when AI_PROVIDER=openai-compatible/);
+  });
+
+  it('accepts https, and http only for localhost', () => {
+    expect(loadEnv({ ...ai, AI_BASE_URL: 'https://api.groq.com/openai/v1' }).AI_BASE_URL).toBe(
+      'https://api.groq.com/openai/v1',
+    );
+    expect(loadEnv({ ...ai, AI_BASE_URL: 'http://localhost:11434/v1' }).AI_BASE_URL).toBeDefined();
+    expect(() => loadEnv({ ...ai, AI_BASE_URL: 'http://api.example.com/v1' })).toThrow(
+      /must be an https/,
+    );
+  });
+});

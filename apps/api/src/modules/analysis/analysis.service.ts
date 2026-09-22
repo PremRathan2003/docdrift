@@ -11,6 +11,7 @@ import { PROMPT_VERSION, RunFailure, runPipeline, type RepoSource } from './pipe
 export interface AnalysisConfig {
   timeoutMs: number;
   maxInputTokens: number;
+  maxOutputTokens?: number;
   inputUsdPerMTok?: number;
   outputUsdPerMTok?: number;
   /** Test hook: replaces real waiting between retries. */

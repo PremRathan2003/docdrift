@@ -138,6 +138,13 @@ Prompt v2 asks for the complete updated file, so the review page can show an exa
 the document at the analysed commit and export a `git apply`-able patch. Nothing is written to
 GitHub; `APPLIED`/`FAILED` are reserved for docs-PR creation in Phase 3.
 
+**D14 — Several AI providers.** Besides Gemini's native API, one `OpenAICompatibleProvider`
+covers every service that speaks OpenAI's Chat Completions format (Groq, OpenRouter, Cerebras,
+OpenAI, a local Ollama), chosen by `AI_BASE_URL`. Both use JSON mode with the schema in the
+system message, so behaviour is comparable; the pipeline, validation and evaluation don't change.
+Motivation: free-tier quotas differ a lot, and measuring several models on the same cases is
+more informative than one.
+
 **D13 — Evaluation.** `npm run eval` runs the same `runPipeline` as the app (context selection,
 prompt, retries, validation), only reading repositories from `eval/cases` instead of GitHub, so it
 measures what users get. Cases are small repositories (`head/` + the changed files' `base/`) with
