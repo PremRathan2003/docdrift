@@ -1,0 +1,22 @@
+{
+  "id": "006-pagination-default",
+  "title": "Return 50 tasks per page by default",
+  "body": "Clients kept asking for more.",
+  "group": "drift",
+  "category": "changed default",
+  "expected": [
+    {
+      "path": "docs/api.md",
+      "mustContain": [
+        "default 50"
+      ],
+      "mustNotContain": [
+        "default 20"
+      ]
+    }
+  ],
+  "acceptable": [],
+  "added": [],
+  "notes": "Only the limit default changes; max stays 100.",
+  "source": "synthetic"
+}

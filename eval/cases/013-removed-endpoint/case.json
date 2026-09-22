@@ -1,0 +1,22 @@
+{
+  "id": "013-removed-endpoint",
+  "title": "Archive tasks instead of deleting them",
+  "body": "Deleting lost data by accident; archive is reversible.",
+  "group": "drift",
+  "category": "removed endpoint",
+  "expected": [
+    {
+      "path": "docs/api.md",
+      "mustContain": [
+        "/archive"
+      ],
+      "mustNotContain": [
+        "DELETE /tasks/:id"
+      ]
+    }
+  ],
+  "acceptable": [],
+  "added": [],
+  "notes": "The documented DELETE endpoint no longer exists.",
+  "source": "synthetic"
+}

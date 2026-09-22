@@ -1,0 +1,14 @@
+{
+  "id": "018-tests-only",
+  "title": "Add store tests",
+  "body": "",
+  "group": "no-drift",
+  "category": "tests",
+  "expected": [],
+  "acceptable": [],
+  "added": [
+    "test/store.test.js"
+  ],
+  "notes": "Only a new test file.",
+  "source": "synthetic"
+}

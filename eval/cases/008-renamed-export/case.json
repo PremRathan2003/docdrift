@@ -1,0 +1,24 @@
+{
+  "id": "008-renamed-export",
+  "title": "Rename parseDate to parseIsoDate",
+  "body": "Breaking: makes the accepted format explicit.",
+  "group": "drift",
+  "category": "renamed function",
+  "expected": [
+    {
+      "path": "README.md",
+      "mustContain": [
+        "parseIsoDate"
+      ],
+      "mustNotContain": [
+        "parseDate"
+      ]
+    }
+  ],
+  "acceptable": [
+    "CHANGELOG.md"
+  ],
+  "added": [],
+  "notes": "A changelog entry would also be reasonable, so it is accepted but not required.",
+  "source": "synthetic"
+}

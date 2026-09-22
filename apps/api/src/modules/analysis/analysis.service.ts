@@ -1,26 +1,12 @@
-import {
-  ANALYSIS_OUTPUT_SCHEMA_VERSION,
-  analysisOutputSchema,
-  type InputManifest,
-} from '@docdrift/shared';
-import { z } from 'zod';
+import { ANALYSIS_OUTPUT_SCHEMA_VERSION, type InputManifest } from '@docdrift/shared';
 import { Prisma } from '../../generated/prisma/client.js';
 import { AppError } from '../../lib/errors.js';
 import type { Logger } from '../../lib/logger.js';
 import type { Db } from '../../lib/prisma.js';
-import { AIProviderError, type AIProvider } from '../ai/provider.js';
+import type { AIProvider } from '../ai/provider.js';
 import { GitHubError } from '../github/github-client.js';
 import type { GitHubService } from '../github/github.service.js';
-import {
-  extractKeywords,
-  isSensitivePath,
-  pickDocCandidates,
-  rankDocs,
-  redactSecrets,
-  selectChangedFiles,
-} from './context.js';
-import { buildUserPrompt, PROMPT_VERSION, SYSTEM_PROMPT } from './prompts/v2.js';
-import { parseModelOutput, validateSemantics } from './validate.js';
+import { PROMPT_VERSION, RunFailure, runPipeline, type RepoSource } from './pipeline.js';
 
 export interface AnalysisConfig {
   timeoutMs: number;
@@ -31,25 +17,22 @@ export interface AnalysisConfig {
   sleep?: (ms: number) => Promise<void>;
 }
 
-const MAX_ATTEMPTS = 3;
-// Thinking models count their reasoning tokens against this limit, so leave generous room.
-const MAX_OUTPUT_TOKENS = 16_384;
-const MAX_DOCS_FETCHED = 15;
-const MAX_CHARS_PER_DOC = 12_000;
-const CHARS_PER_TOKEN = 4; // rough rule of thumb for English text and code
-
-const JSON_SCHEMA = z.toJSONSchema(analysisOutputSchema) as Record<string, unknown>;
-
-class RunFailure extends Error {
-  constructor(
-    readonly code: string,
-    message: string,
-  ) {
-    super(message);
-  }
-}
-
 type RepoRef = { owner: string; name: string; fullName: string; installationId: bigint };
+
+/** The pipeline's view of a repository, read from GitHub at one commit. */
+function gitHubSource(
+  github: GitHubService,
+  repo: RepoRef,
+  prNumber: number,
+  sha: string,
+): RepoSource {
+  return {
+    fullName: repo.fullName,
+    changedFiles: () => github.pullRequestFiles(repo, prNumber),
+    treePaths: async () => (await github.treePaths(repo, sha)).paths.map((p) => p.path),
+    textFile: (path) => github.textFile(repo, path, sha),
+  };
+}
 
 export function createAnalysisService(deps: {
   db: Db;
@@ -59,7 +42,6 @@ export function createAnalysisService(deps: {
   config: AnalysisConfig;
 }) {
   const { db, github, ai, logger, config } = deps;
-  const sleep = config.sleep ?? ((ms: number) => new Promise((r) => setTimeout(r, ms)));
 
   // ---------------------------------------------------------------- a tiny in-process queue
   // Analyses take 10–60 s, so the HTTP request returns 202 immediately and the
@@ -85,131 +67,6 @@ export function createAnalysisService(deps: {
     }
   }
 
-  // ---------------------------------------------------------------- context building
-  async function buildContext(
-    pr: {
-      number: number;
-      title: string;
-      body: string | null;
-      baseRef: string;
-      headRef: string;
-      headSha: string;
-    },
-    repo: RepoRef,
-  ) {
-    const budget = config.maxInputTokens * CHARS_PER_TOKEN;
-    const files = await github!.pullRequestFiles(repo, pr.number);
-    const selection = selectChangedFiles(files, Math.floor(budget * 0.55));
-
-    const { paths } = await github!.treePaths(repo, pr.headSha);
-    const candidates = pickDocCandidates(
-      paths.map((p) => p.path).filter((p) => !isSensitivePath(p)),
-      files.map((f) => f.filename),
-      MAX_DOCS_FETCHED,
-    );
-    const fetched: { path: string; content: string }[] = [];
-    for (const path of candidates) {
-      const content = await github!.textFile(repo, path, pr.headSha);
-      if (content !== null) fetched.push({ path, content });
-    }
-
-    const keywords = extractKeywords(selection.included.map((f) => f.patch));
-    const ranked = rankDocs(fetched, keywords);
-    const docBudget = Math.floor(budget * 0.35);
-    let used = 0;
-    let secretsRedacted = selection.redactions;
-    const docs: { path: string; content: string; truncated: boolean; matched: string[] }[] = [];
-    for (const d of ranked) {
-      const { text, redactions } = redactSecrets(d.content);
-      secretsRedacted += redactions;
-      const truncated = text.length > MAX_CHARS_PER_DOC;
-      const content = truncated ? text.slice(0, MAX_CHARS_PER_DOC) : text;
-      if (used + content.length > docBudget) continue;
-      used += content.length;
-      docs.push({ path: d.path, content, truncated, matched: d.matched });
-    }
-
-    const prompt = buildUserPrompt({
-      repository: repo.fullName,
-      pullRequest: pr,
-      files: selection.included,
-      skippedFiles: selection.skipped,
-      docs,
-    });
-    const manifest: InputManifest = {
-      filesSent: selection.included.map((f) => ({
-        filename: f.filename,
-        kind: f.kind,
-        truncated: f.truncated,
-      })),
-      filesSkipped: selection.skipped,
-      docsSent: docs.map((d) => ({
-        path: d.path,
-        matchedKeywords: d.matched.slice(0, 15),
-        truncated: d.truncated,
-      })),
-      docsConsidered: fetched.length,
-      secretsRedacted,
-      promptChars: prompt.length + SYSTEM_PROMPT.length,
-    };
-    return {
-      prompt,
-      manifest,
-      truncatedDocs: docs.filter((d) => d.truncated).map((d) => d.path),
-      changedFiles: files.map((f) => f.filename),
-      docPaths: docs.map((d) => d.path),
-      included: selection.included.length,
-    };
-  }
-
-  // ---------------------------------------------------------------- one LLM call with retries
-  async function callModel(prompt: string) {
-    let inputTokens: number | null = null;
-    let outputTokens: number | null = null;
-    const add = (a: number | null, b: number | null) => (b === null ? a : (a ?? 0) + b);
-    let lastProblem = '';
-
-    for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
-      try {
-        const result = await ai!.generateJson({
-          system: SYSTEM_PROMPT,
-          user: prompt,
-          jsonSchema: JSON_SCHEMA,
-          maxOutputTokens: MAX_OUTPUT_TOKENS,
-          timeoutMs: config.timeoutMs,
-        });
-        inputTokens = add(inputTokens, result.usage.inputTokens);
-        outputTokens = add(outputTokens, result.usage.outputTokens);
-        const parsed = parseModelOutput(result.text);
-        if (parsed.ok)
-          return { output: parsed.output, attempts: attempt, inputTokens, outputTokens };
-        // A malformed answer is worth one more try; the same prompt often succeeds.
-        lastProblem = `${parsed.reason}: ${parsed.detail}`;
-        logger.warn({ attempt, problem: lastProblem }, 'Model output failed validation');
-      } catch (err) {
-        if (!(err instanceof AIProviderError)) throw err;
-        if (!err.transient || attempt === MAX_ATTEMPTS) {
-          throw Object.assign(new RunFailure(err.code, err.message), {
-            attempts: attempt,
-            inputTokens,
-            outputTokens,
-          });
-        }
-        lastProblem = err.message;
-        const waitSeconds = Math.min(err.retryAfterSeconds ?? 2 ** attempt, 20);
-        logger.warn({ attempt, code: err.code, waitSeconds }, 'AI call failed, retrying');
-        await sleep(waitSeconds * 1000);
-      }
-    }
-    throw Object.assign(
-      new RunFailure(
-        'AI_INVALID_OUTPUT',
-        `The model did not return valid output after ${MAX_ATTEMPTS} attempts (${lastProblem})`,
-      ),
-      { attempts: MAX_ATTEMPTS, inputTokens, outputTokens },
-    );
-  }
-
   function costOf(inputTokens: number | null, outputTokens: number | null) {
     if (config.inputUsdPerMTok === undefined || config.outputUsdPerMTok === undefined) return null;
     if (inputTokens === null || outputTokens === null) return null;
@@ -218,7 +75,7 @@ export function createAnalysisService(deps: {
     );
   }
 
-  // ---------------------------------------------------------------- the pipeline
+  // ---------------------------------------------------------------- run one analysis and store it
   async function execute(runId: string) {
     const run = await db.analysisRun.findUnique({
       where: { id: runId },
@@ -240,19 +97,21 @@ export function createAnalysisService(deps: {
     try {
       if (!github || !ai)
         throw new RunFailure('NOT_CONFIGURED', 'GitHub or the AI provider is not configured');
-      const ctx = await buildContext({ ...pr, headSha: run.headSha }, repo);
-      manifest = ctx.manifest;
+      const result = await runPipeline({
+        ai,
+        source: gitHubSource(github, repo, pr.number, run.headSha),
+        pullRequest: pr,
+        config,
+        logger,
+      });
+      manifest = result.context.manifest;
 
-      // Nothing to ask the model? Don't spend tokens on it.
-      if (ctx.included === 0 || ctx.docPaths.length === 0) {
+      if (result.kind === 'skipped') {
         await db.analysisRun.update({
           where: { id: runId },
           data: {
             status: 'SUCCEEDED',
-            summary:
-              ctx.included === 0
-                ? 'No reviewable code changes (only generated, binary or sensitive files), so no analysis was needed.'
-                : 'No documentation files were found in this repository, so there is nothing to check.',
+            summary: result.summary,
             rawOutput: Prisma.JsonNull,
             warnings: [],
             inputManifest: manifest,
@@ -263,13 +122,6 @@ export function createAnalysisService(deps: {
         return;
       }
 
-      const result = await callModel(ctx.prompt);
-      const { recommendations, warnings } = validateSemantics(result.output, {
-        changedFiles: ctx.changedFiles,
-        candidateDocs: ctx.docPaths,
-        truncatedDocs: ctx.truncatedDocs,
-      });
-
       await db.$transaction([
         db.analysisRun.update({
           where: { id: runId },
@@ -277,7 +129,7 @@ export function createAnalysisService(deps: {
             status: 'SUCCEEDED',
             summary: result.output.summary,
             rawOutput: result.output,
-            warnings,
+            warnings: result.warnings,
             inputManifest: manifest,
             attemptCount: result.attempts,
             inputTokens: result.inputTokens,
@@ -287,7 +139,7 @@ export function createAnalysisService(deps: {
             finishedAt: new Date(),
           },
         }),
-        ...recommendations.map((r) =>
+        ...result.recommendations.map((r) =>
           db.suggestion.create({
             data: {
               analysisRunId: runId,
@@ -311,11 +163,6 @@ export function createAnalysisService(deps: {
             : new RunFailure('INTERNAL_ERROR', 'Unexpected error during analysis');
       if (!(err instanceof RunFailure) && !(err instanceof GitHubError))
         logger.error({ err, runId }, 'Analysis failed unexpectedly');
-      const extra = err as {
-        attempts?: number;
-        inputTokens?: number | null;
-        outputTokens?: number | null;
-      };
       await db.analysisRun.update({
         where: { id: runId },
         data: {
@@ -323,10 +170,10 @@ export function createAnalysisService(deps: {
           errorCode: failure.code,
           errorMessage: failure.message.slice(0, 1000),
           inputManifest: manifest ?? Prisma.JsonNull,
-          attemptCount: extra.attempts ?? 0,
-          inputTokens: extra.inputTokens ?? null,
-          outputTokens: extra.outputTokens ?? null,
-          costUsd: costOf(extra.inputTokens ?? null, extra.outputTokens ?? null),
+          attemptCount: failure.attempts,
+          inputTokens: failure.inputTokens,
+          outputTokens: failure.outputTokens,
+          costUsd: costOf(failure.inputTokens, failure.outputTokens),
           latencyMs: Date.now() - started,
           finishedAt: new Date(),
         },

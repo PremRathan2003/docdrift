@@ -1,0 +1,22 @@
+{
+  "id": "016-openapi-parameter",
+  "title": "Rename search parameter q to search",
+  "body": "More descriptive for API consumers.",
+  "group": "drift",
+  "category": "renamed parameter",
+  "expected": [
+    {
+      "path": "openapi.yaml",
+      "mustContain": [
+        "name: search"
+      ],
+      "mustNotContain": [
+        "name: q"
+      ]
+    }
+  ],
+  "acceptable": [],
+  "added": [],
+  "notes": "The API description is documentation too.",
+  "source": "synthetic"
+}

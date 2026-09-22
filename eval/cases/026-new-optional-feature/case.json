@@ -1,0 +1,14 @@
+{
+  "id": "026-new-optional-feature",
+  "title": "Filter tasks by done",
+  "body": "Adds an optional `done` query parameter.",
+  "group": "tricky",
+  "category": "new feature",
+  "expected": [],
+  "acceptable": [
+    "docs/api.md"
+  ],
+  "added": [],
+  "notes": "Nothing documented became wrong, but documenting the new parameter is reasonable. Either answer is accepted for docs/api.md; any other document is a false positive.",
+  "source": "synthetic"
+}

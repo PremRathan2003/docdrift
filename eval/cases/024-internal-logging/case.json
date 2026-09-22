@@ -1,0 +1,14 @@
+{
+  "id": "024-internal-logging",
+  "title": "Log task creation at debug level",
+  "body": "",
+  "group": "no-drift",
+  "category": "logging",
+  "expected": [],
+  "acceptable": [],
+  "added": [
+    "src/logger.js"
+  ],
+  "notes": "Uses the existing LOG_LEVEL setting; nothing user-facing changes.",
+  "source": "synthetic"
+}

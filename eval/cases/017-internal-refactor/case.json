@@ -1,0 +1,12 @@
+{
+  "id": "017-internal-refactor",
+  "title": "Extract title validation",
+  "body": "No behaviour change.",
+  "group": "no-drift",
+  "category": "refactor",
+  "expected": [],
+  "acceptable": [],
+  "added": [],
+  "notes": "Same inputs, same outputs, same errors.",
+  "source": "synthetic"
+}

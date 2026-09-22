@@ -1,0 +1,12 @@
+{
+  "id": "022-equivalent-code",
+  "title": "Tidy deleteTask",
+  "body": "",
+  "group": "no-drift",
+  "category": "refactor",
+  "expected": [],
+  "acceptable": [],
+  "added": [],
+  "notes": "Equivalent code.",
+  "source": "synthetic"
+}

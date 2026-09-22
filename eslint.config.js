@@ -6,7 +6,14 @@ import prettier from 'eslint-config-prettier';
 
 export default tseslint.config(
   {
-    ignores: ['**/dist/**', '**/coverage/**', '**/node_modules/**', 'apps/api/src/generated/**'],
+    ignores: [
+      '**/dist/**',
+      '**/coverage/**',
+      '**/node_modules/**',
+      'apps/api/src/generated/**',
+      // Evaluation fixtures: sample repositories, not our code.
+      'eval/cases/**',
+    ],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,

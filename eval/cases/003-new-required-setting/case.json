@@ -1,0 +1,20 @@
+{
+  "id": "003-new-required-setting",
+  "title": "Cache sessions in Redis",
+  "body": "Adds a Redis connection for the session cache.",
+  "group": "drift",
+  "category": "omission",
+  "expected": [
+    {
+      "path": "docs/configuration.md",
+      "mustContain": [
+        "REDIS_URL"
+      ],
+      "mustNotContain": []
+    }
+  ],
+  "acceptable": [],
+  "added": [],
+  "notes": "A new required variable is missing from the list; the server will not start without it.",
+  "source": "synthetic"
+}

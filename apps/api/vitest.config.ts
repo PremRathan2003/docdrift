@@ -3,7 +3,7 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
   test: {
     environment: 'node',
-    include: ['test/**/*.test.ts', 'src/**/*.test.ts'],
+    include: ['test/**/*.test.ts', 'src/**/*.test.ts', 'eval/**/*.test.ts'],
     exclude: ['test/integration/**', 'node_modules/**'],
     // Unit/integration tests must never call real GitHub or LLM APIs.
     // Live tests will get their own config (vitest.live.config.ts) later.

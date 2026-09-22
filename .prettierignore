@@ -4,3 +4,5 @@ node_modules
 package-lock.json
 apps/api/src/generated
 apps/api/prisma/migrations
+eval/cases
+eval/reports

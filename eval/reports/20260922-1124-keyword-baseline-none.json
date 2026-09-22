@@ -1,0 +1,1062 @@
+{
+  "generatedAt": "2026-09-22T11:24:54.164Z",
+  "detector": {
+    "name": "keyword-baseline",
+    "model": "none",
+    "promptVersion": null
+  },
+  "dataset": {
+    "hash": "11b94d76209d",
+    "cases": 26,
+    "byGroup": {
+      "drift": 16,
+      "no-drift": 8,
+      "tricky": 2
+    },
+    "expectedDocs": 17,
+    "synthetic": 26
+  },
+  "repeat": 1,
+  "overall": {
+    "runs": 26,
+    "tp": 12,
+    "fp": 3,
+    "fn": 5,
+    "precision": 0.8,
+    "recall": 0.7058823529411765,
+    "f1": 0.7500000000000001,
+    "precisionCI": [
+      0.5481406466534955,
+      0.9295257935638959
+    ],
+    "recallCI": [
+      0.468664666737861,
+      0.8672020613444361
+    ],
+    "caseAccuracy": 0.7307692307692307,
+    "falseAlarmRate": 0.1,
+    "quietCases": 10,
+    "content": {
+      "checked": 0,
+      "passed": 0,
+      "passRate": null,
+      "medianDroppedLines": null
+    },
+    "confidence": {
+      "meanWhenRight": 1,
+      "meanWhenWrong": 1
+    },
+    "errors": {
+      "count": 0,
+      "byCode": {}
+    },
+    "validationWarnings": 0,
+    "modelCalls": 24,
+    "meanAttempts": 0,
+    "tokens": {
+      "input": null,
+      "output": null
+    },
+    "latencyMs": {
+      "median": 0,
+      "max": 12
+    }
+  },
+  "byGroup": {
+    "drift": {
+      "runs": 16,
+      "tp": 12,
+      "fp": 2,
+      "fn": 5,
+      "precision": 0.8571428571428571,
+      "recall": 0.7058823529411765,
+      "f1": 0.7741935483870968,
+      "precisionCI": [
+        0.600580922361363,
+        0.9599069262620787
+      ],
+      "recallCI": [
+        0.468664666737861,
+        0.8672020613444361
+      ],
+      "caseAccuracy": 0.625,
+      "falseAlarmRate": null,
+      "quietCases": 0,
+      "content": {
+        "checked": 0,
+        "passed": 0,
+        "passRate": null,
+        "medianDroppedLines": null
+      },
+      "confidence": {
+        "meanWhenRight": 1,
+        "meanWhenWrong": 1
+      },
+      "errors": {
+        "count": 0,
+        "byCode": {}
+      },
+      "validationWarnings": 0,
+      "modelCalls": 16,
+      "meanAttempts": 0,
+      "tokens": {
+        "input": null,
+        "output": null
+      },
+      "latencyMs": {
+        "median": 0,
+        "max": 12
+      }
+    },
+    "no-drift": {
+      "runs": 8,
+      "tp": 0,
+      "fp": 1,
+      "fn": 0,
+      "precision": 0,
+      "recall": null,
+      "f1": null,
+      "precisionCI": [
+        0,
+        0.7934567085261071
+      ],
+      "recallCI": null,
+      "caseAccuracy": 0.875,
+      "falseAlarmRate": 0.125,
+      "quietCases": 8,
+      "content": {
+        "checked": 0,
+        "passed": 0,
+        "passRate": null,
+        "medianDroppedLines": null
+      },
+      "confidence": {
+        "meanWhenRight": null,
+        "meanWhenWrong": 1
+      },
+      "errors": {
+        "count": 0,
+        "byCode": {}
+      },
+      "validationWarnings": 0,
+      "modelCalls": 6,
+      "meanAttempts": 0,
+      "tokens": {
+        "input": null,
+        "output": null
+      },
+      "latencyMs": {
+        "median": 1,
+        "max": 1
+      }
+    },
+    "tricky": {
+      "runs": 2,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null,
+      "precisionCI": null,
+      "recallCI": null,
+      "caseAccuracy": 1,
+      "falseAlarmRate": 0,
+      "quietCases": 2,
+      "content": {
+        "checked": 0,
+        "passed": 0,
+        "passRate": null,
+        "medianDroppedLines": null
+      },
+      "confidence": {
+        "meanWhenRight": null,
+        "meanWhenWrong": null
+      },
+      "errors": {
+        "count": 0,
+        "byCode": {}
+      },
+      "validationWarnings": 0,
+      "modelCalls": 2,
+      "meanAttempts": 0,
+      "tokens": {
+        "input": null,
+        "output": null
+      },
+      "latencyMs": {
+        "median": 0,
+        "max": 0
+      }
+    }
+  },
+  "perRun": [
+    {
+      "run": 1,
+      "precision": 0.8,
+      "recall": 0.7058823529411765,
+      "f1": 0.7500000000000001
+    }
+  ],
+  "unstableCases": [],
+  "outcomes": [
+    {
+      "caseId": "001-renamed-json-field",
+      "group": "drift",
+      "category": "renamed field",
+      "run": 1,
+      "tp": [
+        "README.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [],
+      "latencyMs": 12,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "README.md",
+            "reason": "Mentions removed \"done\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: done",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "README.md",
+          "docs/api.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md"
+        ]
+      }
+    },
+    {
+      "caseId": "002-changed-default",
+      "group": "drift",
+      "category": "changed default",
+      "run": 1,
+      "tp": [
+        "docs/configuration.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/configuration.md",
+            "reason": "Mentions removed \"3000\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: 3000",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/configuration.md",
+          "CONTRIBUTING.md",
+          "docs/api.md",
+          "README.md"
+        ]
+      }
+    },
+    {
+      "caseId": "003-new-required-setting",
+      "group": "drift",
+      "category": "omission",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [
+        "docs/configuration.md"
+      ],
+      "acceptableFlagged": [],
+      "correct": false,
+      "content": [],
+      "latencyMs": 1,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: (none)",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/configuration.md",
+          "CONTRIBUTING.md",
+          "docs/api.md",
+          "README.md"
+        ]
+      }
+    },
+    {
+      "caseId": "004-renamed-endpoint",
+      "group": "drift",
+      "category": "renamed endpoint",
+      "run": 1,
+      "tp": [
+        "docs/api.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "Mentions removed \"users\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: users",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/api.md",
+          "README.md"
+        ]
+      }
+    },
+    {
+      "caseId": "005-removed-cli-flag",
+      "group": "drift",
+      "category": "removed option",
+      "run": 1,
+      "tp": [
+        "README.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "README.md",
+            "reason": "Mentions removed \"every\", \"file\", \"verbose\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: DEBUG, INFO, action, every, file, store_true, verbose",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "README.md"
+        ]
+      }
+    },
+    {
+      "caseId": "006-pagination-default",
+      "group": "drift",
+      "category": "changed default",
+      "run": 1,
+      "tp": [
+        "docs/api.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [],
+      "latencyMs": 1,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "Mentions removed \"20\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: 20",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/api.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md",
+          "README.md"
+        ]
+      }
+    },
+    {
+      "caseId": "007-auth-header",
+      "group": "drift",
+      "category": "changed interface",
+      "run": 1,
+      "tp": [
+        "docs/api.md"
+      ],
+      "fp": [
+        "docs/configuration.md",
+        "README.md"
+      ],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": false,
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "Mentions removed \"API\", \"Key\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/configuration.md",
+            "reason": "Mentions removed \"API\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "README.md",
+            "reason": "Mentions removed \"API\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: API, Key",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/api.md",
+          "docs/configuration.md",
+          "README.md",
+          "CONTRIBUTING.md"
+        ]
+      }
+    },
+    {
+      "caseId": "008-renamed-export",
+      "group": "drift",
+      "category": "renamed function",
+      "run": 1,
+      "tp": [
+        "README.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "README.md",
+            "reason": "Mentions removed \"parseDate\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: parseDate",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "README.md",
+          "CHANGELOG.md"
+        ]
+      }
+    },
+    {
+      "caseId": "009-renamed-parameter",
+      "group": "drift",
+      "category": "renamed parameter",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [
+        "docs/usage.md"
+      ],
+      "acceptableFlagged": [],
+      "correct": false,
+      "content": [],
+      "latencyMs": 1,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: (none)",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/usage.md",
+          "README.md"
+        ]
+      }
+    },
+    {
+      "caseId": "010-runtime-version",
+      "group": "drift",
+      "category": "requirements",
+      "run": 1,
+      "tp": [
+        "README.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "README.md",
+            "reason": "Mentions removed \"18\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: 18",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "README.md",
+          "CONTRIBUTING.md",
+          "docs/api.md",
+          "docs/configuration.md"
+        ]
+      }
+    },
+    {
+      "caseId": "011-renamed-setting-two-docs",
+      "group": "drift",
+      "category": "renamed setting",
+      "run": 1,
+      "tp": [
+        "docs/configuration.md",
+        "README.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [],
+      "latencyMs": 1,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/configuration.md",
+            "reason": "Mentions removed \"DB_URL\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "README.md",
+            "reason": "Mentions removed \"DB_URL\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: DB_URL",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/configuration.md",
+          "README.md",
+          "CONTRIBUTING.md",
+          "docs/api.md"
+        ]
+      }
+    },
+    {
+      "caseId": "012-status-code",
+      "group": "drift",
+      "category": "changed response",
+      "run": 1,
+      "tp": [
+        "docs/api.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "Mentions removed \"200\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: 200",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/api.md",
+          "README.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md"
+        ]
+      }
+    },
+    {
+      "caseId": "013-removed-endpoint",
+      "group": "drift",
+      "category": "removed endpoint",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [
+        "docs/api.md"
+      ],
+      "acceptableFlagged": [],
+      "correct": false,
+      "content": [],
+      "latencyMs": 1,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: delete, deleteTask, findIndex, index, splice",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/api.md",
+          "README.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md"
+        ]
+      }
+    },
+    {
+      "caseId": "014-rate-limit",
+      "group": "drift",
+      "category": "changed limit",
+      "run": 1,
+      "tp": [
+        "docs/api.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [],
+      "latencyMs": 1,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "Mentions removed \"100\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: 100",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/api.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md",
+          "README.md"
+        ]
+      }
+    },
+    {
+      "caseId": "015-behaviour-change",
+      "group": "drift",
+      "category": "changed behaviour",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [
+        "docs/api.md"
+      ],
+      "acceptableFlagged": [],
+      "correct": false,
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: (none)",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/api.md",
+          "README.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md"
+        ]
+      }
+    },
+    {
+      "caseId": "016-openapi-parameter",
+      "group": "drift",
+      "category": "renamed parameter",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [
+        "openapi.yaml"
+      ],
+      "acceptableFlagged": [],
+      "correct": false,
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: (none)",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "openapi.yaml",
+          "README.md"
+        ]
+      }
+    },
+    {
+      "caseId": "017-internal-refactor",
+      "group": "no-drift",
+      "category": "refactor",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [],
+      "latencyMs": 1,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: (none)",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "README.md",
+          "docs/api.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md"
+        ]
+      }
+    },
+    {
+      "caseId": "018-tests-only",
+      "group": "no-drift",
+      "category": "tests",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": true,
+        "summary": "Removed tokens: (none)",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/api.md",
+          "README.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md"
+        ]
+      }
+    },
+    {
+      "caseId": "019-comments-only",
+      "group": "no-drift",
+      "category": "comments",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [],
+      "latencyMs": 1,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: (none)",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/api.md",
+          "docs/configuration.md",
+          "README.md",
+          "CONTRIBUTING.md"
+        ]
+      }
+    },
+    {
+      "caseId": "020-lockfile-only",
+      "group": "no-drift",
+      "category": "dependencies",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": true,
+        "summary": "Removed tokens: (none)",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "CONTRIBUTING.md",
+          "docs/api.md",
+          "docs/configuration.md",
+          "README.md"
+        ]
+      }
+    },
+    {
+      "caseId": "021-keyword-trap",
+      "group": "no-drift",
+      "category": "local rename",
+      "run": 1,
+      "tp": [],
+      "fp": [
+        "README.md"
+      ],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": false,
+      "content": [],
+      "latencyMs": 1,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "README.md",
+            "reason": "Mentions removed \"count\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: count",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "README.md",
+          "docs/api.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md"
+        ]
+      }
+    },
+    {
+      "caseId": "022-equivalent-code",
+      "group": "no-drift",
+      "category": "refactor",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: (none)",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/api.md",
+          "README.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md"
+        ]
+      }
+    },
+    {
+      "caseId": "023-docs-already-updated",
+      "group": "no-drift",
+      "category": "docs in same PR",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: due",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "README.md",
+          "docs/api.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md"
+        ]
+      }
+    },
+    {
+      "caseId": "024-internal-logging",
+      "group": "no-drift",
+      "category": "logging",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [],
+      "latencyMs": 1,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: (none)",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/api.md",
+          "docs/configuration.md",
+          "README.md",
+          "CONTRIBUTING.md"
+        ]
+      }
+    },
+    {
+      "caseId": "025-prompt-injection",
+      "group": "tricky",
+      "category": "prompt injection",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: (none)",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "CONTRIBUTING.md",
+          "docs/api.md",
+          "docs/configuration.md",
+          "README.md",
+          "SECURITY.md"
+        ]
+      }
+    },
+    {
+      "caseId": "026-new-optional-feature",
+      "group": "tricky",
+      "category": "new feature",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: (none)",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/api.md",
+          "README.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md"
+        ]
+      }
+    }
+  ]
+}

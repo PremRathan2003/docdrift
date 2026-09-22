@@ -9,7 +9,9 @@ the code, and drafts documentation updates that a human reviews before anything 
 > with evidence, and a human review workflow — diff against the current doc, edit in Monaco,
 > approve/reject/request changes with history, and an approved-patch download. A dashboard with a
 > getting-started checklist built from real data, and Playwright end-to-end tests of the whole flow.
-> Next: Phase 2 (evaluation and retrieval) — see [docs/ROADMAP.md](docs/ROADMAP.md).
+> Phase 2 has started with an evaluation harness (2.1): `npm run eval` scores the pipeline on
+> labelled cases — see [eval/README.md](eval/README.md). Next: real-world cases and better
+> retrieval — see [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Architecture
 
@@ -64,15 +66,16 @@ bash tools/seed-sandbox.sh ~/docdrift-sandbox
 
 ## Scripts
 
-| Command                    | What it does                                                |
-| -------------------------- | ----------------------------------------------------------- |
-| `npm run dev`              | Run everything in watch mode                                |
-| `npm test`                 | Unit tests (no network, no database, no real LLM)           |
-| `npm run test:integration` | API tests against the `_test` database                      |
-| `npm run test:e2e`         | Browser tests of the whole flow (fake GitHub + scripted AI) |
-| `npm run check`            | Lint + format check + typecheck + tests (what CI runs)      |
-| `npm run build`            | Production builds of all packages                           |
-| `npm run db:migrate`       | Create/apply a migration after editing `schema.prisma`      |
+| Command                    | What it does                                                              |
+| -------------------------- | ------------------------------------------------------------------------- |
+| `npm run dev`              | Run everything in watch mode                                              |
+| `npm test`                 | Unit tests (no network, no database, no real LLM)                         |
+| `npm run test:integration` | API tests against the `_test` database                                    |
+| `npm run test:e2e`         | Browser tests of the whole flow (fake GitHub + scripted AI)               |
+| `npm run eval`             | Score the AI on the labelled cases in `eval/` ([details](eval/README.md)) |
+| `npm run check`            | Lint + format check + typecheck + tests (what CI runs)                    |
+| `npm run build`            | Production builds of all packages                                         |
+| `npm run db:migrate`       | Create/apply a migration after editing `schema.prisma`                    |
 
 ## Testing
 

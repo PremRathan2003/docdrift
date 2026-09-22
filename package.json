@@ -25,7 +25,8 @@
     "check": "npm run lint && npm run format:check && npm run typecheck && npm test",
     "test:integration": "npm run test:integration -w @docdrift/api",
     "test:e2e": "npm run build -w @docdrift/shared && playwright test -c e2e/playwright.config.ts",
-    "test:e2e:ui": "npm run build -w @docdrift/shared && playwright test -c e2e/playwright.config.ts --ui"
+    "test:e2e:ui": "npm run build -w @docdrift/shared && playwright test -c e2e/playwright.config.ts --ui",
+    "eval": "npm run build -w @docdrift/shared && npm run eval -w @docdrift/api --"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",

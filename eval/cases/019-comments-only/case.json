@@ -1,0 +1,12 @@
+{
+  "id": "019-comments-only",
+  "title": "Explain the in-memory store",
+  "body": "Comments only.",
+  "group": "no-drift",
+  "category": "comments",
+  "expected": [],
+  "acceptable": [],
+  "added": [],
+  "notes": "Comments restate what the README already says.",
+  "source": "synthetic"
+}

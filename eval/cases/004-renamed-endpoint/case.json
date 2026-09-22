@@ -1,0 +1,22 @@
+{
+  "id": "004-renamed-endpoint",
+  "title": "Rename /users to /accounts",
+  "body": "Matches the naming used by the other services.",
+  "group": "drift",
+  "category": "renamed endpoint",
+  "expected": [
+    {
+      "path": "docs/api.md",
+      "mustContain": [
+        "/accounts"
+      ],
+      "mustNotContain": [
+        "/users"
+      ]
+    }
+  ],
+  "acceptable": [],
+  "added": [],
+  "notes": "Both documented paths changed.",
+  "source": "synthetic"
+}

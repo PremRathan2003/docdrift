@@ -1,0 +1,12 @@
+{
+  "id": "021-keyword-trap",
+  "title": "Rename a local variable in stats",
+  "body": "Readability.",
+  "group": "no-drift",
+  "category": "local rename",
+  "expected": [],
+  "acceptable": [],
+  "added": [],
+  "notes": "The removed identifier \"count\" appears in the README in its ordinary English meaning.",
+  "source": "synthetic"
+}

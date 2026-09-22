@@ -1,0 +1,7 @@
+{
+  "name": "task-api",
+  "version": "1.4.0",
+  "type": "module",
+  "scripts": { "start": "node src/server.js", "test": "node --test" },
+  "engines": { "node": ">=18" }
+}

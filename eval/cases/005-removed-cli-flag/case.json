@@ -1,0 +1,22 @@
+{
+  "id": "005-removed-cli-flag",
+  "title": "Replace --verbose with --log-level",
+  "body": "One option for all verbosity levels.",
+  "group": "drift",
+  "category": "removed option",
+  "expected": [
+    {
+      "path": "README.md",
+      "mustContain": [
+        "--log-level"
+      ],
+      "mustNotContain": [
+        "--verbose"
+      ]
+    }
+  ],
+  "acceptable": [],
+  "added": [],
+  "notes": "--verbose now fails with \"unrecognized arguments\".",
+  "source": "synthetic"
+}

@@ -138,6 +138,15 @@ Prompt v2 asks for the complete updated file, so the review page can show an exa
 the document at the analysed commit and export a `git apply`-able patch. Nothing is written to
 GitHub; `APPLIED`/`FAILED` are reserved for docs-PR creation in Phase 3.
 
+**D13 — Evaluation.** `npm run eval` runs the same `runPipeline` as the app (context selection,
+prompt, retries, validation), only reading repositories from `eval/cases` instead of GitHub, so it
+measures what users get. Cases are small repositories (`head/` + the changed files' `base/`) with
+labels: which documents must change, which are _acceptable_ either way, and strings the suggestion
+must (not) contain. Scoring is per document, micro-averaged, with 95% Wilson intervals because the
+dataset is small; errors count as misses. A no-AI keyword baseline runs on the same cases, so the
+model's numbers have a reference point. Reports (Markdown + full JSON answers) are committed under
+`eval/reports`; synthetic data is labelled as such in every report.
+
 ## Technical risks and how we handle them
 
 | #   | Risk                                                                                                                    | Mitigation                                                                                                                                                    |

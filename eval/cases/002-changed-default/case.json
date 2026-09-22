@@ -1,0 +1,22 @@
+{
+  "id": "002-changed-default",
+  "title": "Change default port to 8080",
+  "body": "3000 clashes with the web dev server.",
+  "group": "drift",
+  "category": "changed default",
+  "expected": [
+    {
+      "path": "docs/configuration.md",
+      "mustContain": [
+        "8080"
+      ],
+      "mustNotContain": [
+        "`3000`"
+      ]
+    }
+  ],
+  "acceptable": [],
+  "added": [],
+  "notes": "The configuration table lists the PORT default.",
+  "source": "synthetic"
+}

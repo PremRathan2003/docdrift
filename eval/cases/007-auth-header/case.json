@@ -1,0 +1,22 @@
+{
+  "id": "007-auth-header",
+  "title": "Accept API keys as bearer tokens",
+  "body": "Standard Authorization header instead of a custom one.",
+  "group": "drift",
+  "category": "changed interface",
+  "expected": [
+    {
+      "path": "docs/api.md",
+      "mustContain": [
+        "Authorization"
+      ],
+      "mustNotContain": [
+        "X-API-Key"
+      ]
+    }
+  ],
+  "acceptable": [],
+  "added": [],
+  "notes": "The old header is no longer read at all.",
+  "source": "synthetic"
+}

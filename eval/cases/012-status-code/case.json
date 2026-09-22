@@ -1,0 +1,22 @@
+{
+  "id": "012-status-code",
+  "title": "Return 201 Created from POST /tasks",
+  "body": "Correct HTTP semantics.",
+  "group": "drift",
+  "category": "changed response",
+  "expected": [
+    {
+      "path": "docs/api.md",
+      "mustContain": [
+        "201"
+      ],
+      "mustNotContain": [
+        "200 OK"
+      ]
+    }
+  ],
+  "acceptable": [],
+  "added": [],
+  "notes": "Clients checking for 200 would break.",
+  "source": "synthetic"
+}

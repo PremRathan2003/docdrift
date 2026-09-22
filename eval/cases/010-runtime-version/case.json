@@ -1,0 +1,22 @@
+{
+  "id": "010-runtime-version",
+  "title": "Require Node 20",
+  "body": "Node 18 is end-of-life; we now use the built-in test runner watch mode.",
+  "group": "drift",
+  "category": "requirements",
+  "expected": [
+    {
+      "path": "README.md",
+      "mustContain": [
+        "20"
+      ],
+      "mustNotContain": [
+        "Node.js 18"
+      ]
+    }
+  ],
+  "acceptable": [],
+  "added": [],
+  "notes": "The README states the minimum version.",
+  "source": "synthetic"
+}

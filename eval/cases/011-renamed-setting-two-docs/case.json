@@ -1,0 +1,31 @@
+{
+  "id": "011-renamed-setting-two-docs",
+  "title": "Use DATABASE_URL like every other service",
+  "body": "",
+  "group": "drift",
+  "category": "renamed setting",
+  "expected": [
+    {
+      "path": "README.md",
+      "mustContain": [
+        "DATABASE_URL"
+      ],
+      "mustNotContain": [
+        "DB_URL"
+      ]
+    },
+    {
+      "path": "docs/configuration.md",
+      "mustContain": [
+        "DATABASE_URL"
+      ],
+      "mustNotContain": [
+        "DB_URL"
+      ]
+    }
+  ],
+  "acceptable": [],
+  "added": [],
+  "notes": "Two documents mention the old name.",
+  "source": "synthetic"
+}

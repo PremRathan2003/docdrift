@@ -1,0 +1,12 @@
+{
+  "id": "020-lockfile-only",
+  "title": "Bump express to 5.2.1",
+  "body": "Security patch release.",
+  "group": "no-drift",
+  "category": "dependencies",
+  "expected": [],
+  "acceptable": [],
+  "added": [],
+  "notes": "Generated file only: the pipeline should not even call the model.",
+  "source": "synthetic"
+}

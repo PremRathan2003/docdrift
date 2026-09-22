@@ -1,0 +1,22 @@
+{
+  "id": "014-rate-limit",
+  "title": "Lower the rate limit to 60/min",
+  "body": "Protects the database during peaks.",
+  "group": "drift",
+  "category": "changed limit",
+  "expected": [
+    {
+      "path": "docs/api.md",
+      "mustContain": [
+        "60"
+      ],
+      "mustNotContain": [
+        "100 requests per minute"
+      ]
+    }
+  ],
+  "acceptable": [],
+  "added": [],
+  "notes": "The documented limit is now wrong.",
+  "source": "synthetic"
+}

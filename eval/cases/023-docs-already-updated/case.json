@@ -1,0 +1,12 @@
+{
+  "id": "023-docs-already-updated",
+  "title": "Rename due to dueDate",
+  "body": "Also updates the README.",
+  "group": "no-drift",
+  "category": "docs in same PR",
+  "expected": [],
+  "acceptable": [],
+  "added": [],
+  "notes": "The PR already fixes the README; recommending it again would be noise.",
+  "source": "synthetic"
+}

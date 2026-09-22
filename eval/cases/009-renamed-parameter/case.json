@@ -1,0 +1,22 @@
+{
+  "id": "009-renamed-parameter",
+  "title": "Rename timeout to timeout_seconds",
+  "body": "Makes the unit obvious.",
+  "group": "drift",
+  "category": "renamed parameter",
+  "expected": [
+    {
+      "path": "docs/usage.md",
+      "mustContain": [
+        "timeout_seconds"
+      ],
+      "mustNotContain": [
+        "timeout=5"
+      ]
+    }
+  ],
+  "acceptable": [],
+  "added": [],
+  "notes": "The documented keyword argument now raises TypeError.",
+  "source": "synthetic"
+}

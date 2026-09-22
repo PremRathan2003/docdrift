@@ -1,0 +1,24 @@
+{
+  "id": "015-behaviour-change",
+  "title": "Sort tasks by priority",
+  "body": "High-priority tasks first; ties keep creation order.",
+  "group": "drift",
+  "category": "changed behaviour",
+  "expected": [
+    {
+      "path": "docs/api.md",
+      "mustContain": [
+        "priority"
+      ],
+      "mustNotContain": [
+        "oldest first"
+      ]
+    }
+  ],
+  "acceptable": [
+    "README.md"
+  ],
+  "added": [],
+  "notes": "No identifier in the docs changes; the documented ordering does. README shows the task JSON (without priority), so updating it is reasonable too.",
+  "source": "synthetic"
+}

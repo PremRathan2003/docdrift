@@ -1,0 +1,22 @@
+{
+  "id": "001-renamed-json-field",
+  "title": "Rename task field done to completed",
+  "body": "`completed` reads better in the UI.",
+  "group": "drift",
+  "category": "renamed field",
+  "expected": [
+    {
+      "path": "README.md",
+      "mustContain": [
+        "\"completed\""
+      ],
+      "mustNotContain": [
+        "\"done\""
+      ]
+    }
+  ],
+  "acceptable": [],
+  "added": [],
+  "notes": "The README example shows the task JSON with \"done\".",
+  "source": "synthetic"
+}
