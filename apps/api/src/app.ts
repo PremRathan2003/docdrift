@@ -23,6 +23,7 @@ import { analysisRouter } from './modules/analysis/analysis.routes.js';
 import { createAnalysisService, type AnalysisConfig } from './modules/analysis/analysis.service.js';
 import { pullRequestsRouter } from './modules/pull-requests/pull-requests.routes.js';
 import { repositoriesRouter } from './modules/repositories/repositories.routes.js';
+import { suggestionsRouter } from './modules/suggestions/suggestions.routes.js';
 import { healthRouter } from './routes/health.js';
 
 /**
@@ -137,6 +138,8 @@ export function createApp(deps: AppDeps) {
     '/api',
     analysisRouter({ db, analysis, sessions, cookie, maxRunsPerHour: deps.maxAnalysesPerHour }),
   );
+
+  app.use('/api', suggestionsRouter({ db, github, sessions, audit, cookie }));
 
   app.use(notFoundHandler);
   app.use(errorHandler);

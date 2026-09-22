@@ -48,6 +48,7 @@ enum ReviewDecision {
   REQUEST_CHANGES
   APPROVE
   REJECT
+  REOPEN
 }
 
 // ---------------------------------------------------------------- identity

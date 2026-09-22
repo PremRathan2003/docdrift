@@ -15,7 +15,13 @@ export type AuditAction =
   | 'github.link'
   | 'github.installation.rejected'
   | 'repository.connect'
-  | 'repository.disconnect';
+  | 'repository.disconnect'
+  | 'suggestion.start_review'
+  | 'suggestion.edit'
+  | 'suggestion.request_changes'
+  | 'suggestion.approve'
+  | 'suggestion.reject'
+  | 'suggestion.reopen';
 
 export interface AuditEvent {
   action: AuditAction;

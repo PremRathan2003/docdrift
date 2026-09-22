@@ -3,11 +3,12 @@
 DocDrift analyses GitHub pull requests, identifies documentation that may no longer match
 the code, and drafts documentation updates that a human reviews before anything changes.
 
-> **Status: Phase 1, milestone 1.5 (AI analysis) complete.** Working today: accounts (sign-up,
-> sessions, rate limiting, audit log), GitHub App connection with verified installations,
-> repositories and pull requests with a diff viewer, and AI analysis of a pull request that
-> suggests documentation updates with evidence — validated, stored and fully explainable.
-> Not built yet: editing/approving suggestions (1.6) — see [docs/ROADMAP.md](docs/ROADMAP.md).
+> **Status: Phase 1 core complete through milestone 1.6 (review workflow).** Working today:
+> accounts (sessions, rate limiting, audit log), GitHub App connection with verified installations,
+> repositories and pull requests with a diff viewer, AI analysis that suggests documentation updates
+> with evidence, and a human review workflow — diff against the current doc, edit in Monaco,
+> approve/reject/request changes with history, and an approved-patch download. Next: dashboard polish
+> and an end-to-end test (1.7) — see [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Architecture
 

@@ -13,6 +13,7 @@ import { RegisterPage } from './pages/RegisterPage';
 import { PullRequestPage } from './pages/PullRequestPage';
 import { RepositoriesPage } from './pages/RepositoriesPage';
 import { RepositoryPage } from './pages/RepositoryPage';
+import { SuggestionPage } from './pages/SuggestionPage';
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 30_000, refetchOnWindowFocus: false } },
@@ -37,6 +38,7 @@ const router = createBrowserRouter([
           { path: '/repositories', element: <RepositoriesPage /> },
           { path: '/repositories/:id', element: <RepositoryPage /> },
           { path: '/pull-requests/:id', element: <PullRequestPage /> },
+          { path: '/suggestions/:id', element: <SuggestionPage /> },
         ],
       },
     ],

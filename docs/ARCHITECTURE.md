@@ -129,6 +129,15 @@ reviewable code or no docs exist, the model is not called. Runs cut off by a res
 `INTERRUPTED` at startup (single-instance assumption; pg-boss if that changes). Starting runs is
 rate-limited per user because each costs tokens.
 
+**D12 — Review workflow.** Clients send an _action_ (`START_REVIEW`, `EDIT`, `REQUEST_CHANGES`,
+`APPROVE`, `REJECT`, `REOPEN`), never a status; a pure, unit-tested state machine decides the next
+status. Every write carries the `version` the reviewer saw and the update is conditional on it
+(optimistic locking → `409 VERSION_CONFLICT` instead of a silent overwrite). The AI's
+`originalContent` is never modified; each review row snapshots the content at that moment.
+Prompt v2 asks for the complete updated file, so the review page can show an exact diff against
+the document at the analysed commit and export a `git apply`-able patch. Nothing is written to
+GitHub; `APPLIED`/`FAILED` are reserved for docs-PR creation in Phase 3.
+
 ## Technical risks and how we handle them
 
 | #   | Risk                                                                                                                    | Mitigation                                                                                                                                                    |

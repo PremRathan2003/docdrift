@@ -19,7 +19,7 @@ import {
   redactSecrets,
   selectChangedFiles,
 } from './context.js';
-import { buildUserPrompt, PROMPT_VERSION, SYSTEM_PROMPT } from './prompts/v1.js';
+import { buildUserPrompt, PROMPT_VERSION, SYSTEM_PROMPT } from './prompts/v2.js';
 import { parseModelOutput, validateSemantics } from './validate.js';
 
 export interface AnalysisConfig {
@@ -155,6 +155,7 @@ export function createAnalysisService(deps: {
     return {
       prompt,
       manifest,
+      truncatedDocs: docs.filter((d) => d.truncated).map((d) => d.path),
       changedFiles: files.map((f) => f.filename),
       docPaths: docs.map((d) => d.path),
       included: selection.included.length,
@@ -266,6 +267,7 @@ export function createAnalysisService(deps: {
       const { recommendations, warnings } = validateSemantics(result.output, {
         changedFiles: ctx.changedFiles,
         candidateDocs: ctx.docPaths,
+        truncatedDocs: ctx.truncatedDocs,
       });
 
       await db.$transaction([

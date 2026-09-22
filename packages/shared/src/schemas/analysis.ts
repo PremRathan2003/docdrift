@@ -37,7 +37,14 @@ export const recommendationSchema = z.object({
   documentationPath: repoPath,
   reason: z.string().trim().min(1).max(2000),
   evidence: z.array(evidenceSchema).min(1).max(MAX_EVIDENCE_ITEMS),
-  suggestedUpdate: z.string().trim().min(1).max(20_000),
+  /**
+   * The complete updated document (prompt v2+). Not trimmed: leading/trailing
+   * whitespace, like the final newline, is part of the file.
+   */
+  suggestedUpdate: z
+    .string()
+    .max(100_000)
+    .refine((s) => s.trim().length > 0, { message: 'Suggested update is empty' }),
   /**
    * The model's own estimate in [0, 1]. This is NOT a calibrated probability
    * and the UI must label it as a model-generated estimate.

@@ -46,18 +46,19 @@ User 1─* AuditLog              (actor)
 
 ```
 PENDING ──start review──► IN_REVIEW ──edit──► EDITED
-   │                          │                 │
-   └──────────── approve / reject ◄─────────────┘
+   │  └────────────── edit ─────────────────────▲ │
+   │      request changes: stays IN_REVIEW / EDITED
+   └──────────── approve / reject (from any open state)
                      │           │
-                 APPROVED     REJECTED
-                     │
-          (explicit confirm) create docs PR
+                 APPROVED     REJECTED ──reopen──► IN_REVIEW
+                     │     (APPROVED can also be reopened)
+          (explicit confirm, Phase 3) create docs PR
                      │
               APPLIED  or  FAILED (retryable)
 ```
 
-Transitions are enforced in `modules/suggestions` (a pure function, unit-tested), not
-trusted from the client.
+Transitions are enforced in `modules/suggestions/state-machine.ts` (a pure function,
+unit-tested); the client sends an action, never a status.
 
 ## Added in later phases
 

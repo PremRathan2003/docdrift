@@ -1,4 +1,7 @@
 import type { AnalysisRunDto, SuggestionDto } from '@docdrift/shared';
+import { Link } from 'react-router';
+import { SuggestionStatusBadge } from './SuggestionStatusBadge';
+import { buttonClass } from './ui/Button';
 import { AnalysisBadge, FileKindBadge } from './Badges';
 import { Alert } from './ui/Alert';
 
@@ -95,9 +98,7 @@ function SuggestionCard({ suggestion: s }: { suggestion: SuggestionDto }) {
         <h3 id={`sug-${s.id}`} className="font-mono text-sm font-semibold">
           {s.documentationPath}
         </h3>
-        <span className="rounded-full bg-zinc-100 px-2 py-0.5 text-xs text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
-          {s.status.toLowerCase().replace('_', ' ')}
-        </span>
+        <SuggestionStatusBadge status={s.status} />
       </div>
       <p className="mt-2 text-sm">{s.reason}</p>
 
@@ -113,9 +114,9 @@ function SuggestionCard({ suggestion: s }: { suggestion: SuggestionDto }) {
       </ul>
 
       <h4 className="mt-4 text-xs font-semibold uppercase tracking-wide text-zinc-500">
-        Suggested update
+        Suggested update (preview — open the review to see the exact changes)
       </h4>
-      <pre className="mt-1 max-h-96 overflow-auto whitespace-pre-wrap rounded-md bg-zinc-50 p-3 font-mono text-xs dark:bg-zinc-950">
+      <pre className="mt-1 max-h-48 overflow-auto whitespace-pre-wrap rounded-md bg-zinc-50 p-3 font-mono text-xs dark:bg-zinc-950">
         {s.currentContent}
       </pre>
 
@@ -125,9 +126,11 @@ function SuggestionCard({ suggestion: s }: { suggestion: SuggestionDto }) {
         </span>
         {s.uncertainty && <span>Uncertainty: {s.uncertainty}</span>}
       </div>
-      <p className="mt-3 text-xs text-zinc-500">
-        Editing, approving and rejecting suggestions arrives in milestone 1.6.
-      </p>
+      <Link to={`/suggestions/${s.id}`} className={buttonClass('primary', 'mt-4')}>
+        {s.status === 'PENDING' || s.status === 'IN_REVIEW' || s.status === 'EDITED'
+          ? 'Review changes'
+          : 'View review'}
+      </Link>
     </article>
   );
 }

@@ -1,81 +1,123 @@
 import { Link } from 'react-router';
+import { AnalysisBadge } from '../components/Badges';
+import { SuggestionStatusBadge } from '../components/SuggestionStatusBadge';
+import { Alert } from '../components/ui/Alert';
 import { useCurrentUser } from '../lib/auth';
-import { useConnectedRepositories } from '../lib/github';
+import { formErrorMessage } from '../lib/form-errors';
+import { formatDateTime } from '../lib/pull-requests';
+import { useDashboard } from '../lib/suggestions';
 
-/**
- * Deliberately honest: no fake charts or numbers. Each card becomes real
- * as its milestone lands (analyses in 1.5, reviews in 1.6).
- */
-const upcoming = [
-  {
-    title: 'Recent analyses',
-    body: 'Pull request analyses and their results will appear here.',
-    milestone: '1.5',
-  },
-  {
-    title: 'Pending reviews',
-    body: 'Documentation suggestions waiting for your decision.',
-    milestone: '1.6',
-  },
-];
+const card = 'rounded-lg border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900';
+const link = 'text-sm font-medium text-indigo-600 hover:underline dark:text-indigo-400';
 
-const cardClass = 'rounded-lg border bg-white p-5 dark:bg-zinc-900';
-
+/** Every number here comes from the database; nothing is a placeholder. */
 export function DashboardPage() {
   const { data: user } = useCurrentUser();
-  const repos = useConnectedRepositories();
+  const { data, isPending, isError, error } = useDashboard();
   const name = user?.displayName ?? user?.email;
 
   return (
     <>
       <h1 className="text-2xl font-semibold tracking-tight">Welcome{name ? `, ${name}` : ''}</h1>
-      <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-        {repos.data?.length
-          ? 'Your connected repositories are ready for pull request analysis.'
-          : 'Connect a repository to start analysing pull requests.'}
-      </p>
+      {isPending && <p className="mt-4 text-sm text-zinc-500">Loading…</p>}
+      {isError && (
+        <div className="mt-4">
+          <Alert>{formErrorMessage(error)}</Alert>
+        </div>
+      )}
+      {data && (
+        <>
+          <dl className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
+            {(
+              [
+                ['Connected repositories', data.repositoryCount],
+                [
+                  'Awaiting review',
+                  data.suggestionCounts.PENDING +
+                    data.suggestionCounts.IN_REVIEW +
+                    data.suggestionCounts.EDITED,
+                ],
+                ['Approved', data.suggestionCounts.APPROVED],
+                ['Rejected', data.suggestionCounts.REJECTED],
+              ] as [string, number][]
+            ).map(([label, value]) => (
+              <div key={label} className={card}>
+                <dt className="text-xs text-zinc-500">{label}</dt>
+                <dd className="mt-1 text-2xl font-semibold tabular-nums">{value}</dd>
+              </div>
+            ))}
+          </dl>
 
-      <ul className="mt-8 grid gap-4 md:grid-cols-3">
-        <li className={`${cardClass} border-zinc-200 dark:border-zinc-800`}>
-          <h2 className="font-semibold">Connected repositories</h2>
-          {repos.isPending && <p className="mt-2 text-sm text-zinc-500">Loading…</p>}
-          {repos.isError && (
-            <p className="mt-2 text-sm text-red-600">Couldn’t load repositories.</p>
-          )}
-          {repos.data && (
-            <>
-              <p className="mt-2 text-3xl font-semibold tabular-nums">{repos.data.length}</p>
-              <ul className="mt-2 space-y-1 text-sm text-zinc-600 dark:text-zinc-400">
-                {repos.data.slice(0, 5).map((r) => (
-                  <li key={r.id} className="truncate">
-                    <Link to={`/repositories/${r.id}`} className="hover:underline">
-                      {r.fullName}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-              <Link
-                to="/repositories"
-                className="mt-3 inline-block text-sm font-medium text-indigo-600 hover:underline dark:text-indigo-400"
-              >
-                {repos.data.length ? 'Manage repositories' : 'Connect a repository'} →
-              </Link>
-            </>
-          )}
-        </li>
-        {upcoming.map((card) => (
-          <li
-            key={card.title}
-            className={`${cardClass} border-dashed border-zinc-300 dark:border-zinc-700`}
-          >
-            <h2 className="font-semibold">{card.title}</h2>
-            <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">{card.body}</p>
-            <p className="mt-3 text-xs font-medium text-zinc-500">
-              Coming in milestone {card.milestone}
-            </p>
-          </li>
-        ))}
-      </ul>
+          <div className="mt-6 grid gap-6 lg:grid-cols-2">
+            <section className={card} aria-labelledby="pending">
+              <h2 id="pending" className="font-semibold">
+                Pending reviews
+              </h2>
+              {data.pendingReviews.length === 0 ? (
+                <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+                  Nothing waiting for you.
+                </p>
+              ) : (
+                <ul className="mt-3 divide-y divide-zinc-200 dark:divide-zinc-800">
+                  {data.pendingReviews.map((s) => (
+                    <li key={s.id} className="flex items-center justify-between gap-3 py-2">
+                      <div className="min-w-0">
+                        <Link
+                          to={`/suggestions/${s.id}`}
+                          className="font-mono text-sm hover:underline"
+                        >
+                          {s.documentationPath}
+                        </Link>
+                        <p className="truncate text-xs text-zinc-500">
+                          {s.repositoryFullName} #{s.pullRequest.number} {s.pullRequest.title}
+                        </p>
+                      </div>
+                      <SuggestionStatusBadge status={s.status} />
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </section>
+
+            <section className={card} aria-labelledby="recent">
+              <h2 id="recent" className="font-semibold">
+                Recent analyses
+              </h2>
+              {data.recentAnalyses.length === 0 ? (
+                <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+                  No analyses yet. Open a pull request and click <strong>Run analysis</strong>.
+                </p>
+              ) : (
+                <ul className="mt-3 divide-y divide-zinc-200 dark:divide-zinc-800">
+                  {data.recentAnalyses.map((a) => (
+                    <li key={a.id} className="flex items-center justify-between gap-3 py-2">
+                      <div className="min-w-0">
+                        <Link
+                          to={`/pull-requests/${a.pullRequest.id}`}
+                          className="text-sm hover:underline"
+                        >
+                          #{a.pullRequest.number} {a.pullRequest.title}
+                        </Link>
+                        <p className="truncate text-xs text-zinc-500">
+                          {a.repositoryFullName} · {formatDateTime(a.createdAt)} ·{' '}
+                          {a.suggestionCount} suggestion(s)
+                        </p>
+                      </div>
+                      <AnalysisBadge status={a.status} />
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </section>
+          </div>
+
+          <p className="mt-6">
+            <Link to="/repositories" className={link}>
+              {data.repositoryCount ? 'Manage repositories →' : 'Connect a repository →'}
+            </Link>
+          </p>
+        </>
+      )}
     </>
   );
 }

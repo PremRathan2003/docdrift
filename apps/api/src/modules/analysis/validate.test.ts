@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildUserPrompt } from './prompts/v1.js';
+import { buildUserPrompt } from './prompts/v2.js';
 import { parseModelOutput, validateSemantics } from './validate.js';
 
 const rec = (path: string, evidence: string[]) => ({
@@ -64,6 +64,21 @@ describe('validateSemantics', () => {
       recommendations.map((r) => [r.documentationPath, r.evidence.map((e) => e.filePath)]),
     ).toEqual([['README.md', ['src/store.js']]]);
     expect(warnings).toHaveLength(5);
+  });
+});
+
+describe('validateSemantics with truncated docs', () => {
+  it('drops recommendations for documents that were sent truncated', () => {
+    const { recommendations, warnings } = validateSemantics(
+      { summary: 's', recommendations: [rec('README.md', ['src/store.js'])] },
+      {
+        changedFiles: ['src/store.js'],
+        candidateDocs: ['README.md'],
+        truncatedDocs: ['README.md'],
+      },
+    );
+    expect(recommendations).toEqual([]);
+    expect(warnings[0]).toMatch(/too long/);
   });
 });
 

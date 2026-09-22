@@ -14,7 +14,7 @@ const idParam = z.object({ id: z.string().min(1).max(40) });
 type RunRow = Awaited<ReturnType<Db['analysisRun']['findFirstOrThrow']>>;
 type SuggestionRow = Awaited<ReturnType<Db['suggestion']['findFirstOrThrow']>>;
 
-function toSuggestionDto(s: SuggestionRow) {
+export function toSuggestionDto(s: SuggestionRow) {
   return suggestionSchema.parse({
     id: s.id,
     documentationPath: s.documentationPath,

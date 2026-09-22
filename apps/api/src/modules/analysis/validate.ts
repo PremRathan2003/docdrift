@@ -36,10 +36,11 @@ export function parseModelOutput(text: string): ParseResult {
  */
 export function validateSemantics(
   output: AnalysisOutput,
-  ctx: { changedFiles: string[]; candidateDocs: string[] },
+  ctx: { changedFiles: string[]; candidateDocs: string[]; truncatedDocs?: string[] },
 ): { recommendations: Recommendation[]; warnings: string[] } {
   const changed = new Set(ctx.changedFiles);
   const docs = new Set(ctx.candidateDocs);
+  const truncated = new Set(ctx.truncatedDocs ?? []);
   const warnings: string[] = [];
   const seen = new Set<string>();
   const recommendations: Recommendation[] = [];
@@ -48,6 +49,12 @@ export function validateSemantics(
     if (!docs.has(rec.documentationPath)) {
       warnings.push(
         `Dropped a recommendation for "${rec.documentationPath}": not one of the documentation files provided.`,
+      );
+      continue;
+    }
+    if (truncated.has(rec.documentationPath)) {
+      warnings.push(
+        `Dropped a recommendation for "${rec.documentationPath}": the file was too long to send in full, so a complete update can't be trusted.`,
       );
       continue;
     }

@@ -12,7 +12,10 @@
   },
   "dependencies": {
     "@docdrift/shared": "^0.1.0",
+    "@monaco-editor/react": "^4.7.0",
     "@tanstack/react-query": "^5.103.1",
+    "diff": "^9.0.0",
+    "monaco-editor": "^0.56.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "react-router": "^8.4.0",
