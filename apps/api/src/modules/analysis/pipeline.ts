@@ -16,6 +16,7 @@ import {
 import { z } from 'zod';
 import type { Logger } from '../../lib/logger.js';
 import { AIProviderError, type AIProvider } from '../ai/provider.js';
+import { classifyFile } from '@docdrift/shared';
 import {
   extractKeywords,
   isSensitivePath,
@@ -25,6 +26,7 @@ import {
   selectChangedFiles,
   type ChangedFile,
 } from './context.js';
+import { isHistoryDoc, queryTerms, rankByContent } from './retrieval.js';
 import { buildUserPrompt, SYSTEM_PROMPT } from './prompts/v2.js';
 import { parseModelOutput, validateSemantics } from './validate.js';
 
@@ -38,6 +40,11 @@ export interface RepoSource {
   treePaths(): Promise<string[]>;
   /** A text file at the head commit, or null if missing/binary/too large. */
   textFile(path: string): Promise<string | null>;
+  /**
+   * Several files at once. Content ranking needs every document's text, so
+   * implementations fetch in parallel and cache (see the GitHub source).
+   */
+  textFiles?(paths: string[]): Promise<Map<string, string>>;
 }
 
 export interface PullRequestInfo {
@@ -49,6 +56,13 @@ export interface PullRequestInfo {
 }
 
 export interface PipelineConfig {
+  /**
+   * 'content' (default): rank every documentation file by how well its text
+   * matches the identifiers the PR changed (BM25).
+   * 'path-rules': the Phase 1 behaviour, kept so the evaluation can show the
+   * difference.
+   */
+  retrieval?: 'content' | 'path-rules';
   timeoutMs: number;
   maxInputTokens: number;
   /** Defaults to 16 384: thinking models need room. */
@@ -60,7 +74,11 @@ export interface PipelineConfig {
 export const MAX_ATTEMPTS = 3;
 // Thinking models count their reasoning tokens against this limit, so leave generous room.
 const DEFAULT_MAX_OUTPUT_TOKENS = 16_384;
-const MAX_DOCS_FETCHED = 15;
+const MAX_DOCS_FETCHED = 15; // path-rules mode only
+/** Content ranking reads every documentation file, up to this many per repository. */
+const MAX_DOCS_CONSIDERED = 250;
+/** How many of the best-matching documents can go into one prompt. */
+const MAX_DOCS_SENT = 12;
 const MAX_CHARS_PER_DOC = 12_000;
 const CHARS_PER_TOKEN = 4; // rough rule of thumb for English text and code
 
@@ -92,20 +110,37 @@ export async function buildContext(
   const files = await source.changedFiles();
   const selection = selectChangedFiles(files, Math.floor(budget * 0.55));
 
-  const paths = await source.treePaths();
-  const candidates = pickDocCandidates(
-    paths.filter((p) => !isSensitivePath(p)),
-    files.map((f) => f.filename),
-    MAX_DOCS_FETCHED,
-  );
+  const paths = (await source.treePaths()).filter((p) => !isSensitivePath(p));
+  const byContent = (config.retrieval ?? 'content') === 'content';
+
+  const candidates = byContent
+    ? paths
+        .filter((p) => classifyFile(p) === 'documentation' && !isHistoryDoc(p))
+        .slice(0, MAX_DOCS_CONSIDERED)
+    : pickDocCandidates(
+        paths,
+        files.map((f) => f.filename),
+        MAX_DOCS_FETCHED,
+      );
+
   const fetched: { path: string; content: string }[] = [];
-  for (const path of candidates) {
-    const content = await source.textFile(path);
-    if (content !== null) fetched.push({ path, content });
+  if (source.textFiles) {
+    for (const [path, content] of await source.textFiles(candidates))
+      fetched.push({ path, content });
+  } else {
+    for (const path of candidates) {
+      const content = await source.textFile(path);
+      if (content !== null) fetched.push({ path, content });
+    }
   }
 
-  const keywords = extractKeywords(selection.included.map((f) => f.patch));
-  const ranked = rankDocs(fetched, keywords);
+  // Rank by what the documents say about what this PR changed.
+  const ranked = byContent
+    ? rankByContent(fetched, queryTerms(selection.included.map((f) => f.patch)))
+        .filter((d) => d.score > 0)
+        .slice(0, MAX_DOCS_SENT)
+        .map((d) => ({ ...d, content: fetched.find((f) => f.path === d.path)!.content }))
+    : rankDocs(fetched, extractKeywords(selection.included.map((f) => f.patch)));
   const docBudget = Math.floor(budget * 0.35);
   let used = 0;
   let secretsRedacted = selection.redactions;

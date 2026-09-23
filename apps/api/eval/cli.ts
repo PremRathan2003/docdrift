@@ -6,6 +6,7 @@
  *   npm run eval -- --cases 001,021 --repeat 3 some cases, three times each
  *   npm run eval -- --no-save                  print only, don't write a report
  *   npm run eval -- --fresh                    ignore answers saved by an interrupted run
+ *   npm run eval -- --retrieval path-rules     measure the old filename-based document selection
  *   npm run eval -- --model <id>               another model than AI_MODEL (see npm run ai:models)
  *
  * The AI run sends each case (small synthetic repositories, no real code or
@@ -36,6 +37,8 @@ const { values } = parseArgs({
     'no-save': { type: 'boolean', default: false },
     /** Ignore answers saved by an interrupted run and ask everything again. */
     fresh: { type: 'boolean', default: false },
+    /** 'content' (default) or 'path-rules' (the Phase 1 selection), for comparison. */
+    retrieval: { type: 'string' },
     /** Use another model than AI_MODEL (free-tier quotas are per model). */
     model: { type: 'string' },
   },
@@ -55,8 +58,12 @@ async function main() {
 
   let detector: Detector;
   let delayMs = 0;
+  const retrieval = values.retrieval as 'content' | 'path-rules' | undefined;
+  if (retrieval && retrieval !== 'content' && retrieval !== 'path-rules')
+    throw new Error("--retrieval must be 'content' or 'path-rules'");
+
   if (values.baseline) {
-    detector = keywordBaseline({ timeoutMs: 0, maxInputTokens: 30_000 });
+    detector = keywordBaseline({ timeoutMs: 0, maxInputTokens: 30_000, retrieval });
   } else {
     if (values.model && !/^[a-z0-9][a-z0-9.-]*$/.test(values.model))
       throw new Error(
@@ -72,6 +79,7 @@ async function main() {
       timeoutMs: env.AI_TIMEOUT_MS,
       maxInputTokens: env.AI_MAX_INPUT_TOKENS,
       maxOutputTokens: env.AI_MAX_OUTPUT_TOKENS,
+      retrieval,
     });
     // Free tiers allow only a few requests per minute; pace the calls.
     delayMs = Number(values['delay-ms'] ?? 4000);
@@ -131,7 +139,7 @@ async function main() {
     await mkdir(REPORTS, { recursive: true });
     const stamp = report.generatedAt.slice(0, 16).replace(/[-:]/g, '').replace('T', '-');
     const model = detector.model.replace(/[^a-z0-9.-]+/gi, '_');
-    const base = join(REPORTS, `${stamp}-${detector.name}-${model}`);
+    const base = join(REPORTS, `${stamp}-${detector.name}-${model}-${detector.retrieval}`);
     await writeFile(`${base}.md`, toMarkdown(report));
     await writeFile(`${base}.json`, JSON.stringify(report, null, 2) + '\n');
     console.warn(`Report: ${relative(process.cwd(), `${base}.md`)} (+ .json with every answer)`);

@@ -1,10 +1,14 @@
-import { generateKeyPairSync } from 'node:crypto';
+import { createHash, generateKeyPairSync } from 'node:crypto';
 import type { GitHubAppConfig } from '../../src/modules/github/config.js';
 
 /**
  * An in-memory stand-in for github.com and api.github.com, just big enough for
  * the connect flow. Tests never touch the real GitHub.
  */
+/** Content hash, like git's blob SHA: identical content, identical id. */
+const blobSha = (content: string) =>
+  createHash('sha1').update(`blob ${content.length}\0${content}`).digest('hex');
+
 export interface FakeRepo {
   id: number;
   name: string;
@@ -169,10 +173,30 @@ export function createFakeGitHub(state: FakeGitHubState) {
     if (method === 'GET' && tree) {
       const full = `${tree[1]}/${tree[2]}`;
       if (!canRead(full)) return json(404, { message: 'Not Found' });
-      const paths = Object.keys(state.files?.[full] ?? {});
+      const files = state.files?.[full] ?? {};
       return json(200, {
-        tree: paths.map((path) => ({ path, type: 'blob', size: 10 })),
+        // Like git, the blob SHA is a hash of the content, so the same content
+        // always gets the same SHA (that is what makes caching them correct).
+        tree: Object.entries(files).map(([path, content]) => ({
+          path,
+          type: 'blob',
+          size: content.length,
+          sha: blobSha(content),
+        })),
         truncated: false,
+      });
+    }
+
+    const blob = /^\/repos\/([^/]+)\/([^/]+)\/git\/blobs\/([^/]+)$/.exec(url.pathname);
+    if (method === 'GET' && blob) {
+      const full = `${blob[1]}/${blob[2]}`;
+      if (!canRead(full)) return json(404, { message: 'Not Found' });
+      const content = Object.values(state.files?.[full] ?? {}).find((c) => blobSha(c) === blob[3]);
+      if (content === undefined) return json(404, { message: 'Not Found' });
+      return json(200, {
+        encoding: 'base64',
+        size: content.length,
+        content: Buffer.from(content).toString('base64'),
       });
     }
 

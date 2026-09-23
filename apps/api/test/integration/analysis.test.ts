@@ -70,11 +70,22 @@ const goodOutput = {
   ],
 };
 
+const blobRequests: string[] = [];
+
 async function setup(ai: FakeAI | null, extra: Parameters<typeof createTestApp>[3] = {}) {
   const fake = createFakeGitHub(
     new Proxy({} as FakeGitHubState, { get: (_t, k) => gh[k as keyof FakeGitHubState] }),
   );
-  const app = createTestApp(db, undefined, fake, { ai, ...extra });
+  // Count how often file contents are downloaded, to prove the cache works.
+  const counting = {
+    ...fake,
+    fetchImpl: (async (input: string | URL | Request, init?: RequestInit) => {
+      const path = new URL(String(input)).pathname;
+      if (path.includes('/git/blobs/')) blobRequests.push(path);
+      return fake.fetchImpl(input as string, init);
+    }) as typeof fetch,
+  };
+  const app = createTestApp(db, undefined, counting, { ai, ...extra });
   const agent = request.agent(app);
   await agent.post('/api/auth/register').send(creds).expect(201);
   const auth = await agent.get('/api/github/authorize');
@@ -235,6 +246,30 @@ describe('running an analysis', () => {
     gh.down = true;
     const run = await runAndWait(ctx);
     expect(run).toMatchObject({ status: 'FAILED', errorCode: 'GITHUB_ERROR' });
+  });
+});
+
+describe('document cache', () => {
+  it('downloads each document once and reuses it for later analyses', async () => {
+    const ctx = await setup(new FakeAI([reply(goodOutput), reply(goodOutput)]));
+    blobRequests.length = 0;
+
+    const first = await runAndWait(ctx);
+    expect(first.status).toBe('SUCCEEDED');
+    const downloaded = blobRequests.length;
+    expect(downloaded).toBeGreaterThan(0);
+
+    // A second analysis of the same commit reads the same documents…
+    blobRequests.length = 0;
+    await db.analysisRun.deleteMany({});
+    const second = await runAndWait(ctx);
+    expect(second.status).toBe('SUCCEEDED');
+    // …without downloading any of them again.
+    expect(blobRequests).toEqual([]);
+    expect(second.inputManifest!.docsSent).toEqual(first.inputManifest!.docsSent);
+
+    const cached = await db.documentBlob.count();
+    expect(cached).toBe(downloaded);
   });
 });
 

@@ -14,6 +14,7 @@ export function toMarkdown(r: EvalReport): string {
     '',
     `- **Date:** ${r.generatedAt.slice(0, 16).replace('T', ' ')} UTC`,
     `- **Prompt version:** ${r.detector.promptVersion ?? 'n/a (no model)'}`,
+    `- **Document selection:** ${r.detector.retrieval === 'content' ? 'content ranking (BM25)' : 'path rules (Phase 1)'}`,
     `- **Dataset:** ${r.dataset.cases} cases (${Object.entries(r.dataset.byGroup)
       .map(([g, n]) => `${n} ${g}`)
       .join(

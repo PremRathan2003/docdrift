@@ -20,7 +20,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { structuredPatch } from 'diff';
 import { classifyFile } from '@docdrift/shared';
-import { isSensitivePath, pickDocCandidates } from '../src/modules/analysis/context.js';
+import { isSensitivePath } from '../src/modules/analysis/context.js';
 import type { EvalCaseMeta, ExpectedDoc } from './dataset.js';
 
 export interface PullRequestRef {
@@ -209,7 +209,13 @@ export function trimToChanges(before: string, after: string, path: string) {
 /** Documents whose text a person reads; a script under docs/ makes a poor label. */
 const PROSE_DOC = /\.(md|mdx|rst|txt|adoc|ya?ml|json)$/i;
 const MAX_CHANGED_FILES = 60;
-const MAX_DOCS = 15; // same as the app
+/**
+ * Every documentation file in the repository is stored, not just the ones the
+ * app would fetch: document selection is itself under test, so a case must
+ * contain the documents a better retriever could find.
+ */
+const MAX_DOCS = 250;
+const MAX_DOC_BYTES = 100_000;
 const isChangelog = (p: string) => /(^|\/)(changelog|history|changes|news|release)/i.test(p);
 
 export interface ImportResult {
@@ -303,17 +309,24 @@ export async function importPullRequest(
     ]),
   ].sort();
 
-  // Store the documents the app would fetch (same rules), at their pre-PR version.
-  const candidates = pickDocCandidates(
-    paths.filter((p) => !isSensitivePath(p)),
-    codeChanges.map((f) => f.filename),
-    MAX_DOCS,
-  );
-  for (const path of candidates) {
+  // Every documentation file, at its pre-PR version.
+  const docPaths = paths
+    .filter((p) => !isSensitivePath(p) && classifyFile(p) === 'documentation')
+    .slice(0, MAX_DOCS);
+  if (docPaths.length === MAX_DOCS)
+    warnings.push(`more than ${MAX_DOCS} documents: the rest are not stored`);
+  let skippedDocs = 0;
+  for (const path of docPaths) {
     const text = await gh.raw(owner, repo, baseSha, path);
-    if (text !== null && text.length <= MAX_FILE_BYTES && !text.includes('\0'))
-      head.set(path, text);
+    if (text === null || text.includes('\0')) continue;
+    if (text.length > MAX_DOC_BYTES) {
+      skippedDocs++;
+      continue;
+    }
+    head.set(path, text);
   }
+  if (skippedDocs)
+    warnings.push(`${skippedDocs} document(s) over ${MAX_DOC_BYTES / 1000} kB not stored`);
 
   // ---- labels from the developer's own documentation edit
   const expected: ExpectedDoc[] = [];
@@ -336,7 +349,7 @@ export async function importPullRequest(
     });
     if (!head.has(path))
       warnings.push(
-        `${path} needed updating but is not among the ${MAX_DOCS} documents DocDrift fetches: expect a miss`,
+        `${path} needed updating but was not stored (too large, or removed): expect a miss`,
       );
   }
 

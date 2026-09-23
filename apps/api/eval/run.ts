@@ -154,6 +154,7 @@ export async function runEval(opts: EvalOptions) {
     generatedAt: new Date().toISOString(),
     detector: {
       name: opts.detector.name,
+      retrieval: opts.detector.retrieval,
       model: opts.detector.model,
       promptVersion: opts.detector.promptVersion,
     },

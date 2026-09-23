@@ -24,7 +24,7 @@
   "trimmedFiles": [
     "src/click/core.py"
   ],
-  "notes": "The PR author updated these documents in the same PR; the case removes those edits. Content checks are words the author added/removed. Review them before relying on the case. Labels reviewed by hand: automatic checks that were link fragments or ordinary English words were removed.",
+  "notes": "The PR author updated these documents in the same PR; the case removes those edits. Content checks are words the author added/removed. Review them before relying on the case.",
   "source": "real",
   "origin": {
     "url": "https://github.com/pallets/click/pull/3818",
@@ -32,6 +32,6 @@
     "license": "BSD-3-Clause",
     "baseSha": "08a7bc6d2a2af02268b09b3b5fd8079546c81c03",
     "headSha": "fc518e41218b447e875fe27244ae692c269bcb77",
-    "importedAt": "2026-09-23T07:59:46.135Z"
+    "importedAt": "2026-09-23T08:54:55.135Z"
   }
 }

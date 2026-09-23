@@ -12,7 +12,7 @@ export async function fetchTreePaths(
   sha: string,
 ) {
   const { data } = await client.request<{
-    tree?: { path?: string; type?: string; size?: number }[];
+    tree?: { path?: string; type?: string; size?: number; sha?: string }[];
     truncated?: boolean;
   }>({
     path: `/repos/${seg(owner)}/${seg(name)}/git/trees/${seg(sha)}?recursive=1`,
@@ -20,7 +20,8 @@ export async function fetchTreePaths(
   });
   const paths = (data.tree ?? [])
     .filter((e) => e.type === 'blob' && typeof e.path === 'string')
-    .map((e) => ({ path: e.path!, size: e.size ?? 0 }));
+    // The blob SHA is git's hash of the file's content: the cache key.
+    .map((e) => ({ path: e.path!, size: e.size ?? 0, sha: e.sha ?? '' }));
   return { paths, truncated: data.truncated === true };
 }
 
@@ -48,6 +49,31 @@ export async function fetchTextFile(
       return null;
     if ((data.size ?? 0) > maxBytes) return null;
     return Buffer.from(data.content, 'base64').toString('utf8');
+  } catch (err) {
+    if (err instanceof GitHubError && err.code === 'GITHUB_NOT_FOUND') return null;
+    throw err;
+  }
+}
+
+/** One blob by its SHA (content-addressed, so the answer never changes). */
+export async function fetchBlob(
+  client: GitHubClient,
+  token: string,
+  owner: string,
+  name: string,
+  blobSha: string,
+  maxBytes = 200_000,
+): Promise<string | null> {
+  try {
+    const { data } = await client.request<{ encoding?: string; content?: string; size?: number }>({
+      path: `/repos/${seg(owner)}/${seg(name)}/git/blobs/${seg(blobSha)}`,
+      token,
+    });
+    if (data.encoding !== 'base64' || typeof data.content !== 'string') return null;
+    if ((data.size ?? 0) > maxBytes) return null;
+    const text = Buffer.from(data.content, 'base64').toString('utf8');
+    // Binary files are not documentation; a NUL byte is the usual giveaway.
+    return text.includes('\0') ? null : text;
   } catch (err) {
     if (err instanceof GitHubError && err.code === 'GITHUB_NOT_FOUND') return null;
     throw err;

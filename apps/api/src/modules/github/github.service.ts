@@ -6,7 +6,7 @@ import type { GitHubAppConfig } from './config.js';
 import { GitHubError, type GitHubClient } from './github-client.js';
 import { createInstallationTokenProvider } from './installation-tokens.js';
 import { fetchPullRequestFiles, fetchPullRequests } from './pull-requests.github.js';
-import { fetchTextFile, fetchTreePaths } from './repo-content.github.js';
+import { fetchBlob, fetchTextFile, fetchTreePaths } from './repo-content.github.js';
 import { exchangeCodeForUserToken, listUserInstallations } from './user-oauth.js';
 
 /** The subset of GitHub's repository object we rely on, checked at runtime. */
@@ -86,6 +86,71 @@ export function createGitHubService({ db, config, client, oauthFetch }: GitHubSe
     async treePaths(repo: { owner: string; name: string; installationId: bigint }, sha: string) {
       const token = await tokens.get(repo.installationId);
       return fetchTreePaths(client, token, repo.owner, repo.name, sha);
+    },
+
+    /**
+     * Several documentation files at one commit, read through a cache.
+     *
+     * Ranking documents by their text means reading every documentation file in
+     * the repository — hundreds in a big project. Git blob SHAs are content
+     * hashes, so a file's content is downloaded once and reused by every later
+     * analysis of that repository (and by other pull requests that don't touch
+     * it). Only the files whose SHA we have never seen cost a request.
+     */
+    async textFilesBySha(
+      repo: { id: string; owner: string; name: string; installationId: bigint },
+      blobs: { path: string; sha: string }[],
+    ): Promise<Map<string, string>> {
+      const out = new Map<string, string>();
+      const wanted = blobs.filter((b) => b.sha);
+      const cached = await db.documentBlob.findMany({
+        where: { repositoryId: repo.id, blobSha: { in: wanted.map((b) => b.sha) } },
+        select: { blobSha: true, content: true },
+      });
+      const bySha = new Map(cached.map((c) => [c.blobSha, c.content]));
+      const missing = wanted.filter((b) => !bySha.has(b.sha));
+
+      if (missing.length) {
+        const token = await tokens.get(repo.installationId);
+        // A little parallelism, but not enough to trip GitHub's abuse limits.
+        const CONCURRENCY = 6;
+        for (let i = 0; i < missing.length; i += CONCURRENCY) {
+          const batch = missing.slice(i, i + CONCURRENCY);
+          const texts = await Promise.all(
+            batch.map((b) => fetchBlob(client, token, repo.owner, repo.name, b.sha)),
+          );
+          const rows = batch
+            .map((b, j) => ({ b, text: texts[j] }))
+            .filter((x): x is { b: (typeof batch)[number]; text: string } => x.text !== null);
+          for (const { b, text } of rows) bySha.set(b.sha, text);
+          // Caching is an optimisation: a failure here must not fail the analysis.
+          await db.documentBlob
+            .createMany({
+              data: rows.map(({ b, text }) => ({
+                repositoryId: repo.id,
+                blobSha: b.sha,
+                path: b.path,
+                content: text,
+                bytes: Buffer.byteLength(text),
+              })),
+              skipDuplicates: true,
+            })
+            .catch(() => undefined);
+        }
+      } else if (wanted.length) {
+        await db.documentBlob
+          .updateMany({
+            where: { repositoryId: repo.id, blobSha: { in: wanted.map((b) => b.sha) } },
+            data: { lastUsedAt: new Date() },
+          })
+          .catch(() => undefined);
+      }
+
+      for (const b of wanted) {
+        const text = bySha.get(b.sha);
+        if (text !== undefined) out.set(b.path, text);
+      }
+      return out;
     },
 
     /** One text file at a commit, or null if missing/too large/binary. */

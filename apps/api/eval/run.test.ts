@@ -29,6 +29,7 @@ function flakyDetector(): Detector {
   let calls = 0;
   return {
     name: 'flaky',
+    retrieval: 'content',
     model: 'fake/m',
     promptVersion: 'v2',
     writesContent: true,

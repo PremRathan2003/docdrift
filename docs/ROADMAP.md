@@ -23,12 +23,13 @@ the full story: _connect → analyse a real PR with a real LLM → human reviews
 
 Measure first, then improve: every later change is judged against the evaluation.
 
-| #   | Milestone                 | What                                                                                                     |
-| --- | ------------------------- | -------------------------------------------------------------------------------------------------------- |
-| 2.1 | **Evaluation harness** ✅ | Labelled dataset (`eval/cases`), `npm run eval`, precision/recall/F1 with CIs, keyword baseline          |
-| 2.2 | **Real-world cases** ✅   | `npm run eval:import` builds cases from merged PRs (pydantic, execa, click); retrieval measured          |
-| 2.3 | Documentation index + FTS | Chunk docs, Postgres full-text search instead of path rules — the real cases show this is the bottleneck |
-| 2.4 | Embeddings (pgvector)     | Semantic retrieval for behaviour changes; keep it only if the evaluation shows a gain                    |
+| #    | Milestone                       | What                                                                                                                       |
+| ---- | ------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| 2.1  | **Evaluation harness** ✅       | Labelled dataset (`eval/cases`), `npm run eval`, precision/recall/F1 with CIs, keyword baseline                            |
+| 2.2  | **Real-world cases** ✅         | `npm run eval:import` builds cases from merged PRs (pydantic, execa, click); retrieval measured                            |
+| 2.3  | **Content-ranked retrieval** ✅ | BM25 over every doc + blob-SHA cache: documents reaching the model 27% → 91% on real PRs                                   |
+| 2.3b | Section-level documents         | Split long documents so a 60 kB reference file can be updated section by section (6 reached documents are still truncated) |
+| 2.4  | Embeddings (pgvector)           | Semantic retrieval for behaviour changes; keep it only if the evaluation shows a gain                                      |
 
 ## Phase 3 — Engineering (≈ 2–3 weeks)
 

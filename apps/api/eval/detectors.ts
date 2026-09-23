@@ -44,6 +44,8 @@ export interface Detection {
 
 export interface Detector {
   name: string;
+  /** Which document selection was measured ('content' or 'path-rules'). */
+  retrieval: string;
   model: string;
   promptVersion: string | null;
   /** Whether suggestions contain real document text, so content checks mean something. */
@@ -60,6 +62,7 @@ const quietLogger = { warn: () => {} };
 export function aiDetector(ai: AIProvider, config: PipelineConfig): Detector {
   return {
     name: 'docdrift',
+    retrieval: config.retrieval ?? 'content',
     model: `${ai.name}/${ai.model}`,
     promptVersion: PROMPT_VERSION,
     writesContent: true,
@@ -141,6 +144,7 @@ export function removedTokens(patches: string[]): string[] {
 export function keywordBaseline(config: PipelineConfig): Detector {
   return {
     name: 'keyword-baseline',
+    retrieval: config.retrieval ?? 'content',
     model: 'none',
     promptVersion: null,
     writesContent: false,

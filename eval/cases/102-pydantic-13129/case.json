@@ -12,7 +12,7 @@
     "pydantic/json_schema.py",
     "tests/test_json_schema.py"
   ],
-  "notes": "The PR author changed no documentation. Weaker label: the docs may have been stale already. Only keep clearly internal changes. Reviewed: an internal metadata fix with no user-visible behaviour change, so flagging any document is a false positive.",
+  "notes": "The PR author changed no documentation. Weaker label: the docs may have been stale already. Only keep clearly internal changes.",
   "source": "real",
   "origin": {
     "url": "https://github.com/pydantic/pydantic/pull/13129",
@@ -20,6 +20,6 @@
     "license": "MIT",
     "baseSha": "3c305a357f0622605a91e0240cd064c92e2963a0",
     "headSha": "c110fed5c5413e46e32827378b199ef49c2bd280",
-    "importedAt": "2026-09-23T07:59:35.155Z"
+    "importedAt": "2026-09-23T08:53:52.129Z"
   }
 }

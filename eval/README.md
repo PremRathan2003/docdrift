@@ -9,6 +9,7 @@ npm run eval                        # DocDrift with the AI settings in apps/api/
 npm run eval -- --repeat 3          # each case three times (models aren't deterministic)
 npm run eval -- --cases 001,021     # only some cases (id prefixes)
 npm run eval -- --no-save           # print the summary without writing a report
+npm run eval -- --retrieval path-rules   # measure the Phase 1 filename-based document selection
 npm run eval -- --model <id>        # another model than AI_MODEL (list them: npm run ai:models)
 npm run eval -- --delay-ms 15000    # more time between calls (free tiers allow few per minute)
 ```

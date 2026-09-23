@@ -145,6 +145,19 @@ system message, so behaviour is comparable; the pipeline, validation and evaluat
 Motivation: free-tier quotas differ a lot, and measuring several models on the same cases is
 more informative than one.
 
+**D15 — Document selection by content (Phase 2.3).** Phase 1 chose the 15 documents to show the
+model by filename, with an alphabetical tie-break; the real pull-request cases showed only 27% of
+the documents that needed updating ever reached the model. Now every documentation file in the
+repository is ranked by BM25 against the identifiers the pull request changed, with sub-word
+tokenizing (`killDescendants` matches "kill descendants"), words appearing in over half the
+repository's documents dropped as uninformative, history documents (changelogs, migration guides)
+excluded, and the filename used only as a ±25% nudge. Measured on the same cases: 96% reach the
+model (91% on the real ones), while _fewer_ documents are sent (2.2 vs 4.6 per pull request).
+Ranking is plain TypeScript rather than PostgreSQL full-text search so the evaluation runs exactly
+the code the app runs, and because identifiers need their own tokenizer. Reading every document
+needs their content: `DocumentBlob` caches it by git blob SHA (a content hash), so each file is
+downloaded once per repository and later analyses read the cache — proven by an integration test.
+
 **D13 — Evaluation.** `npm run eval` runs the same `runPipeline` as the app (context selection,
 prompt, retries, validation), only reading repositories from `eval/cases` instead of GitHub, so it
 measures what users get. Cases are small repositories (`head/` + the changed files' `base/`) with

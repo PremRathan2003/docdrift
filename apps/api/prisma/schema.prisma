@@ -128,6 +128,7 @@ model Repository {
   user         User               @relation(fields: [userId], references: [id], onDelete: Cascade)
   installation GithubInstallation @relation(fields: [installationId], references: [id], onDelete: Cascade)
   pullRequests PullRequest[]
+  documents    DocumentBlob[]
 
   @@unique([userId, githubRepoId])
   @@index([installationId])
@@ -275,4 +276,26 @@ model AuditLog {
 
   @@index([entityType, entityId])
   @@index([actorId, createdAt])
+}
+
+/// Cached documentation file contents, keyed by git's own content hash (blob
+/// SHA). Ranking documents by their text means reading every documentation
+/// file in the repository; blobs never change, so each one is downloaded once
+/// and reused by every later analysis of that repository.
+model DocumentBlob {
+  id           String   @id @default(cuid())
+  repositoryId String
+  /// Git blob SHA: the same content always has the same SHA.
+  blobSha      String
+  /// Where it was last seen; only for explaining what was read.
+  path         String
+  content      String
+  bytes        Int
+  createdAt    DateTime @default(now())
+  lastUsedAt   DateTime @default(now())
+
+  repository Repository @relation(fields: [repositoryId], references: [id], onDelete: Cascade)
+
+  @@unique([repositoryId, blobSha])
+  @@index([repositoryId, lastUsedAt])
 }

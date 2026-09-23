@@ -18,7 +18,13 @@ export interface AnalysisConfig {
   sleep?: (ms: number) => Promise<void>;
 }
 
-type RepoRef = { owner: string; name: string; fullName: string; installationId: bigint };
+type RepoRef = {
+  id: string;
+  owner: string;
+  name: string;
+  fullName: string;
+  installationId: bigint;
+};
 
 /** The pipeline's view of a repository, read from GitHub at one commit. */
 function gitHubSource(
@@ -27,11 +33,23 @@ function gitHubSource(
   prNumber: number,
   sha: string,
 ): RepoSource {
+  // The tree is read once and reused: it carries each file's blob SHA, which is
+  // the cache key for that file's content.
+  let tree: Promise<{ path: string; sha: string }[]> | null = null;
+  const paths = () => (tree ??= github.treePaths(repo, sha).then((t) => t.paths));
+
   return {
     fullName: repo.fullName,
     changedFiles: () => github.pullRequestFiles(repo, prNumber),
-    treePaths: async () => (await github.treePaths(repo, sha)).paths.map((p) => p.path),
+    treePaths: async () => (await paths()).map((p) => p.path),
     textFile: (path) => github.textFile(repo, path, sha),
+    async textFiles(wanted) {
+      const bySha = new Map((await paths()).map((p) => [p.path, p.sha]));
+      return github.textFilesBySha(
+        repo,
+        wanted.map((path) => ({ path, sha: bySha.get(path) ?? '' })),
+      );
+    },
   };
 }
 
