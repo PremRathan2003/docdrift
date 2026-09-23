@@ -1,1 +1,0 @@
-::: pydantic.functional_serializers
