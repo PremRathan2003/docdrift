@@ -4,6 +4,8 @@
  *   case.json   metadata and the expected answer (the "label")
  *   head/       the repository at the pull request's head commit
  *   base/       the files this PR changes, as they were before it
+ *   tree.txt    optional: every path in the repository (real cases), so document
+ *               selection runs over the whole repository as it would on GitHub
  *
  * The diff is computed from base/ and head/, in the same format GitHub
  * returns, so cases are easy to write and the diffs are always valid.
@@ -36,10 +38,23 @@ export const caseSchema = z.object({
   acceptable: z.array(z.string()).default([]),
   /** Files that exist in head/ but not at the base commit. */
   added: z.array(z.string()).default([]),
+  /** Large changed files stored as their changed regions only (real cases). */
+  trimmedFiles: z.array(z.string()).default([]),
   /** Why the label is what it is. */
   notes: z.string().min(1),
   /** synthetic = written for this dataset; real = taken from a public pull request. */
   source: z.enum(['synthetic', 'real']),
+  /** Where a real case came from (npm run eval:import). */
+  origin: z
+    .object({
+      url: z.string().url(),
+      repository: z.string(),
+      license: z.string().nullable(),
+      baseSha: z.string(),
+      headSha: z.string(),
+      importedAt: z.string(),
+    })
+    .optional(),
 });
 
 export type EvalCaseMeta = z.infer<typeof caseSchema>;
@@ -51,6 +66,8 @@ export interface EvalCase extends EvalCaseMeta {
   /** Changed files at base: path → content. */
   base: Map<string, string>;
   changedFiles: ChangedFile[];
+  /** Every repository path (tree.txt); defaults to the files in head/. */
+  tree: string[] | null;
 }
 
 async function readTree(dir: string): Promise<Map<string, string>> {
@@ -119,6 +136,9 @@ export function problemsWith(c: EvalCase): string[] {
   for (const e of c.expected) {
     const doc = c.head.get(e.path);
     if (doc === undefined) {
+      // Real cases store only the documents DocDrift would fetch, so a missing
+      // expected document is a genuine retrieval miss, not a broken case.
+      if (c.source === 'real' && c.tree?.includes(e.path)) continue;
       problems.push(`${e.path}: expected document missing from head/`);
       continue;
     }
@@ -138,7 +158,11 @@ export async function loadCase(dir: string): Promise<EvalCase> {
   const meta = caseSchema.parse(JSON.parse(await readFile(join(dir, 'case.json'), 'utf8')));
   const head = await readTree(join(dir, 'head'));
   const base = await readTree(join(dir, 'base'));
-  return { ...meta, head, base, changedFiles: changedFilesOf(head, base, meta.added) };
+  const tree = await readFile(join(dir, 'tree.txt'), 'utf8').then(
+    (t) => t.split('\n').filter(Boolean),
+    () => null,
+  );
+  return { ...meta, head, base, tree, changedFiles: changedFilesOf(head, base, meta.added) };
 }
 
 /** All cases in a folder, in id order. `only` keeps ids starting with any of the prefixes. */
@@ -156,7 +180,7 @@ export function caseSource(c: EvalCase): RepoSource {
   return {
     fullName: `eval/${c.id}`,
     changedFiles: async () => c.changedFiles,
-    treePaths: async () => [...c.head.keys()].sort(),
+    treePaths: async () => c.tree ?? [...c.head.keys()].sort(),
     textFile: async (path) => c.head.get(path) ?? null,
   };
 }
@@ -169,6 +193,7 @@ export async function datasetHash(cases: EvalCase[]): Promise<string> {
     // The diff is derived from head and base, so it isn't hashed separately.
     const { head, base } = c;
     hash.update(JSON.stringify(caseSchema.parse(c)));
+    if (c.tree) hash.update(c.tree.join('\n'));
     for (const m of [head, base])
       for (const [k, v] of [...m.entries()].sort()) hash.update(`${k}\0${v}\0`);
   }

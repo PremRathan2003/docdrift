@@ -34,6 +34,7 @@ retries, validation) runs on each case. The repository is read from disk instead
 | Recall                   | Of the documents that needed updating, how many did it find?                |
 | F1                       | One number balancing the two                                                |
 | Cases exactly right      | Did it flag exactly the right set of documents?                             |
+| Reached the model        | Of the documents that needed updating, how many were even fetched?          |
 | False alarms             | On pull requests that need no doc changes, how often did it flag something? |
 | Content checks           | Does the suggested text contain the new wording and drop the stale wording? |
 | Original lines dropped   | Does the "complete updated file" keep the rest of the document?             |
@@ -44,6 +45,9 @@ Counting is per document, summed over all cases. Documents marked _acceptable_ (
 reasonable) are never counted. A run that errors flags nothing, so its documents count as misses.
 With about 25 cases, one case moves a percentage by several points, so precision and recall are
 shown with 95% confidence intervals.
+
+Recall can never beat the "reached the model" line: document selection decides what the model
+ever sees, so a low number there is a retrieval problem, not a model problem.
 
 **Keyword baseline:** flags every candidate document that mentions an identifier or number the
 PR removed. It's what you'd get with `grep`, and gives the AI numbers a reference point.
@@ -60,9 +64,38 @@ PR removed. It's what you'd get with `grep`, and gives the AI numbers a referenc
 - **tricky (2):** instructions hidden in the README and PR description (prompt injection), and a
   new optional feature where documenting it is reasonable but not required.
 
-**Limitations.** All cases are synthetic and labelled by the author, the repositories are tiny,
-and every case fits in the prompt. So the numbers are a regression check on known patterns, not
-the accuracy you'd see on real repositories. Real-world cases are milestone 2.2.
+**Limitations.** The synthetic cases and labelled by the author, the repositories are tiny,
+and every case fits in the prompt, so they are a regression check on known patterns rather than
+real-world accuracy. The real cases are the harder measure, but there are still few of them, they
+come from a small number of projects, and `no-drift` labels there are weaker.
+
+## Real cases (`1xx-*`)
+
+Synthetic cases are written by hand; real ones come from merged pull requests of public
+repositories:
+
+```bash
+npm run eval:import -- find pydantic/pydantic        # recent merged PRs and what they touched
+npm run eval:import -- https://github.com/o/r/pull/7 # import one (or several) as cases
+```
+
+**Where the right answer comes from.** When a developer changed code _and_ updated a document in
+the same pull request, that document needed updating — the developer said so. The importer keeps
+the code change and puts every document back to its state before the PR, which is exactly the
+situation where the docs have drifted. `mustContain` and `mustNotContain` are distinctive words
+the developer added or removed. Changelogs, and scripts that live under `docs/`, are marked
+_acceptable_ instead. Code-only PRs become `no-drift` cases; that label is weaker (the docs may
+have been stale already), so only clear internal changes are kept.
+
+**What is stored.** The repository's full file list (`tree.txt`), so document selection runs over
+the whole repository as it would on GitHub; the documents DocDrift would fetch, at their pre-PR
+version; and the changed files. Files over 12 kB are stored as their changed regions with 40
+lines of context (`trimmedFiles`), because the analysis only ever sees a file's diff. Every case
+records the pull request URL, commit SHAs and the repository's licence; only permissively
+licensed repositories are imported, and the files stay under their original licence.
+
+**Always review an imported case** (`case.json`) before committing it: the labels are derived
+automatically.
 
 ## Adding a case
 

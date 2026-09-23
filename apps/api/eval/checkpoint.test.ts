@@ -17,6 +17,7 @@ describe('fileCheckpoint', () => {
         inputTokens: 1,
         outputTokens: 1,
         docsSent: [],
+        docsTruncated: [],
       },
       latencyMs: 5,
       savedAt: '2026-09-22T12:00:00.000Z',

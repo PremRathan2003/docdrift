@@ -1,0 +1,49 @@
+{
+  "id": "103-execa-1256",
+  "title": "Add `killDescendants` option to also terminate descendant processes",
+  "body": "Fixes #96",
+  "group": "drift",
+  "category": "real: docs updated with code",
+  "expected": [
+    {
+      "path": "docs/api.md",
+      "mustContain": [
+        "learn.microsoft.com",
+        "options.killDescendants",
+        "Process_group"
+      ],
+      "mustNotContain": []
+    },
+    {
+      "path": "docs/termination.md",
+      "mustContain": [
+        "killDescendants",
+        "learn.microsoft.com",
+        "Process_group"
+      ],
+      "mustNotContain": [
+        "windows.md",
+        "windowsHide"
+      ]
+    }
+  ],
+  "acceptable": [],
+  "added": [
+    "lib/terminate/kill-descendants.js",
+    "test/terminate/kill-descendants.js"
+  ],
+  "trimmedFiles": [
+    "test-d/arguments/options.test-d.ts",
+    "types/arguments/options.d.ts"
+  ],
+  "notes": "The PR author updated these documents in the same PR; the case removes those edits. Content checks are words the author added/removed. Review them before relying on the case.",
+  "source": "real",
+  "origin": {
+    "url": "https://github.com/sindresorhus/execa/pull/1256",
+    "repository": "sindresorhus/execa",
+    "license": "MIT",
+    "baseSha": "ade74bfe0c3fc686d11e9398efdb244c9cb35d29",
+    "headSha": "53657b64ada15aaf0e05ee2095d0441cd078de64",
+    "importedAt": "2026-09-23T07:57:57.614Z"
+  }
+}

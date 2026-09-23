@@ -37,6 +37,8 @@ export interface Detection {
   outputTokens: number | null;
   /** Documents that were sent to the model (or examined by the baseline). */
   docsSent: string[];
+  /** Of those, the ones too long to send in full: they can never be recommended. */
+  docsTruncated: string[];
   error?: { code: string; message: string };
 }
 
@@ -71,6 +73,7 @@ export function aiDetector(ai: AIProvider, config: PipelineConfig): Detector {
           logger: quietLogger,
         });
         const docsSent = result.context.docs.map((d) => d.path);
+        const docsTruncated = result.context.truncatedDocs;
         if (result.kind === 'skipped') {
           return {
             recommendations: [],
@@ -81,6 +84,7 @@ export function aiDetector(ai: AIProvider, config: PipelineConfig): Detector {
             inputTokens: null,
             outputTokens: null,
             docsSent,
+            docsTruncated,
           };
         }
         return {
@@ -92,6 +96,7 @@ export function aiDetector(ai: AIProvider, config: PipelineConfig): Detector {
           inputTokens: result.inputTokens,
           outputTokens: result.outputTokens,
           docsSent,
+          docsTruncated,
         };
       } catch (err) {
         if (!(err instanceof RunFailure)) throw err;
@@ -104,6 +109,7 @@ export function aiDetector(ai: AIProvider, config: PipelineConfig): Detector {
           inputTokens: err.inputTokens,
           outputTokens: err.outputTokens,
           docsSent: [],
+          docsTruncated: [],
           error: { code: err.code, message: err.message },
         };
       }
@@ -169,6 +175,7 @@ export function keywordBaseline(config: PipelineConfig): Detector {
         inputTokens: null,
         outputTokens: null,
         docsSent: ctx.docs.map((d) => d.path),
+        docsTruncated: ctx.truncatedDocs,
       };
     },
   };

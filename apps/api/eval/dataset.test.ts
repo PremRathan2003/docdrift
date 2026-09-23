@@ -58,7 +58,9 @@ describe('context selection on the dataset', async () => {
 
   // If an expected document never reaches the model, no model could get the case
   // right and the case would be measuring document selection instead.
-  it.each(cases.filter((c) => c.expected.length).map((c) => [c.id, c] as const))(
+  // Synthetic cases only: for real ones, missing a document is part of what we measure.
+  const synthetic = cases.filter((c) => c.source === 'synthetic' && c.expected.length);
+  it.each(synthetic.map((c) => [c.id, c] as const))(
     '%s sends every expected document to the model',
     async (_id, c) => {
       const d = await detector.detect(c);

@@ -33,6 +33,7 @@ export function toMarkdown(r: EvalReport): string {
     `| Recall (docs needing updates that were found) | ${pct(m.recall)}${ci(m.recallCI)} — ${m.tp} of ${m.tp + m.fn} |`,
     `| F1 | ${pct(m.f1)} |`,
     `| Cases exactly right | ${pct(m.caseAccuracy)} |`,
+    `| Documents that needed updating and reached the model (retrieval ceiling) | ${pct(m.retrieval.rate)} — ${m.retrieval.reached} of ${m.retrieval.expected}${m.retrieval.truncated ? `, and ${m.retrieval.truncated} of those only in part (too long to rewrite in full)` : ''} |`,
     `| False alarms on "nothing to update" cases | ${pct(m.falseAlarmRate)} of ${m.quietCases} |`,
   ];
   if (writesContent) {
@@ -83,6 +84,15 @@ export function toMarkdown(r: EvalReport): string {
 
   lines.push(
     '',
+    '## Synthetic cases vs real pull requests',
+    '',
+    '| Cases | Precision | Recall | Reached the model | Cases exactly right | False alarms |',
+    '| --- | --- | --- | --- | --- | --- |',
+    ...Object.entries(r.bySource).map(
+      ([s, x]) =>
+        `| ${s} (${r.outcomes.filter((o) => o.source === s).length}) | ${pct(x.precision)} | ${pct(x.recall)} | ${pct(x.retrieval.rate)} | ${pct(x.caseAccuracy)} | ${x.quietCases ? pct(x.falseAlarmRate) : '—'} |`,
+    ),
+    '',
     '## By group',
     '',
     '| Group | Precision | Recall | Cases exactly right | False alarms |',
@@ -122,6 +132,7 @@ export function toMarkdown(r: EvalReport): string {
     '',
     '- A document counts once per case and run. "Acceptable" documents (either answer is reasonable) never count.',
     '- Runs that errored flagged nothing, so their expected documents count as misses.',
+    '- Document selection decides which files the model ever sees, so recall can never beat the retrieval line.',
     '- Content checks only test that the new wording is there and the stale wording is gone; a person still reviews every suggestion.',
     '- Self-reported confidence is the model’s own estimate, not a probability.',
     '',

@@ -26,6 +26,7 @@ export interface ContentCheck {
 export interface CaseOutcome {
   caseId: string;
   group: EvalCase['group'];
+  source: EvalCase['source'];
   category: string;
   run: number;
   tp: string[];
@@ -33,6 +34,10 @@ export interface CaseOutcome {
   fn: string[];
   acceptableFlagged: string[];
   correct: boolean;
+  /** Expected documents that document selection actually sent to the model. */
+  retrieved: string[];
+  /** Of those, the ones sent only in part: DocDrift refuses to rewrite a document it can't see whole. */
+  retrievedTruncated: string[];
   content: ContentCheck[];
   latencyMs: number;
   detection: Detection;
@@ -60,6 +65,8 @@ export function scoreCase(
   const fn = [...expected].filter((p) => !flagged.includes(p));
   const acceptableFlagged = flagged.filter((p) => acceptable.has(p));
 
+  const retrieved = [...expected].filter((p) => detection.docsSent.includes(p));
+  const retrievedTruncated = retrieved.filter((p) => detection.docsTruncated.includes(p));
   const content: ContentCheck[] = [];
   if (opts.checkContent) {
     for (const e of c.expected.filter((x) => tp.includes(x.path))) {
@@ -81,6 +88,7 @@ export function scoreCase(
   return {
     caseId: c.id,
     group: c.group,
+    source: c.source,
     category: c.category,
     run: opts.run,
     tp,
@@ -88,6 +96,8 @@ export function scoreCase(
     fn,
     acceptableFlagged,
     correct: fp.length === 0 && fn.length === 0,
+    retrieved,
+    retrievedTruncated,
     content,
     latencyMs: opts.latencyMs,
     detection,
@@ -141,6 +151,7 @@ export function aggregate(outcomes: CaseOutcome[], expectedCounts: Map<string, n
   const tokensIn = outcomes.map((o) => o.detection.inputTokens).filter((t) => t !== null);
   const tokensOut = outcomes.map((o) => o.detection.outputTokens).filter((t) => t !== null);
 
+  const expectedDocs = sum((o) => o.tp.length + o.fn.length);
   return {
     runs: outcomes.length,
     tp,
@@ -153,6 +164,20 @@ export function aggregate(outcomes: CaseOutcome[], expectedCounts: Map<string, n
     recallCI: wilson(tp, tp + fn),
     /** Cases where the flagged set was exactly right. */
     caseAccuracy: ratio(outcomes.filter((o) => o.correct).length, outcomes.length),
+    /**
+     * Of the documents that needed updating, how many even reached the model.
+     * Recall can never beat this: document selection is the ceiling.
+     */
+    retrieval: {
+      reached: sum((o) => o.retrieved.length),
+      expected: expectedDocs,
+      rate: ratio(
+        sum((o) => o.retrieved.length),
+        expectedDocs,
+      ),
+      /** Of those, fetched but too long to send whole, so never recommendable. */
+      truncated: sum((o) => o.retrievedTruncated.length),
+    },
     /** Of the cases where nothing needed updating, how often something was flagged anyway. */
     falseAlarmRate: ratio(quiet.filter((o) => o.fp.length > 0).length, quiet.length),
     quietCases: quiet.length,

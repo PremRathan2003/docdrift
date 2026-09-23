@@ -1,0 +1,40 @@
+{
+  "id": "106-click-3860",
+  "title": "Always list all positional arguments",
+  "body": "This is inconsistent with the way options are displayed, as every options are displayed including those without help.\r\n\r\nThe reason to display all arguments in the `Positional arguments` section is to not introduce subtle confusion, as an argument without help would only be noticeable in the usage line.\r\n\r\nCloup already renders the section this way (see https://github.com/janluke/cloup/issues/210) and is the source discussion with @janluke for that bug fix.\r\n\r\nIn this implementation, I refrained to always display the `Positional arguments` section. So I made the decision to not print the `Positional arguments` section in full if and only if at least one of its argument has an `help`. This decision is open to discussion.\r\n\r\nThis is a follow up on https://github.com/pallets/click/pull/3473",
+  "group": "drift",
+  "category": "real: docs updated with code",
+  "expected": [
+    {
+      "path": "docs/arguments.md",
+      "mustContain": [
+        "list",
+        "One"
+      ],
+      "mustNotContain": []
+    },
+    {
+      "path": "docs/documentation.md",
+      "mustContain": [
+        "description",
+        "empty",
+        "every"
+      ],
+      "mustNotContain": []
+    }
+  ],
+  "acceptable": [
+    "CHANGES.md"
+  ],
+  "added": [],
+  "notes": "The PR author updated these documents in the same PR; the case removes those edits. Content checks are words the author added/removed. Review them before relying on the case.",
+  "source": "real",
+  "origin": {
+    "url": "https://github.com/pallets/click/pull/3860",
+    "repository": "pallets/click",
+    "license": "BSD-3-Clause",
+    "baseSha": "86949d19b930ef68a45566544cb4b9508d895d0d",
+    "headSha": "05f6fd0df4ecbd104eb7a229f9f185c2484dee69",
+    "importedAt": "2026-09-23T07:55:07.756Z"
+  }
+}

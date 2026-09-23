@@ -14,11 +14,13 @@ function evalCase(id: string, expected: string[]): EvalCase {
     expected: expected.map((path) => ({ path, mustContain: [], mustNotContain: [] })),
     acceptable: [],
     added: [],
+    trimmedFiles: [],
     notes: 'n',
     source: 'synthetic',
     head: new Map(expected.map((p) => [p, 'doc\n'])),
     base: new Map(),
     changedFiles: [],
+    tree: null,
   };
 }
 
@@ -51,6 +53,7 @@ function flakyDetector(): Detector {
         inputTokens: 1,
         outputTokens: 1,
         docsSent: ['README.md'],
+        docsTruncated: [],
       };
     },
   };
@@ -91,6 +94,7 @@ describe('runEval', () => {
           inputTokens: null,
           outputTokens: null,
           docsSent: [],
+          docsTruncated: [],
         };
         if (calls === 1) return { ...base, error: { code: 'AI_UNAVAILABLE', message: 'busy' } };
         return {
@@ -134,6 +138,7 @@ describe('runEval', () => {
           inputTokens: null,
           outputTokens: null,
           docsSent: [],
+          docsTruncated: [],
           error: { code: 'AI_AUTH', message: 'bad key' },
         };
       },
@@ -165,6 +170,7 @@ describe('runEval', () => {
           inputTokens: null,
           outputTokens: null,
           docsSent: [],
+          docsTruncated: [],
           error: { code: 'AI_RATE_LIMITED', message: 'quota' },
         };
       },
@@ -191,6 +197,7 @@ describe('runEval', () => {
           inputTokens: null,
           outputTokens: null,
           docsSent: [],
+          docsTruncated: [],
           error: { code: 'AI_BAD_REQUEST', message: 'unexpected model name format' },
         };
       },
@@ -245,6 +252,7 @@ describe('resuming an interrupted run', () => {
           inputTokens: 1,
           outputTokens: 1,
           docsSent: [],
+          docsTruncated: [],
         };
         if (quotaLeft-- > 0) return base;
         return { ...base, recommendations: [], error: { code: 'AI_AUTH', message: 'quota' } };

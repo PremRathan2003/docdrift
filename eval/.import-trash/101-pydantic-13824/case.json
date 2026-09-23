@@ -1,0 +1,68 @@
+{
+  "id": "101-pydantic-13824",
+  "title": "Add a `counter` core schema",
+  "body": "Following https://github.com/pydantic/pydantic/pull/13757 and https://github.com/pydantic/pydantic/pull/13796, this allows constraints to apply properly (https://github.com/pydantic/pydantic/issues/13704).",
+  "group": "drift",
+  "category": "real: docs updated with code",
+  "expected": [
+    {
+      "path": "docs/api/standard_library_types.md",
+      "mustContain": [
+        "collections.Counter",
+        "counter_type",
+        "typing.Counter"
+      ],
+      "mustNotContain": []
+    },
+    {
+      "path": "docs/errors/validation_errors.md",
+      "mustContain": [
+        "collections.Counter",
+        "counter_type",
+        "Counter"
+      ],
+      "mustNotContain": []
+    }
+  ],
+  "acceptable": [
+    "docs/plugins/conversion_table.py"
+  ],
+  "added": [
+    "pydantic-core/src/common/counter.rs",
+    "pydantic-core/src/serializers/type_serializers/counter.rs",
+    "pydantic-core/src/validators/counter.rs",
+    "pydantic-core/tests/serializers/test_counter.py",
+    "pydantic-core/tests/validators/test_counter.py"
+  ],
+  "notes": "The PR author updated these documents in the same PR; the case removes those edits. Content checks are words the author added/removed. Review them before relying on the case.",
+  "source": "real",
+  "origin": {
+    "url": "https://github.com/pydantic/pydantic/pull/13824",
+    "repository": "pydantic/pydantic",
+    "license": "MIT",
+    "baseSha": "6b819ee1bb1a77c989cb7727af14109cbdf0767e",
+    "headSha": "0398b829e190be1bc4c121abca812c49b726b276",
+    "importedAt": "2026-09-22T21:35:38.627Z"
+  },
+  "trimmedFiles": [
+    "pydantic-core/python/pydantic_core/core_schema.py",
+    "pydantic-core/src/errors/types.rs",
+    "pydantic-core/src/input/input_abstract.rs",
+    "pydantic-core/src/input/input_json.rs",
+    "pydantic-core/src/input/input_python.rs",
+    "pydantic-core/src/input/input_string.rs",
+    "pydantic-core/src/schema_gather.rs",
+    "pydantic-core/src/serializers/infer.rs",
+    "pydantic-core/src/serializers/ob_type.rs",
+    "pydantic-core/src/serializers/shared.rs",
+    "pydantic-core/src/validators/mod.rs",
+    "pydantic-core/tests/serializers/test_any.py",
+    "pydantic-core/tests/test_errors.py",
+    "pydantic-core/tests/test_schema_functions.py",
+    "pydantic/_internal/_generate_schema.py",
+    "pydantic/_internal/_known_annotated_metadata.py",
+    "pydantic/_internal/_validators.py",
+    "pydantic/experimental/pipeline.py",
+    "pydantic/json_schema.py"
+  ]
+}

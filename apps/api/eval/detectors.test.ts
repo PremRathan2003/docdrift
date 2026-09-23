@@ -24,11 +24,13 @@ function evalCase(): EvalCase {
     expected: [{ path: 'README.md', mustContain: ['DATABASE_URL'], mustNotContain: ['DB_URL'] }],
     acceptable: [],
     added: [],
+    trimmedFiles: [],
     notes: 'n',
     source: 'synthetic',
     head,
     base,
     changedFiles: changedFilesOf(head, base, []),
+    tree: null,
   };
 }
 

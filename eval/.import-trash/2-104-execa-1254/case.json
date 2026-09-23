@@ -1,0 +1,49 @@
+{
+  "id": "104-execa-1254",
+  "title": "Add `.readableStream()`, `.writableStream()` and `.transformStream()` methods",
+  "body": "Fixes #913",
+  "group": "drift",
+  "category": "real: docs updated with code",
+  "expected": [
+    {
+      "path": "docs/api.md",
+      "mustContain": [
+        "subprocess.readableStream",
+        "subprocess.transformStream",
+        "subprocess.writableStream"
+      ],
+      "mustNotContain": []
+    },
+    {
+      "path": "docs/streams.md",
+      "mustContain": [
+        "readableStream",
+        "subprocess.readableStream",
+        "subprocess.transformStream"
+      ],
+      "mustNotContain": []
+    }
+  ],
+  "acceptable": [],
+  "added": [
+    "lib/convert/web.js",
+    "test-d/convert/readable-stream.test-d.ts",
+    "test-d/convert/transform-stream.test-d.ts",
+    "test-d/convert/writable-stream.test-d.ts",
+    "test/convert/web.js"
+  ],
+  "trimmedFiles": [
+    "test-d/pipe.test-d.ts",
+    "test/pipe/methods.js"
+  ],
+  "notes": "The PR author updated these documents in the same PR; the case removes those edits. Content checks are words the author added/removed. Review them before relying on the case.",
+  "source": "real",
+  "origin": {
+    "url": "https://github.com/sindresorhus/execa/pull/1254",
+    "repository": "sindresorhus/execa",
+    "license": "MIT",
+    "baseSha": "c31c94c2c65e1aaf1b4d3295eaf927b910a2dc46",
+    "headSha": "91fe48f3fe7bc72274ad3224010493f9a25b8e67",
+    "importedAt": "2026-09-23T07:57:59.736Z"
+  }
+}

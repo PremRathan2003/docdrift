@@ -15,11 +15,13 @@ function evalCase(over: Partial<EvalCase> = {}): EvalCase {
     expected: [{ path: 'docs/api.md', mustContain: ['Authorization'], mustNotContain: ['X-Key'] }],
     acceptable: ['CHANGELOG.md'],
     added: [],
+    trimmedFiles: [],
     notes: 'n',
     source: 'synthetic',
     head: new Map([['docs/api.md', DOC]]),
     base: new Map(),
     changedFiles: [],
+    tree: null,
     ...over,
   };
 }
@@ -41,6 +43,7 @@ function detection(recs: [path: string, text?: string, confidence?: number][]): 
     inputTokens: 100,
     outputTokens: 50,
     docsSent: [],
+    docsTruncated: [],
   };
 }
 

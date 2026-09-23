@@ -129,6 +129,13 @@ export async function runEval(opts: EvalOptions) {
       outcomes.filter((o) => o.group === g),
       expectedCounts,
     );
+  const sources = [...new Set(opts.cases.map((c) => c.source))];
+  const bySource: Record<string, Metrics> = {};
+  for (const s of sources)
+    bySource[s] = aggregate(
+      outcomes.filter((o) => o.source === s),
+      expectedCounts,
+    );
   const perRun = Array.from({ length: repeat }, (_, i) => {
     const m = aggregate(
       outcomes.filter((o) => o.run === i + 1),
@@ -162,6 +169,8 @@ export async function runEval(opts: EvalOptions) {
     repeat,
     overall: aggregate(outcomes, expectedCounts),
     byGroup,
+    /** synthetic vs real pull requests: the comparison milestone 2.2 exists for. */
+    bySource,
     perRun,
     unstableCases,
     /** Cases re-run after a temporary provider error (each counted once, by its final result). */

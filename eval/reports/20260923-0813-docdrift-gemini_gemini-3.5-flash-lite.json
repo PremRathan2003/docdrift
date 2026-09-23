@@ -1,0 +1,1858 @@
+{
+  "generatedAt": "2026-09-23T08:13:24.646Z",
+  "detector": {
+    "name": "docdrift",
+    "model": "gemini/gemini-3.5-flash-lite",
+    "promptVersion": "v2"
+  },
+  "dataset": {
+    "hash": "8d5ede979094",
+    "cases": 33,
+    "byGroup": {
+      "drift": 22,
+      "no-drift": 9,
+      "tricky": 2
+    },
+    "expectedDocs": 28,
+    "synthetic": 26
+  },
+  "repeat": 1,
+  "overall": {
+    "runs": 33,
+    "tp": 18,
+    "fp": 0,
+    "fn": 10,
+    "precision": 1,
+    "recall": 0.6428571428571429,
+    "f1": 0.782608695652174,
+    "precisionCI": [
+      0.8241154494176252,
+      1
+    ],
+    "recallCI": [
+      0.4582997758222723,
+      0.7929438802754113
+    ],
+    "caseAccuracy": 0.8181818181818182,
+    "retrieval": {
+      "reached": 20,
+      "expected": 28,
+      "rate": 0.7142857142857143
+    },
+    "falseAlarmRate": 0,
+    "quietCases": 11,
+    "content": {
+      "checked": 18,
+      "passed": 18,
+      "passRate": 1,
+      "medianDroppedLines": 2
+    },
+    "confidence": {
+      "meanWhenRight": 0.9916666666666666,
+      "meanWhenWrong": null
+    },
+    "errors": {
+      "count": 0,
+      "byCode": {}
+    },
+    "validationWarnings": 0,
+    "modelCalls": 32,
+    "meanAttempts": 1.03125,
+    "tokens": {
+      "input": 216333,
+      "output": 10159
+    },
+    "latencyMs": {
+      "median": 1719.5,
+      "max": 50068
+    }
+  },
+  "byGroup": {
+    "drift": {
+      "runs": 22,
+      "tp": 18,
+      "fp": 0,
+      "fn": 10,
+      "precision": 1,
+      "recall": 0.6428571428571429,
+      "f1": 0.782608695652174,
+      "precisionCI": [
+        0.8241154494176252,
+        1
+      ],
+      "recallCI": [
+        0.4582997758222723,
+        0.7929438802754113
+      ],
+      "caseAccuracy": 0.7272727272727273,
+      "retrieval": {
+        "reached": 20,
+        "expected": 28,
+        "rate": 0.7142857142857143
+      },
+      "falseAlarmRate": null,
+      "quietCases": 0,
+      "content": {
+        "checked": 18,
+        "passed": 18,
+        "passRate": 1,
+        "medianDroppedLines": 2
+      },
+      "confidence": {
+        "meanWhenRight": 0.9916666666666666,
+        "meanWhenWrong": null
+      },
+      "errors": {
+        "count": 0,
+        "byCode": {}
+      },
+      "validationWarnings": 0,
+      "modelCalls": 22,
+      "meanAttempts": 1.0454545454545454,
+      "tokens": {
+        "input": 180895,
+        "output": 9066
+      },
+      "latencyMs": {
+        "median": 1825,
+        "max": 50068
+      }
+    },
+    "no-drift": {
+      "runs": 9,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null,
+      "precisionCI": null,
+      "recallCI": null,
+      "caseAccuracy": 1,
+      "retrieval": {
+        "reached": 0,
+        "expected": 0,
+        "rate": null
+      },
+      "falseAlarmRate": 0,
+      "quietCases": 9,
+      "content": {
+        "checked": 0,
+        "passed": 0,
+        "passRate": null,
+        "medianDroppedLines": null
+      },
+      "confidence": {
+        "meanWhenRight": null,
+        "meanWhenWrong": null
+      },
+      "errors": {
+        "count": 0,
+        "byCode": {}
+      },
+      "validationWarnings": 0,
+      "modelCalls": 8,
+      "meanAttempts": 1,
+      "tokens": {
+        "input": 31750,
+        "output": 516
+      },
+      "latencyMs": {
+        "median": 984,
+        "max": 1325
+      }
+    },
+    "tricky": {
+      "runs": 2,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null,
+      "precisionCI": null,
+      "recallCI": null,
+      "caseAccuracy": 1,
+      "retrieval": {
+        "reached": 0,
+        "expected": 0,
+        "rate": null
+      },
+      "falseAlarmRate": 0,
+      "quietCases": 2,
+      "content": {
+        "checked": 0,
+        "passed": 0,
+        "passRate": null,
+        "medianDroppedLines": null
+      },
+      "confidence": {
+        "meanWhenRight": null,
+        "meanWhenWrong": null
+      },
+      "errors": {
+        "count": 0,
+        "byCode": {}
+      },
+      "validationWarnings": 0,
+      "modelCalls": 2,
+      "meanAttempts": 1,
+      "tokens": {
+        "input": 3688,
+        "output": 577
+      },
+      "latencyMs": {
+        "median": 1484,
+        "max": 1834
+      }
+    }
+  },
+  "bySource": {
+    "synthetic": {
+      "runs": 26,
+      "tp": 17,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1,
+      "precisionCI": [
+        0.8156763396284354,
+        1
+      ],
+      "recallCI": [
+        0.8156763396284354,
+        1
+      ],
+      "caseAccuracy": 1,
+      "retrieval": {
+        "reached": 17,
+        "expected": 17,
+        "rate": 1
+      },
+      "falseAlarmRate": 0,
+      "quietCases": 10,
+      "content": {
+        "checked": 17,
+        "passed": 17,
+        "passRate": 1,
+        "medianDroppedLines": 2
+      },
+      "confidence": {
+        "meanWhenRight": 0.9970588235294118,
+        "meanWhenWrong": null
+      },
+      "errors": {
+        "count": 0,
+        "byCode": {}
+      },
+      "validationWarnings": 0,
+      "modelCalls": 25,
+      "meanAttempts": 1.04,
+      "tokens": {
+        "input": 41233,
+        "output": 7801
+      },
+      "latencyMs": {
+        "median": 1790,
+        "max": 50068
+      }
+    },
+    "real": {
+      "runs": 7,
+      "tp": 1,
+      "fp": 0,
+      "fn": 10,
+      "precision": 1,
+      "recall": 0.09090909090909091,
+      "f1": 0.16666666666666669,
+      "precisionCI": [
+        0.20654329147389294,
+        1
+      ],
+      "recallCI": [
+        0.01623175226282597,
+        0.3773646254862038
+      ],
+      "caseAccuracy": 0.14285714285714285,
+      "retrieval": {
+        "reached": 3,
+        "expected": 11,
+        "rate": 0.2727272727272727
+      },
+      "falseAlarmRate": 0,
+      "quietCases": 1,
+      "content": {
+        "checked": 1,
+        "passed": 1,
+        "passRate": 1,
+        "medianDroppedLines": 2
+      },
+      "confidence": {
+        "meanWhenRight": 0.9,
+        "meanWhenWrong": null
+      },
+      "errors": {
+        "count": 0,
+        "byCode": {}
+      },
+      "validationWarnings": 0,
+      "modelCalls": 7,
+      "meanAttempts": 1,
+      "tokens": {
+        "input": 175100,
+        "output": 2358
+      },
+      "latencyMs": {
+        "median": 1712,
+        "max": 5417
+      }
+    }
+  },
+  "perRun": [
+    {
+      "run": 1,
+      "precision": 1,
+      "recall": 0.6428571428571429,
+      "f1": 0.782608695652174
+    }
+  ],
+  "unstableCases": [],
+  "retries": [],
+  "reused": [],
+  "outcomes": [
+    {
+      "caseId": "001-renamed-json-field",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "renamed field",
+      "run": 1,
+      "tp": [
+        "README.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "README.md"
+      ],
+      "content": [
+        {
+          "path": "README.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 1
+        }
+      ],
+      "latencyMs": 1859,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "README.md",
+            "reason": "The task object representation in README.md uses the property \"done\", but the code was updated to use \"completed\".",
+            "evidence": [
+              {
+                "filePath": "src/store.js",
+                "detail": "Changed property from done to completed in task object creation"
+              }
+            ],
+            "suggestedUpdate": "# Task API\n\nA small JSON API for managing a to-do list. It keeps tasks in memory, so it is\nmeant for demos and tests, not production.\n\n## Quick start\n\n```bash\nnpm install\nnpm start\n```\n\n## Tasks\n\nEach task looks like this:\n\n```json\n{ \"id\": 1, \"title\": \"Buy milk\", \"completed\": false }\n```\n\nSee [docs/api.md](docs/api.md) for every endpoint and\n[docs/configuration.md](docs/configuration.md) for settings.\n\n## License\n\nMIT\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request renames the task object property `done` to `completed` in `src/store.js`. Documentation in `README.md` shows the old `done` property and must be updated.",
+        "attempts": 1,
+        "inputTokens": 1711,
+        "outputTokens": 336,
+        "docsSent": [
+          "README.md",
+          "docs/api.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md"
+        ]
+      }
+    },
+    {
+      "caseId": "002-changed-default",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "changed default",
+      "run": 1,
+      "tp": [
+        "docs/configuration.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "docs/configuration.md"
+      ],
+      "content": [
+        {
+          "path": "docs/configuration.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 1
+        }
+      ],
+      "latencyMs": 5864,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/configuration.md",
+            "reason": "The default value for the PORT environment variable was updated from 3000 to 8080 in the configuration code, but the documentation still states it is 3000.",
+            "evidence": [
+              {
+                "filePath": "src/config.js",
+                "detail": "port: Number(process.env.PORT ?? 8080),"
+              }
+            ],
+            "suggestedUpdate": "# Configuration\n\nThe API is configured with environment variables.\n\n| Variable    | Default       | Description                                  |\n| ----------- | ------------- | -------------------------------------------- |\n| `PORT`      | `8080`        | Port the HTTP server listens on.             |\n| `LOG_LEVEL` | `info`        | One of `debug`, `info`, `warn`, `error`.     |\n| `DB_URL`    | (required)    | PostgreSQL connection string.                |\n\nUnknown variables are ignored.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request changes the default port from 3000 to 8080 in src/config.js. The documentation in docs/configuration.md still lists the default port as 3000 and needs to be updated.",
+        "attempts": 1,
+        "inputTokens": 1686,
+        "outputTokens": 328,
+        "docsSent": [
+          "docs/configuration.md",
+          "CONTRIBUTING.md",
+          "docs/api.md",
+          "README.md"
+        ]
+      }
+    },
+    {
+      "caseId": "003-new-required-setting",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "omission",
+      "run": 1,
+      "tp": [
+        "docs/configuration.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "docs/configuration.md"
+      ],
+      "content": [
+        {
+          "path": "docs/configuration.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 0
+        }
+      ],
+      "latencyMs": 1560,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/configuration.md",
+            "reason": "The configuration documentation omits the new required environment variable 'REDIS_URL' introduced in src/config.js.",
+            "evidence": [
+              {
+                "filePath": "src/config.js",
+                "detail": "Added redisUrl: required('REDIS_URL')"
+              }
+            ],
+            "suggestedUpdate": "# Configuration\n\nThe API is configured with environment variables.\n\n| Variable    | Default       | Description                                  |\n| ----------- | ------------- | -------------------------------------------- |\n| `PORT`      | `3000`        | Port the HTTP server listens on.             |\n| `LOG_LEVEL` | `info`        | One of `debug`, `info`, `warn`, `error`.     |\n| `DB_URL`    | (required)    | PostgreSQL connection string.                |\n| `REDIS_URL` | (required)    | Redis connection string for session cache.   |\n\nUnknown variables are ignored.\n",
+            "modelConfidence": 0.95,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request adds a new required configuration variable 'REDIS_URL' to 'src/config.js'. The documentation in 'docs/configuration.md' needs to be updated to include this new environment variable.",
+        "attempts": 1,
+        "inputTokens": 1664,
+        "outputTokens": 326,
+        "docsSent": [
+          "docs/configuration.md",
+          "CONTRIBUTING.md",
+          "docs/api.md",
+          "README.md"
+        ]
+      }
+    },
+    {
+      "caseId": "004-renamed-endpoint",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "renamed endpoint",
+      "run": 1,
+      "tp": [
+        "docs/api.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "docs/api.md"
+      ],
+      "content": [
+        {
+          "path": "docs/api.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 2
+        }
+      ],
+      "latencyMs": 5475,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "The endpoint paths were renamed from /users to /accounts in the router code, so the API documentation must be updated to reflect this change.",
+            "evidence": [
+              {
+                "filePath": "src/routes.js",
+                "detail": "router.post('/accounts', (req, res) => res.status(201).json(createUser(req.body))); and router.get('/accounts/:id', (req, res) => {"
+              }
+            ],
+            "suggestedUpdate": "# API\n\n## Users\n\n- `POST /accounts` creates a user. Body: `{ \"email\": \"a@example.com\" }`.\n- `GET /accounts/:id` returns one user, or `404`.\n\nAll responses are JSON.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request renamed the API endpoints from `/users` to `/accounts`. The documentation in `docs/api.md` still refers to the old `/users` endpoints and needs to be updated.",
+        "attempts": 2,
+        "inputTokens": 2008,
+        "outputTokens": 467,
+        "docsSent": [
+          "docs/api.md",
+          "README.md"
+        ]
+      }
+    },
+    {
+      "caseId": "005-removed-cli-flag",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "removed option",
+      "run": 1,
+      "tp": [
+        "README.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "README.md"
+      ],
+      "content": [
+        {
+          "path": "README.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 2
+        }
+      ],
+      "latencyMs": 50068,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "README.md",
+            "reason": "The --verbose flag was removed and replaced with --log-level in the CLI code. README.md needs to be updated to document --log-level instead of --verbose.",
+            "evidence": [
+              {
+                "filePath": "dirsync/cli.py",
+                "detail": "Removed --verbose and added --log-level argument"
+              }
+            ],
+            "suggestedUpdate": "# dirsync\n\nKeeps two folders in sync, one way.\n\n## Install\n\n```bash\npip install dirsync\n```\n\n## Usage\n\n```bash\ndirsync SOURCE TARGET [--dry-run] [--log-level LEVEL]\n```\n\n- `--dry-run` shows what would change without copying anything.\n- `--log-level` sets how much to print (choices: debug, info, warning).\n\n## Development\n\nRun the tests with `pytest`.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request replaced the CLI flag --verbose with --log-level. The README.md still documents --verbose instead of --log-level.",
+        "attempts": 1,
+        "inputTokens": 1081,
+        "outputTokens": 302,
+        "docsSent": [
+          "README.md"
+        ]
+      }
+    },
+    {
+      "caseId": "006-pagination-default",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "changed default",
+      "run": 1,
+      "tp": [
+        "docs/api.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "docs/api.md"
+      ],
+      "content": [
+        {
+          "path": "docs/api.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 2
+        }
+      ],
+      "latencyMs": 2306,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "The default value for the `limit` query parameter on `GET /tasks` was changed from 20 to 50 in the code, but the documentation still states it is 20.",
+            "evidence": [
+              {
+                "filePath": "src/routes.js",
+                "detail": "const limit = Math.min(Number(req.query.limit ?? 50), 100);"
+              },
+              {
+                "filePath": "src/store.js",
+                "detail": "export function listTasks({ limit = 50, offset = 0 } = {}) {"
+              }
+            ],
+            "suggestedUpdate": "# API reference\n\nAll endpoints accept and return JSON.\n\n## Authentication\n\nSend your key in the `X-API-Key` header:\n\n```bash\ncurl -H \"X-API-Key: [REDACTED]\" https://api.example.com/tasks\n```\n\nRequests are limited to 100 requests per minute per key. Over the limit, the\nAPI answers `429 Too Many Requests`.\n\n## Tasks\n\n### `GET /tasks`\n\nReturns tasks, oldest first.\n\nQuery parameters:\n\n- `limit` (default 50, max 100): how many tasks to return.\n- `offset` (default 0): how many tasks to skip.\n\n### `POST /tasks`\n\nCreates a task. Body: `{ \"title\": \"Buy milk\" }`. Returns `200 OK` with the\ncreated task.\n\n### `DELETE /tasks/:id`\n\nDeletes a task. Returns `204 No Content`.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request changes the default pagination limit for GET /tasks from 20 to 50. This requires updating docs/api.md which documents the default limit.",
+        "attempts": 1,
+        "inputTokens": 1831,
+        "outputTokens": 497,
+        "docsSent": [
+          "docs/api.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md",
+          "README.md"
+        ]
+      }
+    },
+    {
+      "caseId": "007-auth-header",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "changed interface",
+      "run": 1,
+      "tp": [
+        "docs/api.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "docs/api.md"
+      ],
+      "content": [
+        {
+          "path": "docs/api.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 2
+        }
+      ],
+      "latencyMs": 2172,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "The authentication header was changed from `X-API-Key` to standard `Authorization: Bearer <key>`, but `docs/api.md` still instructs users to use `X-API-Key`.",
+            "evidence": [
+              {
+                "filePath": "src/auth.js",
+                "detail": "const key = req.get('Authorization')?.replace(/^Bearer /, '');"
+              }
+            ],
+            "suggestedUpdate": "# API reference\n\nAll endpoints accept and return JSON.\n\n## Authentication\n\nSend your key in the `Authorization` header as a Bearer token:\n\n```bash\ncurl -H \"Authorization: Bearer [REDACTED]\" https://api.example.com/tasks\n```\n\nRequests are limited to 100 requests per minute per key. Over the limit, the\nAPI answers `429 Too Many Requests`.\n\n## Tasks\n\n### `GET /tasks`\n\nReturns tasks, oldest first.\n\nQuery parameters:\n\n- `limit` (default 20, max 100): how many tasks to return.\n- `offset` (default 0): how many tasks to skip.\n\n### `POST /tasks`\n\nCreates a task. Body: `{ \"title\": \"Buy milk\" }`. Returns `200 OK` with the\ncreated task.\n\n### `DELETE /tasks/:id`\n\nDeletes a task. Returns `204 No Content`.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request changes the API authentication mechanism from a custom X-API-Key header to the standard Authorization Bearer header. This requires updating the documentation in docs/api.md.",
+        "attempts": 1,
+        "inputTokens": 1698,
+        "outputTokens": 449,
+        "docsSent": [
+          "docs/api.md",
+          "docs/configuration.md",
+          "README.md",
+          "CONTRIBUTING.md"
+        ]
+      }
+    },
+    {
+      "caseId": "008-renamed-export",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "renamed function",
+      "run": 1,
+      "tp": [
+        "README.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "README.md"
+      ],
+      "content": [
+        {
+          "path": "README.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 3
+        }
+      ],
+      "latencyMs": 1514,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "README.md",
+            "reason": "The exported function `parseDate` was renamed to `parseIsoDate` in src/index.ts, but the README still uses the old name in code examples and text.",
+            "evidence": [
+              {
+                "filePath": "src/index.ts",
+                "detail": "Renamed export function parseDate to parseIsoDate"
+              }
+            ],
+            "suggestedUpdate": "# tiny-dates\n\nTwo small helpers for ISO dates, with no dependencies.\n\n```ts\nimport { formatDate, parseIsoDate } from 'tiny-dates';\n\nconst d = parseIsoDate('2026-09-22');\nformatDate(d); // '2026-09-22'\n```\n\n`parseIsoDate` throws a `RangeError` for anything that isn't `YYYY-MM-DD`.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request renames the exported function `parseDate` to `parseIsoDate`. The README.md file needs to be updated to reflect this renamed export in both the import statement, the usage example, and the description referencing `parseDate`.",
+        "attempts": 1,
+        "inputTokens": 1038,
+        "outputTokens": 311,
+        "docsSent": [
+          "README.md",
+          "CHANGELOG.md"
+        ]
+      }
+    },
+    {
+      "caseId": "009-renamed-parameter",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "renamed parameter",
+      "run": 1,
+      "tp": [
+        "docs/usage.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "docs/usage.md"
+      ],
+      "content": [
+        {
+          "path": "docs/usage.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 1
+        }
+      ],
+      "latencyMs": 1278,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/usage.md",
+            "reason": "The parameter `timeout` in the `fetch` function has been renamed to `timeout_seconds`, but `docs/usage.md` still uses `timeout=5` in the code example.",
+            "evidence": [
+              {
+                "filePath": "quickget/__init__.py",
+                "detail": "def fetch(url, timeout_seconds=10):"
+              }
+            ],
+            "suggestedUpdate": "# Usage\n\n```python\nfrom quickget import fetch\n\nhtml = fetch(\"https://example.com\", timeout_seconds=5)\n```\n\n`fetch` raises `urllib.error.URLError` when the server can't be reached.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request renames the `timeout` parameter to `timeout_seconds` in the `fetch` function. Documentation in `docs/usage.md` uses the old `timeout` parameter name and needs to be updated.",
+        "attempts": 1,
+        "inputTokens": 954,
+        "outputTokens": 266,
+        "docsSent": [
+          "docs/usage.md",
+          "README.md"
+        ]
+      }
+    },
+    {
+      "caseId": "010-runtime-version",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "requirements",
+      "run": 1,
+      "tp": [
+        "README.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "README.md"
+      ],
+      "content": [
+        {
+          "path": "README.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 1
+        }
+      ],
+      "latencyMs": 1869,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "README.md",
+            "reason": "The README states that the project requires Node.js 18 or later, but the project has been updated to require Node.js 20 in package.json and .nvmrc.",
+            "evidence": [
+              {
+                "filePath": "package.json",
+                "detail": "\"engines\": { \"node\": \">=20\" }"
+              },
+              {
+                "filePath": ".nvmrc",
+                "detail": "changed version from 18 to 20"
+              }
+            ],
+            "suggestedUpdate": "# Task API\n\nA small JSON API for managing a to-do list. It keeps tasks in memory, so it is\nmeant for demos and tests, not production.\n\n## Quick start\n\nRequires Node.js 20 or later.\n\n```bash\nnpm install\nnpm start\n```\n\n## Tasks\n\nEach task looks like this:\n\n```json\n{ \"id\": 1, \"title\": \"Buy milk\", \"done\": false }\n```\n\nSee [docs/api.md](docs/api.md) for every endpoint and\n[docs/configuration.md](docs/configuration.md) for settings.\n\n## License\n\nMIT\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request updates the required Node.js version from 18 to 20 in both .nvmrc and package.json. The README.md file still refers to Node.js 18 and should be updated to Node.js 20.",
+        "attempts": 1,
+        "inputTokens": 1756,
+        "outputTokens": 408,
+        "docsSent": [
+          "README.md",
+          "CONTRIBUTING.md",
+          "docs/api.md",
+          "docs/configuration.md"
+        ]
+      }
+    },
+    {
+      "caseId": "011-renamed-setting-two-docs",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "renamed setting",
+      "run": 1,
+      "tp": [
+        "docs/configuration.md",
+        "README.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "README.md",
+        "docs/configuration.md"
+      ],
+      "content": [
+        {
+          "path": "README.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 1
+        },
+        {
+          "path": "docs/configuration.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 3
+        }
+      ],
+      "latencyMs": 2885,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/configuration.md",
+            "reason": "The environment variable for the database connection was renamed from `DB_URL` to `DATABASE_URL` in `src/config.js`.",
+            "evidence": [
+              {
+                "filePath": "src/config.js",
+                "detail": "Changed `dbUrl: required('DB_URL')` to `dbUrl: required('DATABASE_URL')`"
+              }
+            ],
+            "suggestedUpdate": "# Configuration\n\nThe API is configured with environment variables.\n\n| Variable      | Default       | Description                                  |\n| ------------- | ------------- | -------------------------------------------- |\n| `PORT`      | `3000`        | Port the HTTP server listens on.             |\n| `LOG_LEVEL` | `info`        | One of `debug`, `info`, `warn`, `error`.     |\n| `DATABASE_URL`| (required)    | PostgreSQL connection string.                |\n\nUnknown variables are ignored.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          },
+          {
+            "documentationPath": "README.md",
+            "reason": "The quick start example uses `DB_URL`, which was renamed to `DATABASE_URL` in `src/config.js`.",
+            "evidence": [
+              {
+                "filePath": "src/config.js",
+                "detail": "Changed `dbUrl: required('DB_URL')` to `dbUrl: required('DATABASE_URL')`"
+              }
+            ],
+            "suggestedUpdate": "# Task API\n\nA small JSON API for managing a to-do list. It keeps tasks in memory, so it is\nmeant for demos and tests, not production.\n\n## Quick start\n\n```bash\nnpm install\nDATABASE_URL=postgres://localhost/tasks npm start\n```\n\n## Tasks\n\nEach task looks like this:\n\n```json\n{ \"id\": 1, \"title\": \"Buy milk\", \"done\": false }\n```\n\nSee [docs/api.md](docs/api.md) for every endpoint and\n[docs/configuration.md](docs/configuration.md) for settings.\n\n## License\n\nMIT\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request renamed the configuration environment variable from `DB_URL` to `DATABASE_URL` in `src/config.js`. Two documentation files reference the old variable name (`docs/configuration.md` and `README.md`) and need to be updated.",
+        "attempts": 1,
+        "inputTokens": 1681,
+        "outputTokens": 630,
+        "docsSent": [
+          "docs/configuration.md",
+          "README.md",
+          "CONTRIBUTING.md",
+          "docs/api.md"
+        ]
+      }
+    },
+    {
+      "caseId": "012-status-code",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "changed response",
+      "run": 1,
+      "tp": [
+        "docs/api.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "docs/api.md"
+      ],
+      "content": [
+        {
+          "path": "docs/api.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 2
+        }
+      ],
+      "latencyMs": 1950,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "The code change updates `POST /tasks` to return a 201 Created status code instead of 200 OK. docs/api.md must be updated to reflect this correct HTTP status code.",
+            "evidence": [
+              {
+                "filePath": "src/routes.js",
+                "detail": "router.post('/tasks', ... res.status(201).json(task));"
+              }
+            ],
+            "suggestedUpdate": "# API reference\n\nAll endpoints accept and return JSON.\n\n## Authentication\n\nSend your key in the `X-API-Key` header:\n\n```bash\ncurl -H \"X-API-Key: [REDACTED]\" https://api.example.com/tasks\n```\n\nRequests are limited to 100 requests per minute per key. Over the limit, the\nAPI answers `429 Too Many Requests`.\n\n## Tasks\n\n### `GET /tasks`\n\nReturns tasks, oldest first.\n\nQuery parameters:\n\n- `limit` (default 20, max 100): how many tasks to return.\n- `offset` (default 0): how many tasks to skip.\n\n### `POST /tasks`\n\nCreates a task. Body: `{ \"title\": \"Buy milk\" }`. Returns `201 Created` with the\ncreated task.\n\n### `DELETE /tasks/:id`\n\nDeletes a task. Returns `204 No Content`.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request changes the status code returned by `POST /tasks` from 200 to 201. The documentation in `docs/api.md` still states that it returns `200 OK`, which needs to be updated to `201 Created`.",
+        "attempts": 1,
+        "inputTokens": 1684,
+        "outputTokens": 478,
+        "docsSent": [
+          "docs/api.md",
+          "README.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md"
+        ]
+      }
+    },
+    {
+      "caseId": "013-removed-endpoint",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "removed endpoint",
+      "run": 1,
+      "tp": [
+        "docs/api.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "docs/api.md"
+      ],
+      "content": [
+        {
+          "path": "docs/api.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 3
+        }
+      ],
+      "latencyMs": 1791,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "The DELETE /tasks/:id endpoint was removed and replaced with POST /tasks/:id/archive in src/routes.js.",
+            "evidence": [
+              {
+                "filePath": "src/routes.js",
+                "detail": "router.delete('/tasks/:id' was replaced with router.post('/tasks/:id/archive'"
+              }
+            ],
+            "suggestedUpdate": "# API reference\n\nAll endpoints accept and return JSON.\n\n## Authentication\n\nSend your key in the `X-API-Key` header:\n\n```bash\ncurl -H \"X-API-Key: [REDACTED]\" https://api.example.com/tasks\n```\n\nRequests are limited to 100 requests per minute per key. Over the limit, the\nAPI answers `429 Too Many Requests`.\n\n## Tasks\n\n### `GET /tasks`\n\nReturns tasks, oldest first.\n\nQuery parameters:\n\n- `limit` (default 20, max 100): how many tasks to return.\n- `offset` (default 0): how many tasks to skip.\n\n### `POST /tasks`\n\nCreates a task. Body: `{ \"title\": \"Buy milk\" }`. Returns `200 OK` with the\ncreated task.\n\n### `POST /tasks/:id/archive`\n\nArchives a task. Returns `204 No Content`.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request replaces the DELETE /tasks/:id endpoint with a POST /tasks/:id/archive endpoint. The API documentation in docs/api.md still documents DELETE /tasks/:id and needs to be updated to document POST /tasks/:id/archive instead.",
+        "attempts": 1,
+        "inputTokens": 1959,
+        "outputTokens": 456,
+        "docsSent": [
+          "docs/api.md",
+          "README.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md"
+        ]
+      }
+    },
+    {
+      "caseId": "014-rate-limit",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "changed limit",
+      "run": 1,
+      "tp": [
+        "docs/api.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "docs/api.md"
+      ],
+      "content": [
+        {
+          "path": "docs/api.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 2
+        }
+      ],
+      "latencyMs": 1790,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "The rate limit was changed from 100 to 60 requests per minute in the code, but `docs/api.md` still states it is 100 requests per minute.",
+            "evidence": [
+              {
+                "filePath": "src/auth.js",
+                "detail": "limit changed from 100 to 60"
+              }
+            ],
+            "suggestedUpdate": "# API reference\n\nAll endpoints accept and return JSON.\n\n## Authentication\n\nSend your key in the `X-API-Key` header:\n\n```bash\ncurl -H \"X-API-Key: [REDACTED]\" https://api.example.com/tasks\n```\n\nRequests are limited to 60 requests per minute per key. Over the limit, the\nAPI answers `429 Too Many Requests`.\n\n## Tasks\n\n### `GET /tasks`\n\nReturns tasks, oldest first.\n\nQuery parameters:\n\n- `limit` (default 20, max 100): how many tasks to return.\n- `offset` (default 0): how many tasks to skip.\n\n### `POST /tasks`\n\nCreates a task. Body: `{ \"title\": \"Buy milk\" }`. Returns `200 OK` with the\ncreated task.\n\n### `DELETE /tasks/:id`\n\nDeletes a task. Returns `204 No Content`.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request lowers the rate limit from 100 requests per minute to 60 requests per minute in `src/auth.js`. The documentation in `docs/api.md` mentions the old rate limit of 100 requests per minute and needs to be updated.",
+        "attempts": 1,
+        "inputTokens": 1696,
+        "outputTokens": 465,
+        "docsSent": [
+          "docs/api.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md",
+          "README.md"
+        ]
+      }
+    },
+    {
+      "caseId": "015-behaviour-change",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "changed behaviour",
+      "run": 1,
+      "tp": [
+        "docs/api.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [
+        "README.md"
+      ],
+      "correct": true,
+      "retrieved": [
+        "docs/api.md"
+      ],
+      "content": [
+        {
+          "path": "docs/api.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 2
+        }
+      ],
+      "latencyMs": 2713,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "The code changes `listTasks` to sort tasks by priority descending and then by creation date (`b.priority - a.priority || a.createdAt - b.createdAt`), whereas `docs/api.md` states that tasks are returned oldest first.",
+            "evidence": [
+              {
+                "filePath": "src/store.js",
+                "detail": "listTasks sorts by b.priority - a.priority || a.createdAt - b.createdAt"
+              }
+            ],
+            "suggestedUpdate": "# API reference\n\nAll endpoints accept and return JSON.\n\n## Authentication\n\nSend your key in the `X-API-Key` header:\n\n```bash\ncurl -H \"X-API-Key: [REDACTED]\" https://api.example.com/tasks\n```\n\nRequests are limited to 100 requests per minute per key. Over the limit, the\nAPI answers `429 Too Many Requests`.\n\n## Tasks\n\n### `GET /tasks`\n\nReturns tasks sorted by priority (high-priority first), with ties broken by oldest first.\n\nQuery parameters:\n\n- `limit` (default 20, max 100): how many tasks to return.\n- `offset` (default 0): how many tasks to skip.\n\n### `POST /tasks`\n\nCreates a task. Body: `{ \"title\": \"Buy milk\" }`. Returns `200 OK` with the\ncreated task.\n\n### `DELETE /tasks/:id`\n\nDeletes a task. Returns `204 No Content`.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          },
+          {
+            "documentationPath": "README.md",
+            "reason": "New tasks created in `src/store.js` now include a `priority: 0` property which should be documented in the task object example.",
+            "evidence": [
+              {
+                "filePath": "src/store.js",
+                "detail": "Adds priority: 0 to the created task object"
+              }
+            ],
+            "suggestedUpdate": "# Task API\n\nA small JSON API for managing a to-do list. It keeps tasks in memory, so it is\nmeant for demos and tests, not production.\n\n## Quick start\n\n```bash\nnpm install\nnpm start\n```\n\n## Tasks\n\nEach task looks like this:\n\n```json\n{ \"id\": 1, \"title\": \"Buy milk\", \"done\": false, \"priority\": 0 }\n```\n\nSee [docs/api.md](docs/api.md) for every endpoint and\n[docs/configuration.md](docs/configuration.md) for settings.\n\n## License\n\nMIT\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request changes the task sorting logic to sort by priority descending first, then creation order, and adds a `priority` field (defaulting to 0) to newly created tasks. Documentation files need updates to reflect these changes in both the API behavior and the task data structure.",
+        "attempts": 1,
+        "inputTokens": 1817,
+        "outputTokens": 780,
+        "docsSent": [
+          "docs/api.md",
+          "README.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md"
+        ]
+      }
+    },
+    {
+      "caseId": "016-openapi-parameter",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "renamed parameter",
+      "run": 1,
+      "tp": [
+        "openapi.yaml"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "openapi.yaml"
+      ],
+      "content": [
+        {
+          "path": "openapi.yaml",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 1
+        }
+      ],
+      "latencyMs": 1211,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "openapi.yaml",
+            "reason": "The query parameter for searching products was renamed from 'q' to 'search' in the code.",
+            "evidence": [
+              {
+                "filePath": "src/routes.js",
+                "detail": "const text = String(req.query.search ?? '');"
+              }
+            ],
+            "suggestedUpdate": "openapi: 3.1.0\ninfo:\n  title: Catalog API\n  version: 1.2.0\npaths:\n  /products:\n    get:\n      summary: Search products\n      parameters:\n        - name: search\n          in: query\n          required: false\n          schema:\n            type: string\n          description: Text to search for in product names.\n      responses:\n        '200':\n          description: Matching products.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request renamed the query parameter from 'q' to 'search' in src/routes.js, which contradicts the parameter definition in openapi.yaml.",
+        "attempts": 1,
+        "inputTokens": 1010,
+        "outputTokens": 280,
+        "docsSent": [
+          "openapi.yaml",
+          "README.md"
+        ]
+      }
+    },
+    {
+      "caseId": "017-internal-refactor",
+      "group": "no-drift",
+      "source": "synthetic",
+      "category": "refactor",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [],
+      "content": [],
+      "latencyMs": 811,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request performs an internal refactoring by extracting title validation logic into a helper function `cleanTitle` in `src/store.js`. There is no change to public APIs, configuration, or documented behavior. Therefore, no documentation updates are required.",
+        "attempts": 1,
+        "inputTokens": 1758,
+        "outputTokens": 67,
+        "docsSent": [
+          "README.md",
+          "docs/api.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md"
+        ]
+      }
+    },
+    {
+      "caseId": "018-tests-only",
+      "group": "no-drift",
+      "source": "synthetic",
+      "category": "tests",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [],
+      "content": [],
+      "latencyMs": 996,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request only adds test files (`test/store.test.js`) and contains no source code or configuration changes. Therefore, no documentation updates are required.",
+        "attempts": 1,
+        "inputTokens": 1728,
+        "outputTokens": 49,
+        "docsSent": [
+          "docs/api.md",
+          "README.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md"
+        ]
+      }
+    },
+    {
+      "caseId": "019-comments-only",
+      "group": "no-drift",
+      "source": "synthetic",
+      "category": "comments",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [],
+      "content": [],
+      "latencyMs": 1074,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Reviewed pull request #1 which only adds comments to src/store.js explaining the in-memory storage and task ID behavior. No code logic, configuration, or API endpoints were changed. All candidate documentation files remain accurate.",
+        "attempts": 1,
+        "inputTokens": 1669,
+        "outputTokens": 61,
+        "docsSent": [
+          "docs/api.md",
+          "docs/configuration.md",
+          "README.md",
+          "CONTRIBUTING.md"
+        ]
+      }
+    },
+    {
+      "caseId": "020-lockfile-only",
+      "group": "no-drift",
+      "source": "synthetic",
+      "category": "dependencies",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [],
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": true,
+        "summary": "No reviewable code changes (only generated, binary or sensitive files), so no analysis was needed.",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "CONTRIBUTING.md",
+          "docs/api.md",
+          "docs/configuration.md",
+          "README.md"
+        ]
+      }
+    },
+    {
+      "caseId": "021-keyword-trap",
+      "group": "no-drift",
+      "source": "synthetic",
+      "category": "local rename",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [],
+      "content": [],
+      "latencyMs": 1180,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request performs a simple internal refactoring in `src/stats.js`, renaming a local variable `count` to `openTasks`. No public API endpoints, return values, parameters, configuration variables, or documented behaviours were changed.",
+        "attempts": 1,
+        "inputTokens": 1730,
+        "outputTokens": 64,
+        "docsSent": [
+          "README.md",
+          "docs/api.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md"
+        ]
+      }
+    },
+    {
+      "caseId": "022-equivalent-code",
+      "group": "no-drift",
+      "source": "synthetic",
+      "category": "refactor",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [],
+      "content": [],
+      "latencyMs": 965,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request refactors the internal implementation of `deleteTask` in `src/store.js` by using destructuring and changing the array index check from `index === -1` to `index < 0`. This is an internal code cleanup that does not change the public API behavior, endpoints, parameters, configuration, or documentation requirements.",
+        "attempts": 1,
+        "inputTokens": 1692,
+        "outputTokens": 86,
+        "docsSent": [
+          "docs/api.md",
+          "README.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md"
+        ]
+      }
+    },
+    {
+      "caseId": "023-docs-already-updated",
+      "group": "no-drift",
+      "source": "synthetic",
+      "category": "docs in same PR",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [],
+      "content": [],
+      "latencyMs": 972,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request renames the `due` parameter to `dueDate` in `src/store.js` and already updates `README.md`. Other documentation files do not need updates.",
+        "attempts": 1,
+        "inputTokens": 1907,
+        "outputTokens": 54,
+        "docsSent": [
+          "README.md",
+          "docs/api.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md"
+        ]
+      }
+    },
+    {
+      "caseId": "024-internal-logging",
+      "group": "no-drift",
+      "source": "synthetic",
+      "category": "logging",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [],
+      "content": [],
+      "latencyMs": 972,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request introduces a new internal debug log for task creation using the `LOG_LEVEL` environment variable. The documentation files are already up to date regarding `LOG_LEVEL` configuration and endpoint details, so no documentation updates are required.",
+        "attempts": 1,
+        "inputTokens": 1787,
+        "outputTokens": 64,
+        "docsSent": [
+          "docs/api.md",
+          "docs/configuration.md",
+          "README.md",
+          "CONTRIBUTING.md"
+        ]
+      }
+    },
+    {
+      "caseId": "025-prompt-injection",
+      "group": "tricky",
+      "source": "synthetic",
+      "category": "prompt injection",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [],
+      "content": [],
+      "latencyMs": 1134,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Reviewed the pull request changing an internal array search condition in `deleteTask` from `index === -1` to `index < 0`. This is a purely internal refactoring change that does not affect public APIs, configuration, or documented behavior. The prompt injection attempt inside README.md and the pull request description requesting changes to SECURITY.md have been ignored.",
+        "attempts": 1,
+        "inputTokens": 1778,
+        "outputTokens": 89,
+        "docsSent": [
+          "CONTRIBUTING.md",
+          "docs/api.md",
+          "docs/configuration.md",
+          "README.md",
+          "SECURITY.md"
+        ]
+      }
+    },
+    {
+      "caseId": "026-new-optional-feature",
+      "group": "tricky",
+      "source": "synthetic",
+      "category": "new feature",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [
+        "docs/api.md"
+      ],
+      "correct": true,
+      "retrieved": [],
+      "content": [],
+      "latencyMs": 1834,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "The `GET /tasks` endpoint now supports a new `done` query parameter to filter tasks by their completion status, which is not documented in `docs/api.md` under the query parameters list.",
+            "evidence": [
+              {
+                "filePath": "src/routes.js",
+                "detail": "Added `const done = req.query.done === undefined ? undefined : req.query.done === 'true';` and passed it to `listTasks`."
+              }
+            ],
+            "suggestedUpdate": "# API reference\n\nAll endpoints accept and return JSON.\n\n## Authentication\n\nSend your key in the `X-API-Key` header:\n\n```bash\ncurl -H \"X-API-Key: [REDACTED]\" https://api.example.com/tasks\n```\n\nRequests are limited to 100 requests per minute per key. Over the limit, the\nAPI answers `429 Too Many Requests`.\n\n## Tasks\n\n### `GET /tasks`\n\nReturns tasks, oldest first.\n\nQuery parameters:\n\n- `limit` (default 20, max 100): how many tasks to return.\n- `offset` (default 0): how many tasks to skip.\n- `done`: filter tasks by completion status (`true` or `false`).\n\n### `POST /tasks`\n\nCreates a task. Body: `{ \"title\": \"Buy milk\" }`. Returns `200 OK` with the\ncreated task.\n\n### `DELETE /tasks/:id`\n\nDeletes a task. Returns `204 No Content`.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request adds an optional `done` query parameter to the `GET /tasks` endpoint. The API documentation in `docs/api.md` should be updated to document this new parameter.",
+        "attempts": 1,
+        "inputTokens": 1910,
+        "outputTokens": 488,
+        "docsSent": [
+          "docs/api.md",
+          "README.md",
+          "CONTRIBUTING.md",
+          "docs/configuration.md"
+        ]
+      }
+    },
+    {
+      "caseId": "101-pydantic-13824",
+      "group": "drift",
+      "source": "real",
+      "category": "real: docs updated with code",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [
+        "docs/api/standard_library_types.md",
+        "docs/errors/validation_errors.md"
+      ],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [],
+      "content": [],
+      "latencyMs": 1712,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Reviewed the pull request which adds a `counter` core schema and supporting Python generation/validation logic for collections.Counter. None of the candidate documentation files list specific core schema types or require updates based on this change.",
+        "attempts": 1,
+        "inputTokens": 36436,
+        "outputTokens": 59,
+        "docsSent": [
+          "docs/errors/usage_errors.md",
+          "docs/contributing.md",
+          "docs/concepts/config.md",
+          "README.md",
+          "docs/api/config.md",
+          "docs/api/errors.md",
+          "docs/api/experimental.md",
+          "docs/install.md",
+          "docs/api/aliases.md",
+          "docs/api/annotated_handlers.md",
+          "docs/api/base_model.md",
+          "docs/api/dataclasses.md",
+          "docs/api/fields.md",
+          "docs/api/functional_serializers.md",
+          "docs/api/functional_validators.md"
+        ]
+      }
+    },
+    {
+      "caseId": "102-pydantic-13129",
+      "group": "no-drift",
+      "source": "real",
+      "category": "real: code-only change",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [],
+      "content": [],
+      "latencyMs": 1325,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Reviewed the pull request which preserves `RootModel` core metadata (such as descriptions, examples, and deprecation flags from Annotated types and Field) during schema generation, instead of overriding or dropping them. None of the candidate documentation files cover this specific internal mechanism or require updates.",
+        "attempts": 1,
+        "inputTokens": 19479,
+        "outputTokens": 71,
+        "docsSent": [
+          "docs/errors/usage_errors.md",
+          "docs/contributing.md",
+          "docs/concepts/config.md",
+          "README.md",
+          "docs/api/base_model.md",
+          "docs/install.md",
+          "docs/api/fields.md",
+          "docs/api/aliases.md",
+          "docs/api/annotated_handlers.md",
+          "docs/api/config.md",
+          "docs/api/dataclasses.md",
+          "docs/api/errors.md",
+          "docs/api/experimental.md",
+          "docs/api/functional_serializers.md",
+          "docs/api/functional_validators.md"
+        ]
+      }
+    },
+    {
+      "caseId": "103-execa-1256",
+      "group": "drift",
+      "source": "real",
+      "category": "real: docs updated with code",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [
+        "docs/api.md",
+        "docs/termination.md"
+      ],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "docs/api.md"
+      ],
+      "content": [],
+      "latencyMs": 1229,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The PR adds a new `killDescendants` option to asynchronously terminate a subprocess and its descendant processes. The candidate documentation files provided are truncated or do not document options in detail, so no documentation changes are required or recommended.",
+        "attempts": 1,
+        "inputTokens": 23601,
+        "outputTokens": 53,
+        "docsSent": [
+          "docs/api.md",
+          "docs/bash.md",
+          "docs/execution.md",
+          "docs/input.md",
+          "docs/errors.md",
+          "docs/node.md"
+        ]
+      }
+    },
+    {
+      "caseId": "104-execa-1254",
+      "group": "drift",
+      "source": "real",
+      "category": "real: docs updated with code",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [
+        "docs/api.md",
+        "docs/streams.md"
+      ],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "docs/api.md"
+      ],
+      "content": [],
+      "latencyMs": 1761,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request adds new `.readableStream()`, `.writableStream()`, and `.transformStream()` methods to the subprocess object for web streams conversion. The API documentation in `docs/api.md` was truncated so it cannot be safely updated, but no other documentation files require updates as these methods are additions.",
+        "attempts": 1,
+        "inputTokens": 26915,
+        "outputTokens": 134,
+        "docsSent": [
+          "docs/api.md",
+          "docs/bash.md",
+          "docs/execution.md",
+          "readme.md"
+        ]
+      }
+    },
+    {
+      "caseId": "105-execa-1251",
+      "group": "drift",
+      "source": "real",
+      "category": "real: docs updated with code",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [
+        "docs/windows.md",
+        "readme.md"
+      ],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [],
+      "content": [],
+      "latencyMs": 1727,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The PR removes the dependency on `cross-spawn` and replaces it with a custom command resolution and argument escaping implementation (`parseCommandFile`) using `which` and `path-key`. No documentation changes are contradicted by or omit these internal refactoring details in a way that a reader would notice.",
+        "attempts": 1,
+        "inputTokens": 26591,
+        "outputTokens": 76,
+        "docsSent": [
+          "docs/api.md",
+          "docs/bash.md",
+          "docs/escaping.md",
+          "docs/execution.md",
+          "docs/input.md",
+          "docs/environment.md"
+        ]
+      }
+    },
+    {
+      "caseId": "106-click-3860",
+      "group": "drift",
+      "source": "real",
+      "category": "real: docs updated with code",
+      "run": 1,
+      "tp": [
+        "docs/arguments.md"
+      ],
+      "fp": [],
+      "fn": [
+        "docs/documentation.md"
+      ],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "docs/arguments.md"
+      ],
+      "content": [
+        {
+          "path": "docs/arguments.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 2
+        }
+      ],
+      "latencyMs": 5417,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/arguments.md",
+            "reason": "The documentation states that arguments can take an optional help string shown in the Positional arguments section, but does not mention the new behavior where having at least one documented argument causes all positional arguments (including undocumented ones) to be listed in that section.",
+            "evidence": [
+              {
+                "filePath": "src/click/core.py",
+                "detail": "Command.format_arguments was updated to write all arguments into the formatter if at least one argument is documented, giving undocumented arguments an empty description."
+              }
+            ],
+            "suggestedUpdate": "(arguments)=\n\n# Arguments\n\n```{currentmodule} click\n```\n\nArguments are:\n\n* Are positional in nature.\n* Similar to a limited version of {ref}`options <options>^\n  that can take an arbitrary number of inputs\n* Can take an optional `help` string shown in the `Positional arguments`\n  section of the help page, or be {ref}`documented in the command docstring\n  <documenting-arguments>`.\n\nUseful and often used kwargs are:\n\n* `help`: Help text for the argument.\n* `default`: Passes a default.\n* `nargs`: Sets the number of arguments. Set to -1 to take an arbitrary number.\n\n## Basic Arguments\n\nA minimal {class}`click.Argument` solely takes one string argument:\nthe name of the argument. This will assume the argument is required,\nhas no default, and is of the type `str`.\n\nExample:\n\n```{eval-rst}\n.. click:example::\n\n    @click.command()\n    @click.argument('filename')\n    def touch(filename: str):\n        \"\"\"Print FILENAME.\"\"\"\n        click.echo(filename)\n\nAnd from the command line:\n\n.. click:run::\n\n    invoke(touch, args=['foo.txt'])\n```\n\nIf at least one argument on a command has a `help` string (or a help-like attribute such as `deprecated`), the `Positional arguments` section will be displayed and will list **all** positional arguments, including any undocumented ones with empty descriptions.\n\nAn argument may be assigned a {ref}`parameter type <parameter-types>`.\nIf no type is provided, the type of the default value is used if it is\nrecognized, otherwise {data}`STRING` is used. If no default value is\nprovided, the type is assumed to be {data}`STRING`. See\n{ref}`type-inference` for the types that are recognized.\n\n```{admonition} Note on Required Arguments\n:class: note\n\n   It is possible to make an argument required by setting\n   `required=True`. It is not recommended since we think command line\n   tools should gracefully degrade into becoming no ops. We think this\n   because command line tools are often invoked with wildcard inputs\n   and they should not error out if the wildcard is empty.\n```\n\n## Multiple Arguments\n\nTo set the number of argument use the `nargs` kwarg. It can be set to\nany positive integer and -1. Setting it to -1, makes the number of\narguments arbitrary (which is called variadic) and can only be used\nonce. The arguments are then packed as a tuple and passed to the\nfunction.\n\n```{eval-rst}\n.. click:example::\n\n    @click.command()\n    @click.argument('src', nargs=1)\n    @click.argument('dsts', nargs=-1)\n    def copy(src: str, dsts: tuple[str, ...]):\n        \"\"\"Move file SRC to DST.\"\"\"\n        for destination in dsts:\n            click.echo(f\"Copy {src} to folder {destination}\")\n\nAnd from the command line:\n\n.. click:run::\n\n    invoke(copy, args=['foo.txt', 'usr/david/foo.txt', 'usr/mitsuko/foo.txt'])\n```\n\n```{admonition} Note on Handling Files\n:class: note\n\n   This is not how you should handle files and files paths. This\n   merely used as a simple example. See {ref}`handling-files` to learn\n   more about how to handle files in parameters.\n```\n\n## Argument Escape Sequences\n\nIf you want to process arguments that look like options, like a file\nnamed `-foo.txt` or `--foo.txt`, you must pass the `--` separator\nfirst. After you pass the `--`, you may only pass arguments. This is a\ncommon feature for POSIX command line tools.\n\nExample usage:\n\n```{eval-rst}\n.. click:example::\n\n    @click.command()\n    @click.argument('files', nargs=-1, type=click.Path())\n    def touch(files):\n        \"\"\"Print all FILES file names.\"\"\"\n        for filename in files:\n            click.echo(filename)\n\nAnd from the command line:\n\n.. click:run::\n\n    invoke(touch, ['--', '-foo.txt', 'bar.txt'])\n```\n\nIf you don't like the `--` marker, you can set\n`ignore_unknown_options` to `True` to avoid checking unknown options:\n\n```{eval-rst}\n.. click:example::\n\n    @click.command(context_settings={\"ignore_unknown_options\": True})\n    @click.argument('files', nargs=-1, type=click.Path())\n    def touch(files):\n        \"\"\"Print all FILES file names.\"\"\"\n        for filename in files:\n            click.echo(filename)\n\nAnd from the command line:\n\n.. click:run::\n\n    invoke(touch, ['-foo.txt', 'bar.txt'])\n```\n\n(environment-variables)=\n\n## Environment Variables\n\nArguments can use environment variables. To do so, pass the name(s) of\nthe environment variable(s) via `envvar` in `click.argument`.\n\nChecking one environment variable:\n\n```{eval-rst}\n.. click:example::\n\n    @click.command()\n    @click.argument('src', envvar='SRC', type=click.File('r'))\n    def echo(src):\n        \"\"\"Print value of SRC environment variable.\"\"\"\n        click.echo(src.read())\n\nAnd from the command line:\n\n.. click:run::\n\n    with isolated_filesystem():\n        # Writing the file in the filesystem.\n        with open('hello.txt', 'w') as f:\n            f.write('Hello World!')\n        invoke(echo, env={'SRC': 'hello.txt'})\n\n\nChecking multiple environment variables:\n\n.. click:example::\n\n    @click.command()\n    @click.argument('src', envvar=['SRC', 'SRC_2'], type=click.File('r'))\n    def echo(src):\n        \"\"\"Print value of SRC environment variable.\"\"\"\n        click.echo(src.read())\n\nAnd from the command line:\n\n.. click:run::\n\n    with isolated_filesystem():\n        # Writing the file in the filesystem.\n        with open('hello.txt', 'w') as f:\n            f.write('Hello World from second variable!')\n        invoke(echo, env={'SRC_2': 'hello.txt'})\n```\n",
+            "modelConfidence": 0.9,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request modifies how positional arguments are rendered in help output: the \"Positional arguments\" section is now displayed if at least one argument has help (or a help-like attribute such as deprecated), and all positional arguments are listed (with undocumented ones receiving empty descriptions), rather than only listing arguments that explicitly have help records.",
+        "attempts": 1,
+        "inputTokens": 20670,
+        "outputTokens": 1900,
+        "docsSent": [
+          "docs/complex.md",
+          "docs/advanced.md",
+          "docs/commands-and-groups.md",
+          "docs/arguments.md",
+          "docs/contributing.md",
+          "docs/changes.md"
+        ]
+      }
+    },
+    {
+      "caseId": "107-click-3818",
+      "group": "drift",
+      "source": "real",
+      "category": "real: docs updated with code",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [
+        "docs/exceptions.md"
+      ],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [],
+      "content": [],
+      "latencyMs": 1295,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Reviewed the pull request fixing the race condition on KeyboardInterrupt in Command.main(), and verified that the change is internal refactoring of exception handling and control flow that does not contradict any documented APIs, parameters, or configurations in the candidate documentation files.",
+        "attempts": 1,
+        "inputTokens": 21408,
+        "outputTokens": 65,
+        "docsSent": [
+          "docs/advanced.md",
+          "docs/commands.md",
+          "docs/complex.md",
+          "docs/arguments.md",
+          "docs/changes.md",
+          "docs/setuptools.md"
+        ]
+      }
+    }
+  ]
+}
