@@ -95,6 +95,13 @@ export class RunFailure extends Error {
   attempts = 0;
   inputTokens: number | null = null;
   outputTokens: number | null = null;
+  /**
+   * The context that was built before the failure, when there was one. A run
+   * that fails at the model still retrieved documents, and saying otherwise
+   * would understate retrieval in the evaluation and hide the prompt from the
+   * user's run detail page.
+   */
+  context?: AnalysisContext;
   constructor(
     readonly code: string,
     message: string,
@@ -357,7 +364,7 @@ export async function callModel(
       const parsed = parseModelOutput(result.text);
       if (parsed.ok) return { output: parsed.output, attempts: attempt, inputTokens, outputTokens };
       // A malformed answer is worth one more try; the same prompt often succeeds.
-      lastProblem = `${parsed.reason}: ${parsed.detail}`;
+      lastProblem = `${parsed.reason}: ${parsed.detail}, finishReason ${result.finishReason ?? 'none'}`;
       logger.warn({ attempt, problem: lastProblem }, 'Model output failed validation');
     } catch (err) {
       if (!(err instanceof AIProviderError)) throw err;
@@ -427,7 +434,12 @@ export async function runPipeline(deps: {
     };
   }
 
-  const result = await callModel(deps.ai, context.prompt, deps.config, deps.logger);
+  const result = await callModel(deps.ai, context.prompt, deps.config, deps.logger).catch(
+    (err: unknown) => {
+      if (err instanceof RunFailure) err.context = context;
+      throw err;
+    },
+  );
   const { recommendations, warnings } = validateSemantics(result.output, {
     changedFiles: context.changedFiles,
     docs: context.docs,

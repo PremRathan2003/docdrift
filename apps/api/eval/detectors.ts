@@ -103,6 +103,8 @@ export function aiDetector(ai: AIProvider, config: PipelineConfig): Detector {
         };
       } catch (err) {
         if (!(err instanceof RunFailure)) throw err;
+        // A failed run still retrieved documents: reporting none would blame
+        // retrieval for a model failure.
         return {
           recommendations: [],
           warnings: [],
@@ -111,8 +113,8 @@ export function aiDetector(ai: AIProvider, config: PipelineConfig): Detector {
           attempts: err.attempts,
           inputTokens: err.inputTokens,
           outputTokens: err.outputTokens,
-          docsSent: [],
-          docsTruncated: [],
+          docsSent: err.context?.docs.map((d) => d.path) ?? [],
+          docsTruncated: err.context?.sectionedDocs ?? [],
           error: { code: err.code, message: err.message },
         };
       }

@@ -112,4 +112,15 @@ describe('aiDetector', () => {
     expect(seen).toHaveLength(2);
     expect(d.attempts).toBe(2);
   });
+
+  it('still reports the documents it retrieved when the model never answers', async () => {
+    // Otherwise a model failure is scored as a retrieval miss, which sends the
+    // next piece of work to the wrong part of the system.
+    const { ai } = scripted(['not json', 'still not json', 'nope']);
+    const d = await aiDetector(ai, config).detect(evalCase());
+    expect(d.error?.code).toBe('AI_INVALID_OUTPUT');
+    expect(d.docsSent).toEqual(['README.md']);
+    // And the message says what came back, not just that it was wrong.
+    expect(d.error?.message).toContain('"nope"');
+  });
 });

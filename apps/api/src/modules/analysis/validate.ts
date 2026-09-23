@@ -17,7 +17,7 @@ export function parseModelOutput(text: string): ParseResult {
         .replace(/\s*```$/, ''),
     );
   } catch {
-    return { ok: false, reason: 'invalid_json', detail: 'Response was not valid JSON' };
+    return { ok: false, reason: 'invalid_json', detail: describeNonJson(text) };
   }
   const parsed = analysisOutputSchema.safeParse(json);
   if (!parsed.success) {
@@ -28,6 +28,19 @@ export function parseModelOutput(text: string): ParseResult {
     return { ok: false, reason: 'schema_mismatch', detail };
   }
   return { ok: true, output: parsed.data };
+}
+
+/**
+ * What came back instead of JSON. Without this an AI_INVALID_OUTPUT failure is
+ * unanswerable after the fact: "not valid JSON" is true of an empty answer, a
+ * refusal and a half-written object alike. The snippet is model output, so it
+ * is trimmed to one short line and never treated as an instruction.
+ */
+function describeNonJson(text: string): string {
+  const trimmed = text.trim();
+  if (trimmed === '') return 'The model returned no answer text';
+  const snippet = trimmed.slice(0, 200).replace(/\s+/g, ' ');
+  return `Response was not valid JSON (${trimmed.length} chars, starts: ${JSON.stringify(snippet)})`;
 }
 
 /**

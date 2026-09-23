@@ -44,6 +44,17 @@ describe('parseModelOutput', () => {
     });
   });
 
+  it('says what came back instead of JSON, so a failed run can be diagnosed', () => {
+    expect(parseModelOutput('  ')).toMatchObject({
+      reason: 'invalid_json',
+      detail: 'The model returned no answer text',
+    });
+    expect(parseModelOutput('I cannot help with that.\nSorry.')).toMatchObject({
+      reason: 'invalid_json',
+      detail: expect.stringContaining('"I cannot help with that. Sorry."'),
+    });
+  });
+
   it('defaults scope to a whole-file update (answers from prompt v2 stay valid)', () => {
     const parsed = parseModelOutput(
       JSON.stringify({
