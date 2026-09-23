@@ -9,16 +9,14 @@
       "path": "docs/windows.md",
       "mustContain": [],
       "mustNotContain": [
-        "cross-spawn",
-        "node-cross-spawn"
+        "cross-spawn"
       ]
     },
     {
       "path": "readme.md",
       "mustContain": [],
       "mustNotContain": [
-        "node-cross-spawn",
-        "readme-ov-file"
+        "cross-spawn"
       ]
     }
   ],
@@ -33,7 +31,7 @@
     "test/fixtures/echo-space-shebang.js"
   ],
   "trimmedFiles": [],
-  "notes": "The PR author updated these documents in the same PR; the case removes those edits. Content checks are words the author added/removed. Review them before relying on the case.",
+  "notes": "The PR author updated these documents in the same PR; the case removes those edits. Content checks are words the author added/removed. Review them before relying on the case. Labels reviewed by hand: automatic checks that were link fragments or ordinary English words were removed.",
   "source": "real",
   "origin": {
     "url": "https://github.com/sindresorhus/execa/pull/1251",

@@ -119,7 +119,7 @@ describe('running an analysis', () => {
       status: 'SUCCEEDED',
       provider: 'fake',
       model: 'fake-model-1',
-      promptVersion: 'v2',
+      promptVersion: 'v3',
       summary: goodOutput.summary,
       attemptCount: 1,
       inputTokens: 1000,
@@ -249,6 +249,91 @@ describe('running an analysis', () => {
   });
 });
 
+describe('long documents', () => {
+  /** A reference document well past the size that fits in a prompt. */
+  const LONG_DOC = [
+    '# Reference',
+    '',
+    '## Tasks',
+    '',
+    'Each task: `{ "id": 1, "done": false }`.',
+    '',
+    // Many unrelated sections, so the file is far too big to send whole.
+    ...Array.from({ length: 200 }, (_, i) =>
+      [`## Unrelated setting ${i}`, '', `Explains setting number ${i} in detail.`, ''].join('\n'),
+    ),
+    '## Limits',
+    '',
+    'The default limit is 20.',
+    '',
+  ].join('\n');
+
+  it('shows sections, and splices the updated section back into the whole file', async () => {
+    gh.files![SANDBOX]!['docs/reference.md'] = LONG_DOC;
+    const ai = new FakeAI([
+      reply({
+        summary: 'The task field was renamed.',
+        recommendations: [
+          {
+            documentationPath: 'docs/reference.md',
+            reason: 'The Tasks section still shows `done`.',
+            evidence: [{ filePath: 'src/store.js', detail: 'done → completed' }],
+            scope: 'section',
+            sectionHeading: '## Tasks',
+            suggestedUpdate: '## Tasks\n\nEach task: `{ "id": 1, "completed": false }`.\n',
+            modelConfidence: 0.8,
+            uncertainty: '',
+          },
+        ],
+      }),
+    ]);
+    const ctx = await setup(ai);
+    const run = await runAndWait(ctx);
+
+    expect(run.status).toBe('SUCCEEDED');
+    expect(run.warnings).toEqual([]);
+    // The model saw only the matching sections, not the whole 20 kB file…
+    const sent = run.inputManifest!.docsSent.find((d) => d.path === 'docs/reference.md')!;
+    expect(sent.truncated).toBe(true);
+    expect(ai.requests[0]!.user.length).toBeLessThan(LONG_DOC.length);
+    expect(ai.requests[0]!.user).toContain('sections, chosen because they match');
+
+    // …and the stored suggestion is still the complete document.
+    const suggestion = run.suggestions.find((s) => s.documentationPath === 'docs/reference.md')!;
+    expect(suggestion.currentContent).toContain('"completed": false');
+    expect(suggestion.currentContent).toContain('Explains setting number 199 in detail.');
+    expect(suggestion.currentContent).toContain('The default limit is 20.');
+    expect(suggestion.currentContent.split('\n')).toHaveLength(LONG_DOC.split('\n').length);
+  });
+
+  it('refuses a section it never showed, instead of writing it somewhere', async () => {
+    gh.files![SANDBOX]!['docs/reference.md'] = LONG_DOC;
+    const ai = new FakeAI([
+      reply({
+        summary: 's',
+        recommendations: [
+          {
+            documentationPath: 'docs/reference.md',
+            reason: 'r',
+            evidence: [{ filePath: 'src/store.js', detail: 'd' }],
+            scope: 'section',
+            sectionHeading: '## A section that was never shown',
+            suggestedUpdate: '## A section that was never shown\n\nText.\n',
+            modelConfidence: 0.9,
+            uncertainty: '',
+          },
+        ],
+      }),
+    ]);
+    const ctx = await setup(ai);
+    const run = await runAndWait(ctx);
+
+    expect(run.status).toBe('SUCCEEDED');
+    expect(run.suggestions).toHaveLength(0);
+    expect(run.warnings[0]).toContain('was not one of the sections shown');
+  });
+});
+
 describe('document cache', () => {
   it('downloads each document once and reuses it for later analyses', async () => {
     const ctx = await setup(new FakeAI([reply(goodOutput), reply(goodOutput)]));
@@ -339,7 +424,7 @@ describe('analysis API rules', () => {
         trigger: 'MANUAL',
         status: 'RUNNING',
         headSha: 'x',
-        promptVersion: 'v2',
+        promptVersion: 'v3',
         schemaVersion: '1',
         provider: 'fake',
         model: 'm',

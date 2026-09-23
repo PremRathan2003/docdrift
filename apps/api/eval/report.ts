@@ -34,7 +34,7 @@ export function toMarkdown(r: EvalReport): string {
     `| Recall (docs needing updates that were found) | ${pct(m.recall)}${ci(m.recallCI)} — ${m.tp} of ${m.tp + m.fn} |`,
     `| F1 | ${pct(m.f1)} |`,
     `| Cases exactly right | ${pct(m.caseAccuracy)} |`,
-    `| Documents that needed updating and reached the model (retrieval ceiling) | ${pct(m.retrieval.rate)} — ${m.retrieval.reached} of ${m.retrieval.expected}${m.retrieval.truncated ? `, and ${m.retrieval.truncated} of those only in part (too long to rewrite in full)` : ''} |`,
+    `| Documents that needed updating and reached the model (retrieval ceiling) | ${pct(m.retrieval.rate)} — ${m.retrieval.reached} of ${m.retrieval.expected}${m.retrieval.truncated ? `, and ${m.retrieval.truncated} of those as selected sections (too long to send whole)` : ''} |`,
     `| False alarms on "nothing to update" cases | ${pct(m.falseAlarmRate)} of ${m.quietCases} |`,
   ];
   if (writesContent) {
@@ -134,6 +134,7 @@ export function toMarkdown(r: EvalReport): string {
     '- A document counts once per case and run. "Acceptable" documents (either answer is reasonable) never count.',
     '- Runs that errored flagged nothing, so their expected documents count as misses.',
     '- Document selection decides which files the model ever sees, so recall can never beat the retrieval line.',
+    '- A document too long to send whole is shown as the sections that match the change; the model rewrites one section and the API splices it back into the file.',
     '- Content checks only test that the new wording is there and the stale wording is gone; a person still reviews every suggestion.',
     '- Self-reported confidence is the model’s own estimate, not a probability.',
     '',

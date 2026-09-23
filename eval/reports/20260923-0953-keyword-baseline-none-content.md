@@ -1,9 +1,9 @@
 # Evaluation: keyword-baseline (none)
 
-- **Date:** 2026-09-23 09:09 UTC
+- **Date:** 2026-09-23 09:53 UTC
 - **Prompt version:** n/a (no model)
 - **Document selection:** content ranking (BM25)
-- **Dataset:** 33 cases (22 drift, 9 no-drift, 2 tricky), 28 documents that need updating, hash `e83faa457fbb`
+- **Dataset:** 33 cases (22 drift, 9 no-drift, 2 tricky), 28 documents that need updating, hash `a07ee01256a3`
 - **Runs per case:** 1
 
 > 26 of 33 cases are synthetic and labelled by the author.
@@ -12,11 +12,11 @@
 
 | Metric | Value |
 | --- | --- |
-| Precision (flagged docs that were right) | 59% (95% CI 41%–74%) — 17 of 29 |
-| Recall (docs needing updates that were found) | 61% (95% CI 42%–76%) — 17 of 28 |
-| F1 | 60% |
+| Precision (flagged docs that were right) | 47% (95% CI 32%–63%) — 18 of 38 |
+| Recall (docs needing updates that were found) | 64% (95% CI 46%–79%) — 18 of 28 |
+| F1 | 55% |
 | Cases exactly right | 58% |
-| Documents that needed updating and reached the model (retrieval ceiling) | 96% — 27 of 28, and 6 of those only in part (too long to rewrite in full) |
+| Documents that needed updating and reached the model (retrieval ceiling) | 100% — 28 of 28, and 6 of those as selected sections (too long to send whole) |
 | False alarms on "nothing to update" cases | 18% of 11 |
 
 ## Synthetic cases vs real pull requests
@@ -24,13 +24,13 @@
 | Cases | Precision | Recall | Reached the model | Cases exactly right | False alarms |
 | --- | --- | --- | --- | --- | --- |
 | synthetic (26) | 80% | 71% | 100% | 73% | 10% |
-| real (7) | 36% | 45% | 91% | 0% | 100% |
+| real (7) | 26% | 55% | 100% | 0% | 100% |
 
 ## By group
 
 | Group | Precision | Recall | Cases exactly right | False alarms |
 | --- | --- | --- | --- | --- |
-| drift | 68% | 61% | 45% | — |
+| drift | 58% | 64% | 45% | — |
 | no-drift | 0% | n/a | 78% | 22% |
 | tricky | n/a | n/a | 100% | 0% |
 
@@ -64,12 +64,12 @@
 | 024-internal-logging | 1 | right | — | — | — |
 | 025-prompt-injection | 1 | right | — | — | — |
 | 026-new-optional-feature | 1 | right | — | — | — |
-| 101-pydantic-13824 | 1 | wrong | — | docs/concepts/types.md | — |
-| 102-pydantic-13129 | 1 | wrong | — | docs/errors/usage_errors.md, docs/concepts/json_schema.md, docs/concepts/models.md | — |
+| 101-pydantic-13824 | 1 | wrong | — | docs/concepts/types.md, docs/concepts/json_schema.md, docs/errors/usage_errors.md, docs/concepts/models.md, docs/concepts/experimental.md | — |
+| 102-pydantic-13129 | 1 | wrong | — | docs/errors/usage_errors.md, docs/concepts/json_schema.md, docs/concepts/models.md, docs/concepts/fields.md, docs/concepts/types.md, docs/api/standard_library_types.md | — |
 | 103-execa-1256 | 1 | wrong | docs/api.md, docs/termination.md | — | — |
 | 104-execa-1254 | 1 | wrong | docs/api.md, docs/streams.md | — | — |
-| 105-execa-1251 | 1 | wrong | — | docs/shell.md | — |
-| 106-click-3860 | 1 | wrong | docs/documentation.md | docs/testing.md, docs/options.md, docs/advanced.md, docs/support-multiple-versions.md | — |
+| 105-execa-1251 | 1 | wrong | — | docs/shell.md, docs/bash.md | — |
+| 106-click-3860 | 1 | wrong | — | docs/testing.md, docs/options.md, docs/advanced.md, docs/complex.md | — |
 | 107-click-3818 | 1 | wrong | docs/exceptions.md | — | — |
 
 ## How to read this
@@ -77,5 +77,6 @@
 - A document counts once per case and run. "Acceptable" documents (either answer is reasonable) never count.
 - Runs that errored flagged nothing, so their expected documents count as misses.
 - Document selection decides which files the model ever sees, so recall can never beat the retrieval line.
+- A document too long to send whole is shown as the sections that match the change; the model rewrites one section and the API splices it back into the file.
 - Content checks only test that the new wording is there and the stale wording is gone; a person still reviews every suggestion.
 - Self-reported confidence is the model’s own estimate, not a probability.

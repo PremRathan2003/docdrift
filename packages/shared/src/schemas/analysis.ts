@@ -11,7 +11,7 @@ import { z } from 'zod';
  */
 
 /** Bumped whenever the shape below changes. Stored with every analysis run. */
-export const ANALYSIS_OUTPUT_SCHEMA_VERSION = '1';
+export const ANALYSIS_OUTPUT_SCHEMA_VERSION = '2';
 
 // Limits keep a misbehaving model from flooding the database or the UI.
 const MAX_RECOMMENDATIONS = 20;
@@ -38,8 +38,20 @@ export const recommendationSchema = z.object({
   reason: z.string().trim().min(1).max(2000),
   evidence: z.array(evidenceSchema).min(1).max(MAX_EVIDENCE_ITEMS),
   /**
-   * The complete updated document (prompt v2+). Not trimmed: leading/trailing
-   * whitespace, like the final newline, is part of the file.
+   * What `suggestedUpdate` contains (prompt v3):
+   *  - 'file': the complete updated document, when the whole file was shown;
+   *  - 'section': one updated section, when only parts were shown. Long
+   *    reference documents don't fit in a prompt, and asking a model to
+   *    reproduce 40 kB exhausts its output limit, so it rewrites one section
+   *    and the API splices it back into the file.
+   * Absent means 'file' (answers from prompt v2 stay valid).
+   */
+  scope: z.enum(['file', 'section']).default('file'),
+  /** With scope 'section': the heading line of the section being replaced, copied exactly. */
+  sectionHeading: z.string().max(500).optional(),
+  /**
+   * The complete updated document, or the complete updated section. Not
+   * trimmed: leading/trailing whitespace, like the final newline, is part of it.
    */
   suggestedUpdate: z
     .string()

@@ -27,10 +27,11 @@ import {
   type ChangedFile,
 } from './context.js';
 import { isHistoryDoc, queryTerms, rankByContent } from './retrieval.js';
-import { buildUserPrompt, SYSTEM_PROMPT } from './prompts/v2.js';
+import { buildUserPrompt, SYSTEM_PROMPT, type PromptDoc } from './prompts/v3.js';
+import { packSections, replaceSection, splitIntoSections, type Section } from './sections.js';
 import { parseModelOutput, validateSemantics } from './validate.js';
 
-export { PROMPT_VERSION } from './prompts/v2.js';
+export { PROMPT_VERSION } from './prompts/v3.js';
 
 export interface RepoSource {
   /** "owner/name", shown to the model. */
@@ -79,7 +80,12 @@ const MAX_DOCS_FETCHED = 15; // path-rules mode only
 const MAX_DOCS_CONSIDERED = 250;
 /** How many of the best-matching documents can go into one prompt. */
 const MAX_DOCS_SENT = 12;
+/** A document longer than this is shown as sections instead of in full. */
 const MAX_CHARS_PER_DOC = 12_000;
+/** Sizes for one section: small ones are merged, huge ones split. */
+const SECTION_SIZE = { min: 400, max: 6_000 };
+/** At most this much of one long document goes into the prompt. */
+const MAX_CHARS_PER_SECTIONED_DOC = 9_000;
 const CHARS_PER_TOKEN = 4; // rough rule of thumb for English text and code
 
 const JSON_SCHEMA = z.toJSONSchema(analysisOutputSchema) as Record<string, unknown>;
@@ -144,23 +150,66 @@ export async function buildContext(
   const docBudget = Math.floor(budget * 0.35);
   let used = 0;
   let secretsRedacted = selection.redactions;
-  const docs: { path: string; content: string; truncated: boolean; matched: string[] }[] = [];
+  const terms = queryTerms(selection.included.map((f) => f.patch));
+  const docs: ContextDoc[] = [];
   for (const d of ranked) {
     const { text, redactions } = redactSecrets(d.content);
     secretsRedacted += redactions;
-    const truncated = text.length > MAX_CHARS_PER_DOC;
-    const content = truncated ? text.slice(0, MAX_CHARS_PER_DOC) : text;
-    if (used + content.length > docBudget) continue;
-    used += content.length;
-    docs.push({ path: d.path, content, truncated, matched: d.matched });
+
+    if (text.length <= MAX_CHARS_PER_DOC) {
+      if (used + text.length > docBudget) continue;
+      used += text.length;
+      docs.push({ path: d.path, content: text, full: text, sections: null, matched: d.matched });
+      continue;
+    }
+
+    // Too long to send whole: show the sections that match this pull request.
+    const all = packSections(splitIntoSections(text), SECTION_SIZE);
+    const best = rankByContent(
+      all.map((s) => ({ path: String(s.index), content: s.content })),
+      terms,
+    )
+      .filter((s) => s.score > 0)
+      .map((s) => all[Number(s.path)]!);
+    const chosen: Section[] = [];
+    let size = 0;
+    for (const s of best) {
+      if (size + s.content.length > Math.min(MAX_CHARS_PER_SECTIONED_DOC, docBudget - used)) break;
+      size += s.content.length;
+      chosen.push(s);
+    }
+    if (chosen.length === 0) continue;
+    used += size;
+    // Sections go in document order, so the model reads them as it would the file.
+    chosen.sort((a, b) => a.startLine - b.startLine);
+    docs.push({
+      path: d.path,
+      content: chosen.map((s) => s.content).join('\n\n'),
+      full: text,
+      sections: { chosen, total: all.length, raw: splitIntoSections(text) },
+      matched: d.matched,
+    });
   }
 
+  const promptDocs: PromptDoc[] = docs.map((d) =>
+    d.sections
+      ? {
+          path: d.path,
+          sections: d.sections.chosen.map((s) => ({
+            heading: s.heading,
+            breadcrumb: s.breadcrumb,
+            content: s.content,
+          })),
+          totalSections: d.sections.total,
+        }
+      : { path: d.path, content: d.content },
+  );
   const prompt = buildUserPrompt({
     repository: source.fullName,
     pullRequest: pr,
     files: selection.included,
     skippedFiles: selection.skipped,
-    docs,
+    docs: promptDocs,
   });
   const manifest: InputManifest = {
     filesSent: selection.included.map((f) => ({
@@ -172,7 +221,10 @@ export async function buildContext(
     docsSent: docs.map((d) => ({
       path: d.path,
       matchedKeywords: d.matched.slice(0, 15),
-      truncated: d.truncated,
+      /** "Truncated" now means "shown as selected sections", never cut mid-file. */
+      truncated: d.sections !== null,
+      sectionsSent: d.sections ? d.sections.chosen.length : undefined,
+      sectionsTotal: d.sections ? d.sections.total : undefined,
     })),
     docsConsidered: fetched.length,
     secretsRedacted,
@@ -184,12 +236,98 @@ export async function buildContext(
     /** Exactly what the model saw, for detectors that don't use a model (the eval baseline). */
     included: selection.included,
     docs,
-    truncatedDocs: docs.filter((d) => d.truncated).map((d) => d.path),
+    /** Documents shown as sections rather than in full. */
+    sectionedDocs: docs.filter((d) => d.sections !== null).map((d) => d.path),
     changedFiles: files.map((f) => f.filename),
   };
 }
 
+/**
+ * Models sometimes echo the prompt's own labelling, e.g.
+ * "### Ordered dictionaries — under ## Generic collection types". Compare
+ * headings by their own text only.
+ */
+function normaliseHeading(heading: string): string {
+  return heading.split(' — under ')[0]!.trim();
+}
+
+export interface ContextDoc {
+  path: string;
+  /** What the model was shown: the whole file, or the chosen sections joined. */
+  content: string;
+  /** The complete document, for splicing a section update back in. */
+  full: string;
+  sections: {
+    /** The chunks that were shown, in document order. */
+    chosen: Section[];
+    total: number;
+    /** Every heading-delimited section of the document, for locating the one the model names. */
+    raw: Section[];
+  } | null;
+  matched: string[];
+}
+
 export type AnalysisContext = Awaited<ReturnType<typeof buildContext>>;
+
+/**
+ * Turns a section-scoped recommendation into a complete updated document, so
+ * everything downstream (diff, review, patch) keeps working with whole files.
+ * Returns null when the section can't be matched, which is a reason to drop
+ * the recommendation rather than write a guess.
+ */
+export function spliceRecommendation(
+  doc: ContextDoc,
+  rec: { scope?: 'file' | 'section'; sectionHeading?: string; suggestedUpdate: string },
+): { content: string } | { error: string } {
+  const scope = rec.scope ?? 'file';
+  // A section-scoped answer for a document shown in full is still usable: find
+  // that section in the document and replace just it. Refusing would throw away
+  // a correct answer over a formality.
+  if (scope === 'section' && !doc.sections && rec.sectionHeading) {
+    const wanted = normaliseHeading(rec.sectionHeading);
+    const matches = splitIntoSections(doc.full).filter(
+      (s) => normaliseHeading(s.heading) === wanted,
+    );
+    if (matches.length === 1) {
+      const spliced = replaceSection(doc.full, matches[0]!, rec.suggestedUpdate);
+      if (spliced !== null) return { content: spliced };
+    }
+    return {
+      error: `section "${rec.sectionHeading}" is not a heading of this document (which was shown in full)`,
+    };
+  }
+  if (scope === 'file') {
+    if (doc.sections)
+      return {
+        error: 'the document was shown as sections, so a whole-file rewrite would drop the rest',
+      };
+    return { content: rec.suggestedUpdate };
+  }
+  if (!doc.sections) return { error: 'the whole document was shown, so name no section' };
+  const heading = normaliseHeading(rec.sectionHeading ?? '');
+  const shown = (s: Section) =>
+    doc.sections!.chosen.some((c) => s.startLine >= c.startLine && s.endLine <= c.endLine);
+
+  // The model may name the chunk it was shown, or a heading inside it (chunks
+  // merge short sections). Both are fine; anything else is not.
+  const candidates = [
+    ...doc.sections.chosen.filter((s) => normaliseHeading(s.heading) === heading),
+    ...doc.sections.raw.filter((s) => normaliseHeading(s.heading) === heading && shown(s)),
+  ];
+  const matches = candidates.filter(
+    (s, i) => candidates.findIndex((o) => o.startLine === s.startLine) === i,
+  );
+  if (matches.length !== 1)
+    return {
+      error: matches.length
+        ? `section "${heading}" appears more than once in what was shown`
+        : `section "${heading}" was not one of the sections shown`,
+    };
+  const spliced = replaceSection(doc.full, matches[0]!, rec.suggestedUpdate);
+  return spliced === null
+    ? { error: 'the section no longer matches the document' }
+    : { content: spliced };
+}
 
 // ---------------------------------------------------------------- one LLM call with retries
 
@@ -292,8 +430,7 @@ export async function runPipeline(deps: {
   const result = await callModel(deps.ai, context.prompt, deps.config, deps.logger);
   const { recommendations, warnings } = validateSemantics(result.output, {
     changedFiles: context.changedFiles,
-    candidateDocs: context.docs.map((d) => d.path),
-    truncatedDocs: context.truncatedDocs,
+    docs: context.docs,
   });
   return { kind: 'answered', ...result, recommendations, warnings, context };
 }

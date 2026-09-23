@@ -102,7 +102,7 @@ describe('suggestion detail', () => {
       'APPROVE',
       'REJECT',
     ]);
-    expect(body.analysis.promptVersion).toBe('v2');
+    expect(body.analysis.promptVersion).toBe('v3');
     expect(body.repository.fullName).toBe(SANDBOX);
     expect(body.reviews).toEqual([]);
   });

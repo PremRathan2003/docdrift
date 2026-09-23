@@ -12,7 +12,7 @@
     "pydantic/json_schema.py",
     "tests/test_json_schema.py"
   ],
-  "notes": "The PR author changed no documentation. Weaker label: the docs may have been stale already. Only keep clearly internal changes.",
+  "notes": "The PR author changed no documentation. Weaker label: the docs may have been stale already. Only keep clearly internal changes. Labels reviewed by hand and kept as derived.",
   "source": "real",
   "origin": {
     "url": "https://github.com/pydantic/pydantic/pull/13129",

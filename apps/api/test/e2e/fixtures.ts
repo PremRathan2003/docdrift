@@ -18,8 +18,14 @@ export const E2E = {
   },
 } as const;
 
+/** The "## Caching" section exists so the cache pull request also has a document to match. */
+const CACHING =
+  '\n\n## Caching\n\nResponses are cached; `ttl` in `src/cache.js` sets for how long.\n';
+
 export const README =
-  '# Task API\n\nA tiny task list API.\n\n## Tasks\n\nEach task looks like `{ "id": 1, "done": false }`.\n\n`POST /tasks/:id/done` marks a task as done.\n';
+  '# Task API\n\nA tiny task list API.\n\n## Tasks\n\nEach task looks like `{ "id": 1, "done": false }`.\n\n`POST /tasks/:id/done` marks a task as done.' +
+  CACHING;
 
 export const README_UPDATED =
-  '# Task API\n\nA tiny task list API.\n\n## Tasks\n\nEach task looks like `{ "id": 1, "completed": false }`.\n\n`POST /tasks/:id/done` marks a task as completed.\n';
+  '# Task API\n\nA tiny task list API.\n\n## Tasks\n\nEach task looks like `{ "id": 1, "completed": false }`.\n\n`POST /tasks/:id/done` marks a task as completed.' +
+  CACHING;

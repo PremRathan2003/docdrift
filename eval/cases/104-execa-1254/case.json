@@ -36,7 +36,7 @@
     "test-d/pipe.test-d.ts",
     "test/pipe/methods.js"
   ],
-  "notes": "The PR author updated these documents in the same PR; the case removes those edits. Content checks are words the author added/removed. Review them before relying on the case.",
+  "notes": "The PR author updated these documents in the same PR; the case removes those edits. Content checks are words the author added/removed. Review them before relying on the case. Labels reviewed by hand and kept as derived.",
   "source": "real",
   "origin": {
     "url": "https://github.com/sindresorhus/execa/pull/1254",

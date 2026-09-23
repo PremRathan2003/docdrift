@@ -8,23 +8,16 @@
     {
       "path": "docs/api.md",
       "mustContain": [
-        "best-effort",
-        "options.killDescendants",
-        "Process_group"
+        "options.killDescendants"
       ],
       "mustNotContain": []
     },
     {
       "path": "docs/termination.md",
       "mustContain": [
-        "best-effort",
-        "killDescendants",
-        "Process_group"
+        "killDescendants"
       ],
-      "mustNotContain": [
-        "console-window",
-        "windows.md"
-      ]
+      "mustNotContain": []
     }
   ],
   "acceptable": [],
@@ -36,7 +29,7 @@
     "test-d/arguments/options.test-d.ts",
     "types/arguments/options.d.ts"
   ],
-  "notes": "The PR author updated these documents in the same PR; the case removes those edits. Content checks are words the author added/removed. Review them before relying on the case.",
+  "notes": "The PR author updated these documents in the same PR; the case removes those edits. Content checks are words the author added/removed. Review them before relying on the case. Labels reviewed by hand: automatic checks that were link fragments or ordinary English words were removed.",
   "source": "real",
   "origin": {
     "url": "https://github.com/sindresorhus/execa/pull/1256",

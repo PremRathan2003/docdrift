@@ -12,9 +12,7 @@
     },
     {
       "path": "docs/documentation.md",
-      "mustContain": [
-        "description"
-      ],
+      "mustContain": [],
       "mustNotContain": []
     }
   ],
@@ -26,7 +24,7 @@
     "src/click/core.py",
     "tests/test_arguments.py"
   ],
-  "notes": "The PR author updated these documents in the same PR; the case removes those edits. Content checks are words the author added/removed. Review them before relying on the case.",
+  "notes": "The PR author updated these documents in the same PR; the case removes those edits. Content checks are words the author added/removed. Review them before relying on the case. Labels reviewed by hand: automatic checks that were link fragments or ordinary English words were removed.",
   "source": "real",
   "origin": {
     "url": "https://github.com/pallets/click/pull/3860",

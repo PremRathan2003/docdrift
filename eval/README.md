@@ -36,6 +36,7 @@ retries, validation) runs on each case. The repository is read from disk instead
 | F1                       | One number balancing the two                                                |
 | Cases exactly right      | Did it flag exactly the right set of documents?                             |
 | Reached the model        | Of the documents that needed updating, how many were even fetched?          |
+| …as sections             | Of those, how many were too long to send whole and were shown in parts      |
 | False alarms             | On pull requests that need no doc changes, how often did it flag something? |
 | Content checks           | Does the suggested text contain the new wording and drop the stale wording? |
 | Original lines dropped   | Does the "complete updated file" keep the rest of the document?             |

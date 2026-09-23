@@ -1,4 +1,5 @@
 import { analysisOutputSchema, type AnalysisOutput, type Recommendation } from '@docdrift/shared';
+import { spliceRecommendation, type ContextDoc } from './pipeline.js';
 
 export type ParseResult =
   | { ok: true; output: AnalysisOutput }
@@ -36,26 +37,27 @@ export function parseModelOutput(text: string): ParseResult {
  */
 export function validateSemantics(
   output: AnalysisOutput,
-  ctx: { changedFiles: string[]; candidateDocs: string[]; truncatedDocs?: string[] },
+  ctx: { changedFiles: string[]; docs: ContextDoc[] },
 ): { recommendations: Recommendation[]; warnings: string[] } {
   const changed = new Set(ctx.changedFiles);
-  const docs = new Set(ctx.candidateDocs);
-  const truncated = new Set(ctx.truncatedDocs ?? []);
+  const docs = new Map(ctx.docs.map((d) => [d.path, d]));
   const warnings: string[] = [];
   const seen = new Set<string>();
   const recommendations: Recommendation[] = [];
 
   for (const rec of output.recommendations) {
-    if (!docs.has(rec.documentationPath)) {
+    const doc = docs.get(rec.documentationPath);
+    if (!doc) {
       warnings.push(
         `Dropped a recommendation for "${rec.documentationPath}": not one of the documentation files provided.`,
       );
       continue;
     }
-    if (truncated.has(rec.documentationPath)) {
-      warnings.push(
-        `Dropped a recommendation for "${rec.documentationPath}": the file was too long to send in full, so a complete update can't be trusted.`,
-      );
+    // A section update becomes a complete document here, so the rest of the
+    // app never deals with fragments.
+    const spliced = spliceRecommendation(doc, rec);
+    if ('error' in spliced) {
+      warnings.push(`Dropped a recommendation for "${rec.documentationPath}": ${spliced.error}.`);
       continue;
     }
     const evidence = rec.evidence.filter((e) => changed.has(e.filePath));
@@ -78,7 +80,7 @@ export function validateSemantics(
       continue;
     }
     seen.add(rec.documentationPath);
-    recommendations.push({ ...rec, evidence });
+    recommendations.push({ ...rec, evidence, suggestedUpdate: spliced.content });
   }
   return { recommendations, warnings };
 }

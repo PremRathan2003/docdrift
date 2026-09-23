@@ -158,6 +158,18 @@ the code the app runs, and because identifiers need their own tokenizer. Reading
 needs their content: `DocumentBlob` caches it by git blob SHA (a content hash), so each file is
 downloaded once per repository and later analyses read the cache — proven by an integration test.
 
+**D16 — Section-level documents (Phase 2.3b).** Prompt v2 sent each document whole and asked for
+the whole file back. On real projects that failed at both ends: a 40 kB reference document arrived
+truncated (and was then refused, because rewriting a half-read file would delete what the model
+never saw), and when one did fit, the model ran out of output tokens mid-answer
+(`AI_INVALID_OUTPUT`). Prompt v3 shows a long document as the sections that match the change,
+each with its heading and the headings above it, and asks for ONE updated section back
+(`scope: 'section'` + `sectionHeading`). The API splices it into the file with `replaceSection`,
+which refuses unless the section still matches byte for byte, so nothing downstream changes: the
+review page, the diff and the exported patch still work with complete documents, and a section the
+model was not shown is dropped with a warning. Measured: every document that needed updating now
+reaches the model (28 of 28, six as sections), and prompts got smaller.
+
 **D13 — Evaluation.** `npm run eval` runs the same `runPipeline` as the app (context selection,
 prompt, retries, validation), only reading repositories from `eval/cases` instead of GitHub, so it
 measures what users get. Cases are small repositories (`head/` + the changed files' `base/`) with

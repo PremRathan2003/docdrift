@@ -1,12 +1,13 @@
 {
-  "generatedAt": "2026-09-23T08:47:12.303Z",
+  "generatedAt": "2026-09-23T09:53:08.793Z",
   "detector": {
     "name": "keyword-baseline",
+    "retrieval": "content",
     "model": "none",
     "promptVersion": null
   },
   "dataset": {
-    "hash": "8d5ede979094",
+    "hash": "a07ee01256a3",
     "cases": 33,
     "byGroup": {
       "drift": 22,
@@ -19,26 +20,26 @@
   "repeat": 1,
   "overall": {
     "runs": 33,
-    "tp": 13,
-    "fp": 15,
-    "fn": 15,
-    "precision": 0.4642857142857143,
-    "recall": 0.4642857142857143,
-    "f1": 0.4642857142857143,
+    "tp": 18,
+    "fp": 20,
+    "fn": 10,
+    "precision": 0.47368421052631576,
+    "recall": 0.6428571428571429,
+    "f1": 0.5454545454545454,
     "precisionCI": [
-      0.29531303739659587,
-      0.6418760485789833
+      0.3247877880894159,
+      0.6274128925728913
     ],
     "recallCI": [
-      0.29531303739659587,
-      0.6418760485789833
+      0.4582997758222723,
+      0.7929438802754113
     ],
     "caseAccuracy": 0.5757575757575758,
     "retrieval": {
-      "reached": 20,
+      "reached": 28,
       "expected": 28,
-      "rate": 0.7142857142857143,
-      "truncated": 2
+      "rate": 1,
+      "truncated": 6
     },
     "falseAlarmRate": 0.18181818181818182,
     "quietCases": 11,
@@ -64,33 +65,33 @@
       "output": null
     },
     "latencyMs": {
-      "median": 0,
-      "max": 15
+      "median": 1,
+      "max": 128
     }
   },
   "byGroup": {
     "drift": {
       "runs": 22,
-      "tp": 13,
-      "fp": 10,
-      "fn": 15,
-      "precision": 0.5652173913043478,
-      "recall": 0.4642857142857143,
-      "f1": 0.5098039215686274,
+      "tp": 18,
+      "fp": 13,
+      "fn": 10,
+      "precision": 0.5806451612903226,
+      "recall": 0.6428571428571429,
+      "f1": 0.6101694915254238,
       "precisionCI": [
-        0.3681104930501695,
-        0.7436563166780135
+        0.40765964352020967,
+        0.7358469692645074
       ],
       "recallCI": [
-        0.29531303739659587,
-        0.6418760485789833
+        0.4582997758222723,
+        0.7929438802754113
       ],
       "caseAccuracy": 0.45454545454545453,
       "retrieval": {
-        "reached": 20,
+        "reached": 28,
         "expected": 28,
-        "rate": 0.7142857142857143,
-        "truncated": 2
+        "rate": 1,
+        "truncated": 6
       },
       "falseAlarmRate": null,
       "quietCases": 0,
@@ -116,21 +117,21 @@
         "output": null
       },
       "latencyMs": {
-        "median": 0,
-        "max": 15
+        "median": 1,
+        "max": 128
       }
     },
     "no-drift": {
       "runs": 9,
       "tp": 0,
-      "fp": 5,
+      "fp": 7,
       "fn": 0,
       "precision": 0,
       "recall": null,
       "f1": null,
       "precisionCI": [
         0,
-        0.43449149475208104
+        0.35433884297520657
       ],
       "recallCI": null,
       "caseAccuracy": 0.7777777777777778,
@@ -164,8 +165,8 @@
         "output": null
       },
       "latencyMs": {
-        "median": 0,
-        "max": 8
+        "median": 1,
+        "max": 77
       }
     },
     "tricky": {
@@ -262,32 +263,32 @@
         "output": null
       },
       "latencyMs": {
-        "median": 0,
-        "max": 12
+        "median": 1,
+        "max": 13
       }
     },
     "real": {
       "runs": 7,
-      "tp": 1,
-      "fp": 12,
-      "fn": 10,
-      "precision": 0.07692307692307693,
-      "recall": 0.09090909090909091,
-      "f1": 0.08333333333333334,
+      "tp": 6,
+      "fp": 17,
+      "fn": 5,
+      "precision": 0.2608695652173913,
+      "recall": 0.5454545454545454,
+      "f1": 0.3529411764705882,
       "precisionCI": [
-        0.013710066379696323,
-        0.3331453392824736
+        0.1254844588924897,
+        0.4647039054375056
       ],
       "recallCI": [
-        0.01623175226282597,
-        0.3773646254862038
+        0.28008775568998817,
+        0.7872904245601196
       ],
       "caseAccuracy": 0,
       "retrieval": {
-        "reached": 3,
+        "reached": 11,
         "expected": 11,
-        "rate": 0.2727272727272727,
-        "truncated": 2
+        "rate": 1,
+        "truncated": 6
       },
       "falseAlarmRate": 1,
       "quietCases": 1,
@@ -313,17 +314,17 @@
         "output": null
       },
       "latencyMs": {
-        "median": 12,
-        "max": 15
+        "median": 26,
+        "max": 128
       }
     }
   },
   "perRun": [
     {
       "run": 1,
-      "precision": 0.4642857142857143,
-      "recall": 0.4642857142857143,
-      "f1": 0.4642857142857143
+      "precision": 0.47368421052631576,
+      "recall": 0.6428571428571429,
+      "f1": 0.5454545454545454
     }
   ],
   "unstableCases": [],
@@ -348,7 +349,7 @@
       ],
       "retrievedTruncated": [],
       "content": [],
-      "latencyMs": 12,
+      "latencyMs": 13,
       "detection": {
         "recommendations": [
           {
@@ -366,9 +367,7 @@
         "outputTokens": null,
         "docsSent": [
           "README.md",
-          "docs/api.md",
-          "CONTRIBUTING.md",
-          "docs/configuration.md"
+          "docs/api.md"
         ],
         "docsTruncated": []
       }
@@ -408,10 +407,7 @@
         "inputTokens": null,
         "outputTokens": null,
         "docsSent": [
-          "docs/configuration.md",
-          "CONTRIBUTING.md",
-          "docs/api.md",
-          "README.md"
+          "docs/configuration.md"
         ],
         "docsTruncated": []
       }
@@ -434,7 +430,7 @@
       ],
       "retrievedTruncated": [],
       "content": [],
-      "latencyMs": 0,
+      "latencyMs": 1,
       "detection": {
         "recommendations": [],
         "warnings": [],
@@ -444,10 +440,7 @@
         "inputTokens": null,
         "outputTokens": null,
         "docsSent": [
-          "docs/configuration.md",
-          "CONTRIBUTING.md",
-          "docs/api.md",
-          "README.md"
+          "docs/configuration.md"
         ],
         "docsTruncated": []
       }
@@ -470,7 +463,7 @@
       ],
       "retrievedTruncated": [],
       "content": [],
-      "latencyMs": 0,
+      "latencyMs": 1,
       "detection": {
         "recommendations": [
           {
@@ -551,7 +544,7 @@
       ],
       "retrievedTruncated": [],
       "content": [],
-      "latencyMs": 0,
+      "latencyMs": 2,
       "detection": {
         "recommendations": [
           {
@@ -569,8 +562,6 @@
         "outputTokens": null,
         "docsSent": [
           "docs/api.md",
-          "CONTRIBUTING.md",
-          "docs/configuration.md",
           "README.md"
         ],
         "docsTruncated": []
@@ -586,8 +577,8 @@
         "docs/api.md"
       ],
       "fp": [
-        "docs/configuration.md",
-        "README.md"
+        "README.md",
+        "docs/configuration.md"
       ],
       "fn": [],
       "acceptableFlagged": [],
@@ -597,7 +588,7 @@
       ],
       "retrievedTruncated": [],
       "content": [],
-      "latencyMs": 0,
+      "latencyMs": 1,
       "detection": {
         "recommendations": [
           {
@@ -607,13 +598,13 @@
             "modelConfidence": 1
           },
           {
-            "documentationPath": "docs/configuration.md",
+            "documentationPath": "README.md",
             "reason": "Mentions removed \"API\"",
             "suggestedUpdate": "",
             "modelConfidence": 1
           },
           {
-            "documentationPath": "README.md",
+            "documentationPath": "docs/configuration.md",
             "reason": "Mentions removed \"API\"",
             "suggestedUpdate": "",
             "modelConfidence": 1
@@ -627,9 +618,8 @@
         "outputTokens": null,
         "docsSent": [
           "docs/api.md",
-          "docs/configuration.md",
           "README.md",
-          "CONTRIBUTING.md"
+          "docs/configuration.md"
         ],
         "docsTruncated": []
       }
@@ -669,8 +659,7 @@
         "inputTokens": null,
         "outputTokens": null,
         "docsSent": [
-          "README.md",
-          "CHANGELOG.md"
+          "README.md"
         ],
         "docsTruncated": []
       }
@@ -703,8 +692,7 @@
         "inputTokens": null,
         "outputTokens": null,
         "docsSent": [
-          "docs/usage.md",
-          "README.md"
+          "docs/usage.md"
         ],
         "docsTruncated": []
       }
@@ -727,7 +715,7 @@
       ],
       "retrievedTruncated": [],
       "content": [],
-      "latencyMs": 0,
+      "latencyMs": 1,
       "detection": {
         "recommendations": [
           {
@@ -744,10 +732,7 @@
         "inputTokens": null,
         "outputTokens": null,
         "docsSent": [
-          "README.md",
-          "CONTRIBUTING.md",
-          "docs/api.md",
-          "docs/configuration.md"
+          "README.md"
         ],
         "docsTruncated": []
       }
@@ -796,9 +781,7 @@
         "outputTokens": null,
         "docsSent": [
           "docs/configuration.md",
-          "README.md",
-          "CONTRIBUTING.md",
-          "docs/api.md"
+          "README.md"
         ],
         "docsTruncated": []
       }
@@ -838,10 +821,8 @@
         "inputTokens": null,
         "outputTokens": null,
         "docsSent": [
-          "docs/api.md",
           "README.md",
-          "CONTRIBUTING.md",
-          "docs/configuration.md"
+          "docs/api.md"
         ],
         "docsTruncated": []
       }
@@ -864,7 +845,7 @@
       ],
       "retrievedTruncated": [],
       "content": [],
-      "latencyMs": 0,
+      "latencyMs": 1,
       "detection": {
         "recommendations": [],
         "warnings": [],
@@ -875,9 +856,7 @@
         "outputTokens": null,
         "docsSent": [
           "docs/api.md",
-          "README.md",
-          "CONTRIBUTING.md",
-          "docs/configuration.md"
+          "README.md"
         ],
         "docsTruncated": []
       }
@@ -900,7 +879,7 @@
       ],
       "retrievedTruncated": [],
       "content": [],
-      "latencyMs": 0,
+      "latencyMs": 1,
       "detection": {
         "recommendations": [
           {
@@ -917,10 +896,7 @@
         "inputTokens": null,
         "outputTokens": null,
         "docsSent": [
-          "docs/api.md",
-          "CONTRIBUTING.md",
-          "docs/configuration.md",
-          "README.md"
+          "docs/api.md"
         ],
         "docsTruncated": []
       }
@@ -954,9 +930,7 @@
         "outputTokens": null,
         "docsSent": [
           "docs/api.md",
-          "README.md",
-          "CONTRIBUTING.md",
-          "docs/configuration.md"
+          "README.md"
         ],
         "docsTruncated": []
       }
@@ -989,8 +963,7 @@
         "inputTokens": null,
         "outputTokens": null,
         "docsSent": [
-          "openapi.yaml",
-          "README.md"
+          "openapi.yaml"
         ],
         "docsTruncated": []
       }
@@ -1020,9 +993,7 @@
         "outputTokens": null,
         "docsSent": [
           "README.md",
-          "docs/api.md",
-          "CONTRIBUTING.md",
-          "docs/configuration.md"
+          "docs/api.md"
         ],
         "docsTruncated": []
       }
@@ -1051,10 +1022,8 @@
         "inputTokens": null,
         "outputTokens": null,
         "docsSent": [
-          "docs/api.md",
           "README.md",
-          "CONTRIBUTING.md",
-          "docs/configuration.md"
+          "docs/api.md"
         ],
         "docsTruncated": []
       }
@@ -1083,10 +1052,7 @@
         "inputTokens": null,
         "outputTokens": null,
         "docsSent": [
-          "docs/api.md",
-          "docs/configuration.md",
-          "README.md",
-          "CONTRIBUTING.md"
+          "README.md"
         ],
         "docsTruncated": []
       }
@@ -1114,12 +1080,7 @@
         "attempts": 0,
         "inputTokens": null,
         "outputTokens": null,
-        "docsSent": [
-          "CONTRIBUTING.md",
-          "docs/api.md",
-          "docs/configuration.md",
-          "README.md"
-        ],
+        "docsSent": [],
         "docsTruncated": []
       }
     },
@@ -1157,9 +1118,7 @@
         "outputTokens": null,
         "docsSent": [
           "README.md",
-          "docs/api.md",
-          "CONTRIBUTING.md",
-          "docs/configuration.md"
+          "docs/api.md"
         ],
         "docsTruncated": []
       }
@@ -1189,9 +1148,7 @@
         "outputTokens": null,
         "docsSent": [
           "docs/api.md",
-          "README.md",
-          "CONTRIBUTING.md",
-          "docs/configuration.md"
+          "README.md"
         ],
         "docsTruncated": []
       }
@@ -1210,7 +1167,7 @@
       "retrieved": [],
       "retrievedTruncated": [],
       "content": [],
-      "latencyMs": 0,
+      "latencyMs": 1,
       "detection": {
         "recommendations": [],
         "warnings": [],
@@ -1221,9 +1178,7 @@
         "outputTokens": null,
         "docsSent": [
           "README.md",
-          "docs/api.md",
-          "CONTRIBUTING.md",
-          "docs/configuration.md"
+          "docs/api.md"
         ],
         "docsTruncated": []
       }
@@ -1242,7 +1197,7 @@
       "retrieved": [],
       "retrievedTruncated": [],
       "content": [],
-      "latencyMs": 0,
+      "latencyMs": 1,
       "detection": {
         "recommendations": [],
         "warnings": [],
@@ -1252,10 +1207,9 @@
         "inputTokens": null,
         "outputTokens": null,
         "docsSent": [
-          "docs/api.md",
           "docs/configuration.md",
-          "README.md",
-          "CONTRIBUTING.md"
+          "docs/api.md",
+          "README.md"
         ],
         "docsTruncated": []
       }
@@ -1283,13 +1237,7 @@
         "attempts": 0,
         "inputTokens": null,
         "outputTokens": null,
-        "docsSent": [
-          "CONTRIBUTING.md",
-          "docs/api.md",
-          "docs/configuration.md",
-          "README.md",
-          "SECURITY.md"
-        ],
+        "docsSent": [],
         "docsTruncated": []
       }
     },
@@ -1318,9 +1266,7 @@
         "outputTokens": null,
         "docsSent": [
           "docs/api.md",
-          "README.md",
-          "CONTRIBUTING.md",
-          "docs/configuration.md"
+          "README.md"
         ],
         "docsTruncated": []
       }
@@ -1331,25 +1277,56 @@
       "source": "real",
       "category": "real: docs updated with code",
       "run": 1,
-      "tp": [],
-      "fp": [
-        "docs/errors/usage_errors.md",
-        "docs/concepts/config.md",
-        "README.md",
-        "docs/install.md"
-      ],
-      "fn": [
+      "tp": [
         "docs/api/standard_library_types.md",
         "docs/errors/validation_errors.md"
       ],
+      "fp": [
+        "docs/concepts/types.md",
+        "docs/concepts/json_schema.md",
+        "docs/errors/usage_errors.md",
+        "docs/concepts/models.md",
+        "docs/concepts/experimental.md"
+      ],
+      "fn": [],
       "acceptableFlagged": [],
       "correct": false,
-      "retrieved": [],
-      "retrievedTruncated": [],
+      "retrieved": [
+        "docs/api/standard_library_types.md",
+        "docs/errors/validation_errors.md"
+      ],
+      "retrievedTruncated": [
+        "docs/api/standard_library_types.md",
+        "docs/errors/validation_errors.md"
+      ],
       "content": [],
-      "latencyMs": 12,
+      "latencyMs": 128,
       "detection": {
         "recommendations": [
+          {
+            "documentationPath": "docs/api/standard_library_types.md",
+            "reason": "Mentions removed \"typing\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/concepts/types.md",
+            "reason": "Mentions removed \"typing\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/errors/validation_errors.md",
+            "reason": "Mentions removed \"typing\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/concepts/json_schema.md",
+            "reason": "Mentions removed \"typing\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
           {
             "documentationPath": "docs/errors/usage_errors.md",
             "reason": "Mentions removed \"typing\"",
@@ -1357,19 +1334,13 @@
             "modelConfidence": 1
           },
           {
-            "documentationPath": "docs/concepts/config.md",
+            "documentationPath": "docs/concepts/models.md",
             "reason": "Mentions removed \"typing\"",
             "suggestedUpdate": "",
             "modelConfidence": 1
           },
           {
-            "documentationPath": "README.md",
-            "reason": "Mentions removed \"typing\"",
-            "suggestedUpdate": "",
-            "modelConfidence": 1
-          },
-          {
-            "documentationPath": "docs/install.md",
+            "documentationPath": "docs/concepts/experimental.md",
             "reason": "Mentions removed \"typing\"",
             "suggestedUpdate": "",
             "modelConfidence": 1
@@ -1382,25 +1353,22 @@
         "inputTokens": null,
         "outputTokens": null,
         "docsSent": [
+          "docs/api/standard_library_types.md",
+          "docs/concepts/types.md",
+          "docs/errors/validation_errors.md",
+          "docs/concepts/json_schema.md",
           "docs/errors/usage_errors.md",
-          "docs/contributing.md",
-          "docs/concepts/config.md",
-          "README.md",
-          "docs/api/config.md",
-          "docs/api/errors.md",
-          "docs/api/experimental.md",
-          "docs/install.md",
-          "docs/api/aliases.md",
-          "docs/api/annotated_handlers.md",
-          "docs/api/base_model.md",
-          "docs/api/dataclasses.md",
-          "docs/api/fields.md",
-          "docs/api/functional_serializers.md",
-          "docs/api/functional_validators.md"
+          "docs/concepts/models.md",
+          "docs/concepts/experimental.md"
         ],
         "docsTruncated": [
+          "docs/api/standard_library_types.md",
+          "docs/concepts/types.md",
+          "docs/errors/validation_errors.md",
+          "docs/concepts/json_schema.md",
           "docs/errors/usage_errors.md",
-          "docs/contributing.md"
+          "docs/concepts/models.md",
+          "docs/concepts/experimental.md"
         ]
       }
     },
@@ -1413,9 +1381,11 @@
       "tp": [],
       "fp": [
         "docs/errors/usage_errors.md",
-        "docs/contributing.md",
-        "docs/concepts/config.md",
-        "README.md"
+        "docs/concepts/json_schema.md",
+        "docs/concepts/models.md",
+        "docs/concepts/fields.md",
+        "docs/concepts/types.md",
+        "docs/api/standard_library_types.md"
       ],
       "fn": [],
       "acceptableFlagged": [],
@@ -1423,7 +1393,7 @@
       "retrieved": [],
       "retrievedTruncated": [],
       "content": [],
-      "latencyMs": 8,
+      "latencyMs": 77,
       "detection": {
         "recommendations": [
           {
@@ -1433,20 +1403,32 @@
             "modelConfidence": 1
           },
           {
-            "documentationPath": "docs/contributing.md",
+            "documentationPath": "docs/concepts/json_schema.md",
             "reason": "Mentions removed \"should\", \"used\"",
             "suggestedUpdate": "",
             "modelConfidence": 1
           },
           {
-            "documentationPath": "docs/concepts/config.md",
-            "reason": "Mentions removed \"should\", \"used\"",
+            "documentationPath": "docs/concepts/models.md",
+            "reason": "Mentions removed \"RootModel\", \"json_schema\", \"root_model\", \"used\"",
             "suggestedUpdate": "",
             "modelConfidence": 1
           },
           {
-            "documentationPath": "README.md",
-            "reason": "Mentions removed \"should\"",
+            "documentationPath": "docs/concepts/fields.md",
+            "reason": "Mentions removed \"json_schema\", \"should\", \"used\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/concepts/types.md",
+            "reason": "Mentions removed \"json_schema\", \"used\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/api/standard_library_types.md",
+            "reason": "Mentions removed \"used\"",
             "suggestedUpdate": "",
             "modelConfidence": 1
           }
@@ -1459,24 +1441,19 @@
         "outputTokens": null,
         "docsSent": [
           "docs/errors/usage_errors.md",
-          "docs/contributing.md",
-          "docs/concepts/config.md",
-          "README.md",
-          "docs/api/base_model.md",
-          "docs/install.md",
-          "docs/api/fields.md",
-          "docs/api/aliases.md",
-          "docs/api/annotated_handlers.md",
-          "docs/api/config.md",
-          "docs/api/dataclasses.md",
-          "docs/api/errors.md",
-          "docs/api/experimental.md",
-          "docs/api/functional_serializers.md",
-          "docs/api/functional_validators.md"
+          "docs/concepts/json_schema.md",
+          "docs/concepts/models.md",
+          "docs/concepts/fields.md",
+          "docs/concepts/types.md",
+          "docs/api/standard_library_types.md"
         ],
         "docsTruncated": [
           "docs/errors/usage_errors.md",
-          "docs/contributing.md"
+          "docs/concepts/json_schema.md",
+          "docs/concepts/models.md",
+          "docs/concepts/fields.md",
+          "docs/concepts/types.md",
+          "docs/api/standard_library_types.md"
         ]
       }
     },
@@ -1495,13 +1472,15 @@
       "acceptableFlagged": [],
       "correct": false,
       "retrieved": [
-        "docs/api.md"
+        "docs/api.md",
+        "docs/termination.md"
       ],
       "retrievedTruncated": [
-        "docs/api.md"
+        "docs/api.md",
+        "docs/termination.md"
       ],
       "content": [],
-      "latencyMs": 12,
+      "latencyMs": 25,
       "detection": {
         "recommendations": [],
         "warnings": [],
@@ -1511,16 +1490,19 @@
         "inputTokens": null,
         "outputTokens": null,
         "docsSent": [
+          "docs/termination.md",
           "docs/api.md",
-          "docs/bash.md",
           "docs/execution.md",
-          "docs/input.md",
-          "docs/errors.md",
-          "docs/node.md"
+          "docs/bash.md",
+          "readme.md",
+          "docs/windows.md",
+          "docs/errors.md"
         ],
         "docsTruncated": [
+          "docs/termination.md",
           "docs/api.md",
-          "docs/bash.md"
+          "docs/bash.md",
+          "readme.md"
         ]
       }
     },
@@ -1539,13 +1521,14 @@
       "acceptableFlagged": [],
       "correct": false,
       "retrieved": [
-        "docs/api.md"
+        "docs/api.md",
+        "docs/streams.md"
       ],
       "retrievedTruncated": [
         "docs/api.md"
       ],
       "content": [],
-      "latencyMs": 15,
+      "latencyMs": 26,
       "detection": {
         "recommendations": [],
         "warnings": [],
@@ -1556,14 +1539,18 @@
         "outputTokens": null,
         "docsSent": [
           "docs/api.md",
+          "docs/streams.md",
+          "readme.md",
+          "docs/lines.md",
           "docs/bash.md",
-          "docs/execution.md",
-          "readme.md"
+          "docs/transform.md",
+          "docs/termination.md"
         ],
         "docsTruncated": [
           "docs/api.md",
+          "readme.md",
           "docs/bash.md",
-          "readme.md"
+          "docs/termination.md"
         ]
       }
     },
@@ -1573,22 +1560,46 @@
       "source": "real",
       "category": "real: docs updated with code",
       "run": 1,
-      "tp": [],
-      "fp": [
-        "docs/bash.md"
-      ],
-      "fn": [
+      "tp": [
         "docs/windows.md",
         "readme.md"
       ],
+      "fp": [
+        "docs/shell.md",
+        "docs/bash.md"
+      ],
+      "fn": [],
       "acceptableFlagged": [],
       "correct": false,
-      "retrieved": [],
-      "retrievedTruncated": [],
+      "retrieved": [
+        "docs/windows.md",
+        "readme.md"
+      ],
+      "retrievedTruncated": [
+        "readme.md"
+      ],
       "content": [],
-      "latencyMs": 15,
+      "latencyMs": 25,
       "detection": {
         "recommendations": [
+          {
+            "documentationPath": "docs/windows.md",
+            "reason": "Mentions removed \"cross\", \"spawn\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "readme.md",
+            "reason": "Mentions removed \"cross\", \"spawn\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/shell.md",
+            "reason": "Mentions removed \"cross\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
           {
             "documentationPath": "docs/bash.md",
             "reason": "Mentions removed \"cross\"",
@@ -1603,15 +1614,18 @@
         "inputTokens": null,
         "outputTokens": null,
         "docsSent": [
-          "docs/api.md",
-          "docs/bash.md",
+          "docs/windows.md",
           "docs/escaping.md",
+          "docs/api.md",
+          "readme.md",
+          "docs/shell.md",
+          "docs/bash.md",
           "docs/execution.md",
-          "docs/input.md",
-          "docs/environment.md"
+          "docs/debugging.md"
         ],
         "docsTruncated": [
           "docs/api.md",
+          "readme.md",
           "docs/bash.md"
         ]
       }
@@ -1623,28 +1637,35 @@
       "category": "real: docs updated with code",
       "run": 1,
       "tp": [
-        "docs/arguments.md"
-      ],
-      "fp": [
-        "docs/complex.md",
-        "docs/advanced.md",
-        "docs/commands-and-groups.md"
-      ],
-      "fn": [
+        "docs/arguments.md",
         "docs/documentation.md"
       ],
+      "fp": [
+        "docs/testing.md",
+        "docs/options.md",
+        "docs/advanced.md",
+        "docs/complex.md"
+      ],
+      "fn": [],
       "acceptableFlagged": [],
       "correct": false,
       "retrieved": [
-        "docs/arguments.md"
+        "docs/arguments.md",
+        "docs/documentation.md"
       ],
       "retrievedTruncated": [],
       "content": [],
-      "latencyMs": 6,
+      "latencyMs": 26,
       "detection": {
         "recommendations": [
           {
-            "documentationPath": "docs/complex.md",
+            "documentationPath": "docs/testing.md",
+            "reason": "Mentions removed \"that\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/options.md",
             "reason": "Mentions removed \"have\", \"that\"",
             "suggestedUpdate": "",
             "modelConfidence": 1
@@ -1656,14 +1677,20 @@
             "modelConfidence": 1
           },
           {
-            "documentationPath": "docs/commands-and-groups.md",
+            "documentationPath": "docs/arguments.md",
+            "reason": "Mentions removed \"that\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/documentation.md",
             "reason": "Mentions removed \"have\", \"that\"",
             "suggestedUpdate": "",
             "modelConfidence": 1
           },
           {
-            "documentationPath": "docs/arguments.md",
-            "reason": "Mentions removed \"that\"",
+            "documentationPath": "docs/complex.md",
+            "reason": "Mentions removed \"have\", \"that\"",
             "suggestedUpdate": "",
             "modelConfidence": 1
           }
@@ -1675,16 +1702,17 @@
         "inputTokens": null,
         "outputTokens": null,
         "docsSent": [
-          "docs/complex.md",
+          "docs/testing.md",
+          "docs/options.md",
           "docs/advanced.md",
-          "docs/commands-and-groups.md",
           "docs/arguments.md",
-          "docs/contributing.md",
-          "docs/changes.md"
+          "docs/documentation.md",
+          "docs/complex.md"
         ],
         "docsTruncated": [
-          "docs/complex.md",
-          "docs/advanced.md"
+          "docs/options.md",
+          "docs/advanced.md",
+          "docs/complex.md"
         ]
       }
     },
@@ -1701,10 +1729,12 @@
       ],
       "acceptableFlagged": [],
       "correct": false,
-      "retrieved": [],
+      "retrieved": [
+        "docs/exceptions.md"
+      ],
       "retrievedTruncated": [],
       "content": [],
-      "latencyMs": 7,
+      "latencyMs": 23,
       "detection": {
         "recommendations": [],
         "warnings": [],
@@ -1714,17 +1744,17 @@
         "inputTokens": null,
         "outputTokens": null,
         "docsSent": [
+          "docs/testing.md",
+          "docs/exceptions.md",
+          "docs/faqs.md",
+          "docs/quickstart.md",
           "docs/advanced.md",
-          "docs/commands.md",
-          "docs/complex.md",
-          "docs/arguments.md",
-          "docs/changes.md",
-          "docs/setuptools.md"
+          "docs/options.md",
+          "docs/wincmd.md"
         ],
         "docsTruncated": [
           "docs/advanced.md",
-          "docs/commands.md",
-          "docs/complex.md"
+          "docs/options.md"
         ]
       }
     }

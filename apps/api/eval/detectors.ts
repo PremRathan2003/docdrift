@@ -76,7 +76,7 @@ export function aiDetector(ai: AIProvider, config: PipelineConfig): Detector {
           logger: quietLogger,
         });
         const docsSent = result.context.docs.map((d) => d.path);
-        const docsTruncated = result.context.truncatedDocs;
+        const docsTruncated = result.context.sectionedDocs;
         if (result.kind === 'skipped') {
           return {
             recommendations: [],
@@ -179,7 +179,7 @@ export function keywordBaseline(config: PipelineConfig): Detector {
         inputTokens: null,
         outputTokens: null,
         docsSent: ctx.docs.map((d) => d.path),
-        docsTruncated: ctx.truncatedDocs,
+        docsTruncated: ctx.sectionedDocs,
       };
     },
   };

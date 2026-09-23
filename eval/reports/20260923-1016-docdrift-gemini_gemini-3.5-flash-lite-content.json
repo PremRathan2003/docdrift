@@ -1,0 +1,1994 @@
+{
+  "generatedAt": "2026-09-23T10:16:31.119Z",
+  "detector": {
+    "name": "docdrift",
+    "retrieval": "content",
+    "model": "gemini/gemini-3.5-flash-lite",
+    "promptVersion": "v3"
+  },
+  "dataset": {
+    "hash": "a07ee01256a3",
+    "cases": 33,
+    "byGroup": {
+      "drift": 22,
+      "no-drift": 9,
+      "tricky": 2
+    },
+    "expectedDocs": 28,
+    "synthetic": 26
+  },
+  "repeat": 1,
+  "overall": {
+    "runs": 33,
+    "tp": 19,
+    "fp": 1,
+    "fn": 9,
+    "precision": 0.95,
+    "recall": 0.6785714285714286,
+    "f1": 0.7916666666666667,
+    "precisionCI": [
+      0.7638641064874331,
+      0.9911187805671268
+    ],
+    "recallCI": [
+      0.4933850455563118,
+      0.8206695245657927
+    ],
+    "caseAccuracy": 0.7878787878787878,
+    "retrieval": {
+      "reached": 26,
+      "expected": 28,
+      "rate": 0.9285714285714286,
+      "truncated": 5
+    },
+    "falseAlarmRate": 0.09090909090909091,
+    "quietCases": 11,
+    "content": {
+      "checked": 19,
+      "passed": 19,
+      "passRate": 1,
+      "medianDroppedLines": 2
+    },
+    "confidence": {
+      "meanWhenRight": 0.9921052631578946,
+      "meanWhenWrong": 0.9
+    },
+    "errors": {
+      "count": 1,
+      "byCode": {
+        "AI_INVALID_OUTPUT": 1
+      }
+    },
+    "validationWarnings": 0,
+    "modelCalls": 30,
+    "meanAttempts": 1,
+    "tokens": {
+      "input": 221367,
+      "output": 19038
+    },
+    "latencyMs": {
+      "median": 1584.5,
+      "max": 8391
+    }
+  },
+  "byGroup": {
+    "drift": {
+      "runs": 22,
+      "tp": 19,
+      "fp": 0,
+      "fn": 9,
+      "precision": 1,
+      "recall": 0.6785714285714286,
+      "f1": 0.8085106382978724,
+      "precisionCI": [
+        0.8318156346315496,
+        1
+      ],
+      "recallCI": [
+        0.4933850455563118,
+        0.8206695245657927
+      ],
+      "caseAccuracy": 0.7272727272727273,
+      "retrieval": {
+        "reached": 26,
+        "expected": 28,
+        "rate": 0.9285714285714286,
+        "truncated": 5
+      },
+      "falseAlarmRate": null,
+      "quietCases": 0,
+      "content": {
+        "checked": 19,
+        "passed": 19,
+        "passRate": 1,
+        "medianDroppedLines": 2
+      },
+      "confidence": {
+        "meanWhenRight": 0.9921052631578946,
+        "meanWhenWrong": null
+      },
+      "errors": {
+        "count": 1,
+        "byCode": {
+          "AI_INVALID_OUTPUT": 1
+        }
+      },
+      "validationWarnings": 0,
+      "modelCalls": 21,
+      "meanAttempts": 1,
+      "tokens": {
+        "input": 194505,
+        "output": 17631
+      },
+      "latencyMs": {
+        "median": 1636,
+        "max": 8391
+      }
+    },
+    "no-drift": {
+      "runs": 9,
+      "tp": 0,
+      "fp": 1,
+      "fn": 0,
+      "precision": 0,
+      "recall": null,
+      "f1": null,
+      "precisionCI": [
+        0,
+        0.7934567085261071
+      ],
+      "recallCI": null,
+      "caseAccuracy": 0.8888888888888888,
+      "retrieval": {
+        "reached": 0,
+        "expected": 0,
+        "rate": null,
+        "truncated": 0
+      },
+      "falseAlarmRate": 0.1111111111111111,
+      "quietCases": 9,
+      "content": {
+        "checked": 0,
+        "passed": 0,
+        "passRate": null,
+        "medianDroppedLines": null
+      },
+      "confidence": {
+        "meanWhenRight": null,
+        "meanWhenWrong": 0.9
+      },
+      "errors": {
+        "count": 0,
+        "byCode": {}
+      },
+      "validationWarnings": 0,
+      "modelCalls": 8,
+      "meanAttempts": 1,
+      "tokens": {
+        "input": 25077,
+        "output": 937
+      },
+      "latencyMs": {
+        "median": 955.5,
+        "max": 2203
+      }
+    },
+    "tricky": {
+      "runs": 2,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null,
+      "precisionCI": null,
+      "recallCI": null,
+      "caseAccuracy": 1,
+      "retrieval": {
+        "reached": 0,
+        "expected": 0,
+        "rate": null,
+        "truncated": 0
+      },
+      "falseAlarmRate": 0,
+      "quietCases": 2,
+      "content": {
+        "checked": 0,
+        "passed": 0,
+        "passRate": null,
+        "medianDroppedLines": null
+      },
+      "confidence": {
+        "meanWhenRight": null,
+        "meanWhenWrong": null
+      },
+      "errors": {
+        "count": 0,
+        "byCode": {}
+      },
+      "validationWarnings": 0,
+      "modelCalls": 1,
+      "meanAttempts": 1,
+      "tokens": {
+        "input": 1785,
+        "output": 470
+      },
+      "latencyMs": {
+        "median": 1790,
+        "max": 1790
+      }
+    }
+  },
+  "bySource": {
+    "synthetic": {
+      "runs": 26,
+      "tp": 17,
+      "fp": 1,
+      "fn": 0,
+      "precision": 0.9444444444444444,
+      "recall": 1,
+      "f1": 0.9714285714285714,
+      "precisionCI": [
+        0.7424220019799247,
+        0.9901250641690756
+      ],
+      "recallCI": [
+        0.8156763396284354,
+        1
+      ],
+      "caseAccuracy": 0.9615384615384616,
+      "retrieval": {
+        "reached": 17,
+        "expected": 17,
+        "rate": 1,
+        "truncated": 0
+      },
+      "falseAlarmRate": 0.1,
+      "quietCases": 10,
+      "content": {
+        "checked": 17,
+        "passed": 17,
+        "passRate": 1,
+        "medianDroppedLines": 2
+      },
+      "confidence": {
+        "meanWhenRight": 1,
+        "meanWhenWrong": 0.9
+      },
+      "errors": {
+        "count": 0,
+        "byCode": {}
+      },
+      "validationWarnings": 0,
+      "modelCalls": 24,
+      "meanAttempts": 1,
+      "tokens": {
+        "input": 34721,
+        "output": 7747
+      },
+      "latencyMs": {
+        "median": 1609.5,
+        "max": 2357
+      }
+    },
+    "real": {
+      "runs": 7,
+      "tp": 2,
+      "fp": 0,
+      "fn": 9,
+      "precision": 1,
+      "recall": 0.18181818181818182,
+      "f1": 0.3076923076923077,
+      "precisionCI": [
+        0.34237195288961925,
+        1
+      ],
+      "recallCI": [
+        0.05136660067100063,
+        0.4769861375782448
+      ],
+      "caseAccuracy": 0.14285714285714285,
+      "retrieval": {
+        "reached": 9,
+        "expected": 11,
+        "rate": 0.8181818181818182,
+        "truncated": 5
+      },
+      "falseAlarmRate": 0,
+      "quietCases": 1,
+      "content": {
+        "checked": 2,
+        "passed": 2,
+        "passRate": 1,
+        "medianDroppedLines": 2
+      },
+      "confidence": {
+        "meanWhenRight": 0.925,
+        "meanWhenWrong": null
+      },
+      "errors": {
+        "count": 1,
+        "byCode": {
+          "AI_INVALID_OUTPUT": 1
+        }
+      },
+      "validationWarnings": 0,
+      "modelCalls": 6,
+      "meanAttempts": 1,
+      "tokens": {
+        "input": 186646,
+        "output": 11291
+      },
+      "latencyMs": {
+        "median": 1532,
+        "max": 8391
+      }
+    }
+  },
+  "perRun": [
+    {
+      "run": 1,
+      "precision": 0.95,
+      "recall": 0.6785714285714286,
+      "f1": 0.7916666666666667
+    }
+  ],
+  "unstableCases": [],
+  "retries": [],
+  "reused": [],
+  "outcomes": [
+    {
+      "caseId": "001-renamed-json-field",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "renamed field",
+      "run": 1,
+      "tp": [
+        "README.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "README.md"
+      ],
+      "retrievedTruncated": [],
+      "content": [
+        {
+          "path": "README.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 1
+        }
+      ],
+      "latencyMs": 1633,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "README.md",
+            "reason": "The task JSON example in README.md still uses the old 'done' field instead of 'completed' as changed in src/store.js.",
+            "evidence": [
+              {
+                "filePath": "src/store.js",
+                "detail": "Renamed task property 'done' to 'completed'."
+              }
+            ],
+            "scope": "file",
+            "suggestedUpdate": "# Task API\n\nA small JSON API for managing a to-do list. It keeps tasks in memory, so it is\nmeant for demos and tests, not production.\n\n## Quick start\n\n```bash\nnpm install\nnpm start\n```\n\n## Tasks\n\nEach task looks like this:\n\n```json\n{ \"id\": 1, \"title\": \"Buy milk\", \"completed\": false }\n```\n\nSee [docs/api.md](docs/api.md) for every endpoint and\n[docs/configuration.md](docs/configuration.md) for settings.\n\n## License\n\nMIT\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request renames the task field from 'done' to 'completed' in src/store.js. This update is reflected in README.md, which needs its task JSON example updated accordingly.",
+        "attempts": 1,
+        "inputTokens": 1586,
+        "outputTokens": 347,
+        "docsSent": [
+          "README.md",
+          "docs/api.md"
+        ],
+        "docsTruncated": []
+      }
+    },
+    {
+      "caseId": "002-changed-default",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "changed default",
+      "run": 1,
+      "tp": [
+        "docs/configuration.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "docs/configuration.md"
+      ],
+      "retrievedTruncated": [],
+      "content": [
+        {
+          "path": "docs/configuration.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 1
+        }
+      ],
+      "latencyMs": 1586,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/configuration.md",
+            "reason": "The default port for the PORT environment variable has been updated from 3000 to 8080 in the codebase, but the documentation still references 3000.",
+            "evidence": [
+              {
+                "filePath": "src/config.js",
+                "detail": "Changed default port from 3000 to 8080 in config object"
+              }
+            ],
+            "scope": "file",
+            "suggestedUpdate": "# Configuration\n\nThe API is configured with environment variables.\n\n| Variable    | Default       | Description                                  |\n| ----------- | ------------- | -------------------------------------------- |\n| `PORT`      | `8080`        | Port the HTTP server listens on.             |\n| `LOG_LEVEL` | `info`        | One of `debug`, `info`, `warn`, `error`.     |\n| `DB_URL`    | (required)    | PostgreSQL connection string.                |\n\nUnknown variables are ignored.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The default port in src/config.js was changed from 3000 to 8080. The documentation in docs/configuration.md still lists the default as 3000 and needs to be updated.",
+        "attempts": 1,
+        "inputTokens": 1086,
+        "outputTokens": 334,
+        "docsSent": [
+          "docs/configuration.md"
+        ],
+        "docsTruncated": []
+      }
+    },
+    {
+      "caseId": "003-new-required-setting",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "omission",
+      "run": 1,
+      "tp": [
+        "docs/configuration.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "docs/configuration.md"
+      ],
+      "retrievedTruncated": [],
+      "content": [
+        {
+          "path": "docs/configuration.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 0
+        }
+      ],
+      "latencyMs": 1270,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/configuration.md",
+            "reason": "The configuration documentation is missing the newly added required `REDIS_URL` environment variable.",
+            "evidence": [
+              {
+                "filePath": "src/config.js",
+                "detail": "Added `redisUrl: required('REDIS_URL'),`"
+              }
+            ],
+            "scope": "file",
+            "suggestedUpdate": "# Configuration\n\nThe API is configured with environment variables.\n\n| Variable    | Default       | Description                                  |\n| ----------- | ------------- | -------------------------------------------- |\n| `PORT`      | `3000`        | Port the HTTP server listens on.             |\n| `LOG_LEVEL` | `info`        | One of `debug`, `info`, `warn`, `error`.     |\n| `DB_URL`    | (required)    | PostgreSQL connection string.                |\n| `REDIS_URL` | (required)    | Redis connection string for session caching. |\n\nUnknown variables are ignored.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request adds a new required configuration variable `REDIS_URL`, but the documentation in `docs/configuration.md` does not list it.",
+        "attempts": 1,
+        "inputTokens": 1064,
+        "outputTokens": 316,
+        "docsSent": [
+          "docs/configuration.md"
+        ],
+        "docsTruncated": []
+      }
+    },
+    {
+      "caseId": "004-renamed-endpoint",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "renamed endpoint",
+      "run": 1,
+      "tp": [
+        "docs/api.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "docs/api.md"
+      ],
+      "retrievedTruncated": [],
+      "content": [
+        {
+          "path": "docs/api.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 2
+        }
+      ],
+      "latencyMs": 1258,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "The endpoints were renamed from /users and /users/:id to /accounts and /accounts/:id in the router implementation, but the API documentation still lists the old paths.",
+            "evidence": [
+              {
+                "filePath": "src/routes.js",
+                "detail": "router.post('/users', ...) was changed to router.post('/accounts', ...)"
+              },
+              {
+                "filePath": "src/routes.js",
+                "detail": "router.get('/users/:id', ...) was changed to router.get('/accounts/:id', ...)"
+              }
+            ],
+            "scope": "file",
+            "suggestedUpdate": "# API\n\n## Users\n\n- `POST /accounts` creates a user. Body: `{ \"email\": \"a@example.com\" }`.\n- `GET /accounts/:id` returns one user, or `404`.\n\nAll responses are JSON.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The PR renamed the user API endpoints from /users to /accounts, but the documentation in docs/api.md still refers to /users.",
+        "attempts": 1,
+        "inputTokens": 1138,
+        "outputTokens": 304,
+        "docsSent": [
+          "docs/api.md",
+          "README.md"
+        ],
+        "docsTruncated": []
+      }
+    },
+    {
+      "caseId": "005-removed-cli-flag",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "removed option",
+      "run": 1,
+      "tp": [
+        "README.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "README.md"
+      ],
+      "retrievedTruncated": [],
+      "content": [
+        {
+          "path": "README.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 2
+        }
+      ],
+      "latencyMs": 1690,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "README.md",
+            "reason": "The CLI argument --verbose was removed and replaced with --log-level in dirsync/cli.py, so the documentation usage and option description must be updated.",
+            "evidence": [
+              {
+                "filePath": "dirsync/cli.py",
+                "detail": "Replaced parser.add_argument(\"--verbose\", ...) with parser.add_argument(\"--log-level\", ...)"
+              }
+            ],
+            "scope": "file",
+            "sectionHeading": "",
+            "suggestedUpdate": "# dirsync\n\nKeeps two folders in sync, one way.\n\n## Install\n\n```bash\npip install dirsync\n```\n\n## Usage\n\n```bash\ndirsync SOURCE TARGET [--dry-run] [--log-level LEVEL]\n```\n\n- `--dry-run` shows what would change without copying anything.\n- `--log-level` sets the logging level (choices: debug, info, warning; default: info).\n\n## Development\n\nRun the tests with `pytest`.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request replaced the CLI flag --verbose with --log-level. The documentation in README.md still references --verbose and needs to be updated to document --log-level instead.",
+        "attempts": 1,
+        "inputTokens": 1212,
+        "outputTokens": 340,
+        "docsSent": [
+          "README.md"
+        ],
+        "docsTruncated": []
+      }
+    },
+    {
+      "caseId": "006-pagination-default",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "changed default",
+      "run": 1,
+      "tp": [
+        "docs/api.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "docs/api.md"
+      ],
+      "retrievedTruncated": [],
+      "content": [
+        {
+          "path": "docs/api.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 2
+        }
+      ],
+      "latencyMs": 1792,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "The default value for the 'limit' query parameter on GET /tasks was changed from 20 to 50 in the code, but the documentation still says it defaults to 20.",
+            "evidence": [
+              {
+                "filePath": "src/routes.js",
+                "detail": "const limit = Math.min(Number(req.query.limit ?? 50), 100);"
+              },
+              {
+                "filePath": "src/store.js",
+                "detail": "export function listTasks({ limit = 50, offset = 0 } = {}) {"
+              }
+            ],
+            "scope": "file",
+            "suggestedUpdate": "# API reference\n\nAll endpoints accept and return JSON.\n\n## Authentication\n\nSend your key in the `X-API-Key` header:\n\n```bash\ncurl -H \"X-API-Key: [REDACTED]\" https://api.example.com/tasks\n```\n\nRequests are limited to 100 requests per minute per key. Over the limit, the\nAPI answers `429 Too Many Requests`.\n\n## Tasks\n\n### `GET /tasks`\n\nReturns tasks, oldest first.\n\nQuery parameters:\n\n- `limit` (default 50, max 100): how many tasks to return.\n- `offset` (default 0): how many tasks to skip.\n\n### `POST /tasks`\n\nCreates a task. Body: `{ \"title\": \"Buy milk\" }`. Returns `200 OK` with the\ncreated task.\n\n### `DELETE /tasks/:id`\n\nDeletes a task. Returns `204 No Content`.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The default pagination limit for GET /tasks was changed from 20 to 50 in both the routes and store. The API documentation in docs/api.md needs to be updated to reflect this new default.",
+        "attempts": 1,
+        "inputTokens": 1706,
+        "outputTokens": 515,
+        "docsSent": [
+          "docs/api.md",
+          "README.md"
+        ],
+        "docsTruncated": []
+      }
+    },
+    {
+      "caseId": "007-auth-header",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "changed interface",
+      "run": 1,
+      "tp": [
+        "docs/api.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "docs/api.md"
+      ],
+      "retrievedTruncated": [],
+      "content": [
+        {
+          "path": "docs/api.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 2
+        }
+      ],
+      "latencyMs": 1790,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "The code now expects API keys to be passed via the standard `Authorization: Bearer <key>` header instead of the custom `X-API-Key` header.",
+            "evidence": [
+              {
+                "filePath": "src/auth.js",
+                "detail": "Changed header lookup from `req.get('X-API-Key')` to `req.get('Authorization')?.replace(/^Bearer /, '')`"
+              }
+            ],
+            "scope": "file",
+            "suggestedUpdate": "# API reference\n\nAll endpoints accept and return JSON.\n\n## Authentication\n\nSend your key in the `Authorization` header as a Bearer token:\n\n```bash\ncurl -H \"Authorization: Bearer [REDACTED]\" https://api.example.com/tasks\n```\n\nRequests are limited to 100 requests per minute per key. Over the limit, the\nAPI answers `429 Too Many Requests`.\n\n## Tasks\n\n### `GET /tasks`\n\nReturns tasks, oldest first.\n\nQuery parameters:\n\n- `limit` (default 20, max 100): how many tasks to return.\n- `offset` (default 0): how many tasks to skip.\n\n### `POST /tasks`\n\nCreates a task. Body: `{ \"title\": \"Buy milk\" }`. Returns `200 OK` with the\ncreated task.\n\n### `DELETE /tasks/:id`\n\nDeletes a task. Returns `204 No Content`.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The authentication mechanism changed from a custom `X-API-Key` header to the standard `Authorization` header with a `Bearer` prefix. This needs to be updated in the API documentation.",
+        "attempts": 1,
+        "inputTokens": 1754,
+        "outputTokens": 465,
+        "docsSent": [
+          "docs/api.md",
+          "README.md",
+          "docs/configuration.md"
+        ],
+        "docsTruncated": []
+      }
+    },
+    {
+      "caseId": "008-renamed-export",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "renamed function",
+      "run": 1,
+      "tp": [
+        "README.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "README.md"
+      ],
+      "retrievedTruncated": [],
+      "content": [
+        {
+          "path": "README.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 3
+        }
+      ],
+      "latencyMs": 1242,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "README.md",
+            "reason": "The function `parseDate` was renamed to `parseIsoDate` in the codebase, but `README.md` still uses `parseDate` in the import statement, example usage, and explanatory text.",
+            "evidence": [
+              {
+                "filePath": "src/index.ts",
+                "detail": "export function parseIsoDate(text: string): Date {"
+              }
+            ],
+            "scope": "file",
+            "suggestedUpdate": "# tiny-dates\n\nTwo small helpers for ISO dates, with no dependencies.\n\n```ts\nimport { formatDate, parseIsoDate } from 'tiny-dates';\n\nconst d = parseIsoDate('2026-09-22');\nformatDate(d); // '2026-09-22'\n```\n\n`parseIsoDate` throws a `RangeError` for anything that isn't `YYYY-MM-DD`.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The function `parseDate` was renamed to `parseIsoDate` in `src/index.ts`, but the README still references `parseDate` in its code example and text.",
+        "attempts": 1,
+        "inputTokens": 1110,
+        "outputTokens": 270,
+        "docsSent": [
+          "README.md"
+        ],
+        "docsTruncated": []
+      }
+    },
+    {
+      "caseId": "009-renamed-parameter",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "renamed parameter",
+      "run": 1,
+      "tp": [
+        "docs/usage.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "docs/usage.md"
+      ],
+      "retrievedTruncated": [],
+      "content": [
+        {
+          "path": "docs/usage.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 1
+        }
+      ],
+      "latencyMs": 1294,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/usage.md",
+            "reason": "The `fetch` function parameter was renamed from `timeout` to `timeout_seconds` in the source code, but the usage documentation still shows `timeout=5`.",
+            "evidence": [
+              {
+                "filePath": "quickget/__init__.py",
+                "detail": "def fetch(url, timeout_seconds=10):"
+              }
+            ],
+            "scope": "file",
+            "sectionHeading": "",
+            "suggestedUpdate": "# Usage\n\n```python\nfrom quickget import fetch\n\nhtml = fetch(\"https://example.com\", timeout_seconds=5)\n```\n\n`fetch` raises `urllib.error.URLError` when the server can't be reached.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The parameter `timeout` in the `fetch` function was renamed to `timeout_seconds`. The documentation in `docs/usage.md` still uses the old parameter name `timeout`.",
+        "attempts": 1,
+        "inputTokens": 1028,
+        "outputTokens": 271,
+        "docsSent": [
+          "docs/usage.md"
+        ],
+        "docsTruncated": []
+      }
+    },
+    {
+      "caseId": "010-runtime-version",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "requirements",
+      "run": 1,
+      "tp": [
+        "README.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "README.md"
+      ],
+      "retrievedTruncated": [],
+      "content": [
+        {
+          "path": "README.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 1
+        }
+      ],
+      "latencyMs": 1784,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "README.md",
+            "reason": "The README states that Node.js 18 or later is required, but the project has been updated to require Node.js 20.",
+            "evidence": [
+              {
+                "filePath": "package.json",
+                "detail": "engines node updated from >=18 to >=20"
+              },
+              {
+                "filePath": ".nvmrc",
+                "detail": "Node version updated from 18 to 20"
+              }
+            ],
+            "scope": "file",
+            "suggestedUpdate": "# Task API\n\nA small JSON API for managing a to-do list. It keeps tasks in memory, so it is\nmeant for demos and tests, not production.\n\n## Quick start\n\nRequires Node.js 20 or later.\n\n```bash\nnpm install\nnpm start\n```\n\n## Tasks\n\nEach task looks like this:\n\n```json\n{ \"id\": 1, \"title\": \"Buy milk\", \"done\": false }\n```\n\nSee [docs/api.md](docs/api.md) for every endpoint and\n[docs/configuration.md](docs/configuration.md) for settings.\n\n## License\n\nMIT\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request updates the required Node.js version from 18 to 20 across .nvmrc and package.json. The README.md still references Node.js 18, so it needs to be updated.",
+        "attempts": 1,
+        "inputTokens": 1239,
+        "outputTokens": 329,
+        "docsSent": [
+          "README.md"
+        ],
+        "docsTruncated": []
+      }
+    },
+    {
+      "caseId": "011-renamed-setting-two-docs",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "renamed setting",
+      "run": 1,
+      "tp": [
+        "docs/configuration.md",
+        "README.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "README.md",
+        "docs/configuration.md"
+      ],
+      "retrievedTruncated": [],
+      "content": [
+        {
+          "path": "README.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 1
+        },
+        {
+          "path": "docs/configuration.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 5
+        }
+      ],
+      "latencyMs": 1922,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/configuration.md",
+            "reason": "The environment variable DB_URL was renamed to DATABASE_URL in src/config.js.",
+            "evidence": [
+              {
+                "filePath": "src/config.js",
+                "detail": "Changed DB_URL to DATABASE_URL in required setting."
+              }
+            ],
+            "scope": "file",
+            "suggestedUpdate": "# Configuration\n\nThe API is configured with environment variables.\n\n| Variable     | Default       | Description                                  |\n| ------------ | ------------- | -------------------------------------------- |\n| `PORT`       | `3000`        | Port the HTTP server listens on.             |\n| `LOG_LEVEL`  | `info`        | One of `debug`, `info`, `warn`, `error`.     |\n| `DATABASE_URL` | (required)  | PostgreSQL connection string.                |\n\nUnknown variables are ignored.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          },
+          {
+            "documentationPath": "README.md",
+            "reason": "The quick start example uses DB_URL, which was renamed to DATABASE_URL in src/config.js.",
+            "evidence": [
+              {
+                "filePath": "src/config.js",
+                "detail": "Changed DB_URL to DATABASE_URL in required setting."
+              }
+            ],
+            "scope": "file",
+            "suggestedUpdate": "# Task API\n\nA small JSON API for managing a to-do list. It keeps tasks in memory, so it is\nmeant for demos and tests, not production.\n\n## Quick start\n\n```bash\nnpm install\nDATABASE_URL=postgres://localhost/tasks npm start\n```\n\n## Tasks\n\nEach task looks like this:\n\n```json\n{ \"id\": 1, \"title\": \"Buy milk\", \"done\": false }\n```\n\nSee [docs/api.md](docs/api.md) for every endpoint and\n[docs/configuration.md](docs/configuration.md) for settings.\n\n## License\n\nMIT\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The PR renamed the environment variable DB_URL to DATABASE_URL in src/config.js. Two documentation files reference DB_URL and need to be updated.",
+        "attempts": 1,
+        "inputTokens": 1345,
+        "outputTokens": 481,
+        "docsSent": [
+          "docs/configuration.md",
+          "README.md"
+        ],
+        "docsTruncated": []
+      }
+    },
+    {
+      "caseId": "012-status-code",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "changed response",
+      "run": 1,
+      "tp": [
+        "docs/api.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "docs/api.md"
+      ],
+      "retrievedTruncated": [],
+      "content": [
+        {
+          "path": "docs/api.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 2
+        }
+      ],
+      "latencyMs": 1924,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "The code change in src/routes.js updates the POST /tasks endpoint response status from 200 to 201, but docs/api.md still states it returns '200 OK'.",
+            "evidence": [
+              {
+                "filePath": "src/routes.js",
+                "detail": "- res.status(200).json(task);\n+ res.status(201).json(task);"
+              }
+            ],
+            "scope": "file",
+            "suggestedUpdate": "# API reference\n\nAll endpoints accept and return JSON.\n\n## Authentication\n\nSend your key in the `X-API-Key` header:\n\n```bash\ncurl -H \"X-API-Key: [REDACTED]\" https://api.example.com/tasks\n```\n\nRequests are limited to 100 requests per minute per key. Over the limit, the\nAPI answers `429 Too Many Requests`.\n\n## Tasks\n\n### `GET /tasks`\n\nReturns tasks, oldest first.\n\nQuery parameters:\n\n- `limit` (default 20, max 100): how many tasks to return.\n- `offset` (default 0): how many tasks to skip.\n\n### `POST /tasks`\n\nCreates a task. Body: `{ \"title\": \"Buy milk\" }`. Returns `201 Created` with the\ncreated task.\n\n### `DELETE /tasks/:id`\n\nDeletes a task. Returns `204 No Content`.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The POST /tasks endpoint was updated to return a 201 Created status code instead of 200 OK. Documentation in docs/api.md needs to be updated to reflect this change.",
+        "attempts": 1,
+        "inputTokens": 1559,
+        "outputTokens": 474,
+        "docsSent": [
+          "README.md",
+          "docs/api.md"
+        ],
+        "docsTruncated": []
+      }
+    },
+    {
+      "caseId": "013-removed-endpoint",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "removed endpoint",
+      "run": 1,
+      "tp": [
+        "docs/api.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "docs/api.md"
+      ],
+      "retrievedTruncated": [],
+      "content": [
+        {
+          "path": "docs/api.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 3
+        }
+      ],
+      "latencyMs": 1949,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "The DELETE /tasks/:id endpoint was removed and replaced with POST /tasks/:id/archive in the application code.",
+            "evidence": [
+              {
+                "filePath": "src/routes.js",
+                "detail": "Replaced router.delete('/tasks/:id', ...) with router.post('/tasks/:id/archive', ...)"
+              }
+            ],
+            "scope": "file",
+            "suggestedUpdate": "# API reference\n\nAll endpoints accept and return JSON.\n\n## Authentication\n\nSend your key in the `X-API-Key` header:\n\n```bash\ncurl -H \"X-API-Key: [REDACTED]\" https://api.example.com/tasks\n```\n\nRequests are limited to 100 requests per minute per key. Over the limit, the\nAPI answers `429 Too Many Requests`.\n\n## Tasks\n\n### `GET /tasks`\n\nReturns tasks, oldest first.\n\nQuery parameters:\n\n- `limit` (default 20, max 100): how many tasks to return.\n- `offset` (default 0): how many tasks to skip.\n\n### `POST /tasks`\n\nCreates a task. Body: `{ \"title\": \"Buy milk\" }`. Returns `200 OK` with the\ncreated task.\n\n### `POST /tasks/:id/archive`\n\nArchives a task. Returns `204 No Content`.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request replaces the task deletion endpoint (DELETE /tasks/:id) with an archive endpoint (POST /tasks/:id/archive). The API documentation in docs/api.md still documents the old delete endpoint and needs to be updated to document the new archive endpoint.",
+        "attempts": 1,
+        "inputTokens": 1834,
+        "outputTokens": 466,
+        "docsSent": [
+          "docs/api.md",
+          "README.md"
+        ],
+        "docsTruncated": []
+      }
+    },
+    {
+      "caseId": "014-rate-limit",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "changed limit",
+      "run": 1,
+      "tp": [
+        "docs/api.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "docs/api.md"
+      ],
+      "retrievedTruncated": [],
+      "content": [
+        {
+          "path": "docs/api.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 2
+        }
+      ],
+      "latencyMs": 1502,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "The rate limit was changed from 100 to 60 requests per minute in src/auth.js.",
+            "evidence": [
+              {
+                "filePath": "src/auth.js",
+                "detail": "Changed rate limit from 100 to 60"
+              }
+            ],
+            "scope": "file",
+            "suggestedUpdate": "# API reference\n\nAll endpoints accept and return JSON.\n\n## Authentication\n\nSend your key in the `X-API-Key` header:\n\n```bash\ncurl -H \"X-API-Key: [REDACTED]\" https://api.example.com/tasks\n```\n\nRequests are limited to 60 requests per minute per key. Over the limit, the\nAPI answers `429 Too Many Requests`.\n\n## Tasks\n\n### `GET /tasks`\n\nReturns tasks, oldest first.\n\nQuery parameters:\n\n- `limit` (default 20, max 100): how many tasks to return.\n- `offset` (default 0): how many tasks to skip.\n\n### `POST /tasks`\n\nCreates a task. Body: `{ \"title\": \"Buy milk\" }`. Returns `200 OK` with the\ncreated task.\n\n### `DELETE /tasks/:id`\n\nDeletes a task. Returns `204 No Content`.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The rate limit in src/auth.js was lowered from 100 to 60 requests per minute, but docs/api.md still states the old limit.",
+        "attempts": 1,
+        "inputTokens": 1307,
+        "outputTokens": 434,
+        "docsSent": [
+          "docs/api.md"
+        ],
+        "docsTruncated": []
+      }
+    },
+    {
+      "caseId": "015-behaviour-change",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "changed behaviour",
+      "run": 1,
+      "tp": [
+        "docs/api.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [
+        "README.md"
+      ],
+      "correct": true,
+      "retrieved": [
+        "docs/api.md"
+      ],
+      "retrievedTruncated": [],
+      "content": [
+        {
+          "path": "docs/api.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 2
+        }
+      ],
+      "latencyMs": 2357,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "GET /tasks now returns tasks sorted by priority (high to low) first, then by creation date (oldest first), whereas the documentation previously stated 'oldest first'.",
+            "evidence": [
+              {
+                "filePath": "src/store.js",
+                "detail": "listTasks sorts by b.priority - a.priority || a.createdAt - b.createdAt"
+              }
+            ],
+            "scope": "file",
+            "suggestedUpdate": "# API reference\n\nAll endpoints accept and return JSON.\n\n## Authentication\n\nSend your key in the `X-API-Key` header:\n\n```bash\ncurl -H \"X-API-Key: [REDACTED]\" https://api.example.com/tasks\n```\n\nRequests are limited to 100 requests per minute per key. Over the limit, the\nAPI answers `429 Too Many Requests`.\n\n## Tasks\n\n### `GET /tasks`\n\nReturns tasks sorted by priority (highest first), then oldest first.\n\nQuery parameters:\n\n- `limit` (default 20, max 100): how many tasks to return.\n- `offset` (default 0): how many tasks to skip.\n\n### `POST /tasks`\n\nCreates a task. Body: `{ \"title\": \"Buy milk\" }`. Returns `200 OK` with the\ncreated task.\n\n### `DELETE /tasks/:id`\n\nDeletes a task. Returns `204 No Content`.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          },
+          {
+            "documentationPath": "README.md",
+            "reason": "Tasks created now include a 'priority' field, which should be reflected in the task object example in the README.",
+            "evidence": [
+              {
+                "filePath": "src/store.js",
+                "detail": "addTask creates task with priority: 0"
+              }
+            ],
+            "scope": "file",
+            "suggestedUpdate": "# Task API\n\nA small JSON API for managing a to-do list. It keeps tasks in memory, so it is\nmeant for demos and tests, not production.\n\n## Quick start\n\n```bash\nnpm install\nnpm start\n```\n\n## Tasks\n\nEach task looks like this:\n\n```json\n{ \"id\": 1, \"title\": \"Buy milk\", \"done\": false, \"priority\": 0 }\n```\n\nSee [docs/api.md](docs/api.md) for every endpoint and\n[docs/configuration.md](docs/configuration.md) for settings.\n\n## License\n\nMIT\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request adds a priority field to tasks and changes the sorting order of listTasks (and GET /tasks) to sort by priority descending first, then by creation order. Documentation files docs/api.md and README.md need to be updated to reflect this new sorting behavior and the new priority field.",
+        "attempts": 1,
+        "inputTokens": 1692,
+        "outputTokens": 771,
+        "docsSent": [
+          "docs/api.md",
+          "README.md"
+        ],
+        "docsTruncated": []
+      }
+    },
+    {
+      "caseId": "016-openapi-parameter",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "renamed parameter",
+      "run": 1,
+      "tp": [
+        "openapi.yaml"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "openapi.yaml"
+      ],
+      "retrievedTruncated": [],
+      "content": [
+        {
+          "path": "openapi.yaml",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 1
+        }
+      ],
+      "latencyMs": 1636,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "openapi.yaml",
+            "reason": "The query parameter for product search was renamed from 'q' to 'search' in the code, but the OpenAPI specification still documents it as 'q'.",
+            "evidence": [
+              {
+                "filePath": "src/routes.js",
+                "detail": "Renamed req.query.q to req.query.search"
+              }
+            ],
+            "scope": "file",
+            "suggestedUpdate": "openapi: 3.1.0\ninfo:\n  title: Catalog API\n  version: 1.2.0\npaths:\n  /products:\n    get:\n      summary: Search products\n      parameters:\n        - name: search\n          in: query\n          required: false\n          schema:\n            type: string\n          description: Text to search for in product names.\n      responses:\n        '200':\n          description: Matching products.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request renamed the query parameter 'q' to 'search' in src/routes.js, but the OpenAPI documentation in openapi.yaml still references the old parameter name 'q'.",
+        "attempts": 1,
+        "inputTokens": 1091,
+        "outputTokens": 308,
+        "docsSent": [
+          "openapi.yaml"
+        ],
+        "docsTruncated": []
+      }
+    },
+    {
+      "caseId": "017-internal-refactor",
+      "group": "no-drift",
+      "source": "synthetic",
+      "category": "refactor",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [],
+      "retrievedTruncated": [],
+      "content": [],
+      "latencyMs": 758,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request performs an internal refactor to extract title validation into a helper function without changing any external behavior or API definitions. Therefore, no documentation updates are needed.",
+        "attempts": 1,
+        "inputTokens": 1633,
+        "outputTokens": 49,
+        "docsSent": [
+          "README.md",
+          "docs/api.md"
+        ],
+        "docsTruncated": []
+      }
+    },
+    {
+      "caseId": "018-tests-only",
+      "group": "no-drift",
+      "source": "synthetic",
+      "category": "tests",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [],
+      "retrievedTruncated": [],
+      "content": [],
+      "latencyMs": 940,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request only adds a new test file for internal store functions and does not modify any code or behavior described in the documentation. Therefore, no documentation updates are needed.",
+        "attempts": 1,
+        "inputTokens": 1603,
+        "outputTokens": 50,
+        "docsSent": [
+          "README.md",
+          "docs/api.md"
+        ],
+        "docsTruncated": []
+      }
+    },
+    {
+      "caseId": "019-comments-only",
+      "group": "no-drift",
+      "source": "synthetic",
+      "category": "comments",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [],
+      "retrievedTruncated": [],
+      "content": [],
+      "latencyMs": 808,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "No documentation needs to be updated. The pull request only adds internal comments regarding in-memory storage behavior and ID non-reusage, which do not contradict or omit any existing documented features in README.md.",
+        "attempts": 1,
+        "inputTokens": 1152,
+        "outputTokens": 50,
+        "docsSent": [
+          "README.md"
+        ],
+        "docsTruncated": []
+      }
+    },
+    {
+      "caseId": "020-lockfile-only",
+      "group": "no-drift",
+      "source": "synthetic",
+      "category": "dependencies",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [],
+      "retrievedTruncated": [],
+      "content": [],
+      "latencyMs": 1,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": true,
+        "summary": "No reviewable code changes (only generated, binary or sensitive files), so no analysis was needed.",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [],
+        "docsTruncated": []
+      }
+    },
+    {
+      "caseId": "021-keyword-trap",
+      "group": "no-drift",
+      "source": "synthetic",
+      "category": "local rename",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [],
+      "retrievedTruncated": [],
+      "content": [],
+      "latencyMs": 1069,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request only renames a local variable inside the stats function for readability. It does not affect any public API responses, configuration, or documented behavior, as the returned object structure remains unchanged.",
+        "attempts": 1,
+        "inputTokens": 1605,
+        "outputTokens": 49,
+        "docsSent": [
+          "README.md",
+          "docs/api.md"
+        ],
+        "docsTruncated": []
+      }
+    },
+    {
+      "caseId": "022-equivalent-code",
+      "group": "no-drift",
+      "source": "synthetic",
+      "category": "refactor",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [],
+      "retrievedTruncated": [],
+      "content": [],
+      "latencyMs": 769,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Reviewed the pull request changing internal implementation of deleteTask in src/store.js. The change is an internal refactor (tidying up `findIndex` and condition) that does not alter public behavior, API contracts, or configuration, meaning no documentation updates are needed.",
+        "attempts": 1,
+        "inputTokens": 1567,
+        "outputTokens": 69,
+        "docsSent": [
+          "docs/api.md",
+          "README.md"
+        ],
+        "docsTruncated": []
+      }
+    },
+    {
+      "caseId": "023-docs-already-updated",
+      "group": "no-drift",
+      "source": "synthetic",
+      "category": "docs in same PR",
+      "run": 1,
+      "tp": [],
+      "fp": [
+        "docs/api.md"
+      ],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [],
+      "retrievedTruncated": [],
+      "content": [],
+      "latencyMs": 2203,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "The code in src/store.js was updated to use `dueDate` instead of `due`, but `docs/api.md` does not mention `dueDate` for `POST /tasks` or task creation/response properties.",
+            "evidence": [
+              {
+                "filePath": "src/store.js",
+                "detail": "Changed parameter and property from due to dueDate"
+              }
+            ],
+            "scope": "file",
+            "suggestedUpdate": "# API reference\n\nAll endpoints accept and return JSON.\n\n## Authentication\n\nSend your key in the `X-API-Key` header:\n\n```bash\ncurl -H \"X-API-Key: [REDACTED]\" https://api.example.com/tasks\n```\n\nRequests are limited to 100 requests per minute per key. Over the limit, the\nAPI answers `429 Too Many Requests`.\n\n## Tasks\n\n### `GET /tasks`\n\nReturns tasks, oldest first.\n\nQuery parameters:\n\n- `limit` (default 20, max 100): how many tasks to return.\n- `offset` (default 0): how many tasks to skip.\n\n### `POST /tasks`\n\nCreates a task. Body: `{ \"title\": \"Buy milk\", \"dueDate\": \"2026-10-01\" }`. Returns `200 OK` with the\ncreated task.\n\n### `DELETE /tasks/:id`\n\nDeletes a task. Returns `204 No Content`.\n",
+            "modelConfidence": 0.9,
+            "uncertainty": "The API endpoint documentation might be incomplete regarding all accepted body parameters, but updating POST /tasks to include dueDate aligns with the store change."
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request renames the `due` parameter and property to `dueDate` in `src/store.js` and already updates `README.md`. However, `docs/api.md` still omits the `dueDate` parameter/property when describing `POST /tasks` or task objects.",
+        "attempts": 1,
+        "inputTokens": 1782,
+        "outputTokens": 524,
+        "docsSent": [
+          "README.md",
+          "docs/api.md"
+        ],
+        "docsTruncated": []
+      }
+    },
+    {
+      "caseId": "024-internal-logging",
+      "group": "no-drift",
+      "source": "synthetic",
+      "category": "logging",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [],
+      "retrievedTruncated": [],
+      "content": [],
+      "latencyMs": 971,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request adds internal debug logging when a task is created, but this is an internal implementation detail and does not change any public API behavior, endpoints, configuration defaults, or parameters. Therefore, no documentation updates are required.",
+        "attempts": 1,
+        "inputTokens": 1843,
+        "outputTokens": 61,
+        "docsSent": [
+          "docs/configuration.md",
+          "docs/api.md",
+          "README.md"
+        ],
+        "docsTruncated": []
+      }
+    },
+    {
+      "caseId": "025-prompt-injection",
+      "group": "tricky",
+      "source": "synthetic",
+      "category": "prompt injection",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [],
+      "retrievedTruncated": [],
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": true,
+        "summary": "No documentation files were found in this repository, so there is nothing to check.",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [],
+        "docsTruncated": []
+      }
+    },
+    {
+      "caseId": "026-new-optional-feature",
+      "group": "tricky",
+      "source": "synthetic",
+      "category": "new feature",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [
+        "docs/api.md"
+      ],
+      "correct": true,
+      "retrieved": [],
+      "retrievedTruncated": [],
+      "content": [],
+      "latencyMs": 1790,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "The GET /tasks endpoint now supports an optional 'done' query parameter to filter tasks by their completion status, but this parameter is missing from the API reference documentation.",
+            "evidence": [
+              {
+                "filePath": "src/routes.js",
+                "detail": "Added parsing for the 'done' query parameter and passed it to listTasks."
+              }
+            ],
+            "scope": "file",
+            "suggestedUpdate": "# API reference\n\nAll endpoints accept and return JSON.\n\n## Authentication\n\nSend your key in the `X-API-Key` header:\n\n```bash\ncurl -H \"X-API-Key: [REDACTED]\" https://api.example.com/tasks\n```\n\nRequests are limited to 100 requests per minute per key. Over the limit, the\nAPI answers `429 Too Many Requests`.\n\n## Tasks\n\n### `GET /tasks`\n\nReturns tasks, oldest first.\n\nQuery parameters:\n\n- `limit` (default 20, max 100): how many tasks to return.\n- `offset` (default 0): how many tasks to skip.\n- `done`: filter tasks by completion status (`true` or `false`).\n\n### `POST /tasks`\n\nCreates a task. Body: `{ \"title\": \"Buy milk\" }`. Returns `200 OK` with the\ncreated task.\n\n### `DELETE /tasks/:id`\n\nDeletes a task. Returns `204 No Content`.\n",
+            "modelConfidence": 1,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request adds an optional `done` query parameter to the `GET /tasks` endpoint. The API documentation in `docs/api.md` should be updated to document this new query parameter.",
+        "attempts": 1,
+        "inputTokens": 1785,
+        "outputTokens": 470,
+        "docsSent": [
+          "docs/api.md",
+          "README.md"
+        ],
+        "docsTruncated": []
+      }
+    },
+    {
+      "caseId": "101-pydantic-13824",
+      "group": "drift",
+      "source": "real",
+      "category": "real: docs updated with code",
+      "run": 1,
+      "tp": [
+        "docs/api/standard_library_types.md"
+      ],
+      "fp": [],
+      "fn": [
+        "docs/errors/validation_errors.md"
+      ],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "docs/api/standard_library_types.md",
+        "docs/errors/validation_errors.md"
+      ],
+      "retrievedTruncated": [
+        "docs/api/standard_library_types.md",
+        "docs/errors/validation_errors.md"
+      ],
+      "content": [
+        {
+          "path": "docs/api/standard_library_types.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 0
+        }
+      ],
+      "latencyMs": 4437,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api/standard_library_types.md",
+            "reason": "The pull request adds support for `collections.Counter` validation and serialization, but the documentation for standard library types does not cover Counter yet.",
+            "evidence": [
+              {
+                "filePath": "pydantic/_internal/_generate_schema.py",
+                "detail": "Added `collections.Counter` mapping to `_counter_schema`."
+              },
+              {
+                "filePath": "tests/types/test_counter.py",
+                "detail": "Added comprehensive tests for `Counter` validation and JSON schema generation."
+              }
+            ],
+            "scope": "section",
+            "sectionHeading": "### Ordered dictionaries",
+            "suggestedUpdate": "---\ndescription: Support for common types from the Python standard library.\n---\n\nThis section enumerates the supported built-in and standard library types: the allowed values,\nthe possible constraints, and whether strictness can be configured.\n\nSee also the [conversion table](../concepts/conversion_table.md) for a summary of the allowed values for each type.\n\n!!! note\n    Unless specified otherwise, values are serialized as-is, in both Python and JSON modes.\n\n## Booleans\n\nBuilt-in type: [`bool`][]\n\n<h3>Validation</h3>\n\n* A valid [`bool`][] instance, i.e. `True` or `False`.\n* The integers `0` or `1`.\n* A string, which when converted to lowercase is one of `'0'`, `'off'`, `'f'`, `'false'`, `'n'`, `'no'`, `'1'`, `'on'` `'t'`, `'true'`, `'y'`, `'yes'`.\n* [`bytes`][] objects that are valid per the previous rule when decoded to a string.\n\n<h3>Strictness</h3>\n\nIn [strict mode](../concepts/strict_mode.md), only boolean values are valid. Pydantic provides the [`StrictBool`][pydantic.types.StrictBool]\ntype as a convenience to [using the `Strict()` metadata class](../concepts/strict_mode.md#using-the-strict-metadata-class).\n\n<h3>Example</h3>\n\n```python\nfrom pydantic import BaseModel, ValidationError\n\n\nclass BooleanModel(BaseModel):\n    bool_value: bool\n\n\nprint(BooleanModel(bool_value=False))\n#> bool_value=False\nprint(BooleanModel(bool_value='False'))\n#> bool_value=False\nprint(BooleanModel(bool_value=1))\n#> bool_value=True\ntry:\n    BooleanModel(bool_value=[])\nexcept ValidationError as e:\n    print(str(e))\n    \"\"\"\n    1 validation error for BooleanModel\n    bool_value\n      Input should be a valid boolean [type=bool_type, input_value=[], input_type=list]\n    \"\"\"\n```\n\n## Strings\n\nBuilt-in type: [`str`][]\n\n<h3>Validation</h3>\n\n* Strings are accepted as-is.\n* [`bytes`][] and [`bytearray`][] are decoded to UTF-8 strings.\n* [Enums][enum] are converted using the [`value`][enum.Enum.value] attribute, by calling [`str()`][str]\n  on it.\n* If [`coerce_numbers_to_str`][pydantic.ConfigDict.coerce_numbers_to_str] is set, any number type\n  ([`int`][], [`float`][] and [`Decimal`][decimal.Decimal]) will be coerced to a string and accepted\n  as-is.\n\n<h3>Constraints</h3>\n\nStrings support the following constraints:\n\n| Constraint         | Description                                       | JSON Schema                                                                                                                                   |\n| ------------------ | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |\n| `pattern`          | A regex pattern that the string must match        | [`pattern`](https://json-schema.org/understanding-json-schema/reference/string#regexp) keyword (see [note](#pattern-constraint-note) below).  |\n| `min_length`       | The minimum length of the string                  | [`minLength`](https://json-schema.org/understanding-json-schema/reference/string#length) keyword                                              |\n| `max_length`       | The maximum length of the string                  | [`maxLength`](https://json-schema.org/understanding-json-schema/reference/string#length) keyword                                              |\n| `strip_whitespace` | Whether to remove leading and trailing whitespace | N/A                                                                                                                                           |\n| `to_upper`         | Whether to convert the string to uppercase        | N/A                                                                                                                                           |\n| `to_lower`         | Whether to convert the string to lowercase        | N/A                                                                                                                                           |\n| `ascii_only`       | Whether to allow only ASCII characters            | N/A                                                                                                                                           |\n\nThese constraints can be provided using the [`StringConstraints`][pydantic.types.StringConstraints] metadata type, or using the [`Field()`][pydantic.Field] function (except for `strip_whitespace`, `to_upper`, `to_lower` and `ascii_only`).\n\nThe [`annotated-types`](https://github.com/annotated-types/annotated-types) library also provides the `MinLen`, `MaxLen` and `Len` metadata types, as well\nas the `LowerCase`, `UpperCase`, `IsDigit` and `IsAscii` predicates (must be parameterized with `str`, e.g. `LowerCase[str]`).\n\n<!-- markdownlint-disable-next-line no-empty-links -->\n[](){#pattern-constraint-note}\n\n!!! note \"`pattern` constraint\"\n    By default, Pydantic will use the [`regex`](https://docs.rs/regex) Rust crate to enforce the `pattern` constraint. The regex engine can be controlled\n    using the [`regex_engine`][pydantic.ConfigDict.regex_engine] configuration value. If a compiled [regular expression object][re.Pattern] is used for\n    `pattern`, the Python engine will automatically be used.\n\n    While the JSON Schema specification [recommends](https://json-schema.org/draft/2020-12/json-schema-core#name-regular-expressions) using patterns\n    valid according to dialect described in [ECMA-262](https://262.ecma-international.org/11.0/index.html#sec-patterns), Pydantic will *not* enforce it.\n\n<h3>Strictness</h3>\n\nIn [strict mode](../concepts/strict_mode.md), only string values are valid. Pydantic provides the [`StrictStr`][pydantic.types.StrictStr]\ntype as a convenience to [using the `Strict()` metadata class](../concepts/strict_mode.md#using-the-strict-metadata-class).\n\n<h3>Example</h3>\n\n```python\nfrom typing import Annotated\n\nfrom pydantic import BaseModel, StringConstraints\n\n\nclass StringModel(BaseModel):\n    str_value: str = \"\"\n    constrained_str_value: Annotated[str, StringConstraints(to_lower=True)] = \"\"\n\n\nprint(StringModel(str_value=\"test\").str_value)\n#> test\nprint(StringModel(constrained_str_value='TEST').constrained_str_value)\n#> test\n```\n\n## Bytes\n\nBuilt-in type: [`bytes`][].\n\nSee also: [`ByteSize`][pydantic.types.ByteSize].\n\n<h3>Validation</h3>\n\n* [`bytes`][] instances are validated as is.\n* Strings and [`bytearray`][] instances are converted as bytes, following the [`val_json_bytes`][pydantic.ConfigDict.val_json_bytes] configuration value\n  (despite its name, it applies to both Python and JSON modes).\n\n<h3>Constraints</h3>\n\nStrings support the following constraints:\n\n| Constraint         | Description                     | JSON Schema                                                                                      |\n| ------------------ | --------------------------------| -------------------------------------------------------------------------------------------------|\n| `min_length`       | The minimum length of the bytes | [`minLength`](https://json-schema.org/understanding-json-schema/reference/string#length) keyword |\n| `max_length`       | The maximum length of the bytes | [`maxLength`](https://json-schema.org/understanding-json-schema/reference/string#length) keyword |\n\nThe `MinLen` and `MaxLen` metadata types from the [`annotated-types`](https://github.com/annotated-types/annotated-types)\nlibrary can also be used.\n\n<h3>Strictness</h3>\n\nIn [strict mode](../concepts/strict_mode.md), only [`bytes`][] instances are valid. Pydantic provides the [`StrictBytes`][pydantic.types.StrictBytes]\ntype as a convenience to [using the `Strict()` metadata class](../concepts/strict_mode.md#using-the-strict-metadata-class).\n\nIn JSON mode, strict mode has no effect.\n\n<!-- old anchor added for backwards compatibility -->\n<!-- markdownlint-disable-next-line no-empty-links -->\n[](){#number-types}\n\n## Numbers\n\nPydantic supports the following numeric types from the Python standard library:\n\n<!-- old anchor added for backwards compatibility -->\n<!-- markdownlint-disable-next-line no-empty-links -->\n[](){#int}\n\n### Integers\n\nBuilt-in type: [`int`][].\n\n<h4>Validation</h4>\n\n* Integers are validated as-is.\n* Strings and bytes are attempted to be converted to integers and validated as-is\n  (see the [jiter implementation](https://docs.rs/jiter/latest/jiter/enum.NumberInt.html#impl-TryFrom%3C%26%5Bu8%5D%3E-for-NumberInt) for details).\n* Floats are validated as integers, provided the float input is not infinite or a NaN (not-a-number)\n  and the fractional part is 0.\n* [`Decimal`][decimal.Decimal] instances, provided they are [finite][decimal.Decimal.is_finite] and the\n  denominator is 1.\n* [`Fraction`][fractions.Fraction] instances, provided they are [integers][fractions.Fraction.is_integer].\n* [Enums][enum] are converted using the [`value`][enum.Enum.value] attribute.\n\n<h4>Constraints</h4>\n\nIntegers support the following constraints (numbers must be coercible to integers):\n\n| Constraint    | Description                                            | JSON Schema                                                                                             |\n| ------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------- |\n| `le`          | The value must be less than or equal to this number    | [`maximum`](https://json-schema.org/understanding-json-schema/reference/numeric#range) keyword          |\n| `ge`          | The value must be greater than or equal to this number | [`minimum`](https://json-schema.org/understanding-json-schema/reference/numeric#range) keyword          |\n| `lt`          | The value must be strictly less than this number       | [`exclusiveMaximum`](https://json-schema.org/understanding-json-schema/reference/numeric#range) keyword |\n| `gt`          | The value must be strictly greater than this number    | [`exclusiveMinimum`](https://json-schema.org/understanding-json-schema/reference/numeric#range) keyword |\n| `multiple_of` | The value must be a multiple of this number            | [`multipleOf`](https://json-schema.org/understanding-json-schema/reference/numeric#multiples) keyword   |\n\nThese constraints can be provided using the [`Field()`][pydantic.Field] function.\nThe `Le`, `Ge`, `Lt`, `Gt` and `MultipleOf` metadata types from the [`annotated-types`](https://github.com/annotated-types/annotated-types)\nlibrary can also be used.\n\nPydantic also provides the following types to further constrain the allowed integer values:\n\n* [`PositiveInt`][pydantic.types.PositiveInt]: Requires the input to be greater than zero.\n* [`NegativeInt`][pydantic.types.NegativeInt]: Requires the input to be less than zero.\n* [`NonPositiveInt`][pydantic.types.NonPositiveInt]: Requires the input to be less than or equal to zero.\n* [`NonNegativeInt`][pydantic.types.NonNegativeInt]: Requires the input to be greater than or equal to zero.\n\n<h4>Strictness</h4>\n\nIn [strict mode](../concepts/strict_mode.md), only integer values are valid. Pydantic provides the [`StrictInt`][pydantic.types.StrictInt]\ntype as a convenience to [using the `Strict()` metadata class](../concepts/strict_mode.md#using-the-strict-metadata-class).\n\n<!-- old anchor added for backwards compatibility -->\n<!-- markdownlint-disable-next-line no-empty-links -->\n[](){#float}\n\n### Floats\n\nBuilt-in type: [`float`][].\n\n<h4>Validation</h4>\n\n* Floats are validated as-is.\n* String and bytes are attempted to be converted to floats and validated as-is.\n  (see the [Rust implementation](https://doc.rust-lang.org/src/core/num/float_parse.rs.html) for details).\n* If the input has a [`__float__()`][object.__float__] method, it will be called to convert the input into\n  a float. If `__float__()` is not defined, it falls back to [`__index__()`][object.__index__]. This includes\n  (but not limited to) the [`Decimal`][decimal.Decimal] and [`Fraction`][fractions.Fraction] types.\n\n<h4>Constraints</h4>\n\nFloats support the following constraints:\n\n| Constraint      | Description                                             | JSON Schema                                                                                             |\n| --------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |\n| `le`            | The value must be less than or equal to this number     | [`maximum`](https://json-schema.org/understanding-json-schema/reference/numeric#range) keyword          |\n| `ge`            | The value must be greater than or equal to this number  | [`minimum`](https://json-schema.org/understanding-json-schema/reference/numeric#range) keyword          |\n| `lt`            | The value must be strictly less than this number        | [`exclusiveMaximum`](https://json-schema.org/understanding-json-schema/reference/numeric#range) keyword |\n| `gt`            | The value must be strictly greater than this number     | [`exclusiveMinimum`](https://json-schema.org/understanding-json-schema/reference/numeric#range) keyword |\n| `multiple_of`   | The value must be a multiple of this number             | [`multipleOf`](https://json-schema.org/understanding-json-schema/reference/numeric#multiples) keyword   |\n| `allow_inf_nan` | Whether to allow NaN (not-a-number) and infinite values | N/A                                                                                                     |\n\nThese constraints can be provided using the [`Field()`][pydantic.Field] function.\n\nThe [`annotated-types`](https://github.com/annotated-types/annotated-types) library also provides the `Le`, `Ge`, `Lt`, `Gt` and `MultipleOf` metadata types,\nas well as the `IsFinite`, `IsNotFinite`, `IsNan`, `IsNotNan`, `IsAscii`, `IsInfinite` and `IsNotInfinite` predicates\n(must be parameterized with `float`, e.g. `IsFinite[float]`). The [`AllowInfNan`][pydantic.types.AllowInfNan] type can also be used.\n\nPydantic also provides the following types as convenience aliases:\n\n* [`PositiveFloat`][pydantic.types.PositiveFloat]: Requires the input to be greater than zero.\n* [`NegativeFloat`][pydantic.types.NegativeFloat]: Requires the input to be less than zero.\n* [`NonPositiveFloat`][pydantic.types.NonPositiveFloat]: Requires the input to be less than or equal to zero.\n* [`NonNegativeFloat`][pydantic.types.NonNegativeFloat]: Requires the input to be greater than or equal to zero.\n* [`FiniteFloat`][pydantic.types.FiniteFloat]: Prevents NaN (not-a-number) and infinite values.\n\n<h4>Strictness</h4>\n\nIn [strict mode](../concepts/strict_mode.md), only float values and inputs having a [`__float__()`][object.__float__]\nor [`__index__()`][object.__index__] method are valid.\nPydantic provides the [`StrictFloat`][pydantic.types.StrictFloat] type as a convenience to\n[using the `Strict()` metadata class](../concepts/strict_mode.md#using-the-strict-metadata-class).\n\n<!-- old anchor added for backwards compatibility -->\n<!-- markdownlint-disable-next-line no-empty-links -->\n[](){#enumintenum}\n\n### Integer enums\n\nStandard library type: [`enum.IntEnum`][].\n\n<h4>Validation</h4>\n\n* If the [`enum.IntEnum`][] type is used directly, any [`enum.IntEnum`][] instance is validated as-is\n* If an [`enum.IntEnum`][] subclass is used as a type, any enum member or value that correspond to the\n  enum members values is validated as-is.\n\nSee [Enums](#enums) for more details.\n\n<!-- old anchor added for backwards compatibility -->\n<!-- markdownlint-disable-next-line no-empty-links -->\n[](){#decimaldecimal}\n\n### Decimals\n\nStandard library type: [`decimal.Decimal`][].\n\n<h4>Validation</h4>\n\n* [`Decimal`][decimal.Decimal] instances are validated as is.\n* Any value accepted by the [`Decimal`][decimal.Decimal] constructor.\n\n<h4>Constraints</h4>\n\nDecimals support the following constraints (numbers must be coercible to decimals):\n\n| Constraint       | Description                                                                                                         | JSON Schema                                                                                                                    |\n| ---------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |\n| `le`             | The value must be less than or equal to this number                                                                 | [`maximum`](https://json-schema.org/understanding-json-schema/reference/numeric#range) keyword                                 |\n| `ge`             | The value must be greater than or equal to this number                                                              | [`minimum`](https://json-schema.org/understanding-json-schema/reference/numeric#range) keyword                                 |\n| `lt`             | The value must be strictly less than this number                                                                    | [`exclusiveMaximum`](https://json-schema.org/understanding-json-schema/reference/numeric#range) keyword                        |\n| `gt`             | The value must be strictly greater than this number                                                                 | [`exclusiveMinimum`](https://json-schema.org/understanding-json-schema/reference/numeric#range) keyword                        |\n| `multiple_of`    | The value must be a multiple of this number                                                                         | [`multipleOf`](https://json-schema.org/understanding-json-schema/reference/numeric#multiples) keyword                          |\n| `allow_inf_nan`  | Whether to allow NaN (not-a-number) and infinite values                                                             | N/A                                                                                                                            |\n| `max_digits`     | The maximum number of decimal digits allowed. The zero before the decimal point and trailing zeros are not counted. | N/A (see below)                                                                                                           |\n| `decimal_places` | The maximum number of decimal places allowed. Trailing zeros are not counted.                                       | N/A (see below)                                                                                                           |\n\n/// version-changed | v2.12\nThe JSON Schema includes a [`pattern`](https://json-schema.org/understanding-json-schema/reference/string#regexp) matching the `max_digits`\nand `decimal_places` constraints.\n///\n\n/// version-changed | v2.14\nThe JSON Schema no longer includes a [`pattern`](https://json-schema.org/understanding-json-schema/reference/string#regexp) by default,\nas the generated pattern can cause issues for downstream consumers due to its complexity.\n\nThe pattern can be included by subclassing [`GenerateJsonSchema`][pydantic.json_schema.GenerateJsonSchema] and overriding the\n[`get_decimal_pattern()`][pydantic.json_schema.GenerateJsonSchema.get_decimal_pattern] method:\n\n```python\nfrom decimal import Decimal\nfrom typing import Annotated\n\nfrom pydantic import Field, TypeAdapter\nfrom pydantic.json_schema import GenerateJsonSchema\n\n\nclass MyGenerateJsonSchema(GenerateJsonSchema):\n    def get_decimal_pattern(self, schema):\n        return self.build_decimal_pattern(schema)\n\n\nta = TypeAdapter(Annotated[Decimal, Field(max_digits=5, decimal_places=2)])\nprint(\n    ta.json_schema(schema_generator=MyGenerateJsonSchema, mode='serialization')\n)\n\"\"\"\n{\n    'pattern': '^-?(?:(?:0|[1-9][0-9]{0,2})(?:\\\\.[0-9]{1,2}0*)?|0E[+-][1-9][0-9]*|[1-9](?:\\\\.[0-9]+)?E\\\\+[1-2])$',\n    'type': 'string',\n}\n\"\"\"\n```\n\nThe generated pattern also no longer uses lookahead assertions, and takes exponents and `allow_inf_nan` into account.\n///\n\nThese constraints can be provided using the [`Field()`][pydantic.Field] function.\nThe `Le`, `Ge`, `Lt`, `Gt` and `MultipleOf` metadata types from the [`annotated-types`](https://github.com/annotated-types/annotated-types)\nlibrary and the [`AllowInfNan`][pydantic.types.AllowInfNan] type can also be used.\n\n<h4>Strictness</h4>\n\nIn [strict mode](../concepts/strict_mode.md), only [`decimal.Decimal`][] instances are accepted. In JSON mode, strict mode has no effect.\n\n<h4>Serialization</h4>\n\nIn [Python mode](../concepts/serialization.md#python-mode), [`Decimal`][decimal.Decimal] instances are\nserialized as is.\n\nIn [JSON mode](../concepts/serialization.md#json-mode), they are serialized as strings.\nA [serializer](../concepts/serialization.md#field-plain-serializer) can be used to override this behavior:\n\n```python\nfrom decimal import Decimal\nfrom typing import Annotated\n\nfrom pydantic import BaseModel, PlainSerializer\n\n\nclass Model(BaseModel):\n    f: Annotated[Decimal, PlainSerializer(float, when_used='json')]\n\n\nmy_model = Model(f=Decimal('2.1'))\n\nprint(my_model.model_dump())  # (1)!\n#> {'f': Decimal('2.1')}\nprint(my_model.model_dump_json())  # (2)!\n#> {\"f\":2.1}\n```\n\n1. In Python mode, `f`remains a [`Decimal`][decimal.Decimal] instance.\n2. In JSON mode, `f` is serialized as a float.\n\n<!-- old anchor added for backwards compatibility -->\n<!-- markdownlint-disable-next-line no-empty-links -->\n[](){#complex}\n\n### Complex numbers\n\n/// version-added | v2.9\n///\n\nBuilt-in type: [`complex`][].\n\n<h4>Validation</h4>\n\n* [`complex`][] instances are validated as-is.\n* In Python mode, data is validated using the [`complex()`][complex] constructor.\n* In JSON mode, string are validated using the [`complex()`][complex] constructor,\n   numbers (integers and floats) are used as the real part.\n\n<h4>Strictness</h4>\n\nIn [strict mode](../concepts/strict_mode.md), only [`complex`][] instances are accepted. In JSON mode, only strings that are\naccepted by the [`complex()`][complex] constructor are allowed.\n\n<h4>Serialization</h4>\n\nIn [Python mode](../concepts/serialization.md#python-mode), [`complex`][] instances are\nserialized as is.\n\nIn [JSON mode](../concepts/serialization.md#json-mode), they are serialized as strings.\n\n<!-- old anchor added for backwards compatibility -->\n<!-- markdownlint-disable-next-line no-empty-links -->\n[](){#fractionsfraction}\n\n### Fractions\n\n/// version-added | v2.10\n///\n\nStandard library type: [`fractions.Fraction`][].\n\n<h4>Validation</h4>\n\n* [`Fraction`][fractions.Fraction] instances are validated as is.\n* Floats, strings and [`decimal.Decimal`][] instances are validated using the [`Fraction()`][fractions.Fraction]\n  constructor.\n\n<h4>Strictness</h4>\n\nIn [strict mode](../concepts/strict_mode.md), only [`Fraction`][fractions.Fraction] instances are accepted. In JSON mode, strict mode has no effect.\n\n<h4>Serialization</h4>\n\nFractions are serialized as strings, both in [Python](../concepts/serialization.md#python-mode)\nand [JSON](../concepts/serialization.md#json-mode) modes.\n\n<!-- old anchor added for backwards compatibility -->\n<!-- markdownlint-disable-next-line no-empty-links -->\n[](){#datetime-types}\n\n## Date and time types\n\nPydantic supports the following [date and time](https://docs.python.org/library/datetime.html#available-types)\ntypes from the [`datetime`][] standard library:\n\n<!-- old anchor added for backwards compatibility -->\n<!-- markdownlint-disable-next-line no-empty-links -->\n[](){#datetimedatetime}\n\n### Datetimes\n\nStandard library type: [`datetime.datetime`][].\n\n<h4>Validation</h4>\n\n* [`datetime`][datetime.datetime] instances are validated as is.\n* Strings and bytes are validated in two ways:\n    * Strings complying to the [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) format (both datetime and date).\n      See the [speedate](https://docs.rs/speedate/) documentation for more details.\n    * Unix timestamps, both as seconds or milliseconds since the [epoch](https://en.wikipedia.org/wiki/Unix_time).\n      See the [`val_temporal_unit`][pydantic.ConfigDict.val_temporal_unit] configuration value for more details.\n* Integers and floats (or types that can be coerced as integers or floats) are validated as unix timestamps, following the\n  same semantics as strings.\n* [`datetime.date`][] instances are accepted, and converted to a [`datetime`][datetime.datetime] instance\n  by setting the [`hour`][datetime.datetime.hour], [`minute`][datetime.datetime.minute], [`second`][datetime.datetime.second] and\n  [`microsecond`][datetime.datetime.microsecond] attributes to `0`, and the [`tzinfo`][datetime.datetime.tzinfo] attribute to `None`.\n\n!!! note\n    Named timezone support (as specified in [RFC 9557](https://datatracker.ietf.org/doc/html/rfc9557.html))\n    can be tracked in [this issue](https://github.com/pydantic/pydantic/issues/12252).\n\n<h4>Serialization</h4>\n\nIn [Python mode](../concepts/serialization.md#python-mode), [`datetime`][datetime.datetime] instances are\nserialized as is.\n\nIn [JSON mode](../concepts/serialization.md#json-mode), they are serialized as strings.\n\n<h4>Constraints</h4>\n\nDatetimes support the following constraints (constraint values must be coercible to a [`datetime`][datetime.datetime] instance):\n\n| Constraint | Description                                              | JSON Schema |\n| ---------- | -------------------------------------------------------- | ----------- |\n| `le`       | The value must be less than or equal to this datetime    | N/A         |\n| `ge`       | The value must be greater than or equal to this datetime | N/A         |\n| `lt`       | The value must be strictly less than this datetime       | N/A         |\n| `gt`       | The value must be strictly greater than this datetime    | N/A         |\n\nThese constraints can be provided using the [`Field()`][pydantic.Field] function.\nThe `Le`, `Ge`, `Lt` and `Gt` metadata types from the [`annotated-types`](https://github.com/annotated-types/annotated-types)\nlibrary can also be used.\n\nPydantic also provides the following types to further constrain the allowed datetime values:\n\n* [`AwareDatetime`][pydantic.types.AwareDatetime]: Requires the input to have a timezone.\n* [`NaiveDatetime`][pydantic.types.NaiveDatetime]: Requires the input to *not* have a timezone.\n* [`PastDatetime`][pydantic.types.PastDatetime]: Requires the input to be in the past when validated.\n* [`FutureDatetime`][pydantic.types.FutureDatetime]: Requires the input to be in the future when validated.\n\n<h4>Strictness</h4>\n\nIn [strict mode](../concepts/strict_mode.md), only [`datetime`][datetime.datetime] instances are accepted. In JSON mode, only strings complying to the\n[RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) format (*only* datetime) or as unix timestamps are accepted.\n\n<h4>Example</h4>\n\n```python\nfrom datetime import datetime\nfrom typing import Annotated\n\nfrom pydantic import AwareDatetime, BaseModel, Field\n\n\nclass Event(BaseModel):\n    dt: Annotated[AwareDatetime, Field(gt=datetime(2000, 1, 1))]\n\n\nevent = Event(dt='2032-04-23T10:20:30.400+02:30')\n\nprint(event.model_dump())\n\"\"\"\n{'dt': datetime.datetime(2032, 4, 23, 10, 20, 30, 400000, tzinfo=TzInfo(9000))}\n\"\"\"\nprint(event.model_dump_json())\n#> {\"dt\":\"2032-04-23T10:20:30.400000+02:30\"}\n```\n\n<!-- old anchor added for backwards compatibility -->\n<!-- markdownlint-disable-next-line no-empty-links -->\n[](){#datetimedate}\n\n### Dates\n\nStandard library type: [`datetime.date`][].\n\n<h4>Validation</h4>\n\n* [`date`][datetime.date] instances are validated as is.\n* Strings and bytes are validated in two ways:\n    * Strings complying to the [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) date format.\n      See the [speedate](https://docs.rs/speedate/) documentation for more details.\n    * Unix timestamps, both as seconds or milliseconds since the [epoch](https://en.wikipedia.org/wiki/Unix_time).\n      See the [`val_temporal_unit`][pydantic.ConfigDict.val_temporal_unit] configuration value for more details.\n* If the validation fails, the input can be [validated as a datetime](#datetimes) (including as numbers),\n  provided that the time component is 0 and that it is naive.\n\n<h4>Serialization</h4>\n\nIn [Python mode](../concepts/serialization.md#python-mode), [`date`][datetime.date] instances are\nserialized as is.\n\nIn [JSON mode](../concepts/serialization.md#json-mode), they are serialized as strings.\n\n<h4>Constraints</h4>\n\nDates support the following constraints (constraint values must be coercible to a [`date`][datetime.date] instance):\n\n| Constraint | Description                                          | JSON Schema |\n| ---------- | ---------------------------------------------------- | ----------- |\n| `le`       | The value must be less than or equal to this date    | N/A         |\n| `ge`       | The value must be greater than or equal to this date | N/A         |\n| `lt`       | The value must be strictly less than this date       | N/A         |\n| `gt`       | The value must be strictly greater than this date    | N/A         |\n\nThese constraints can be provided using the [`Field()`][pydantic.Field] function.\nThe `Le`, `Ge`, `Lt` and `Gt` metadata types from the [`annotated-types`](https://github.com/annotated-types/annotated-types)\nlibrary can also be used.\n\nPydantic also provides the following types to further constrain the allowed date values:\n\n* [`PastDate`][pydantic.types.PastDate]: Requires the input to be in the past when validated.\n* [`FutureDate`][pydantic.types.FutureDate]: Requires the input to be in the future when validated.\n\n<h4>Strictness</h4>\n\nIn [strict mode](../concepts/strict_mode.md), only [`date`][datetime.date] instances are accepted. In JSON mode, only strings complying to the\n[RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) format (*only* date) or as unix timestamps are accepted.\n\n<h4>Example</h4>\n\n```python\nfrom datetime import date\n\nfrom pydantic import BaseModel\n\n\nclass Birthday(BaseModel):\n    d: date\n\n\nmy_birthday = Birthday(d=1679616000.0)\n\nprint(my_birthday.model_dump())\n#> {'d': datetime.date(2023, 3, 24)}\nprint(my_birthday.model_dump_json())\n#> {\"d\":\"2023-03-24\"}\n```\n\n<!-- old anchor added for backwards compatibility -->\n<!-- markdownlint-disable-next-line no-empty-links -->\n[](){#datetimetime}\n\n### Time\n\nStandard library type: [`datetime.time`][].\n\n<h4>Validation</h4>\n\n* [`time`][datetime.time] instances are validated as is.\n* Strings and bytes are validated according to the [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) time format.\n* Integers and floats (or values that can be coerced to such numbers) are validated as seconds. The value should not exceed 86 399.\n\n<h4>Serialization</h4>\n\nIn [Python mode](../concepts/serialization.md#python-mode), [`time`][datetime.time] instances are\nserialized as is.\n\nIn [JSON mode](../concepts/serialization.md#json-mode), they are serialized as strings.\n\n!!! note\n    Named timezones from the [IANA time zone database](https://www.iana.org/time-zones) (see the [`zoneinfo`][] module) are *not* serialized\n    with time objects. This is consistent with the [`time.isoformat()`][datetime.time.isoformat] method.\n\n<h4>Constraints</h4>\n\nTime support the following constraints (constraint values must be coercible to a [`time`][datetime.time] instance):\n\n| Constraint | Description                                          | JSON Schema |\n| ---------- | ---------------------------------------------------- | ----------- |\n| `le`       | The value must be less than or equal to this time    | N/A         |\n| `ge`       | The value must be greater than or equal to this time | N/A         |\n| `lt`       | The value must be strictly less than this time       | N/A         |\n| `gt`       | The value must be strictly greater than this time    | N/A         |\n\nThese constraints can be provided using the [`Field()`][pydantic.Field] function.\nThe `Le`, `Ge`, `Lt` and `Gt` metadata types from the [`annotated-types`](https://github.com/annotated-types/annotated-types)\nlibrary can also be used.\n\n<h4>Strictness</h4>\n\nIn [strict mode](../concepts/strict_mode.md), only [`time`][datetime.time] instances are accepted. In JSON mode, only strings complying to the\n[RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) format are accepted.\n\n<h4>Example</h4>\n\n```python\nfrom datetime import time\n\nfrom pydantic import BaseModel\n\n\nclass Meeting(BaseModel):\n    t: time\n\n\nm = Meeting(t=time(4, 8, 16))\n\nprint(m.model_dump())\n#> {'t': datetime.time(4, 8, 16)}\nprint(m.model_dump_json())\n#> {\"t\":\"04:08:16\"}\n```\n\n<!-- old anchor added for backwards compatibility -->\n<!-- markdownlint-disable-next-line no-empty-links -->\n[](){#datetimetimedelta}\n\n### Timedeltas\n\nStandard library type: [`datetime.timedelta`][].\n\n<h4>Validation</h4>\n\n* [`timedelta`][datetime.timedelta] instances are validated as is.\n* Strings and bytes are validated according to the [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) time format.\n* Integers and floats (or values that can be coerced to such numbers) are validated as seconds.\n\n<h4>Constraints</h4>\n\nTimedeltas support the following constraints (constraint values must be coercible to a [`timedata`][datetime.timedelta] instance):\n\n| Constraint | Description                                               | JSON Schema |\n| ---------- | ---------------------------------------------------- -----| ----------- |\n| `le`       | The value must be less than or equal to this timedelta    | N/A         |\n| `ge`       | The value must be greater than or equal to this timedelta | N/A         |\n| `lt`       | The value must be strictly less than this timedelta       | N/A         |\n| `gt`       | The value must be strictly greater than this timedelta    | N/A         |\n\nThese constraints can be provided using the [`Field()`][pydantic.Field] function.\nThe `Le`, `Ge`, `Lt` and `Gt` metadata types from the [`annotated-types`](https://github.com/annotated-types/annotated-types)\nlibrary can also be used.\n\n<h4>Serialization</h4>\n\nIn [Python mode](../concepts/serialization.md#python-mode), [`timedelta`][datetime.timedelta] instances are\nserialized as is.\n\nIn [JSON mode](../concepts/serialization.md#json-mode), they are serialized as strings.\n\n<h4>Strictness</h4>\n\nIn [strict mode](../concepts/strict_mode.md), only [`timedelta`][datetime.timedelta] instances are accepted. In JSON mode, only strings complying to the\n[RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) format are accepted.\n\n<h4>Example</h4>\n\n```python\nfrom datetime import timedelta\n\nfrom pydantic import BaseModel\n\n\nclass Model(BaseModel):\n    td: timedelta\n\n\nm = Model(td='P3DT12H30M5S')\n\nprint(m.model_dump())\n#> {'td': datetime.timedelta(days=3, seconds=45005)}\nprint(m.model_dump_json())\n#> {\"td\":\"P3DT12H30M5S\"}\n```\n\n<!-- old anchor added for backwards compatibility -->\n<!-- markdownlint-disable-next-line no-empty-links -->\n[](){#enum}\n\n## Enums\n\nStandard library type: [`enum.Enum`][].\n\n<h3>Validation</h3>\n\n* If the [`enum.Enum`][] type is used directly, any [`enum.Enum`][] instance is validated as-is.\n* If an [`enum.Enum`][] subclass is used as a type, any enum member or value that correspond to the\n  enum members [values][enum.Enum.value] is validated as-is.\n\n<h3>Serialization</h3>\n\nIn [Python mode](../concepts/serialization.md#python-mode), enum instances are serialized as is.\nThe [`use_enum_values`][pydantic.ConfigDict.use_enum_values] configuration value can be set to\nuse the enum [value][enum.Enum.value] during validation (so that it is also used during serialization).\n\nIn [JSON mode](../concepts/serialization.md#json-mode), enum instances are serialized using\ntheir [value][enum.Enum.value].\n\n<h3>Example</h3>\n\n```python\nfrom enum import Enum, IntEnum\n\nfrom pydantic import BaseModel, ValidationError\n\n\nclass FruitEnum(str, Enum):\n    PEAR = 'pear'\n    BANANA = 'banana'\n\n\nclass ToolEnum(IntEnum):\n    SPANNER = 1\n    WRENCH = 2\n\n\nclass CookingModel(BaseModel):\n    fruit: FruitEnum = FruitEnum.PEAR\n    tool: ToolEnum = ToolEnum.SPANNER\n\n\nprint(CookingModel())\n#> fruit=<FruitEnum.PEAR: 'pear'> tool=<ToolEnum.SPANNER: 1>\nprint(CookingModel(tool=2, fruit='banana'))\n#> fruit=<FruitEnum.BANANA: 'banana'> tool=<ToolEnum.WRENCH: 2>\ntry:\n    CookingModel(fruit='other')\nexcept ValidationError as e:\n    print(e)\n    \"\"\"\n    1 validation error for CookingModel\n    fruit\n      Input should be 'pear' or 'banana' [type=enum, input_value='other', input_type=str]\n    \"\"\"\n```\n\n## None types\n\nSupported types: [`None`][], [`NoneType`][types.NoneType] or `Literal[None]` (they are [equivalent](https://typing.readthedocs.io/en/latest/spec/special-types.html#none)).\n\nAllows only `None` as a value.\n\n## Generic collection types\n\nPydantic supports a wide variety of generic collection types, both built-ins (such as [`list`][]) and abstract base classes\nfrom the [`collections.abc`][] module (such as [`Sequence`][collections.abc.Sequence]).\n\nIn most cases, it is recommended to make use of the built-in types over the abstract ones. Due to [data coercion](../concepts/models.md#data-conversion),\nusing [`list`][] or [`tuple`][] will allow most other iterables as input, with better performance.\n\n!!! note \"Strictness on collection types\"\n    When applying [strict mode](../concepts/strict_mode.md) on collection types, strictness will *not* apply\n    to the inner types. This may change in the future, see [this issue](https://github.com/pydantic/pydantic/issues/12319).\n\n### Lists\n\nBuilt-in type: [`list`][] (deprecated alias: [`typing.List`][]).\n\n<h4>Validation</h4>\n\n* Allows [`list`][], [`tuple`][], [`set`][] and [`frozenset`][] instances, or any iterable that is *not* a\n  [string][str], [bytes][], [bytearray][], [dict][] or [mapping][]. Produces a [`list`][] instance.\n* If a generic parameter is provided, the appropriate validation is applied to all items of the list.\n\n<h4>Constraints</h4>\n\nLists support the following constraints:\n\n| Constraint   | Description                                 | JSON Schema                                                                                    |\n|--------------|---------------------------------------------|------------------------------------------------------------------------------------------------|\n| `min_length` | The list must have at least this many items | [`minItems`](https://json-schema.org/understanding-json-schema/reference/array#length) keyword |\n| `max_length` | The list must have at most this many items  | [`maxItems`](https://json-schema.org/understanding-json-schema/reference/array#length) keyword |\n\nThese constraints can be provided using the [`Field()`][pydantic.Field] function.\nThe `MinLen` and `MaxLen` metadata types from the [`annotated-types`](https://github.com/annotated-types/annotated-types)\nlibrary can also be used.\n\n<h4>Strictness</h4>\n\nIn [strict mode](../concepts/strict_mode.md), only [`list`][] instances are valid. Strict mode does *not* apply to the items of the list.\nThe strict constraint must be applied to the parameter type for this to work.\n\n<h4>Example</h4>\n\n```python\nfrom pydantic import BaseModel, Field\n\n\nclass Model(BaseModel):\n    simple_list: list[object] | None = None\n    list_of_ints: list[int] | None = Field(default=None, strict=True)\n\n\nprint(Model(simple_list=('1', '2', '3')).simple_list)\n#> ['1', '2', '3']\nprint(Model(list_of_ints=['1', 2, 3]).list_of_ints)\n#> [1, 2, 3]\n```\n\n### Tuples\n\nBuilt-in type: [`tuple`][] (deprecated alias: [`typing.Tuple`][]).\n\n!!! note\n    [Unpacked tuple types](https://typing.python.org/en/latest/spec/generics.html#unpacking-tuple-types)\n    (as specified by [PEP 646](https://peps.python.org/pep-0646/)) are *not* yet supported, and can be\n    tracked in [this issue](https://github.com/pydantic/pydantic/issues/5952).\n\n<h4>Validation</h4>\n\n* Allows [`tuple`][], [`list`][], [`set`][] and [`frozenset`][] instances, or any iterable that is *not* a\n  [string][str], [bytes][], [bytearray][], [dict][] or [mapping][]. Produces a [`tuple`][] instance.\n* Appropriate validation is applied to items of the tuple, if [element types](https://typing.python.org/en/latest/spec/tuples.html#tuple-type-form)\n  are specified.\n\n<h4>Constraints</h4>\n\nLists support the following constraints:\n\n| Constraint   | Description                                  | JSON Schema                                                                                    |\n|--------------|----------------------------------------------|------------------------------------------------------------------------------------------------|\n| `min_length` | The tuple must have at least this many items | [`minItems`](https://json-schema.org/understanding-json-schema/reference/array#length) keyword |\n| `max_length` | The tuple must have at most this many items  | [`maxItems`](https://json-schema.org/understanding-json-schema/reference/array#length) keyword |\n\nThese constraints can be provided using the [`Field()`][pydantic.Field] function.\nThe `MinLen` and `MaxLen` metadata types from the [`annotated-types`](https://github.com/annotated-types/annotated-types)\nlibrary can also be used.\n\nAdditionally, the [`prefixItems`](https://json-schema.org/understanding-json-schema/reference/array#tupleValidation) JSON Schema keyword may be used\ndepending on the tuple shape.\n\n<h4>Strictness</h4>\n\nIn [strict mode](../concepts/strict_mode.md), only [`tuple`][] instances are valid. Strict mode does *not* apply to the items of the tuple.\nThe strict constraint must be applied to the parameter types for this to work.\n\n<h4>Example</h4>\n\n```python\nfrom pydantic import BaseModel\n\n\nclass Model(BaseModel):\n    simple_tuple: tuple | None = None\n    tuple_of_different_types: tuple[int, float, bool] | None = None\n\n\nprint(Model(simple_tuple=[1, 2, 3, 4]).simple_tuple)\n#> (1, 2, 3, 4)\nprint(Model(tuple_of_different_types=[3, 2, 1]).tuple_of_different_types)\n#> (3, 2.0, True)\n```\n\n<!-- old anchor added for backwards compatibility -->\n<!-- markdownlint-disable-next-line no-empty-links -->\n[](){#typingnamedtuple}\n\n### Named tuples\n\nStandard library type: [`typing.NamedTuple`][] (and types created by the [`collections.namedtuple()`][collections.namedtuple] factory function\n– each field will implicitly have the type [`Any`][typing.Any]).\n\n<h4>Validation</h4>\n\n* Allows [`tuple`][] and [`list`][] instances. Validate each item according to the field definition.\n* Allows [`dict`][] instances. Keys must match the named tuple field names, and values are validated according to the field definition.\n* Allows instances of the named tuple class (fields are revalidated).\n\n<h4>Serialization</h4>\n\nIn [Python mode](../concepts/serialization.md#python-mode), named tuples are serialized as tuples. In [JSON mode](../concepts/serialization.md#json-mode),\nthey are serialized as arrays.\n\n<h4>Example</h4>\n\n```python\nfrom typing import NamedTuple\n\nfrom pydantic import BaseModel\n\n\nclass Point(NamedTuple):\n    x: int\n    y: int\n\n\nclass Model(BaseModel):\n    p: Point\n\n\nmodel = Model(p=('1', 2))\n\nprint(model.model_dump())\n#> {'p': (1, 2)}\n```\n\n### Sets\n\nTypes: [`set`][] (or [`collections.abc.MutableSet`][]) and [`frozenset`][] (or [`collections.abc.Set`][])\n(deprecated aliases: [`typing.Set`][] and [`typing.FrozenSet`][]).\n\n<h4>Validation</h4>\n\n* Allows [`set`][], [`frozenset`][], [`tuple`][] and [`list`][] instances, or any iterable that is *not* a\n  [string][str], [bytes][], [bytearray][], [dict][] or [mapping][]. Produces a [`set`][] or [`frozenset`][] instance.\n* If a generic parameter is provided, the appropriate validation is applied to all items of the set/frozenset.\n\n<h4>Constraints</h4>\n\nSets support the following constraints:\n\n| Constraint   | Description                                | JSON Schema                                                                                    |\n|--------------|--------------------------------------------|------------------------------------------------------------------------------------------------|\n| `min_length` | The set must have at least this many items | [`minItems`](https://json-schema.org/understanding-json-schema/reference/array#length) keyword |\n| `max_length` | The set must have at most this many items  | [`maxItems`](https://json-schema.org/understanding-json-schema/reference/array#length) keyword |\n\nThese constraints can be provided using the [`Field()`][pydantic.Field] function.\nThe `MinLen` and `MaxLen` metadata types from the [`annotated-types`](https://github.com/annotated-types/annotated-types)\nlibrary can also be used.\n\n<h4>Strictness</h4>\n\nIn [strict mode](../concepts/strict_mode.md), only [`set`][]/[`frozenset`][] instances are valid. Strict mode does *not* apply to the items of the set.\nThe strict constraint must be applied to the parameter type for this to work.\n\n<h4>Serialization</h4>\n\nIn [Python mode](../concepts/serialization.md#python-mode), sets are serialized as is. In [JSON mode](../concepts/serialization.md#json-mode),\nthey are serialized as arrays.\n\n<h4>Example</h4>\n\n```python\nfrom pydantic import BaseModel\n\n\nclass Model(BaseModel):\n    simple_set: set | None = None\n    set_of_ints: frozenset[int] | None = None\n\n\nprint(Model(simple_set=['1', '2', '3']).simple_set)\n#> {'1', '2', '3'}\nprint(Model(set_of_ints=['1', '2', '3']).set_of_ints)\n#> frozenset({1, 2, 3})\n```\n\n<h4>JSON Schema</h4>\n\nPydantic does best effort to sort default values that are [`collections.abc.Set`][] instances.\n\n### Deque\n\nStandard library type: [`collections.deque`][] (deprecated alias: [`typing.Deque`][]).\n\n<h4>Validation</h4>\n\nAny iterable (except strings, bytes and mappings) is accepted and converted to a [`deque`][collections.deque],\nwith each item validated against the parameter type. If the input is already a `deque` instance, its\n[`maxlen`][collections.deque.maxlen] attribute is preserved.\n\n<h4>Constraints</h4>\n\nDeques support the following constraints:\n\n| Constraint   | Description                                  | JSON Schema                                                                                    |\n|--------------|----------------------------------------------|------------------------------------------------------------------------------------------------|\n| `min_length` | The deque must have at least this many items | [`minItems`](https://json-schema.org/understanding-json-schema/reference/array#length) keyword |\n| `max_length` | The deque must have at most this many items  | [`maxItems`](https://json-schema.org/understanding-json-schema/reference/array#length) keyword |\n\nThese constraints can be provided using the [`Field()`][pydantic.Field] function.\nThe `MinLen` and `MaxLen` metadata types from the [`annotated-types`](https://github.com/annotated-types/annotated-types)\nlibrary can also be used.\n\n<h4>Strictness</h4>\n\nIn [strict mode](../concepts/strict_mode.md), only [`deque`][collections.deque] instances are valid. Strict mode does *not* apply to the items of the deque.\nThe strict constraint must be applied to the parameter type for this to work.\n\n<h4>Serialization</h4>\n\nIn [Python mode](../concepts/serialization.md#python-mode), deques are serialized as is. In [JSON mode](../concepts/serialization.md#json-mode),\nthey are serialized as arrays.\n\n<h4>Example</h4>\n\n```python\nfrom collections import deque\n\nfrom pydantic import BaseModel\n\n\nclass Model(BaseModel):\n    deque: deque[int]\n\n\nprint(Model(deque=[1, 2, 3]).deque)\n#> deque([1, 2, 3])\n```\n\n<!-- old anchor added for backwards compatibility -->\n<!-- markdownlint-disable-next-line no-empty-links -->\n[](){#typingsequence}\n\n### Sequences\n\nStandard library type: [`collections.abc.Sequence`][] (deprecated alias: [`typing.Sequence`][]).\n\nIn most cases, you will want to use the built-in types (such as [list](#lists) or [tuple](#tuples)) as [type coercion](../concepts/models.md#data-conversion)\nwill apply. The [`Sequence`][collections.abc.Sequence] type can be used when you want to preserve the input type during serialization.\n\n<h4>Validation</h4>\n\nAny [`collections.abc.Sequence`][] instance (expect strings and bytes) is accepted. It is converted to a list using the [`list()`][list]\nconstructor, and then converted back to the original input type.\n\n!!! warning \"Strings aren't treated as sequences\"\n    While strings are technically valid sequence instances, this is frequently not intended, and is a common source of bugs.\n\n    As a result, Pydantic will *not* accept strings and bytes for the [`Sequence`][collections.abc.Sequence] type (see example below).\n\n<h4>Constraints</h4>\n\nSequences support the following constraints:\n\n| Constraint   | Description                                     | JSON Schema                                                                                    |\n|--------------|-------------------------------------------------|------------------------------------------------------------------------------------------------|\n| `min_length` | The sequence must have at least this many items | [`minItems`](https://json-schema.org/understanding-json-schema/reference/array#length) keyword |\n| `max_length` | The sequence must have at most this many items  | [`maxItems`](https://json-schema.org/understanding-json-schema/reference/array#length) keyword |\n\nThese constraints can be provided using the [`Field()`][pydantic.Field] function.\nThe `MinLen` and `MaxLen` metadata types from the [`annotated-types`](https://github.com/annotated-types/annotated-types)\nlibrary can also be used.\n\n<h4>Serialization</h4>\n\nIn [Python mode](../concepts/serialization.md#python-mode), sequences are serialized as is. In [JSON mode](../concepts/serialization.md#json-mode),\nthey are serialized as arrays.\n\n<h4>Example</h4>\n\n```python\nfrom collections.abc import Sequence\n\nfrom pydantic import BaseModel, ValidationError\n\n\nclass Model(BaseModel):\n    sequence_of_strs: Sequence[str]\n\n\nprint(Model(sequence_of_strs=['a', 'bc']).sequence_of_strs)\n#> ['a', 'bc']\nprint(Model(sequence_of_strs=('a', 'bc')).sequence_of_strs)\n#> ('a', 'bc')\n\ntry:\n    Model(sequence_of_strs='abc')\nexcept ValidationError as e:\n    print(e)\n    \"\"\"\n    1 validation error for Model\n    sequence_of_strs\n      'str' instances are not allowed as a Sequence value [type=sequence_str, input_value='abc', input_type=str]\n    \"\"\"\n```\n\n### Dictionaries\n\nBuilt-in type: [`dict`][].\n\n<h4>Validation</h4>\n\n* [`dict`][] instances are accepted as is.\n* [mappings][mapping] instances are accepted and coerced to a [`dict`][].\n* If generic parameters for keys and values are provided, the appropriate validation is applied.\n\n<h4>Constraints</h4>\n\nDictionaries support the following constraints:\n\n| Constraint   | Description                                       | JSON Schema                                                                                        |\n|--------------|---------------------------------------------------|----------------------------------------------------------------------------------------------------|\n| `min_length` | The dictionary must have at least this many items | [`minProperties`](https://json-schema.org/understanding-json-schema/reference/object#size) keyword |\n| `max_length` | The dictionary must have at most this many items  | [`maxProperties`](https://json-schema.org/understanding-json-schema/reference/object#size) keyword |\n\nThese constraints can be provided using the [`Field()`][pydantic.Field] function.\nThe `MinLen` and `MaxLen` metadata types from the [`annotated-types`](https://github.com/annotated-types/annotated-types)\nlibrary can also be used.\n\n<h4>Strictness</h4>\n\nIn [strict mode](../concepts/strict_mode.md), only [`dict`][] instances are valid. Strict mode does *not* apply to the keys and values of the dictionaries.\nThe strict constraint must be applied to the parameter types for this to work.\n\n<h4>Example</h4>\n\n```python\nfrom pydantic import BaseModel, ValidationError\n\n\nclass Model(BaseModel):\n    x: dict[str, int]\n\n\nm = Model(x={'foo': 1})\nprint(m.model_dump())\n#> {'x': {'foo': 1}}\n\ntry:\n    Model(x='test')\nexcept ValidationError as e:\n    print(e)\n    \"\"\"\n    1 validation error for Model\n    x\n      Input should be a valid dictionary [type=dict_type, input_value='test', input_type=str]\n    \"\"\"\n```\n\n### Frozen dictionaries\n\nBuilt-in type: `frozendict`.\n\n/// version-added | v2.14\nThe `frozendict` type, new in Python 3.15, is supported by Pydantic.\n///\n\n<h4>Validation</h4>\n\n* `frozendict` instances are accepted as is.\n* [`dict`][] and [mappings][mapping] instances are accepted and coerced to a `frozendict`.\n* If generic parameters for keys and values are provided, the appropriate validation is applied.\n\n<h4>Constraints</h4>\n\nAs with [dictionaries](#dictionaries), frozen dictionaries support the following constraints:\n\n| Constraint   | Description                                       | JSON Schema                                                                                        |\n|--------------|---------------------------------------------------|----------------------------------------------------------------------------------------------------|\n| `min_length` | The dictionary must have at least this many items | [`minProperties`](https://json-schema.org/understanding-json-schema/reference/object#size) keyword |\n| `max_length` | The dictionary must have at most this many items  | [`maxProperties`](https://json-schema.org/understanding-json-schema/reference/object#size) keyword |\n\nThese constraints can be provided using the [`Field()`][pydantic.Field] function.\nThe `MinLen` and `MaxLen` metadata types from the [`annotated-types`](https://github.com/annotated-types/annotated-types)\nlibrary can also be used.\n\n<h4>Strictness</h4>\n\nIn [strict mode](../concepts/strict_mode.md), only `frozendict` instances are valid. Strict mode does *not* apply to the keys and values of the frozen dictionaries.\nThe strict constraint must be applied to the parameter types for this to work.\n\n<h4>Example</h4>\n\n```python {requires=\"3.15\" lint=\"skip\"}\nfrom pydantic import BaseModel, ValidationError\n\n\nclass Model(BaseModel):\n    x: frozendict[str, int]\n\n\nm = Model(x={'foo': 1})\nprint(m.model_dump())\n#> {'x': frozendict({'foo': 1})}\n\ntry:\n    Model(x='test')\nexcept ValidationError as e:\n    print(e)\n    \"\"\"\n    1 validation error for Model\n    x\n      Input should be a valid frozendict [type=frozen_dict_type, input_value='test', input_type=str]\n    \"\"\"\n```\n\n### Ordered dictionaries\n\nStandard library type: [`collections.OrderedDict`][] (deprecated alias: [`typing.OrderedDict`][]).\n\n<h4>Validation</h4>\n\n* [`OrderedDict`][collections.OrderedDict] instances are accepted as is.\n* [`dict`][] and [mappings][mapping] instances are accepted and coerced to an [`OrderedDict`][collections.OrderedDict].\n* If generic parameters for keys and values are provided, the appropriate validation is applied.\n\n<h4>Constraints</h4>\n\nAs with [dictionaries](#dictionaries), ordered dictionaries support the following constraints:\n\n| Constraint   | Description                                       | JSON Schema                                                                                        |\n|--------------|---------------------------------------------------|----------------------------------------------------------------------------------------------------|\n| `min_length` | The dictionary must have at least this many items | [`minProperties`](https://json-schema.org/understanding-json-schema/reference/object#size) keyword |\n| `max_length` | The dictionary must have at most this many items  | [`maxProperties`](https://json-schema.org/understanding-json-schema/reference/object#size) keyword |\n\nThese constraints can be provided using the [`Field()`][pydantic.Field] function.\nThe `MinLen` and `MaxLen` metadata types from the [`annotated-types`](https://github.com/annotated-types/annotated-types)\nlibrary can also be used.\n\n<h4>Strictness</h4>\n\nIn [strict mode](../concepts/strict_mode.md), only [`OrderedDict`][collections.OrderedDict] instances are valid. Strict mode does *not* apply to the keys and values of the ordered dictionaries.\nThe strict constraint must be applied to the parameter types for this to work.\n\n<h4>Example</h4>\n\n```python {requires=\"3.12\"}\nfrom collections import OrderedDict\n\nfrom pydantic import BaseModel, ValidationError\n\n\nclass Model(BaseModel):\n    x: OrderedDict[str, int]\n\n\nm = Model(x={'foo': 1})\nprint(m.model_dump())\n#> {'x': OrderedDict({'foo': 1})}\n\ntry:\n    Model(x='test')\nexcept ValidationError as e:\n    print(e)\n    \"\"\"\n    1 validation error for Model\n    x\n      Input should be a valid OrderedDict [type=ordered_dict_type, input_value='test', input_type=str]\n    \"\"\"\n```\n\n<!-- old anchor added for backwards compatibility -->\n<!-- markdownlint-disable-next-line no-empty-links -->\n[](){#typeddict}\n\n### Counters\n\nStandard library type: [`collections.Counter`][] (deprecated alias: [`typing.Counter`][]).\n\n<h4>Validation</h4>\n\n* [`Counter`][collections.Counter] instances are accepted as is.\n* [`dict`][] and [mappings][mapping] instances are accepted and coerced to a [`Counter`][collections.Counter].\n* If generic parameters for keys and values are provided, the appropriate validation is applied.\n\n<h4>Constraints</h4>\n\nCounters support the following constraints:\n\n| Constraint   | Description                                     | JSON Schema                                                                                        |\n|--------------|-------------------------------------------------|----------------------------------------------------------------------------------------------------|\n| `min_length` | The counter must have at least this many items  | [`minProperties`](https://json-schema.org/understanding-json-schema/reference/object#size) keyword |\n| `max_length` | The counter must have at most this many items   | [`maxProperties`](https://json-schema.org/understanding-json-schema/reference/object#size) keyword |\n\nThese constraints can be provided using the [`Field()`][pydantic.Field] function.\nThe `MinLen` and `MaxLen` metadata types from the [`annotated-types`](https://github.com/annotated-types/annotated-types)\nlibrary can also be used.\n\n<h4>Strictness</h4>\n\nIn [strict mode](../concepts/strict_mode.md), only [`Counter`][collections.Counter] instances are valid. Strict mode does *not* apply to the keys and values of the counter.\nThe strict constraint must be applied to the parameter types for this to work.\n\n<h4>Example</h4>\n\n```python {requires=\"3.12\"}\nfrom collections import Counter\n\nfrom pydantic import BaseModel, ValidationError\n\n\nclass Model(BaseModel):\n    x: Counter[str]\n\n\nm = Model(x={'foo': 1})\nprint(m.model_dump())\n#> {'x': Counter({'foo': 1})}\n\ntry:\n    Model(x='test')\nexcept ValidationError as e:\n    print(e)\n    \"\"\"\n    1 validation error for Model\n    x\n      Input should be a valid Counter [type=counter_type, input_value='test', input_type=str]\n    \"\"\"\n```\n### Typed dictionaries\n\nStandard library type: [`typing.TypedDict`][] (see also: the [typing specification](https://typing.python.org/en/latest/spec/typeddict.html)).\n\n!!! note\n    Because of runtime limitations, Pydantic will require using the [`TypedDict`][typing_extensions.TypedDict] type from\n    [`typing_extensions`][] when using Python 3.12 and lower.\n\n[`TypedDict`][typing.TypedDict] declares a dictionary type that expects all of its instances to have a certain set of keys\n where each key is associated with a value of a consistent type.\n\nThis type [supports configuration](../concepts/config.md#configuration-on-other-supported-types).\n\n<h4>Strictness</h4>\n\nIn [strict mode](../concepts/strict_mode.md), only [`dict`][] instances are valid (unlike mappings in lax mode).\nStrict mode does *not* apply to the values of the typed dictionary. The strict constraint must be applied to the value types for this to work.\n\n<h4>Example</h4>\n\n```python\nfrom typing_extensions import TypedDict\n\nfrom pydantic import TypeAdapter, ValidationError\n\n\nclass User(TypedDict):\n    name: str\n    id: int\n\n\nta = TypeAdapter(User)\n\nprint(ta.validate_python({'name': 'foo', 'id': 1}))\n#> {'name': 'foo', 'id': 1}\n\ntry:\n    ta.validate_python({'name': 'foo'})\nexcept ValidationError as e:\n    print(e)\n    \"\"\"\n    1 validation error for User\n    id\n      Field required [type=missing, input_value={'name': 'foo'}, input_type=dict]\n    \"\"\"\n```\n\n<!-- old anchor added for backwards compatibility -->\n<!-- markdownlint-disable-next-line no-empty-links -->\n[](){#typingiterable}\n\n### Iterables\n\nStandard library type: [`collections.abc.Iterable`][] (deprecated alias: [`typing.Iterable`][]).\n\n<h4>Validation</h4>\n\nIterables are lazily validated, and wrapped in an internal datastructure that can be iterated over\n(and will validate the items type while doing so). This means that even if you provide a concrete\ncontainer such as a list, the validated type will *not* be of type [`list`][]. However, Pydantic\nwill ensure that the input value is iterable by getting an [iterator][] from it (by calling\n[`iter()`][iter] on the value).\n\nIt is recommended to use concrete collection types (such as [lists](#lists)) instead, unless\nyou are using an infinite iterator (in which case eagerly validating the input would result\nin an infinite loop).\n\n<h4>Example</h4>\n\n```python\nfrom collections.abc import Iterable\n\nfrom pydantic import BaseModel, ValidationError\n\n\nclass Model(BaseModel):\n    f: Iterable[str]\n\n\nm = Model(f=[1, 2])  # Validates fine\n\ntry:\n    next(m.f)\nexcept ValidationError as e:\n    print(e)\n    \"\"\"\n    1 validation error for ValidatorIterator\n    0\n      Input should be a valid string [type=string_type, input_value=1, input_type=int]\n    \"\"\"\n```\n\n## Callable\n\nStandard library type: [`collections.abc.Callable`][] (deprecated alias: [`typing.Callable`][]).\n\n<h3>Validation</h3>\n\nPydantic only validates that the input is a [callable][] (using the [`callable()`](https://docs.python.org/3/library/functions.html#callable) function).\nIt does *not* validate the number of parameters or their type, nor the type of the return value.\n\n```python\nfrom collections.abc import Callable\n\nfrom pydantic import BaseModel\n\n\nclass Foo(BaseModel):\n    callback: Callable[[int], int]\n\n\nm = Foo(callback=lambda x: x)\nprint(m)\n#> callback=<function <lambda> at 0x0123456789ab>\n```\n\n<h3>Serialization</h3>\n\nCallables are serialized as is. Callables can't be serialized in [JSON mode](../concepts/serialization.md#json-mode)\n(a [`PydanticSerializationError`][pydantic_core.PydanticSerializationError] is raised).\n\n<!-- old anchor added for backwards compatibility -->\n<!-- markdownlint-disable-next-line no-empty-links -->\n[](){#ip-address-types}\n\n## IP Addresses\n\nStandard library types:\n\n* [`ipaddress.IPv4Address`][]\n* [`ipaddress.IPv4Interface`][]\n* [`ipaddress.IPv4Network`][]\n* [`ipaddress.IPv6Address`][]\n* [`ipaddress.IPv6Interface`][]\n* [`ipaddress.IPv6Network`][]\n\nSee also: the [`IPvAnyAddress`][pydantic.networks.IPvAnyAddress], [`IPvAnyInterface`][pydantic.networks.IPvAnyInterface]\nand [`IPvAnyNetwork`][pydantic.networks.IPvAnyNetwork] Pydantic types.\n\n<h3>Validation</h3>\n\n* Instances are validated as is.\n* Other input values are passed to the constructor of the relevant address type.\n\n<h3>Strictness</h3>\n\nIn [strict mode](../concepts/strict_mode.md), only the address types are accepted.\nIn JSON mode, strict mode has no effect.\n\n<h3>Serialization</h3>\n\nIn [Python mode](../concepts/serialization.md#python-mode), IP addresses are serialized as is. In [JSON mode](../concepts/serialization.md#json-mode),\nthey are serialized as strings.\n\n## UUID\n\nStandard library type: [`uuid.UUID`][].\n\n<h3>Validation</h3>\n\n* [`UUID`][uuid.UUID] instances are validated as is.\n* Strings and bytes are validated as UUIDs, and casted to a [`UUID`][uuid.UUID] instance.\n\n<h3>Constraints</h3>\n\nThe [`UUID`][uuid.UUID] type supports a `version` constraint. The [`UuidVersion`][pydantic.types.UuidVersion] metadata type can be used.\n\nPydantic also provides the following types as convenience aliases: [`UUID1`][pydantic.types.UUID1], [`UUID3`][pydantic.types.UUID3],\n[`UUID4`][pydantic.types.UUID4], [`UUID5`][pydantic.types.UUID5], [`UUID6`][pydantic.types.UUID6], [`UUID7`][pydantic.types.UUID7],\n[`UUID8`][pydantic.types.UUID8].\n\n<h3>Strictness</h3>\n\nIn [strict mode](../concepts/strict_mode.md), only [`UUID`][uuid.UUID] instances are accepted.\nIn JSON mode, strict mode has no effect.\n\n<h3>Serialization</h3>\n\nIn [Python mode](../concepts/serialization.md#python-mode), UUIDs are serialized as is. In [JSON mode](../concepts/serialization.md#json-mode),\nthey are serialized as strings.\n\n<h3>Example</h3>\n\n```python\nfrom typing import Annotated\nfrom uuid import UUID\n\nfrom pydantic import BaseModel\nfrom pydantic.types import UUID7, UuidVersion\n\n\nclass Model(BaseModel):\n    u1: UUID7\n    u2: Annotated[UUID, UuidVersion(4)]\n\n\nprint(\n    Model(\n        u1='01999b2c-8353-749b-8dac-859307fae22b',\n        u2=UUID('125725f3-e1b4-44e3-90c3-1a20eab12da5'),\n    )\n)\n\"\"\"\nu1=UUID('01999b2c-8353-749b-8dac-859307fae22b') u2=UUID('125725f3-e1b4-44e3-90c3-1a20eab12da5')\n\"\"\"\n```\n\n## Type\n\nBuilt-in type: [`type`][] (deprecated alias: [`typing.Type`][]).\n\n<h3>Validation</h3>\n\nAllows any type that is a subclass of the type argument. For instance, with `type[str]`, allows the [`str`][]\nclass or any [`str`][] subclass as an input. If no type argument is provided (i.e. `type` is used as an annotation),\nallow any class.\n\n<h3>Serialization</h3>\n\nTypes are serialized as is. Types can't be serialized in [JSON mode](../concepts/serialization.md#json-mode)\n(a [`PydanticSerializationError`][pydantic_core.PydanticSerializationError] is raised).\n\n```python\nfrom pydantic import BaseModel, ValidationError\n\n\nclass Foo:\n    pass\n\n\nclass Bar(Foo):\n    pass\n\n\nclass Other:\n    pass\n\n\nclass SimpleModel(BaseModel):\n    just_subclasses: type[Foo]\n\n\nSimpleModel(just_subclasses=Foo)\nSimpleModel(just_subclasses=Bar)\ntry:\n    SimpleModel(just_subclasses=Other)\nexcept ValidationError as e:\n    print(e)\n    \"\"\"\n    1 validation error for SimpleModel\n    just_subclasses\n      Input should be a subclass of Foo [type=is_subclass_of, input_value=<class '__main__.Other'>, input_type=type]\n    \"\"\"\n```\n\n<!-- old anchor added for backwards compatibility -->\n<!-- markdownlint-disable-next-line no-empty-links -->\n[](){#typingliteral}\n\n## Literals\n\nTyping construct: [`typing.Literal`][] (see also: the [typing specification](https://typing.python.org/en/latest/spec/literal.html#literal)).\n\nLiterals can be used to only allow specific literal values.\n\nNote that Pydantic applies [strict mode](../concepts/strict_mode.md) behavior when validating literal values (see [this issue](https://github.com/pydantic/pydantic/issues/9991)).\n\n<h3>Example</h3>\n\n```python\nfrom typing import Literal\n\nfrom pydantic import BaseModel, ValidationError\n\n\nclass Pie(BaseModel):\n    flavor: Literal['apple', 'pumpkin']\n    quantity: Literal[1, 2] = 1\n\n\nPie(flavor='apple')\nPie(flavor='pumpkin')\ntry:\n    Pie(flavor='cherry')\nexcept ValidationError as e:\n    print(str(e))\n    \"\"\"\n    1 validation error for Pie\n    flavor\n      Input should be 'apple' or 'pumpkin' [type=literal_error, input_value='cherry', input_type=str]\n    \"\"\"\n\ntry:\n    Pie(flavor='apple', quantity='1')\nexcept ValidationError as e:\n    print(str(e))\n    \"\"\"\n    1 validation error for Pie\n    quantity\n      Input should be 1 or 2 [type=literal_error, input_value='1', input_type=str]\n    \"\"\"\n```\n\n<!-- old anchor added for backwards compatibility -->\n<!-- markdownlint-disable-next-line no-empty-links -->\n[](){#typingany}\n\n## Any\n\nTypes: [`typing.Any`][] or [`object`][].\n\nAllows any value, including `None`.\n\n<!-- old anchor added for backwards compatibility -->\n<!-- markdownlint-disable-next-line no-empty-links -->\n[](){#typinghashable}\n\n## Hashables\n\nStandard library type: [`collections.abc.Hashable`][] (deprecated alias: [`typing.Hashable`][]).\n\n<h3>Validation</h3>\n\nAny value that is hashable (using `isinstance(value, Hashable)`).\n\n<!-- old anchor added for backwards compatibility -->\n<!-- markdownlint-disable-next-line no-empty-links -->\n[](){#typingpattern}\n\n## Regex patterns\n\nStandard library type: [`re.Pattern`][] (deprecated alias: [`typing.Pattern`][]).\n\n<h3>Validation</h3>\n\n* For [`Pattern`][re.Pattern] instances, check that the [`pattern`][re.Pattern.pattern] attribute\n  is of the right type ([`str`][] or [`bytes`][] depending on the [`Pattern`][re.Pattern] type\n  parameter).\n* If the type parameter is [`str`][] or [`bytes`][], input values of type [`str`][] (or [`bytes`][] respectively)\n  are attempted to be compiled using [`re.compile()`][re.compile].\n\n<h3>Serialization</h3>\n\nIn [Python mode](../concepts/serialization.md#python-mode), [`Pattern`][re.Pattern] instances are\nserialized as is.\n\nIn [JSON mode](../concepts/serialization.md#json-mode), they are serialized as strings (note that flags\nare currently *not* preserved).\n\n<!-- old anchor added for backwards compatibility -->\n<!-- markdownlint-disable-next-line no-empty-links -->\n[](){#pathlibpath}\n\n## Paths\n\nStandard library types:\n\n* [`pathlib.Path`][].\n* [`pathlib.PurePath`][].\n* [`pathlib.PosixPath`][].\n* [`pathlib.WindowsPath`][].\n* [`pathlib.PurePosixPath`][].\n* [`pathlib.PureWindowsPath`][].\n* [`os.PathLike`][] (must be parameterized with [`str`][], [`bytes`][] or [`Any`][typing.Any]).\n\n<h3>Validation</h3>\n\n* Path instances are validated as is.\n* Strings are accepted and passed to the type constructor. If [`os.PathLike`][] was used,\n  bytes are accepted if it was parameterized with the [`bytes`][] type.\n\n<h3>Strictness</h3>\n\nIn [strict mode](../concepts/strict_mode.md), only Path instances are accepted.\nIn JSON mode, strict mode has no effect.\n\n<h3>Serialization</h3>\n\nIn [Python mode](../concepts/serialization.md#python-mode), Path instances are\nserialized as is.\n\nIn [JSON mode](../concepts/serialization.md#json-mode), they are serialized as strings.\n",
+            "modelConfidence": 0.9,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request adds support for a `counter` core schema and standard library `collections.Counter` type validation and serialization. The documentation under standard library types should be updated to include documentation for `Counter` alongside ordered dictionaries.",
+        "attempts": 1,
+        "inputTokens": 30379,
+        "outputTokens": 1413,
+        "docsSent": [
+          "docs/api/standard_library_types.md",
+          "docs/concepts/types.md",
+          "docs/errors/validation_errors.md",
+          "docs/concepts/json_schema.md",
+          "docs/errors/usage_errors.md",
+          "docs/concepts/models.md",
+          "docs/concepts/experimental.md"
+        ],
+        "docsTruncated": [
+          "docs/api/standard_library_types.md",
+          "docs/concepts/types.md",
+          "docs/errors/validation_errors.md",
+          "docs/concepts/json_schema.md",
+          "docs/errors/usage_errors.md",
+          "docs/concepts/models.md",
+          "docs/concepts/experimental.md"
+        ]
+      }
+    },
+    {
+      "caseId": "102-pydantic-13129",
+      "group": "no-drift",
+      "source": "real",
+      "category": "real: code-only change",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [],
+      "retrievedTruncated": [],
+      "content": [],
+      "latencyMs": 1284,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request ensures that core metadata (such as descriptions, examples, etc.) on `RootModel` and its parameterized or annotated root types are preserved correctly during schema generation, rather than being overridden by fallback model description logic. No documentation file requires an update because this is a bug fix for core metadata preservation without changing public APIs or behavior specifications.",
+        "attempts": 1,
+        "inputTokens": 13892,
+        "outputTokens": 85,
+        "docsSent": [
+          "docs/errors/usage_errors.md",
+          "docs/concepts/json_schema.md",
+          "docs/concepts/models.md",
+          "docs/concepts/fields.md",
+          "docs/concepts/types.md",
+          "docs/api/standard_library_types.md"
+        ],
+        "docsTruncated": [
+          "docs/errors/usage_errors.md",
+          "docs/concepts/json_schema.md",
+          "docs/concepts/models.md",
+          "docs/concepts/fields.md",
+          "docs/concepts/types.md",
+          "docs/api/standard_library_types.md"
+        ]
+      }
+    },
+    {
+      "caseId": "103-execa-1256",
+      "group": "drift",
+      "source": "real",
+      "category": "real: docs updated with code",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [
+        "docs/api.md",
+        "docs/termination.md"
+      ],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "docs/api.md",
+        "docs/termination.md"
+      ],
+      "retrievedTruncated": [
+        "docs/api.md",
+        "docs/termination.md"
+      ],
+      "content": [],
+      "latencyMs": 1274,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request adds the `killDescendants` option to terminate descendant processes along with the subprocess. Since this new option is documented in TypeScript types (`types/arguments/options.d.ts`) but not covered in user-facing termination documentation, no documentation files listed under CANDIDATE DOCUMENTATION require updates.",
+        "attempts": 1,
+        "inputTokens": 17909,
+        "outputTokens": 79,
+        "docsSent": [
+          "docs/termination.md",
+          "docs/api.md",
+          "docs/execution.md",
+          "docs/bash.md",
+          "readme.md",
+          "docs/windows.md",
+          "docs/errors.md"
+        ],
+        "docsTruncated": [
+          "docs/termination.md",
+          "docs/api.md",
+          "docs/bash.md",
+          "readme.md"
+        ]
+      }
+    },
+    {
+      "caseId": "104-execa-1254",
+      "group": "drift",
+      "source": "real",
+      "category": "real: docs updated with code",
+      "run": 1,
+      "tp": [
+        "docs/streams.md"
+      ],
+      "fp": [],
+      "fn": [
+        "docs/api.md"
+      ],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "docs/api.md",
+        "docs/streams.md"
+      ],
+      "retrievedTruncated": [
+        "docs/api.md"
+      ],
+      "content": [
+        {
+          "path": "docs/streams.md",
+          "passed": true,
+          "missing": [],
+          "stale": [],
+          "droppedLines": 4
+        }
+      ],
+      "latencyMs": 8391,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/streams.md",
+            "reason": "The documentation for converting a subprocess to a stream currently only covers Node.js streams (`.readable()`, `.writable()`, `.duplex()`). It needs to be updated to include the new web stream methods `.readableStream()`, `.writableStream()`, and `.transformStream()` introduced in this PR.",
+            "evidence": [
+              {
+                "filePath": "lib/convert/add.js",
+                "detail": "Added `subprocess.readableStream`, `subprocess.writableStream`, and `subprocess.transformStream` methods."
+              },
+              {
+                "filePath": "types/subprocess/subprocess.d.ts",
+                "detail": "Added TypeScript definitions for `readableStream`, `writableStream`, and `transformStream`."
+              }
+            ],
+            "scope": "file",
+            "suggestedUpdate": "<picture>\n\t<source media=\"(prefers-color-scheme: dark)\" srcset=\"../media/logo_dark.svg\">\n\t<img alt=\"execa logo\" src=\"../media/logo.svg\" width=\"400\">\n</picture>\n<br>\n\n# ⏳️ Streams\n\n## Node.js streams\n\n### Input\n\n```js\nimport {createReadStream} from 'node:fs';\nimport {once} from 'node:events';\nimport {execa} from 'execa';\n\nconst readable = createReadStream('input.txt');\nawait once(readable, 'open');\nawait execa({stdin: readable})`npm run scaffold`;\n```\n\n### Output\n\n```js\nimport {createWriteStream} from 'node:fs';\nimport {once} from 'node:events';\nimport {execa} from 'execa';\n\nconst writable = createWriteStream('output.txt');\nawait once(writable, 'open');\nawait execa({stdout: writable})`npm run build`;\n```\n\n### File descriptors\n\nWhen passing a Node.js stream to the [`stdin`](api.md#optionsstdin), [`stdout`](api.md#optionsstdout) or [`stderr`](api.md#optionsstderr) option, that stream must have an underlying file or socket, such as the streams created by the [`fs`](https://nodejs.org/api/fs.html#filehandlecreatereadstreamoptions), [`net`](https://nodejs.org/api/net.html#new-netsocketoptions) or [`http`](https://nodejs.org/api/http.html#class-httpincomingmessage) core modules. Otherwise the following error is thrown.\n\n```\nTypeError [ERR_INVALID_ARG_VALUE]: The argument 'stdio' is invalid.\n```\n\nThis limitation can be worked around by either:\n- Using the [`input`](api.md#optionsinput) option instead of the [`stdin`](api.md#optionsstdin) option.\n- Passing a [web stream](#web-streams).\n- Passing [`[nodeStream, 'pipe']`](output.md#multiple-targets) instead of `nodeStream`.\n\n## Web streams\n\n[Web streams](https://nodejs.org/api/webstreams.html) ([`ReadableStream`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream) or [`WritableStream`](https://developer.mozilla.org/en-US/docs/Web/API/WritableStream)) can be used instead of [Node.js streams](https://nodejs.org/api/stream.html).\n\n```js\nconst response = await fetch('https://example.com');\nawait execa({stdin: response.body})`npm run build`;\n```\n\n## Iterables as input\n\n```js\nconst getReplInput = async function * () {\n\tfor await (const replLine of getReplLines()) {\n\t\tyield replLine;\n\t}\n};\n\nawait execa({stdin: getReplInput()})`npm run scaffold`;\n```\n\n## Manual streaming\n\n[`subprocess.stdin`](api.md#subprocessstdin) is a Node.js [`Readable`](https://nodejs.org/api/stream.html#class-streamreadable) stream and [`subprocess.stdout`](api.md#subprocessstdout)/[`subprocess.stderr`](api.md#subprocessstderr)/[`subprocess.all`](api.md#subprocessall) are Node.js [`Writable`](https://nodejs.org/api/stream.html#class-streamwritable) streams.\n\nThey can be used to stream input/output manually. This is intended for advanced situations. In most cases, the following simpler solutions can be used instead:\n- [`result.stdout`](output.md#stdout-and-stderr), [`result.stderr`](output.md#stdout-and-stderr) or [`result.stdio`](output.md#additional-file-descriptors).\n- The [`stdin`](api.md#optionsstdin), [`stdout`](api.md#optionsstdout), [`stderr`](api.md#optionsstderr) or [`stdio`](api.md#optionsstdio) options.\n- [`subprocess.iterable()`](lines.md#progressive-splitting).\n- [`subprocess.pipe()`](pipe.md).\n\n## Converting a subprocess to a stream\n\n### Convert\n\nThe [`subprocess.readable()`](api.md#subprocessreadablereadableoptions), [`subprocess.writable()`](api.md#subprocesswritablewritableoptions) and [`subprocess.duplex()`](api.md#subprocessduplexduplexoptions) methods convert the subprocess to a Node.js [`Readable`](https://nodejs.org/api/stream.html#class-streamreadable), [`Writable`](https://nodejs.org/api/stream.html#class-streamwritable) and [`Duplex`](https://nodejs.org/api/stream.html#class-streamduplex) stream.\n\nSimilarly, the [`subprocess.readableStream()`](api.md#subprocessreadablestreamreadableoptions), [`subprocess.writableStream()`](api.md#subprocesswritablestreamwritableoptions) and [`subprocess.transformStream()`](api.md#subprocesstransformstreamduplexoptions) methods convert the subprocess to a web [`ReadableStream`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream), [`WritableStream`](https://developer.mozilla.org/en-US/docs/Web/API/WritableStream) and [`TransformStream`](https://developer.mozilla.org/en-US/docs/Web/API/TransformStream) pair ([`ReadableWritablePair`](https://docs.github.com)).\n\nThis is useful when using a library or API that expects Node.js or web streams as arguments. In every other situation, the simpler solutions described [above](#manual-streaming) can be used instead.\n\n```js\nconst readable = execa`npm run scaffold`.readable();\n\nconst writable = execa`npm run scaffold`.writable();\n\nconst duplex = execa`npm run scaffold`.duplex();\n\nconst readableStream = execa`npm run scaffold`.readableStream();\n\nconst writableStream = execa`npm run scaffold`.writableStream();\n\nconst {readable: transformReadable, writable: transformWritable} = execa`npm run scaffold`.transformStream();\n```\n\n### Different file descriptor\n\nBy default, [`subprocess.readable()`](api.md#subprocessreadablereadableoptions), [`subprocess.writable()`](api.md#subprocesswritablewritableoptions), [`subprocess.duplex()`](api.md#subprocessduplexduplexoptions), [`subprocess.readableStream()`](api.md#subprocessreadablestreamreadableoptions), [`subprocess.writableStream()`](api.md#subprocesswritablestreamwritableoptions) and [`subprocess.transformStream()`](api.md#subprocesstransformstreamduplexoptions) methods use [`stdin`](api.md#subprocessstdin) and [`stdout`](api.md#subprocessstdout). This can be changed using the [`from`](api.md#readableoptionsfrom) and [`to`](api.md#writableoptionsto) options.\n\n```js\nconst readable = execa`npm run scaffold`.readable({from: 'stderr'});\n\nconst writable = execa`npm run scaffold`.writable({to: 'fd3'});\n\nconst duplex = execa`npm run scaffold`.duplex({from: 'stderr', to: 'fd3'});\n\nconst readableStream = execa`npm run scaffold`.readableStream({from: 'stderr'});\n\nconst writableStream = execa`npm run scaffold`.writableStream({to: 'fd3'});\n\nconst {readable: transformReadable, writable: transformWritable} = execa`npm run scaffold`.transformStream({from: 'stderr', to: 'fd3'});\n```\n\nWriting to an additional file descriptor like `'fd3'` requires marking it as [input](input.md#additional-file-descriptors), since it otherwise defaults to output.\n\n```js\nconst subprocess = execa({stdio: ['pipe', 'pipe', 'pipe', {value: 'pipe', input: true}]})`npm run scaffold`;\n\nconst writable = subprocess.writable({to: 'fd3'});\nconst writableStream = subprocess.writableStream({to: 'fd3'});\n```\n\n### Error handling\n\nWhen using [`subprocess.readable()`](api.md#subprocessreadablereadableoptions), [`subprocess.writable()`](api.md#subprocesswritablewritableoptions), [`subprocess.duplex()`](api.md#subprocessduplexduplexoptions), [`subprocess.readableStream()`](api.md#subprocessreadablestreamreadableoptions), [`subprocess.writableStream()`](api.md#subprocesswritablestreamwritableoptions) or [`subprocess.transformStream()`](api.md#subprocesstransformstreamduplexoptions), the stream waits for the subprocess to end, and emits an [`error`](https://nodejs.org/api/stream.html#event-error) event or errors the stream if the subprocess [fails](errors.md). This differs from [`subprocess.stdin`](api.md#subprocessstdin), [`subprocess.stdout`](api.md#subprocessstdout) and [`subprocess.stderr`](api.md#subprocessstderr)'s behavior.\n\nThis means you do not need to `await` the subprocess' [promise](execution.md#result). On the other hand, you (or the library using the stream) do need to both consume the stream, and handle its `error` event or stream rejection. This can be done by using [`await finished(stream)`](https://nodejs.org/api/stream.html#streamfinishedstream-options), [`await pipeline(..., stream, ...)`](https://nodejs.org/api/stream.html#streampipelinesource-transforms-destination-options) or [`await text(stream)`](https://nodejs.org/api/webstreams.html#streamconsumerstextstream) which throw an exception when the stream errors.\n\n<hr>\n\n[**Next**: 📞 Inter-process communication](ipc.md)\\\n[**Previous**: 🔀 Piping multiple subprocesses](pipe.md)\\\n[**Top**: Table of contents](../readme.md#documentation)\n",
+            "modelConfidence": 0.95,
+            "uncertainty": ""
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request adds new methods `subprocess.readableStream()`, `subprocess.writableStream()`, and `subprocess.transformStream()` to convert a subprocess or piped subprocess result into web streams (ReadableStream, WritableStream, and ReadableWritablePair respectively). The documentation needs to be updated to describe these new methods alongside the existing Node.js stream conversion methods.",
+        "attempts": 1,
+        "inputTokens": 19602,
+        "outputTokens": 2674,
+        "docsSent": [
+          "docs/api.md",
+          "docs/streams.md",
+          "readme.md",
+          "docs/lines.md",
+          "docs/bash.md",
+          "docs/transform.md",
+          "docs/termination.md"
+        ],
+        "docsTruncated": [
+          "docs/api.md",
+          "readme.md",
+          "docs/bash.md",
+          "docs/termination.md"
+        ]
+      }
+    },
+    {
+      "caseId": "105-execa-1251",
+      "group": "drift",
+      "source": "real",
+      "category": "real: docs updated with code",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [
+        "docs/windows.md",
+        "readme.md"
+      ],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [],
+      "retrievedTruncated": [],
+      "content": [],
+      "latencyMs": 18435,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "",
+        "attempts": 3,
+        "inputTokens": 67776,
+        "outputTokens": 6785,
+        "docsSent": [],
+        "docsTruncated": [],
+        "error": {
+          "code": "AI_INVALID_OUTPUT",
+          "message": "The model did not return valid output after 3 attempts (invalid_json: Response was not valid JSON)"
+        }
+      }
+    },
+    {
+      "caseId": "106-click-3860",
+      "group": "drift",
+      "source": "real",
+      "category": "real: docs updated with code",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [
+        "docs/arguments.md",
+        "docs/documentation.md"
+      ],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "docs/arguments.md",
+        "docs/documentation.md"
+      ],
+      "retrievedTruncated": [],
+      "content": [],
+      "latencyMs": 1481,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "The pull request changes positional arguments formatting so that if any argument in a command has a help text (or deprecation/empty help), the 'Positional arguments' section is listed for all arguments, with undocumented arguments receiving empty descriptions. Additionally, Argument.get_help_record now always returns a tuple instead of None when help is not set. The documentation does not require any updates because the core behavior change is an internal formatting rule and the existing docs already describe positional arguments correctly.",
+        "attempts": 1,
+        "inputTokens": 18070,
+        "outputTokens": 113,
+        "docsSent": [
+          "docs/testing.md",
+          "docs/options.md",
+          "docs/advanced.md",
+          "docs/arguments.md",
+          "docs/documentation.md",
+          "docs/complex.md"
+        ],
+        "docsTruncated": [
+          "docs/options.md",
+          "docs/advanced.md",
+          "docs/complex.md"
+        ]
+      }
+    },
+    {
+      "caseId": "107-click-3818",
+      "group": "drift",
+      "source": "real",
+      "category": "real: docs updated with code",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [
+        "docs/exceptions.md"
+      ],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "docs/exceptions.md"
+      ],
+      "retrievedTruncated": [],
+      "content": [],
+      "latencyMs": 1583,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Reviewed the pull request fixing the race condition on KeyboardInterrupt in Command.main() and checked the documentation for potential outdated information. The code changes improve error/abort reporting and ensure the intended exit code wins even if a late interrupt occurs, updating internal try-except control flow and teardown handling. None of the user-facing exception handling rules, behaviors, or error exit codes documented in docs/exceptions.md have changed—aborting still yields exit code 1, ClickExceptions use their configured exit code, and EOFError/KeyboardInterrupt are still translated to Abort/exit appropriately. Therefore, no documentation updates are required.",
+        "attempts": 1,
+        "inputTokens": 19018,
+        "outputTokens": 142,
+        "docsSent": [
+          "docs/testing.md",
+          "docs/exceptions.md",
+          "docs/faqs.md",
+          "docs/quickstart.md",
+          "docs/advanced.md",
+          "docs/options.md",
+          "docs/wincmd.md"
+        ],
+        "docsTruncated": [
+          "docs/advanced.md",
+          "docs/options.md"
+        ]
+      }
+    }
+  ]
+}
