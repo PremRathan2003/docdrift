@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { ContextDoc } from './pipeline.js';
-import { buildUserPrompt } from './prompts/v3.js';
+import { buildUserPrompt, SYSTEM_PROMPT } from './prompts/v3.js';
 import { packSections, splitIntoSections } from './sections.js';
 import { parseModelOutput, stripLineNumbers, validateSemantics } from './validate.js';
 
@@ -237,6 +237,20 @@ describe('a section update for a document shown in full', () => {
     );
     expect(recommendations).toEqual([]);
     expect(warnings[0]).toContain('is not a heading of this document');
+  });
+});
+
+describe('SYSTEM_PROMPT', () => {
+  it('asks for every affected document, not just the clearest one', () => {
+    // Five of ten reachable misses were the same drift reported for one
+    // document while another saying the same thing was left alone.
+    expect(SYSTEM_PROMPT).toContain('Check EVERY candidate document');
+  });
+
+  it('treats an accurate but incomplete document as out of date', () => {
+    expect(SYSTEM_PROMPT).toMatch(/every sentence is still true can still be out of date/);
+    // …while still refusing to blame this change for an older gap.
+    expect(SYSTEM_PROMPT).toContain('already incomplete before it is not this change');
   });
 });
 

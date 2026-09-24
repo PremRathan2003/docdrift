@@ -32,7 +32,8 @@ Measure first, then improve: every later change is judged against the evaluation
 | 2.4a | **Section-level ground truth** ✅ | `npm run eval:anchors` records which section of each document the developer actually edited; the report now shows a section ceiling alongside the document one |
 | 2.4b | **More real cases** ✅          | Nine more merged PRs (fastify, commander, uv, httpx): 16 real cases, 30 documents with anchors — enough to tell retrieval settings apart |
 | 2.4c | **Section size** ✅             | `npm run eval:sections` sweeps the settings with no model: sections cut at 2 kB instead of 6 kB put the developer's own section in front of the model 26 times in 30, up from 22, for 3% more prompt |
-| 2.4d | Embeddings (pgvector)           | Semantic retrieval for behaviour changes; only if the evaluation still shows retrieval, not judgement, as the constraint                |
+| 2.5  | **Judgement, not retrieval**    | With the plumbing fixed, 10 of 14 missed documents had been shown to the model. Prompt v3.2 answers what its own summaries said: check every candidate document, and treat an accurate-but-incomplete document as out of date |
+| 2.4d | Embeddings (pgvector)           | Parked: the evaluation says retrieval is no longer the constraint. Revisit only if that changes                                          |
 
 ## Phase 3 — Engineering (≈ 2–3 weeks)
 

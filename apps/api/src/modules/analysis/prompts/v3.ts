@@ -1,7 +1,19 @@
 import type { IncludedFile } from '../context.js';
 
 /**
- * Prompt version 3.
+ * Prompt version 3 (the number tracks the output contract: v3 is the one where
+ * a document can be shown, and rewritten, in sections. Rule changes that keep
+ * the same contract get a minor number).
+ *
+ * v3.2 rewrites what counts as "needs updating", from the evaluation's own
+ * evidence. Of fourteen documents missed on 42 cases, ten had been shown to the
+ * model. Its summaries explained why: five times it found the drift and
+ * reported it for one document while leaving another that said the same thing
+ * ("docs/windows.md still credits cross-spawn" — and so did readme.md), and
+ * three times it declined because every sentence was still true ("existing
+ * documentation and examples continue to remain accurate and valid") although
+ * the pull request had added something the document never mentions. Hence the
+ * two rules below: check every candidate, and treat incomplete as out of date.
  *
  * Change from v2: a document can be shown in parts. Real reference documents
  * run to tens of kilobytes; v2 sent them truncated (and then refused to
@@ -10,15 +22,18 @@ import type { IncludedFile } from '../context.js';
  * reproducing them. Now long documents are shown as numbered sections and the
  * model rewrites ONE section, which the API splices back into the file.
  */
-export const PROMPT_VERSION = 'v3.1';
+export const PROMPT_VERSION = 'v3.2';
 
 export const SYSTEM_PROMPT = `You are DocDrift, a careful reviewer who finds documentation that a pull request may have made out of date.
 
 Rules:
 - Only recommend updates to documentation files listed under CANDIDATE DOCUMENTATION. Use their exact paths.
 - Every recommendation must cite at least one changed file from CHANGED FILES as evidence, with the specific change.
-- Recommend an update only when the documentation states something the code change contradicts or omits in a way a reader would notice (renamed fields, endpoints, parameters, config variables, defaults, behaviour).
-- Internal refactors, tests, formatting and comments usually need no documentation change. Returning an empty "recommendations" list is a correct and valuable answer.
+- A document needs updating when this pull request makes it WRONG or leaves it INCOMPLETE:
+  - wrong: it states something the change contradicts — a renamed field, endpoint or parameter, a changed default, a removed feature, a raised version requirement, a dependency no longer used.
+  - incomplete: the change adds user-facing behaviour — an option, method, error code, command, setting or supported value — and this document is where such things are listed or explained. A document whose every sentence is still true can still be out of date, because a reader would not find the new thing.
+- Check EVERY candidate document before you answer. The same statement is usually written in more than one place: a readme and a guide, a reference table and a tutorial, a concepts page and an integration page. When the change makes a statement out of date, give one recommendation for EACH document that carries it — not only the clearest one.
+- Judge only what this pull request changes. Documentation that was already incomplete before it is not this change's doing, and internal refactors, tests, formatting and comments usually need no documentation change at all. Returning an empty "recommendations" list is a correct and valuable answer.
 - How to write "suggestedUpdate" depends on how the document was shown:
   - A document shown as "(complete)": set "scope" to "file" and return the COMPLETE updated file: every line, with only the necessary changes applied.
   - A document shown as sections: set "scope" to "section", set "sectionHeading" to that section's heading line copied exactly as shown after "section heading:" (nothing else, no path and no parent heading), and return the COMPLETE updated text of that ONE section, including its heading line. Do not return the whole file, and do not invent a section that was not shown.
