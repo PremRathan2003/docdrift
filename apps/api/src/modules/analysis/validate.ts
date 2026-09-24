@@ -67,6 +67,34 @@ function describeNonJson(text: string, err: unknown): string {
 }
 
 /**
+ * Models sometimes copy a prompt's line-number gutter into their answer, which
+ * would write "   1| # Title" into the user's document. Removing it is only
+ * safe when the whole answer is numbered consecutively from one; anything less
+ * certain is left alone, because a document may legitimately contain a line
+ * that looks like "12| something".
+ */
+export function stripLineNumbers(text: string): { text: string; stripped: boolean } {
+  const lines = text.split('\n');
+  const numbered = lines.map((l) => /^\s{0,6}(\d+)\|\s?(.*)$/.exec(l));
+  const real = numbered.filter((m, i) => m !== null || lines[i] === '');
+  if (real.length !== lines.length) return { text, stripped: false };
+
+  let expected = 0;
+  for (const m of numbered) {
+    if (!m) return { text, stripped: false };
+    const n = Number(m[1]);
+    if (expected === 0) {
+      if (n !== 1) return { text, stripped: false };
+    } else if (n !== expected + 1) {
+      return { text, stripped: false };
+    }
+    expected = n;
+  }
+  return { text: numbered.map((m) => m![2]!).join('\n'), stripped: true };
+}
+
+
+/**
  * Step 2: semantic checks against what we actually sent. The model may
  * invent paths or cite files that weren't changed; such items are removed
  * and reported as warnings instead of being shown as facts.
@@ -81,13 +109,20 @@ export function validateSemantics(
   const seen = new Set<string>();
   const recommendations: Recommendation[] = [];
 
-  for (const rec of output.recommendations) {
+  for (let rec of output.recommendations) {
     const doc = docs.get(rec.documentationPath);
     if (!doc) {
       warnings.push(
         `Dropped a recommendation for "${rec.documentationPath}": not one of the documentation files provided.`,
       );
       continue;
+    }
+    const cleaned = stripLineNumbers(rec.suggestedUpdate);
+    if (cleaned.stripped) {
+      warnings.push(
+        `Removed the line numbers the model copied into its update of "${rec.documentationPath}".`,
+      );
+      rec = { ...rec, suggestedUpdate: cleaned.text };
     }
     // A section update becomes a complete document here, so the rest of the
     // app never deals with fragments.

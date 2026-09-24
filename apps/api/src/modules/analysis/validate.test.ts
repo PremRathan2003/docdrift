@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import type { ContextDoc } from './pipeline.js';
 import { buildUserPrompt } from './prompts/v3.js';
 import { packSections, splitIntoSections } from './sections.js';
-import { parseModelOutput, validateSemantics } from './validate.js';
+import { parseModelOutput, stripLineNumbers, validateSemantics } from './validate.js';
 
 const rec = (path: string, evidence: string[], extra: Partial<Record<string, unknown>> = {}) => ({
   documentationPath: path,
@@ -260,5 +260,43 @@ describe('buildUserPrompt', () => {
     expect(prompt).toContain('=== docs/api.md (1 of 12 sections');
     expect(prompt).toContain('--- (this section sits under # API)');
     expect(prompt).toContain('--- section heading: ## Tasks');
+  });
+});
+
+describe('stripLineNumbers', () => {
+  it('removes a gutter the model copied from the prompt', () => {
+    const answer = '   1| # Title\n   2| \n   3| Body text.';
+    expect(stripLineNumbers(answer)).toEqual({
+      text: '# Title\n\nBody text.',
+      stripped: true,
+    });
+  });
+
+  it('leaves a document that merely contains such a line alone', () => {
+    // A real table row, not a gutter: the numbering neither starts at 1 nor runs on.
+    const doc = '# Sizes\n\n| n | meaning |\n| 12| twelve |\n';
+    expect(stripLineNumbers(doc)).toEqual({ text: doc, stripped: false });
+    expect(stripLineNumbers('   7| seventh\n   8| eighth')).toMatchObject({ stripped: false });
+  });
+});
+
+describe('a suggestion that arrives with line numbers', () => {
+  const DOC = '# API\n\nUse the `done` field.\n';
+  const ctx = { changedFiles: ['src/store.js'], docs: [whole('README.md', DOC)] };
+
+  it('is cleaned up and reported, rather than written to the file as-is', () => {
+    const { recommendations, warnings } = validateSemantics(
+      {
+        summary: 's',
+        recommendations: [
+          rec('README.md', ['src/store.js'], {
+            suggestedUpdate: '   1| # API\n   2| \n   3| Use the `completed` field.\n   4| ',
+          }),
+        ],
+      },
+      ctx,
+    );
+    expect(recommendations[0]!.suggestedUpdate).toBe('# API\n\nUse the `completed` field.\n');
+    expect(warnings[0]).toContain('Removed the line numbers');
   });
 });
