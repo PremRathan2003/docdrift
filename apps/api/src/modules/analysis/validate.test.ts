@@ -221,6 +221,30 @@ describe('a section update for a document shown in full', () => {
     );
   });
 
+  it('accepts the name of a section when the document was shown whole', () => {
+    // There is no "section heading:" label to copy from a complete document,
+    // so the model writes "Tasks" or "## Tasks"; both mean the same section.
+    for (const sectionHeading of ['Tasks', '## Tasks', '##  tasks ', '## `Tasks`']) {
+      const { recommendations, warnings } = validateSemantics(
+        {
+          summary: 's',
+          recommendations: [
+            rec('docs/api.md', ['src/store.js'], {
+              scope: 'section',
+              sectionHeading,
+              suggestedUpdate: '## Tasks\n\nEach task has a `completed` field.\n',
+            }),
+          ],
+        },
+        ctx,
+      );
+      expect(warnings, `for ${JSON.stringify(sectionHeading)}`).toEqual([]);
+      expect(recommendations[0]!.suggestedUpdate).toContain('`completed` field');
+      // The document's own text is what gets replaced, not the model's spelling.
+      expect(recommendations[0]!.suggestedUpdate).toContain('## Options');
+    }
+  });
+
   it('still refuses a heading the document does not have', () => {
     const { warnings, recommendations } = validateSemantics(
       {

@@ -275,12 +275,26 @@ export async function buildContext(
 }
 
 /**
- * Models sometimes echo the prompt's own labelling, e.g.
- * "### Ordered dictionaries — under ## Generic collection types". Compare
- * headings by their own text only.
+ * Models echo the prompt's own labelling ("### Ordered dictionaries — under
+ * ## Generic collection types"), and name a section rather than quoting its
+ * line when the document was shown whole. Compare headings by what they say.
+ * Measured: this silently discarded two correct answers for httpx's README and
+ * index in one evaluation run.
  */
 function normaliseHeading(heading: string): string {
-  return heading.split(' — under ')[0]!.trim();
+  return (
+    heading
+      .split(' — under ')[0]!
+      // A document shown in full has no "section heading:" label to copy, so
+      // the model writes the name of the section ("Installation") rather than
+      // the line ("## Installation"). Compare what the heading says, not how it
+      // is marked up; the replacement still uses the document's own text.
+      .replace(/^\s*#+\s*/, '')
+      .replace(/\s*#+\s*$/, '')
+      .replace(/[`*_]/g, '')
+      .trim()
+      .toLowerCase()
+  );
 }
 
 export interface ContextDoc {
