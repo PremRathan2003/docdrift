@@ -12,7 +12,10 @@
         "subprocess.transformStream",
         "subprocess.writableStream"
       ],
-      "mustNotContain": []
+      "mustNotContain": [],
+      "anchors": [
+        "## Result"
+      ]
     },
     {
       "path": "docs/streams.md",
@@ -21,7 +24,10 @@
         "subprocess.readableStream",
         "subprocess.transformStream"
       ],
-      "mustNotContain": []
+      "mustNotContain": [],
+      "anchors": [
+        "### Error handling"
+      ]
     }
   ],
   "acceptable": [],

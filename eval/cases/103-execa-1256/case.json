@@ -10,14 +10,21 @@
       "mustContain": [
         "options.killDescendants"
       ],
-      "mustNotContain": []
+      "mustNotContain": [],
+      "anchors": [
+        "### options.uid"
+      ]
     },
     {
       "path": "docs/termination.md",
       "mustContain": [
         "killDescendants"
       ],
-      "mustNotContain": []
+      "mustNotContain": [],
+      "anchors": [
+        "## Current process exit",
+        "## Signal termination"
+      ]
     }
   ],
   "acceptable": [],

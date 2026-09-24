@@ -2,19 +2,35 @@
  * Pinpoints which part of a Gemini request is rejected, by sending a series of
  * small requests that add one feature at a time. Sends no repository data and
  * prints only status codes and Gemini's error messages (never the key).
- *   npm run ai:diagnose -w @docdrift/api
+ *   npm run ai:diagnose -w @docdrift/api                      the model in .env
+ *   npm run ai:diagnose -w @docdrift/api -- gemini-3.5-flash-lite  another one
  */
 import { analysisOutputSchema } from '@docdrift/shared';
 import { z } from 'zod';
-import { loadEnv } from '../src/config/env.js';
 import { toGeminiSchema } from '../src/modules/ai/gemini.js';
 
-const env = loadEnv();
+// Deliberately not loadEnv(): this script talks to one AI provider and nothing
+// else, so an unrelated half-configured GitHub App shouldn't stop it running.
+const env = {
+  AI_PROVIDER: process.env.AI_PROVIDER,
+  AI_API_KEY: process.env.AI_API_KEY,
+  AI_MODEL: process.argv[2] ?? process.env.AI_MODEL,
+};
 if (env.AI_PROVIDER !== 'gemini') {
-  console.error('✗ AI_PROVIDER is not gemini');
+  console.error(
+    env.AI_PROVIDER
+      ? `✗ AI_PROVIDER is "${env.AI_PROVIDER}", and this script only talks to Gemini`
+      : '✗ AI_PROVIDER is not set. It comes from apps/api/.env or from the shell;\n' +
+          `  this run saw AI_MODEL ${env.AI_MODEL ? 'set' : 'unset'} and AI_API_KEY ${env.AI_API_KEY ? 'set' : 'unset'}.`,
+  );
   process.exit(1);
 }
-const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(env.AI_MODEL!)}:generateContent`;
+if (!env.AI_API_KEY || !env.AI_MODEL) {
+  console.error('✗ set AI_API_KEY and AI_MODEL in apps/api/.env, or pass a model id as an argument');
+  process.exit(1);
+}
+console.warn(`Model: ${env.AI_MODEL}\n`);
+const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(env.AI_MODEL)}:generateContent`;
 const full = toGeminiSchema(z.toJSONSchema(analysisOutputSchema)) as Record<string, unknown>;
 const withoutAdditional = JSON.parse(
   JSON.stringify(full, (k, v) => (k === 'additionalProperties' ? undefined : v)),
@@ -68,7 +84,7 @@ for (const [name, body] of variants) {
   try {
     const res = await fetch(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-goog-api-key': env.AI_API_KEY! },
+      headers: { 'Content-Type': 'application/json', 'x-goog-api-key': env.AI_API_KEY },
       body: JSON.stringify(body),
       signal: AbortSignal.timeout(60_000),
     });

@@ -23,6 +23,13 @@ const expectedDocSchema = z.object({
   mustContain: z.array(z.string().min(1)).default([]),
   /** …and none of these (e.g. the stale value). */
   mustNotContain: z.array(z.string().min(1)).default([]),
+  /**
+   * Headings of the sections the developer actually edited (real cases only,
+   * filled by `npm run eval:anchors`). A long document is shown to the model
+   * in parts; if none of these sections was among them, a miss is a retrieval
+   * failure, not a judgement failure. Empty means "not measured here".
+   */
+  anchors: z.array(z.string()).default([]),
 });
 
 export const caseSchema = z.object({

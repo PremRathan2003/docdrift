@@ -12,7 +12,10 @@
         "counter_type",
         "typing.Counter"
       ],
-      "mustNotContain": []
+      "mustNotContain": [],
+      "anchors": [
+        "### Ordered dictionaries"
+      ]
     },
     {
       "path": "docs/errors/validation_errors.md",
@@ -20,7 +23,10 @@
         "collections.Counter",
         "counter_type"
       ],
-      "mustNotContain": []
+      "mustNotContain": [],
+      "anchors": [
+        "## `dataclass_exact_type`"
+      ]
     }
   ],
   "acceptable": [

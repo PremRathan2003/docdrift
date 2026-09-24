@@ -19,6 +19,7 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { structuredPatch } from 'diff';
+import { anchorHeadings } from './anchors.js';
 import { classifyFile } from '@docdrift/shared';
 import { isSensitivePath } from '../src/modules/analysis/context.js';
 import type { EvalCaseMeta, ExpectedDoc } from './dataset.js';
@@ -346,6 +347,9 @@ export async function importPullRequest(
     expected.push({
       path,
       ...deriveContentChecks(before, after, { added: codeAdded, removed: codeRemoved }),
+      // Where the developer's edit landed, so the evaluation can tell a
+      // section that was never shown from one the model ignored.
+      anchors: anchorHeadings(before, after).filter(Boolean),
     });
     if (!head.has(path))
       warnings.push(

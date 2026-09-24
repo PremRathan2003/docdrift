@@ -19,7 +19,20 @@ import {
   type PipelineConfig,
   type PullRequestInfo,
 } from '../src/modules/analysis/pipeline.js';
+import { splitIntoSections } from '../src/modules/analysis/sections.js';
 import { caseSource, type EvalCase } from './dataset.js';
+
+/** The headings inside what was sent, for documents that were split up. */
+function headingsShownIn(docs: { path: string; content: string; sections: unknown }[]) {
+  const out: Record<string, string[]> = {};
+  for (const d of docs) {
+    if (!d.sections) continue;
+    out[d.path] = splitIntoSections(d.content)
+      .map((s) => s.heading)
+      .filter(Boolean);
+  }
+  return out;
+}
 
 export interface Detection {
   /** Validated recommendations: what a user would see. */
@@ -39,6 +52,13 @@ export interface Detection {
   docsSent: string[];
   /** Of those, the ones too long to send in full: they can never be recommended. */
   docsTruncated: string[];
+  /**
+   * For each document shown in parts, the headings that were actually in the
+   * prompt. Compared with a case's anchors, this separates "the model ignored
+   * the section" from "the model never saw it". Optional: answers saved by a
+   * run from before this existed are still readable.
+   */
+  headingsShown?: Record<string, string[]>;
   error?: { code: string; message: string };
 }
 
@@ -77,6 +97,7 @@ export function aiDetector(ai: AIProvider, config: PipelineConfig): Detector {
         });
         const docsSent = result.context.docs.map((d) => d.path);
         const docsTruncated = result.context.sectionedDocs;
+        const headingsShown = headingsShownIn(result.context.docs);
         if (result.kind === 'skipped') {
           return {
             recommendations: [],
@@ -88,6 +109,7 @@ export function aiDetector(ai: AIProvider, config: PipelineConfig): Detector {
             outputTokens: null,
             docsSent,
             docsTruncated,
+            headingsShown,
           };
         }
         return {
@@ -100,6 +122,7 @@ export function aiDetector(ai: AIProvider, config: PipelineConfig): Detector {
           outputTokens: result.outputTokens,
           docsSent,
           docsTruncated,
+          headingsShown,
         };
       } catch (err) {
         if (!(err instanceof RunFailure)) throw err;
@@ -115,6 +138,7 @@ export function aiDetector(ai: AIProvider, config: PipelineConfig): Detector {
           outputTokens: err.outputTokens,
           docsSent: err.context?.docs.map((d) => d.path) ?? [],
           docsTruncated: err.context?.sectionedDocs ?? [],
+          headingsShown: err.context ? headingsShownIn(err.context.docs) : {},
           error: { code: err.code, message: err.message },
         };
       }
@@ -182,6 +206,7 @@ export function keywordBaseline(config: PipelineConfig): Detector {
         outputTokens: null,
         docsSent: ctx.docs.map((d) => d.path),
         docsTruncated: ctx.sectionedDocs,
+        headingsShown: headingsShownIn(ctx.docs),
       };
     },
   };

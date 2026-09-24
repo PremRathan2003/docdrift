@@ -21,7 +21,9 @@ function evalCase(): EvalCase {
     body: '',
     group: 'drift',
     category: 'c',
-    expected: [{ path: 'README.md', mustContain: ['DATABASE_URL'], mustNotContain: ['DB_URL'] }],
+    expected: [
+      { path: 'README.md', mustContain: ['DATABASE_URL'], mustNotContain: ['DB_URL'], anchors: [] },
+    ],
     acceptable: [],
     added: [],
     trimmedFiles: [],
@@ -106,11 +108,17 @@ describe('aiDetector', () => {
     expect(d.recommendations).toEqual([]);
   });
 
-  it('retries malformed output like the app does', async () => {
+  it('retries malformed output like the app does, telling the model what broke', async () => {
     const { ai, seen } = scripted(['not json', answer]);
     const d = await aiDetector(ai, config).detect(evalCase());
     expect(seen).toHaveLength(2);
     expect(d.attempts).toBe(2);
+    // An identical retry reproduces an identical mistake, so the second ask differs.
+    expect(seen[0]!.user).not.toContain('COULD NOT BE READ');
+    expect(seen[1]!.user).toContain('YOUR PREVIOUS ANSWER COULD NOT BE READ');
+    expect(seen[1]!.user).toContain('escape every backslash');
+    // It quotes our parser, never the model's own words.
+    expect(seen[1]!.user).not.toContain('not json');
   });
 
   it('still reports the documents it retrieved when the model never answers', async () => {

@@ -1,0 +1,1142 @@
+{
+  "generatedAt": "2026-09-24T13:16:55.835Z",
+  "detector": {
+    "name": "keyword-baseline",
+    "retrieval": "content",
+    "model": "none",
+    "promptVersion": null
+  },
+  "dataset": {
+    "hash": "517778716cbe",
+    "cases": 7,
+    "byGroup": {
+      "drift": 6,
+      "no-drift": 1
+    },
+    "expectedDocs": 11,
+    "synthetic": 0
+  },
+  "repeat": 1,
+  "overall": {
+    "runs": 7,
+    "tp": 6,
+    "fp": 17,
+    "fn": 5,
+    "precision": 0.2608695652173913,
+    "recall": 0.5454545454545454,
+    "f1": 0.3529411764705882,
+    "precisionCI": [
+      0.1254844588924897,
+      0.4647039054375056
+    ],
+    "recallCI": [
+      0.28008775568998817,
+      0.7872904245601196
+    ],
+    "caseAccuracy": 0,
+    "retrieval": {
+      "reached": 11,
+      "expected": 11,
+      "rate": 1,
+      "truncated": 6,
+      "sections": {
+        "reached": 4,
+        "measured": 6,
+        "rate": 0.6666666666666666
+      }
+    },
+    "falseAlarmRate": 1,
+    "quietCases": 1,
+    "content": {
+      "checked": 0,
+      "passed": 0,
+      "passRate": null,
+      "medianDroppedLines": null
+    },
+    "confidence": {
+      "meanWhenRight": 1,
+      "meanWhenWrong": 1
+    },
+    "errors": {
+      "count": 0,
+      "byCode": {}
+    },
+    "validationWarnings": 0,
+    "modelCalls": 7,
+    "meanAttempts": 0,
+    "tokens": {
+      "input": null,
+      "output": null
+    },
+    "latencyMs": {
+      "median": 12,
+      "max": 58
+    }
+  },
+  "byGroup": {
+    "drift": {
+      "runs": 6,
+      "tp": 6,
+      "fp": 11,
+      "fn": 5,
+      "precision": 0.35294117647058826,
+      "recall": 0.5454545454545454,
+      "f1": 0.42857142857142855,
+      "precisionCI": [
+        0.17309486143904904,
+        0.5870003327878818
+      ],
+      "recallCI": [
+        0.28008775568998817,
+        0.7872904245601196
+      ],
+      "caseAccuracy": 0,
+      "retrieval": {
+        "reached": 11,
+        "expected": 11,
+        "rate": 1,
+        "truncated": 6,
+        "sections": {
+          "reached": 4,
+          "measured": 6,
+          "rate": 0.6666666666666666
+        }
+      },
+      "falseAlarmRate": null,
+      "quietCases": 0,
+      "content": {
+        "checked": 0,
+        "passed": 0,
+        "passRate": null,
+        "medianDroppedLines": null
+      },
+      "confidence": {
+        "meanWhenRight": 1,
+        "meanWhenWrong": 1
+      },
+      "errors": {
+        "count": 0,
+        "byCode": {}
+      },
+      "validationWarnings": 0,
+      "modelCalls": 6,
+      "meanAttempts": 0,
+      "tokens": {
+        "input": null,
+        "output": null
+      },
+      "latencyMs": {
+        "median": 11.5,
+        "max": 58
+      }
+    },
+    "no-drift": {
+      "runs": 1,
+      "tp": 0,
+      "fp": 6,
+      "fn": 0,
+      "precision": 0,
+      "recall": null,
+      "f1": null,
+      "precisionCI": [
+        0,
+        0.3903430336530645
+      ],
+      "recallCI": null,
+      "caseAccuracy": 0,
+      "retrieval": {
+        "reached": 0,
+        "expected": 0,
+        "rate": null,
+        "truncated": 0,
+        "sections": {
+          "reached": 0,
+          "measured": 0,
+          "rate": null
+        }
+      },
+      "falseAlarmRate": 1,
+      "quietCases": 1,
+      "content": {
+        "checked": 0,
+        "passed": 0,
+        "passRate": null,
+        "medianDroppedLines": null
+      },
+      "confidence": {
+        "meanWhenRight": null,
+        "meanWhenWrong": 1
+      },
+      "errors": {
+        "count": 0,
+        "byCode": {}
+      },
+      "validationWarnings": 0,
+      "modelCalls": 1,
+      "meanAttempts": 0,
+      "tokens": {
+        "input": null,
+        "output": null
+      },
+      "latencyMs": {
+        "median": 37,
+        "max": 37
+      }
+    }
+  },
+  "bySource": {
+    "real": {
+      "runs": 7,
+      "tp": 6,
+      "fp": 17,
+      "fn": 5,
+      "precision": 0.2608695652173913,
+      "recall": 0.5454545454545454,
+      "f1": 0.3529411764705882,
+      "precisionCI": [
+        0.1254844588924897,
+        0.4647039054375056
+      ],
+      "recallCI": [
+        0.28008775568998817,
+        0.7872904245601196
+      ],
+      "caseAccuracy": 0,
+      "retrieval": {
+        "reached": 11,
+        "expected": 11,
+        "rate": 1,
+        "truncated": 6,
+        "sections": {
+          "reached": 4,
+          "measured": 6,
+          "rate": 0.6666666666666666
+        }
+      },
+      "falseAlarmRate": 1,
+      "quietCases": 1,
+      "content": {
+        "checked": 0,
+        "passed": 0,
+        "passRate": null,
+        "medianDroppedLines": null
+      },
+      "confidence": {
+        "meanWhenRight": 1,
+        "meanWhenWrong": 1
+      },
+      "errors": {
+        "count": 0,
+        "byCode": {}
+      },
+      "validationWarnings": 0,
+      "modelCalls": 7,
+      "meanAttempts": 0,
+      "tokens": {
+        "input": null,
+        "output": null
+      },
+      "latencyMs": {
+        "median": 12,
+        "max": 58
+      }
+    }
+  },
+  "perRun": [
+    {
+      "run": 1,
+      "precision": 0.2608695652173913,
+      "recall": 0.5454545454545454,
+      "f1": 0.3529411764705882
+    }
+  ],
+  "unstableCases": [],
+  "retries": [],
+  "reused": [],
+  "outcomes": [
+    {
+      "caseId": "101-pydantic-13824",
+      "group": "drift",
+      "source": "real",
+      "category": "real: docs updated with code",
+      "run": 1,
+      "tp": [
+        "docs/api/standard_library_types.md",
+        "docs/errors/validation_errors.md"
+      ],
+      "fp": [
+        "docs/concepts/types.md",
+        "docs/concepts/json_schema.md",
+        "docs/errors/usage_errors.md",
+        "docs/concepts/models.md",
+        "docs/concepts/experimental.md"
+      ],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "docs/api/standard_library_types.md",
+        "docs/errors/validation_errors.md"
+      ],
+      "retrievedTruncated": [
+        "docs/api/standard_library_types.md",
+        "docs/errors/validation_errors.md"
+      ],
+      "sectionReached": [
+        "docs/api/standard_library_types.md",
+        "docs/errors/validation_errors.md"
+      ],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 58,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api/standard_library_types.md",
+            "reason": "Mentions removed \"typing\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/concepts/types.md",
+            "reason": "Mentions removed \"typing\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/errors/validation_errors.md",
+            "reason": "Mentions removed \"typing\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/concepts/json_schema.md",
+            "reason": "Mentions removed \"typing\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/errors/usage_errors.md",
+            "reason": "Mentions removed \"typing\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/concepts/models.md",
+            "reason": "Mentions removed \"typing\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/concepts/experimental.md",
+            "reason": "Mentions removed \"typing\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: _mapping_schema, typing",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/api/standard_library_types.md",
+          "docs/concepts/types.md",
+          "docs/errors/validation_errors.md",
+          "docs/concepts/json_schema.md",
+          "docs/errors/usage_errors.md",
+          "docs/concepts/models.md",
+          "docs/concepts/experimental.md"
+        ],
+        "docsTruncated": [
+          "docs/api/standard_library_types.md",
+          "docs/concepts/types.md",
+          "docs/errors/validation_errors.md",
+          "docs/concepts/json_schema.md",
+          "docs/errors/usage_errors.md",
+          "docs/concepts/models.md",
+          "docs/concepts/experimental.md"
+        ],
+        "headingsShown": {
+          "docs/api/standard_library_types.md": [
+            "## Strings",
+            "### Ordered dictionaries",
+            "### Typed dictionaries"
+          ],
+          "docs/concepts/types.md": [
+            "## Utility types",
+            "### `OnErrorOmit`",
+            "### `FailFast`",
+            "### `MISSING` sentinel",
+            "## Custom Types",
+            "### Using the annotated pattern",
+            "#### Adding validation and serialization",
+            "#### Generics"
+          ],
+          "docs/errors/validation_errors.md": [
+            "## `bool_parsing`",
+            "## `bool_type`",
+            "## `bytes_invalid_encoding`",
+            "## `bytes_too_long`",
+            "## `bytes_too_short`",
+            "## `bytes_type`",
+            "## `callable_type`",
+            "## `complex_str_parsing`",
+            "## `complex_type`",
+            "## `dataclass_exact_type`",
+            "## `dataclass_type`",
+            "## `date_from_datetime_inexact`",
+            "## `date_from_datetime_parsing`"
+          ],
+          "docs/concepts/json_schema.md": [
+            "### Implementing `__get_pydantic_core_schema__` <a name=\"implementing_get_pydantic_core_schema\"></a>"
+          ],
+          "docs/errors/usage_errors.md": [
+            "## `TypedDict` version {#typed-dict-version}",
+            "## Model parent field overridden {#model-field-overridden}",
+            "## Model field missing annotation {#model-field-missing-annotation}",
+            "## `Config` and `model_config` both defined {#config-both}",
+            "## Keyword arguments removed {#removed-kwargs}",
+            "## Circular reference schema {#circular-reference-schema}",
+            "## JSON schema invalid type {#invalid-for-json-schema}",
+            "## JSON schema already used {#json-schema-already-used}",
+            "## BaseModel instantiated {#base-model-instantiated}",
+            "## Undefined annotation {#undefined-annotation}",
+            "## Schema for unknown type {#schema-for-unknown-type}",
+            "## Import error {#import-error}",
+            "## `create_model` field definitions {#create-model-field-definitions}",
+            "## Validator on instance method {#validator-instance-method}"
+          ],
+          "docs/concepts/models.md": [
+            "## Basic model usage"
+          ],
+          "docs/concepts/experimental.md": [
+            "### How Partial Validation Works",
+            "#### 1. Partial JSON parsing",
+            "#### 2. Ignore errors in the last element of the input {#2-ignore-errors-in-last}",
+            "### Limitations of Partial Validation",
+            "#### TypeAdapter only",
+            "#### Types supported",
+            "#### Some invalid but complete JSON will be accepted"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "102-pydantic-13129",
+      "group": "no-drift",
+      "source": "real",
+      "category": "real: code-only change",
+      "run": 1,
+      "tp": [],
+      "fp": [
+        "docs/errors/usage_errors.md",
+        "docs/concepts/json_schema.md",
+        "docs/concepts/models.md",
+        "docs/concepts/fields.md",
+        "docs/concepts/types.md",
+        "docs/api/standard_library_types.md"
+      ],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 37,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/errors/usage_errors.md",
+            "reason": "Mentions removed \"common\", \"json_schema\", \"should\", \"used\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/concepts/json_schema.md",
+            "reason": "Mentions removed \"should\", \"used\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/concepts/models.md",
+            "reason": "Mentions removed \"RootModel\", \"json_schema\", \"root_model\", \"used\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/concepts/fields.md",
+            "reason": "Mentions removed \"json_schema\", \"should\", \"used\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/concepts/types.md",
+            "reason": "Mentions removed \"json_schema\", \"used\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/api/standard_library_types.md",
+            "reason": "Mentions removed \"used\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: FIXME, RootModel, __pydantic_fields__, common, elif, issubclass, json_schema, root_description, root_model, setdefault, should, used",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/errors/usage_errors.md",
+          "docs/concepts/json_schema.md",
+          "docs/concepts/models.md",
+          "docs/concepts/fields.md",
+          "docs/concepts/types.md",
+          "docs/api/standard_library_types.md"
+        ],
+        "docsTruncated": [
+          "docs/errors/usage_errors.md",
+          "docs/concepts/json_schema.md",
+          "docs/concepts/models.md",
+          "docs/concepts/fields.md",
+          "docs/concepts/types.md",
+          "docs/api/standard_library_types.md"
+        ],
+        "headingsShown": {
+          "docs/errors/usage_errors.md": [
+            "## Class not fully defined {#class-not-fully-defined}",
+            "## Custom JSON Schema {#custom-json-schema}",
+            "## Invalid decorator fields {#decorator-invalid-fields}",
+            "## Decorator with no fields {#decorator-missing-arguments}",
+            "## Decorator on missing field {#decorator-missing-field}"
+          ],
+          "docs/concepts/json_schema.md": [
+            "### Field-Level Customization",
+            "### Implementing `__get_pydantic_core_schema__` <a name=\"implementing_get_pydantic_core_schema\"></a>"
+          ],
+          "docs/concepts/models.md": [
+            "## `RootModel` and custom root types",
+            "## Abstract base classes",
+            "## Field ordering",
+            "## Automatically excluded attributes",
+            "### Class variables",
+            "### Private model attributes",
+            "## Model signature",
+            "## Structural pattern matching",
+            "## Attribute copies"
+          ],
+          "docs/concepts/fields.md": [
+            "## The annotated pattern",
+            "## Customizing JSON Schema",
+            "## The `computed_field` decorator"
+          ],
+          "docs/concepts/types.md": [
+            "### Named type aliases",
+            "### Access to field name"
+          ],
+          "docs/api/standard_library_types.md": [
+            "## None types",
+            "## Generic collection types",
+            "### Lists",
+            "### Tuples"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "103-execa-1256",
+      "group": "drift",
+      "source": "real",
+      "category": "real: docs updated with code",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [
+        "docs/api.md",
+        "docs/termination.md"
+      ],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "docs/api.md",
+        "docs/termination.md"
+      ],
+      "retrievedTruncated": [
+        "docs/api.md",
+        "docs/termination.md"
+      ],
+      "sectionReached": [
+        "docs/termination.md"
+      ],
+      "sectionMissed": [
+        "docs/api.md"
+      ],
+      "content": [],
+      "latencyMs": 11,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: (none)",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/termination.md",
+          "docs/api.md",
+          "docs/execution.md",
+          "docs/bash.md",
+          "readme.md",
+          "docs/windows.md",
+          "docs/errors.md"
+        ],
+        "docsTruncated": [
+          "docs/termination.md",
+          "docs/api.md",
+          "docs/bash.md",
+          "readme.md"
+        ],
+        "headingsShown": {
+          "docs/termination.md": [
+            "## Signal termination",
+            "### SIGTERM",
+            "### SIGINT",
+            "### SIGKILL",
+            "### SIGQUIT",
+            "### Other signals",
+            "### Default signal",
+            "### Handling signals",
+            "### Signal name and description",
+            "## Forceful termination",
+            "## Inter-process termination"
+          ],
+          "docs/api.md": [
+            "### result.pipedFrom",
+            "### result.command",
+            "### result.escapedCommand",
+            "### result.cwd",
+            "### result.durationMs",
+            "### result.failed",
+            "## ExecaError",
+            "## ExecaSyncError",
+            "### error.message",
+            "### error.shortMessage",
+            "### error.originalMessage",
+            "### error.cause",
+            "### error.code",
+            "### error.timedOut",
+            "### error.isCanceled",
+            "### error.isGracefullyCanceled",
+            "### error.isMaxBuffer",
+            "### error.isTerminated",
+            "### error.isForcefullyTerminated",
+            "### error.exitCode",
+            "### error.signal",
+            "### error.signalDescription",
+            "## Options"
+          ],
+          "docs/bash.md": [
+            "### Piping stdin from a file",
+            "### Web streams",
+            "### Convert to Duplex stream",
+            "### Handle pipeline errors",
+            "### Return all pipeline results",
+            "### Split output into lines",
+            "### Iterate over output lines",
+            "### Detailed errors",
+            "### Exit codes",
+            "### Timeouts",
+            "### Current filename",
+            "### Current directory",
+            "### Background subprocess",
+            "### IPC",
+            "### Transforms",
+            "### Signal termination",
+            "### Default signal"
+          ],
+          "readme.md": [
+            "## Features",
+            "## Install",
+            "## Documentation",
+            "## Examples",
+            "### Execution",
+            "#### Simple syntax",
+            "#### Script",
+            "#### Local binaries",
+            "#### Pipe multiple subprocesses",
+            "### Input/output",
+            "#### Interleaved output",
+            "#### Programmatic + terminal output",
+            "#### Simple input",
+            "#### File input",
+            "#### File output",
+            "#### Split into text lines",
+            "### Streaming",
+            "#### Iterate over text lines",
+            "#### Transform/filter output",
+            "#### Web streams",
+            "#### Convert to Duplex stream",
+            "### IPC",
+            "#### Exchange messages",
+            "#### Any input type",
+            "#### Any output type",
+            "#### Graceful termination",
+            "### Debugging",
+            "#### Detailed error"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "104-execa-1254",
+      "group": "drift",
+      "source": "real",
+      "category": "real: docs updated with code",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [
+        "docs/api.md",
+        "docs/streams.md"
+      ],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "docs/api.md",
+        "docs/streams.md"
+      ],
+      "retrievedTruncated": [
+        "docs/api.md"
+      ],
+      "sectionReached": [],
+      "sectionMissed": [
+        "docs/api.md"
+      ],
+      "content": [],
+      "latencyMs": 13,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: (none)",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/api.md",
+          "docs/streams.md",
+          "readme.md",
+          "docs/lines.md",
+          "docs/bash.md",
+          "docs/transform.md",
+          "docs/termination.md"
+        ],
+        "docsTruncated": [
+          "docs/api.md",
+          "readme.md",
+          "docs/bash.md",
+          "docs/termination.md"
+        ],
+        "headingsShown": {
+          "docs/api.md": [
+            "#### getEachMessageOptions",
+            "#### getEachMessageOptions.reference",
+            "### getCancelSignal()",
+            "## Return value",
+            "## Subprocess",
+            "### subprocess\\[Symbol.asyncIterator\\]()",
+            "### subprocess.iterable(readableOptions?)",
+            "### subprocess.pipe(file, arguments?, options?)",
+            "### subprocess.pipe\\`command\\`",
+            "### subprocess.pipe(options)\\`command\\`",
+            "### subprocess.pipe(secondSubprocess, pipeOptions?)",
+            "#### pipeOptions",
+            "#### pipeOptions.from",
+            "#### pipeOptions.to",
+            "#### pipeOptions.unpipeSignal",
+            "### subprocess.kill(signal, error?)",
+            "### subprocess.kill(error?)"
+          ],
+          "readme.md": [
+            "## Features",
+            "## Install",
+            "## Documentation",
+            "## Examples",
+            "### Execution",
+            "#### Simple syntax",
+            "#### Script",
+            "#### Local binaries",
+            "#### Pipe multiple subprocesses",
+            "### Input/output",
+            "#### Interleaved output",
+            "#### Programmatic + terminal output",
+            "#### Simple input",
+            "#### File input",
+            "#### File output",
+            "#### Split into text lines",
+            "### Streaming",
+            "#### Iterate over text lines",
+            "#### Transform/filter output",
+            "#### Web streams",
+            "#### Convert to Duplex stream",
+            "### IPC",
+            "#### Exchange messages",
+            "#### Any input type",
+            "#### Any output type",
+            "#### Graceful termination",
+            "### Debugging",
+            "#### Detailed error"
+          ],
+          "docs/bash.md": [
+            "### Piping stdin from a file",
+            "### Web streams",
+            "### Convert to Duplex stream",
+            "### Handle pipeline errors",
+            "### Return all pipeline results",
+            "### Split output into lines",
+            "### Iterate over output lines",
+            "### Detailed errors",
+            "### Exit codes",
+            "### Timeouts",
+            "### Current filename",
+            "### Current directory",
+            "### Background subprocess",
+            "### IPC",
+            "### Transforms",
+            "### Signal termination",
+            "### Default signal"
+          ],
+          "docs/termination.md": [
+            "### Inactivity timeout"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "105-execa-1251",
+      "group": "drift",
+      "source": "real",
+      "category": "real: docs updated with code",
+      "run": 1,
+      "tp": [
+        "docs/windows.md",
+        "readme.md"
+      ],
+      "fp": [
+        "docs/shell.md",
+        "docs/bash.md"
+      ],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "docs/windows.md",
+        "readme.md"
+      ],
+      "retrievedTruncated": [
+        "readme.md"
+      ],
+      "sectionReached": [
+        "readme.md"
+      ],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 12,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/windows.md",
+            "reason": "Mentions removed \"cross\", \"spawn\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "readme.md",
+            "reason": "Mentions removed \"cross\", \"spawn\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/shell.md",
+            "reason": "Mentions removed \"cross\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/bash.md",
+            "reason": "Mentions removed \"cross\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: _parse, args, cross, crossSpawn, spawn",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/windows.md",
+          "docs/escaping.md",
+          "docs/api.md",
+          "readme.md",
+          "docs/shell.md",
+          "docs/bash.md",
+          "docs/execution.md",
+          "docs/debugging.md"
+        ],
+        "docsTruncated": [
+          "docs/api.md",
+          "readme.md",
+          "docs/bash.md"
+        ],
+        "headingsShown": {
+          "docs/api.md": [
+            "### options.preferLocal",
+            "### options.localDir",
+            "### options.node",
+            "### options.nodeOptions",
+            "### options.nodePath",
+            "### options.shell",
+            "### options.cwd",
+            "### options.env",
+            "### options.extendEnv",
+            "### options.input",
+            "### options.inputFile",
+            "### options.stdin"
+          ],
+          "readme.md": [
+            "## Features",
+            "## Install",
+            "## Documentation",
+            "## Examples",
+            "### Execution",
+            "#### Simple syntax",
+            "#### Script",
+            "#### Local binaries",
+            "#### Pipe multiple subprocesses",
+            "### Input/output",
+            "#### Interleaved output",
+            "#### Programmatic + terminal output",
+            "#### Simple input",
+            "#### File input",
+            "#### File output",
+            "#### Split into text lines",
+            "### Streaming",
+            "#### Iterate over text lines",
+            "#### Transform/filter output",
+            "#### Web streams",
+            "#### Convert to Duplex stream",
+            "### IPC",
+            "#### Exchange messages",
+            "#### Any input type",
+            "#### Any output type",
+            "#### Graceful termination",
+            "### Debugging",
+            "#### Detailed error"
+          ],
+          "docs/bash.md": [
+            "# 🔍 Differences with Bash and zx",
+            "## Flexibility",
+            "## Shell",
+            "## Simplicity",
+            "## Modularity",
+            "## Performance",
+            "## Debugging",
+            "## Examples",
+            "### Main binary",
+            "### Global variables",
+            "### Command execution",
+            "### Multiline commands",
+            "### Concatenation",
+            "### Variable substitution",
+            "### Escaping"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "106-click-3860",
+      "group": "drift",
+      "source": "real",
+      "category": "real: docs updated with code",
+      "run": 1,
+      "tp": [
+        "docs/arguments.md",
+        "docs/documentation.md"
+      ],
+      "fp": [
+        "docs/testing.md",
+        "docs/options.md",
+        "docs/advanced.md",
+        "docs/complex.md"
+      ],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "docs/arguments.md",
+        "docs/documentation.md"
+      ],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 11,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/testing.md",
+            "reason": "Mentions removed \"that\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/options.md",
+            "reason": "Mentions removed \"have\", \"that\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/advanced.md",
+            "reason": "Mentions removed \"have\", \"that\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/arguments.md",
+            "reason": "Mentions removed \"that\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/documentation.md",
+            "reason": "Mentions removed \"have\", \"that\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/complex.md",
+            "reason": "Mentions removed \"have\", \"that\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: append, have, record, that",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/testing.md",
+          "docs/options.md",
+          "docs/advanced.md",
+          "docs/arguments.md",
+          "docs/documentation.md",
+          "docs/complex.md"
+        ],
+        "docsTruncated": [
+          "docs/options.md",
+          "docs/advanced.md",
+          "docs/complex.md"
+        ],
+        "headingsShown": {
+          "docs/options.md": [
+            "# Options",
+            "## Option Decorator",
+            "## Basic Example",
+            "## Setting a Default",
+            "## Multi Value Options",
+            "## Multi Value Options as Tuples",
+            "## Multiple Options"
+          ],
+          "docs/advanced.md": [
+            "# Advanced Patterns",
+            "## Callbacks and Eager Options",
+            "## Callbacks for Validation",
+            "## Parameter Modifications"
+          ],
+          "docs/complex.md": [
+            "# Complex Applications",
+            "## Basic Concepts",
+            "### Contexts",
+            "### Calling Convention",
+            "## Building a Git Clone",
+            "### The Root Command",
+            "### The First Child Command",
+            "### Interleaved Commands"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "107-click-3818",
+      "group": "drift",
+      "source": "real",
+      "category": "real: docs updated with code",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [
+        "docs/exceptions.md"
+      ],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "docs/exceptions.md"
+      ],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 10,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: (none)",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/testing.md",
+          "docs/exceptions.md",
+          "docs/faqs.md",
+          "docs/quickstart.md",
+          "docs/advanced.md",
+          "docs/options.md",
+          "docs/wincmd.md"
+        ],
+        "docsTruncated": [
+          "docs/advanced.md",
+          "docs/options.md"
+        ],
+        "headingsShown": {
+          "docs/advanced.md": [
+            "# Advanced Patterns",
+            "## Callbacks and Eager Options",
+            "## Callbacks for Validation",
+            "## Parameter Modifications"
+          ],
+          "docs/options.md": [
+            "# Options",
+            "## Option Decorator",
+            "## Basic Example",
+            "## Setting a Default",
+            "## Multi Value Options",
+            "## Multi Value Options as Tuples",
+            "## Multiple Options",
+            "## Values from Environment Variables"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -23,7 +23,8 @@
     "ai:diagnose": "tsx --env-file=.env scripts/ai-diagnose.ts",
     "eval": "tsx eval/cli.ts",
     "ai:models": "tsx --env-file=.env scripts/ai-models.ts",
-    "eval:import": "tsx eval/import-cli.ts"
+    "eval:import": "tsx eval/import-cli.ts",
+    "eval:anchors": "tsx eval/anchors-cli.ts"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.10",

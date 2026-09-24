@@ -12,7 +12,12 @@
         "click.ClickException",
         "e.exit_code"
       ],
-      "mustNotContain": []
+      "mustNotContain": [],
+      "anchors": [
+        "## Where are Errors Handled?",
+        "## What if I Don't Want That?",
+        "## Which Exceptions Exist?"
+      ]
     }
   ],
   "acceptable": [

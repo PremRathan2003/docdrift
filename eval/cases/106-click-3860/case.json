@@ -8,12 +8,18 @@
     {
       "path": "docs/arguments.md",
       "mustContain": [],
-      "mustNotContain": []
+      "mustNotContain": [],
+      "anchors": [
+        "# Arguments"
+      ]
     },
     {
       "path": "docs/documentation.md",
       "mustContain": [],
-      "mustNotContain": []
+      "mustNotContain": [],
+      "anchors": [
+        "## Documenting Arguments"
+      ]
     }
   ],
   "acceptable": [

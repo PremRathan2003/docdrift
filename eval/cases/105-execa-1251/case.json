@@ -10,6 +10,9 @@
       "mustContain": [],
       "mustNotContain": [
         "cross-spawn"
+      ],
+      "anchors": [
+        "## File extensions"
       ]
     },
     {
@@ -17,6 +20,9 @@
       "mustContain": [],
       "mustNotContain": [
         "cross-spawn"
+      ],
+      "anchors": [
+        "## Features"
       ]
     }
   ],

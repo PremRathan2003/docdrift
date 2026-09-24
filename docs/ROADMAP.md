@@ -29,7 +29,9 @@ Measure first, then improve: every later change is judged against the evaluation
 | 2.2  | **Real-world cases** ✅         | `npm run eval:import` builds cases from merged PRs (pydantic, execa, click); retrieval measured                                          |
 | 2.3  | **Content-ranked retrieval** ✅ | BM25 over every doc + blob-SHA cache: documents reaching the model 27% → 91% on real PRs                                                 |
 | 2.3b | **Section-level documents** ✅  | Prompt v3: a long document is shown as its matching sections; the model rewrites one and the API splices it back. Retrieval ceiling 100% |
-| 2.4  | Embeddings (pgvector)           | Semantic retrieval for behaviour changes; keep it only if the evaluation shows a gain                                                    |
+| 2.4a | **Section-level ground truth** ✅ | `npm run eval:anchors` records which section of each document the developer actually edited; the report now shows a section ceiling alongside the document one |
+| 2.4b | More real cases                 | The section ceiling rests on 6 documents, too few to choose between retrieval settings; import more merged PRs before tuning             |
+| 2.4c | Embeddings (pgvector)           | Semantic retrieval for behaviour changes; only if 2.4b shows section selection is still the constraint                                  |
 
 ## Phase 3 — Engineering (≈ 2–3 weeks)
 

@@ -28,7 +28,8 @@
     "test:e2e:ui": "npm run build -w @docdrift/shared && playwright test -c e2e/playwright.config.ts --ui",
     "eval": "npm run build -w @docdrift/shared && npm run eval -w @docdrift/api --",
     "ai:models": "npm run ai:models -w @docdrift/api",
-    "eval:import": "npm run build -w @docdrift/shared && npm run eval:import -w @docdrift/api --"
+    "eval:import": "npm run build -w @docdrift/shared && npm run eval:import -w @docdrift/api --",
+    "eval:anchors": "npm run build -w @docdrift/shared && npm run eval:anchors -w @docdrift/api --"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",

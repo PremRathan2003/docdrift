@@ -51,8 +51,15 @@ describe('parseModelOutput', () => {
     });
     expect(parseModelOutput('I cannot help with that.\nSorry.')).toMatchObject({
       reason: 'invalid_json',
-      detail: expect.stringContaining('"I cannot help with that. Sorry."'),
+      detail: expect.stringContaining('I cannot help with that. Sorry.'),
     });
+    // A half-written answer and a mis-escaped one both say "not valid JSON";
+    // the text around the offending position is what tells them apart.
+    const cutShort = parseModelOutput('{"summary": "The pull request renames a fie');
+    expect(cutShort).toMatchObject({ reason: 'invalid_json' });
+    expect(cutShort.ok === false && cutShort.detail).toContain('renames a fie');
+    const badEscape = parseModelOutput('{"summary": "Use C:\\Users\\app to start", "recommendations": []}');
+    expect(badEscape.ok === false && badEscape.detail).toContain('Users');
   });
 
   it('defaults scope to a whole-file update (answers from prompt v2 stay valid)', () => {

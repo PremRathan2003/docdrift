@@ -338,6 +338,22 @@ export function spliceRecommendation(
 
 // ---------------------------------------------------------------- one LLM call with retries
 
+/**
+ * What to add to the prompt after an unusable answer. It quotes our parser, never
+ * the model's own text: echoing repository content back into the prompt would
+ * hand a document the chance to write its own instructions.
+ */
+function repairNote(hint: string): string {
+  return [
+    '',
+    '',
+    `YOUR PREVIOUS ANSWER COULD NOT BE READ: ${hint}`,
+    'Send the same analysis again as one strictly valid JSON object matching the response schema.',
+    String.raw`Inside JSON strings escape every backslash as \\, every double quote as \", and every newline as \n.`,
+    'Write nothing before or after the JSON object.',
+  ].join('\n');
+}
+
 export async function callModel(
   ai: AIProvider,
   prompt: string,
@@ -350,11 +366,13 @@ export async function callModel(
   const add = (a: number | null, b: number | null) => (b === null ? a : (a ?? 0) + b);
   let lastProblem = '';
 
+  let repair = '';
+
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
     try {
       const result = await ai.generateJson({
         system: SYSTEM_PROMPT,
-        user: prompt,
+        user: prompt + repair,
         jsonSchema: JSON_SCHEMA,
         maxOutputTokens: config.maxOutputTokens ?? DEFAULT_MAX_OUTPUT_TOKENS,
         timeoutMs: config.timeoutMs,
@@ -363,7 +381,11 @@ export async function callModel(
       outputTokens = add(outputTokens, result.usage.outputTokens);
       const parsed = parseModelOutput(result.text);
       if (parsed.ok) return { output: parsed.output, attempts: attempt, inputTokens, outputTokens };
-      // A malformed answer is worth one more try; the same prompt often succeeds.
+      // A malformed answer is worth another try, but not an identical request:
+      // the same prompt reproduced the same broken answer three times running on
+      // documents full of backslashes and quotes. Saying what went wrong is what
+      // makes the retry a different draw.
+      repair = repairNote(parsed.hint);
       lastProblem = `${parsed.reason}: ${parsed.detail}, finishReason ${result.finishReason ?? 'none'}`;
       logger.warn({ attempt, problem: lastProblem }, 'Model output failed validation');
     } catch (err) {

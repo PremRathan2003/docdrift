@@ -11,7 +11,7 @@ function evalCase(id: string, expected: string[]): EvalCase {
     body: '',
     group: expected.length ? 'drift' : 'no-drift',
     category: 'c',
-    expected: expected.map((path) => ({ path, mustContain: [], mustNotContain: [] })),
+    expected: expected.map((path) => ({ path, mustContain: [], mustNotContain: [], anchors: [] })),
     acceptable: [],
     added: [],
     trimmedFiles: [],

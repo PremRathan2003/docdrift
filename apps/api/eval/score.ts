@@ -38,6 +38,14 @@ export interface CaseOutcome {
   retrieved: string[];
   /** Of those, the ones sent only in part: DocDrift refuses to rewrite a document it can't see whole. */
   retrievedTruncated: string[];
+  /**
+   * Of the documents sent in part, the ones whose anchor section — the part the
+   * developer actually edited — was among the sections shown. A document in
+   * `retrievedTruncated` but not here could not have been updated by any model.
+   */
+  sectionReached: string[];
+  /** …and the ones where it wasn't. Each is a retrieval failure, not a model failure. */
+  sectionMissed: string[];
   content: ContentCheck[];
   latencyMs: number;
   detection: Detection;
@@ -67,6 +75,16 @@ export function scoreCase(
 
   const retrieved = [...expected].filter((p) => detection.docsSent.includes(p));
   const retrievedTruncated = retrieved.filter((p) => detection.docsTruncated.includes(p));
+
+  // Only documents shown in parts can miss their anchor; a complete document
+  // always contains it. Cases without anchors (synthetic ones) aren't measured.
+  const sectionReached: string[] = [];
+  const sectionMissed: string[] = [];
+  for (const e of c.expected) {
+    if (!e.anchors.length || !retrievedTruncated.includes(e.path)) continue;
+    const shown = detection.headingsShown?.[e.path] ?? [];
+    (shown.some((h) => e.anchors.includes(h)) ? sectionReached : sectionMissed).push(e.path);
+  }
   const content: ContentCheck[] = [];
   if (opts.checkContent) {
     for (const e of c.expected.filter((x) => tp.includes(x.path))) {
@@ -98,6 +116,8 @@ export function scoreCase(
     correct: fp.length === 0 && fn.length === 0,
     retrieved,
     retrievedTruncated,
+    sectionReached,
+    sectionMissed,
     content,
     latencyMs: opts.latencyMs,
     detection,
@@ -177,6 +197,19 @@ export function aggregate(outcomes: CaseOutcome[], expectedCounts: Map<string, n
       ),
       /** Of those, fetched but too long to send whole, so never recommendable. */
       truncated: sum((o) => o.retrievedTruncated.length),
+      /**
+       * Of the documents shown in parts, how often the part the developer
+       * edited was among them. This is the ceiling on recall for long
+       * documents: below it, no model could have answered correctly.
+       */
+      sections: {
+        reached: sum((o) => o.sectionReached.length),
+        measured: sum((o) => o.sectionReached.length + o.sectionMissed.length),
+        rate: ratio(
+          sum((o) => o.sectionReached.length),
+          sum((o) => o.sectionReached.length + o.sectionMissed.length),
+        ),
+      },
     },
     /** Of the cases where nothing needed updating, how often something was flagged anyway. */
     falseAlarmRate: ratio(quiet.filter((o) => o.fp.length > 0).length, quiet.length),

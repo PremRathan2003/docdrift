@@ -35,6 +35,11 @@ export function toMarkdown(r: EvalReport): string {
     `| F1 | ${pct(m.f1)} |`,
     `| Cases exactly right | ${pct(m.caseAccuracy)} |`,
     `| Documents that needed updating and reached the model (retrieval ceiling) | ${pct(m.retrieval.rate)} — ${m.retrieval.reached} of ${m.retrieval.expected}${m.retrieval.truncated ? `, and ${m.retrieval.truncated} of those as selected sections (too long to send whole)` : ''} |`,
+    ...(m.retrieval.sections.measured
+      ? [
+          `| Of those, the section the developer actually edited was shown (section ceiling) | ${pct(m.retrieval.sections.rate)} — ${m.retrieval.sections.reached} of ${m.retrieval.sections.measured} |`,
+        ]
+      : []),
     `| False alarms on "nothing to update" cases | ${pct(m.falseAlarmRate)} of ${m.quietCases} |`,
   ];
   if (writesContent) {
@@ -134,6 +139,7 @@ export function toMarkdown(r: EvalReport): string {
     '- A document counts once per case and run. "Acceptable" documents (either answer is reasonable) never count.',
     '- Runs that errored flagged nothing, so their expected documents count as misses.',
     '- Document selection decides which files the model ever sees, so recall can never beat the retrieval line.',
+    '- For a document shown in parts, the same holds one level down: a section that was not shown cannot be updated, whatever the model does. That is the section ceiling.',
     '- A document too long to send whole is shown as the sections that match the change; the model rewrites one section and the API splices it back into the file.',
     '- Content checks only test that the new wording is there and the stale wording is gone; a person still reviews every suggestion.',
     '- Self-reported confidence is the model’s own estimate, not a probability.',
