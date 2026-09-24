@@ -170,6 +170,19 @@ review page, the diff and the exported patch still work with complete documents,
 model was not shown is dropped with a warning. Measured: every document that needed updating now
 reaches the model (28 of 28, six as sections), and prompts got smaller.
 
+**D17 — Section size, decided by measurement (Phase 2.4).** Showing a long document in parts raises
+a question v3 left open: which parts? The answer needs ground truth for "the right part", and the
+pull request has it — diffing each expected document as it was before and after the developer's own
+edit gives the sections they touched (`npm run eval:anchors`, stored as `anchors` in each case, and
+computed at import from then on). The evaluation reports a *section ceiling* beside the document
+one: a section that was never shown cannot be updated, whatever the model does. Because this needs
+no model, `npm run eval:sections` sweeps the settings for nothing — the loop that chose 2 kB over
+the original 6 kB (26 of 30 documents against 22, for 3% more prompt). Two findings from the same
+sweep are recorded here because they are easy to get wrong: giving one document a larger allowance
+buys sections by pushing other documents out of the prompt entirely, and simply enlarging the prompt
+changes nothing while the per-document cap binds. The denominator is therefore every expected
+document, not only the sectioned ones.
+
 **D13 — Evaluation.** `npm run eval` runs the same `runPipeline` as the app (context selection,
 prompt, retries, validation), only reading repositories from `eval/cases` instead of GitHub, so it
 measures what users get. Cases are small repositories (`head/` + the changed files' `base/`) with

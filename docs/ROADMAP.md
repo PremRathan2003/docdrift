@@ -30,8 +30,9 @@ Measure first, then improve: every later change is judged against the evaluation
 | 2.3  | **Content-ranked retrieval** ✅ | BM25 over every doc + blob-SHA cache: documents reaching the model 27% → 91% on real PRs                                                 |
 | 2.3b | **Section-level documents** ✅  | Prompt v3: a long document is shown as its matching sections; the model rewrites one and the API splices it back. Retrieval ceiling 100% |
 | 2.4a | **Section-level ground truth** ✅ | `npm run eval:anchors` records which section of each document the developer actually edited; the report now shows a section ceiling alongside the document one |
-| 2.4b | More real cases                 | The section ceiling rests on 6 documents, too few to choose between retrieval settings; import more merged PRs before tuning             |
-| 2.4c | Embeddings (pgvector)           | Semantic retrieval for behaviour changes; only if 2.4b shows section selection is still the constraint                                  |
+| 2.4b | **More real cases** ✅          | Nine more merged PRs (fastify, commander, uv, httpx): 16 real cases, 30 documents with anchors — enough to tell retrieval settings apart |
+| 2.4c | **Section size** ✅             | `npm run eval:sections` sweeps the settings with no model: sections cut at 2 kB instead of 6 kB put the developer's own section in front of the model 26 times in 30, up from 22, for 3% more prompt |
+| 2.4d | Embeddings (pgvector)           | Semantic retrieval for behaviour changes; only if the evaluation still shows retrieval, not judgement, as the constraint                |
 
 ## Phase 3 — Engineering (≈ 2–3 weeks)
 

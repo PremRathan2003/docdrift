@@ -76,6 +76,12 @@ export interface PipelineConfig {
    */
   sectionSize?: { min: number; max: number };
   sectionBudget?: number;
+  /**
+   * Share of the input budget spent on documentation (the rest goes to the
+   * diff). Sweeping this answers the question the per-document settings can't:
+   * whether the model is short of room for one document or for all of them.
+   */
+  docShare?: number;
   /** Test hook: replaces real waiting between retries. */
   sleep?: (ms: number) => Promise<void>;
 }
@@ -90,8 +96,18 @@ const MAX_DOCS_CONSIDERED = 250;
 const MAX_DOCS_SENT = 12;
 /** A document longer than this is shown as sections instead of in full. */
 const MAX_CHARS_PER_DOC = 12_000;
-/** Sizes for one section: small ones are merged, huge ones split. */
-const SECTION_SIZE = { min: 400, max: 6_000 };
+/**
+ * Sizes for one section: small ones are merged, huge ones split.
+ *
+ * 2 000, not the 6 000 this started at, because `npm run eval:sections` says so:
+ * across 30 documents whose editing place is known, the part the developer
+ * actually changed reached the model 22 times at 6 kB and 26 times at 2 kB, for
+ * 3% more prompt. Coarse chunks lose twice over — one chunk that scores well
+ * crowds out the one that matters, and fewer of them fit in the budget.
+ * Anything between 1.5 kB and 3 kB measured the same within noise; the
+ * alternatives that buy a section by dropping a whole document did not.
+ */
+const SECTION_SIZE = { min: 400, max: 2_000 };
 /** At most this much of one long document goes into the prompt. */
 const MAX_CHARS_PER_SECTIONED_DOC = 9_000;
 const CHARS_PER_TOKEN = 4; // rough rule of thumb for English text and code
@@ -162,7 +178,7 @@ export async function buildContext(
         .slice(0, MAX_DOCS_SENT)
         .map((d) => ({ ...d, content: fetched.find((f) => f.path === d.path)!.content }))
     : rankDocs(fetched, extractKeywords(selection.included.map((f) => f.patch)));
-  const docBudget = Math.floor(budget * 0.35);
+  const docBudget = Math.floor(budget * (config.docShare ?? 0.35));
   let used = 0;
   let secretsRedacted = selection.redactions;
   const terms = queryTerms(selection.included.map((f) => f.patch));
