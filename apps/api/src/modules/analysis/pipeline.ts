@@ -68,6 +68,14 @@ export interface PipelineConfig {
   maxInputTokens: number;
   /** Defaults to 16 384: thinking models need room. */
   maxOutputTokens?: number;
+  /**
+   * How a long document is cut up before the matching parts are chosen, and how
+   * much of one document may be sent. Overridable so the evaluation can sweep
+   * these without a model in the loop (npm run eval:sections); production uses
+   * the defaults below.
+   */
+  sectionSize?: { min: number; max: number };
+  sectionBudget?: number;
   /** Test hook: replaces real waiting between retries. */
   sleep?: (ms: number) => Promise<void>;
 }
@@ -171,7 +179,7 @@ export async function buildContext(
     }
 
     // Too long to send whole: show the sections that match this pull request.
-    const all = packSections(splitIntoSections(text), SECTION_SIZE);
+    const all = packSections(splitIntoSections(text), config.sectionSize ?? SECTION_SIZE);
     const best = rankByContent(
       all.map((s) => ({ path: String(s.index), content: s.content })),
       terms,
@@ -181,7 +189,8 @@ export async function buildContext(
     const chosen: Section[] = [];
     let size = 0;
     for (const s of best) {
-      if (size + s.content.length > Math.min(MAX_CHARS_PER_SECTIONED_DOC, docBudget - used)) break;
+      const perDoc = config.sectionBudget ?? MAX_CHARS_PER_SECTIONED_DOC;
+      if (size + s.content.length > Math.min(perDoc, docBudget - used)) break;
       size += s.content.length;
       chosen.push(s);
     }

@@ -29,7 +29,8 @@
     "eval": "npm run build -w @docdrift/shared && npm run eval -w @docdrift/api --",
     "ai:models": "npm run ai:models -w @docdrift/api",
     "eval:import": "npm run build -w @docdrift/shared && npm run eval:import -w @docdrift/api --",
-    "eval:anchors": "npm run build -w @docdrift/shared && npm run eval:anchors -w @docdrift/api --"
+    "eval:anchors": "npm run build -w @docdrift/shared && npm run eval:anchors -w @docdrift/api --",
+    "eval:sections": "npm run build -w @docdrift/shared && npm run eval:sections -w @docdrift/api --"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
