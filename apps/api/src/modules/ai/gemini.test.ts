@@ -110,14 +110,18 @@ describe('GeminiProvider', () => {
 });
 
 describe('toGeminiSchema', () => {
-  it('keeps structure and drops unsupported keywords', () => {
+  it('keeps structure and drops the keywords Gemini rejects', () => {
+    // Array size limits and additionalProperties made the API answer HTTP 400
+    // (ai:diagnose steps 4-6); the value bounds on a number did not.
     expect(
       toGeminiSchema({
         $schema: 'x',
         type: 'object',
         properties: {
           name: { type: 'string', minLength: 1, maxLength: 5 },
-          tags: { type: 'array', items: { type: 'string' }, maxItems: 3 },
+          tags: { type: 'array', items: { type: 'string' }, minItems: 1, maxItems: 3 },
+          score: { type: 'number', minimum: 0, maximum: 1 },
+          scope: { type: 'string', enum: ['file', 'section'] },
         },
         required: ['name'],
         additionalProperties: false,
@@ -126,10 +130,11 @@ describe('toGeminiSchema', () => {
       type: 'object',
       properties: {
         name: { type: 'string' },
-        tags: { type: 'array', items: { type: 'string' }, maxItems: 3 },
+        tags: { type: 'array', items: { type: 'string' } },
+        score: { type: 'number', minimum: 0, maximum: 1 },
+        scope: { type: 'string', enum: ['file', 'section'] },
       },
       required: ['name'],
-      additionalProperties: false,
     });
   });
 });

@@ -1,0 +1,52 @@
+{
+  "id": "112-commander-js-2312",
+  "title": "Add support for dual long options when no short option",
+  "body": "## Problem\r\n\r\n#2270 throws an exception for unsupported option setups. This is picking up more variations than expected, and use of a short-ish form is more widespread than assumed (despite being at odds with the documented usage).\r\n\r\n- multiple character short option: #2307\r\n- dual long options: https://github.com/tj/commander.js/pull/2270#issuecomment-2577122902\r\n- triple dash: #2309\r\n\r\nIn particular, people want to have a multi-character shortish option.\r\n\r\n## Solution\r\n\r\nThe high level goals are still to restrict usage to supported formats, and follow standard conventions.\r\n\r\nAs per https://github.com/tj/commander.js/issues/2307#issuecomment-2581611847\r\n\r\n> Short version: my latest thinking is to add explicit support for a short-ish option, but with double-dash rather than single dash.\r\n> \r\n> Long version\r\n> \r\n> There are strong conventions for short options (POSIX) and long options (GNU). I am uncomfortable about supporting a third and non-standard variation with multi-character short option.\r\n> \r\n> But I appreciate the author desire for a more memorable short-ish option than a single character.\r\n> \r\n> Adding explicit support for a double-dash short-ish option feels like a more pure approach still offering the key benefit. e.g. `--es, --ecmascript <year>`\r\n> \r\n> There are no new behaviours that need to be decided or described for the short-ish option, and it is full featured. Can you embed option value with a short-ish option? Of course, `--es=2018`. Can you combined short and short-ish options in a single argument after a single dash? Of course not.\r\n\r\nSo:\r\n\r\n- Multiple character short option: no, conflicts with standard posix and incomplete (no embedded value support). Use double dash instead. See next item.\r\n- dual long options: yes, add support for this as the intended format for \"shortish\" option like `--ws, --workspace`\r\n- triple dash: no, rare\r\n\r\n## ChangeLog\r\n\r\n- add: support for a pair of long option flags to allow a short-ish flag, like `.option('--ws, --workspace')`\r\n",
+  "group": "drift",
+  "category": "real: docs updated with code",
+  "expected": [
+    {
+      "path": "Readme.md",
+      "mustContain": [
+        "--workspace",
+        "--ws"
+      ],
+      "mustNotContain": [],
+      "anchors": [
+        "## Options"
+      ]
+    },
+    {
+      "path": "docs/deprecated.md",
+      "mustContain": [
+        "--workspace",
+        "--ws",
+        "v13"
+      ],
+      "mustNotContain": [],
+      "anchors": [
+        "# Deprecated",
+        "### Short option flag longer than a single character",
+        "### Default import of global Command object"
+      ]
+    }
+  ],
+  "acceptable": [
+    "CHANGELOG.md"
+  ],
+  "added": [],
+  "trimmedFiles": [
+    "lib/command.js",
+    "typings/index.d.ts"
+  ],
+  "notes": "The PR author updated these documents in the same PR; the case removes those edits. Content checks are words the author added/removed. Review them before relying on the case. Labels reviewed by hand against the developer’s own diff: dropped the word \"short-ish\".",
+  "source": "real",
+  "origin": {
+    "url": "https://github.com/tj/commander.js/pull/2312",
+    "repository": "tj/commander.js",
+    "license": "MIT",
+    "baseSha": "bb733f4f0f5d4b334b04b5e18e5cbb3d71b4e9da",
+    "headSha": "378db48739d2101a6ff6eda18d409b6b8205ff90",
+    "importedAt": "2026-09-24T17:07:16.715Z"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "id": "108-fastify-6909",
+  "title": "refactor!: remove FSTDEP025",
+  "body": "Remove `FSTDEP025` and throw `FST_ERR_ROUTE_METHOD_ALREADY_SUPPORTED`.\r\n",
+  "group": "drift",
+  "category": "real: docs updated with code",
+  "expected": [
+    {
+      "path": "docs/Reference/Errors.md",
+      "mustContain": [
+        "FST_ERR_ROUTE_METHOD_ALREADY_SUPPORTED",
+        "overrideExisting"
+      ],
+      "mustNotContain": [],
+      "anchors": [
+        "## Errors",
+        "### Fastify Error Codes"
+      ]
+    },
+    {
+      "path": "docs/Reference/Server.md",
+      "mustContain": [
+        "FST_ERR_ROUTE_METHOD_ALREADY_SUPPORTED"
+      ],
+      "mustNotContain": [
+        "FSTDEP025"
+      ],
+      "anchors": [
+        "#### addHttpMethod"
+      ]
+    },
+    {
+      "path": "docs/Reference/Warnings.md",
+      "mustContain": [],
+      "mustNotContain": [
+        "addHttpMethod",
+        "FSTDEP025"
+      ],
+      "anchors": [
+        "### Fastify Deprecation Codes"
+      ]
+    }
+  ],
+  "acceptable": [],
+  "added": [],
+  "trimmedFiles": [
+    "fastify.js",
+    "lib/errors.js",
+    "test/internals/errors.test.js"
+  ],
+  "notes": "The PR author updated these documents in the same PR; the case removes those edits. Content checks are words the author added/removed. Review them before relying on the case. Labels reviewed by hand against the developer’s own diff: dropped a lowercase anchor-link fragment.",
+  "source": "real",
+  "origin": {
+    "url": "https://github.com/fastify/fastify/pull/6909",
+    "repository": "fastify/fastify",
+    "license": "MIT",
+    "baseSha": "63ef53497c52c3b4fdb8c5e0c1b6b14dd5a424fc",
+    "headSha": "4bb1ad179c41994833af92f4b4699c3599fd7627",
+    "importedAt": "2026-09-24T17:06:15.212Z"
+  }
+}

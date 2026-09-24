@@ -4,9 +4,9 @@
  *   npm run ai:models -w @docdrift/api
  * Prints only model ids and names, never the key.
  */
-import { loadEnv } from '../src/config/env.js';
+import { loadAiEnv } from '../src/config/env.js';
 
-const env = loadEnv();
+const env = loadAiEnv();
 if (env.AI_PROVIDER === 'openai-compatible') {
   // The standard /models endpoint: every OpenAI-compatible service has it.
   const res = await fetch(`${env.AI_BASE_URL!.replace(/\/+$/, '')}/models`, {

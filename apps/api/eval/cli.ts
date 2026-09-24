@@ -16,7 +16,7 @@ import { existsSync } from 'node:fs';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { join, relative } from 'node:path';
 import { parseArgs } from 'node:util';
-import { loadEnv } from '../src/config/env.js';
+import { loadAiEnv } from '../src/config/env.js';
 import { createAIProvider } from '../src/modules/ai/index.js';
 import { fileCheckpoint } from './checkpoint.js';
 import { loadCases, problemsWith } from './dataset.js';
@@ -69,7 +69,8 @@ async function main() {
       throw new Error(
         `"${values.model}" is not a model id. Run npm run ai:models and copy an id from the list (e.g. one containing "flash").`,
       );
-    const env = loadEnv(values.model ? { ...process.env, AI_MODEL: values.model } : process.env);
+    // Only the AI settings: the harness needs no database and no GitHub App.
+    const env = loadAiEnv(values.model ? { ...process.env, AI_MODEL: values.model } : process.env);
     const ai = createAIProvider(env);
     if (!ai)
       throw new Error(

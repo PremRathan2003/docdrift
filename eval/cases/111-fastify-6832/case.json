@@ -1,0 +1,51 @@
+{
+  "id": "111-fastify-6832",
+  "title": "feat: rfc10008 http query method",
+  "body": "Fixes #6807 \r\n\r\n@kalvenschraut Do point out a valid view about the \"Proposed Standard\" on RFC\r\n\r\nI have look though the history of RFC10008 and it takes about 11 years (2015 - 2026 Jun) to the current state. \r\nIt should receive good amount of reviews and good to use.\r\n\r\n#### Checklist\r\n\r\n- [ ] run `npm run test && npm run benchmark --if-present`\r\n- [ ] tests and/or benchmarks are included\r\n- [ ] documentation is changed or added\r\n- [ ] commit message and code follows the [Developer's Certification of Origin](https://github.com/fastify/.github/blob/main/CONTRIBUTING.md#developers-certificate-of-origin-11)\r\n      and the [Code of conduct](https://github.com/fastify/.github/blob/main/CODE_OF_CONDUCT.md)\r\n",
+  "group": "drift",
+  "category": "real: docs updated with code",
+  "expected": [
+    {
+      "path": "docs/Reference/Errors.md",
+      "mustContain": [
+        "FST_ERR_ROUTE_MISSING_CONTENT",
+        "FST_ERR_ROUTE_MISSING_CONTENT_TYPE"
+      ],
+      "mustNotContain": [],
+      "anchors": [
+        "## Errors",
+        "### Fastify Error Codes"
+      ]
+    },
+    {
+      "path": "docs/Reference/Server.md",
+      "mustContain": [],
+      "mustNotContain": [],
+      "anchors": [
+        "### `trustProxy`",
+        "#### addHttpMethod"
+      ]
+    }
+  ],
+  "acceptable": [],
+  "added": [
+    "test/rfc-10008.test.js"
+  ],
+  "trimmedFiles": [
+    "fastify.js",
+    "lib/errors.js",
+    "test/internals/errors.test.js",
+    "test/types/route.tst.ts",
+    "types/instance.d.ts"
+  ],
+  "notes": "The PR author updated these documents in the same PR; the case removes those edits. Content checks are words the author added/removed. Review them before relying on the case. Labels reviewed by hand against the developer’s own diff: dropped a lowercase anchor-link fragment; both error codes are genuinely new.",
+  "source": "real",
+  "origin": {
+    "url": "https://github.com/fastify/fastify/pull/6832",
+    "repository": "fastify/fastify",
+    "license": "MIT",
+    "baseSha": "94bcbcc6e2ef3b8e8f8e8797fe551ccbe7b942fd",
+    "headSha": "0966d2f82e36e89d06af66d9c738b0119490505c",
+    "importedAt": "2026-09-24T17:07:09.494Z"
+  }
+}

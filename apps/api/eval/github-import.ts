@@ -407,21 +407,65 @@ interface PullFile {
   filename: string;
   status: string;
 }
+interface CommitListItem {
+  commit: { message: string };
+}
 
-/** Recent merged PRs of a repository, with which kinds of files each one touched. */
-export async function findCandidates(gh: GitHubReader, owner: string, repo: string, limit: number) {
-  const pulls = await gh.api<PullListItem[]>(
-    `/repos/${owner}/${repo}/pulls?state=closed&sort=updated&direction=desc&per_page=${Math.min(limit * 2, 100)}`,
-  );
-  const merged = pulls.filter((p) => p.merged_at).slice(0, limit);
-  const out = [];
-  for (const p of merged) {
-    const files = await gh.api<PullFile[]>(
-      `/repos/${owner}/${repo}/pulls/${p.number}/files?per_page=100`,
+/**
+ * Pull requests worth importing changed code AND documentation. Most recent
+ * pull requests change neither, so listing them in order wastes the API budget
+ * (60 requests an hour without a token). Following the commits that touched a
+ * documentation folder starts from the right end: every candidate has already
+ * edited a document, and only the code side is still in question.
+ */
+export async function findCandidates(
+  gh: GitHubReader,
+  owner: string,
+  repo: string,
+  limit: number,
+  docPath = 'docs',
+) {
+  let numbers: { number: number; title: string; url: string }[];
+  const commits = await gh.api<CommitListItem[]>(
+    `/repos/${owner}/${repo}/commits?path=${encodeURIComponent(docPath)}&per_page=${Math.min(limit * 2, 100)}`,
+  ).catch(() => []);
+  const fromCommits = commits
+    .map((c) => {
+      const subject = c.commit.message.split('\n')[0]!;
+      const m = /\(#(\d+)\)\s*$/.exec(subject);
+      return m
+        ? {
+            number: Number(m[1]),
+            title: subject,
+            url: `https://github.com/${owner}/${repo}/pull/${m[1]}`,
+          }
+        : null;
+    })
+    .filter((x): x is { number: number; title: string; url: string } => x !== null);
+
+  if (fromCommits.length) {
+    const seen = new Set<number>();
+    numbers = fromCommits.filter((p) => !seen.has(p.number) && seen.add(p.number)).slice(0, limit);
+  } else {
+    // Repositories that don't squash-merge don't name the PR in the subject.
+    const pulls = await gh.api<PullListItem[]>(
+      `/repos/${owner}/${repo}/pulls?state=closed&sort=updated&direction=desc&per_page=${Math.min(limit * 2, 100)}`,
     );
+    numbers = pulls
+      .filter((p) => p.merged_at)
+      .slice(0, limit)
+      .map((p) => ({ number: p.number, title: p.title, url: p.html_url }));
+  }
+
+  const out = [];
+  for (const p of numbers) {
+    const files = await gh
+      .api<PullFile[]>(`/repos/${owner}/${repo}/pulls/${p.number}/files?per_page=100`)
+      .catch(() => []);
+    if (!files.length) continue;
     const kinds = files.map((f) => classifyFile(f.filename));
     out.push({
-      url: p.html_url,
+      url: p.url,
       title: p.title,
       files: files.length,
       code: kinds.filter((k) => k === 'source' || k === 'config').length,

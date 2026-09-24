@@ -9,8 +9,15 @@ const BASE_URL = 'https://generativelanguage.googleapis.com/v1beta';
 
 /**
  * Gemini supports a subset of JSON Schema for structured output. We keep the
- * structural keywords and drop the rest (length limits etc.); Zod re-checks
- * everything after the response arrives, so nothing is lost.
+ * structural keywords and drop the rest; Zod re-checks everything after the
+ * response arrives, so the contract is unchanged — the schema only steers how
+ * the model writes, it is not what enforces the rules.
+ *
+ * `minItems`, `maxItems` and `additionalProperties` are deliberately absent:
+ * `npm run ai:diagnose` showed gemini-3.5-flash-lite answering HTTP 400
+ * "invalid argument" to our schema until the array size limits were removed
+ * (steps 4–6 failed, 6b passed). `minimum` and `maximum` survived that test
+ * and stay.
  */
 const ALLOWED_KEYS = new Set([
   'type',
@@ -19,11 +26,8 @@ const ALLOWED_KEYS = new Set([
   'items',
   'enum',
   'description',
-  'minItems',
-  'maxItems',
   'minimum',
   'maximum',
-  'additionalProperties',
   'anyOf',
   'format',
   'title',
@@ -60,10 +64,12 @@ interface GeminiResponse {
 export interface GeminiOptions {
   /**
    * 'prompt' (default): ask for JSON via the MIME type and describe the schema in
-   * the system instruction. 'native': also send it as responseJsonSchema.
-   * Why the default is 'prompt': gemini-3.6-flash rejected DocDrift's schema as a
-   * native response schema with a bare "invalid argument" (see ai:diagnose),
-   * while plain JSON mode works. Zod validation + retries make both modes safe.
+   * the system instruction. 'native': also send it as responseJsonSchema, which
+   * constrains decoding — the model then cannot produce a broken string, the
+   * failure that made case 105 of the evaluation fail intermittently.
+   * The default stays 'prompt' because acceptance is per model: run
+   * `npm run ai:diagnose` and turn on AI_NATIVE_SCHEMA if it passes. Zod
+   * validation and retries make both modes safe.
    */
   schemaMode?: 'prompt' | 'native';
 }

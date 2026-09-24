@@ -1,0 +1,60 @@
+{
+  "id": "115-httpx-3139",
+  "title": "Add support for zstd decoding",
+  "body": "# Summary\r\n\r\nThis adds support for zstd decoding using the python package zstandard. This is similar to how it is implemented in urllib3. I also chose the optional installation option httpx[zstd] to mimic the same option in urllib3.\r\n\r\nzstd decoding is similar to brotli, but in benchmarks it is supposed to be even faster. The zstd compression is described in RFC 8878.\r\n\r\nSee https://github.com/encode/httpx/discussions/1986\r\n\r\n# Checklist\r\n\r\n- [x] I understand that this PR may be closed in case there was no previous discussion. (This doesn't apply to typos!)\r\n- [x] I've added a test for each change that was introduced, and I tried as much as possible to make a single atomic change.\r\n- [x] I've updated the documentation accordingly.\r\n",
+  "group": "drift",
+  "category": "real: docs updated with code",
+  "expected": [
+    {
+      "path": "README.md",
+      "mustContain": [
+        "zstandard"
+      ],
+      "mustNotContain": [],
+      "anchors": [
+        "## Dependencies"
+      ]
+    },
+    {
+      "path": "docs/index.md",
+      "mustContain": [
+        "zstandard"
+      ],
+      "mustNotContain": [],
+      "anchors": [
+        "## Dependencies",
+        "## Installation"
+      ]
+    },
+    {
+      "path": "docs/quickstart.md",
+      "mustContain": [
+        "zstandard"
+      ],
+      "mustNotContain": [],
+      "anchors": [
+        "## Binary Response Content",
+        "## Streaming Responses"
+      ]
+    }
+  ],
+  "acceptable": [
+    "CHANGELOG.md",
+    "requirements.txt"
+  ],
+  "added": [],
+  "trimmedFiles": [
+    "httpx/_models.py",
+    "tests/client/test_client.py"
+  ],
+  "notes": "The PR author updated these documents in the same PR; the case removes those edits. Content checks are words the author added/removed. Review them before relying on the case. Labels reviewed by hand against the developer’s own diff: requirements.txt is a dependency list, not documentation, so it is acceptable rather than expected.",
+  "source": "real",
+  "origin": {
+    "url": "https://github.com/encode/httpx/pull/3139",
+    "repository": "encode/httpx",
+    "license": "BSD-3-Clause",
+    "baseSha": "7df47ce4d93a06f2c3310cd692b4c2336d7663ba",
+    "headSha": "7a2f185334b599451961115cc4f69df336f26632",
+    "importedAt": "2026-09-24T17:09:47.680Z"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "id": "113-uv-21423",
+  "title": "uv publish: support token burning",
+  "body": "## Summary\r\n\r\n~~WIP, not ready yet.~~\r\n\r\nSee https://github.com/pypi/warehouse/pull/20197 for context.\r\n\r\nTL;DR PyPI now lets TP clients \"burn\" their token after they're done using it, allowing it to be proactively revoked rather than expiring on its own terms. This results in a small net posture improvement, since the short lived TP token's lifetime becomes even shorter.\r\n\r\n<!-- What's the purpose of the change? What does it do, and why? -->\r\n\r\n## Test Plan\r\n\r\nAdded integration tests. The real publishing tests should also continue to function. \r\n\r\n<!-- How was it tested? -->\r\n",
+  "group": "drift",
+  "category": "real: docs updated with code",
+  "expected": [
+    {
+      "path": "docs/guides/package.md",
+      "mustContain": [
+        "short-lived",
+        "invalidate"
+      ],
+      "mustNotContain": [],
+      "anchors": [
+        "## Publishing your package"
+      ]
+    }
+  ],
+  "acceptable": [],
+  "added": [],
+  "trimmedFiles": [
+    "crates/uv-publish/src/lib.rs",
+    "crates/uv/src/commands/publish.rs",
+    "crates/uv/tests/it/publish.rs"
+  ],
+  "notes": "The PR author updated these documents in the same PR; the case removes those edits. Content checks are words the author added/removed. Review them before relying on the case.",
+  "source": "real",
+  "origin": {
+    "url": "https://github.com/astral-sh/uv/pull/21423",
+    "repository": "astral-sh/uv",
+    "license": "Apache-2.0",
+    "baseSha": "63ef84e362a7bee02bc54f0a0707523da24d41ea",
+    "headSha": "a5d184bad19b99ce145a7c39ff98ca050f5fa553",
+    "importedAt": "2026-09-24T17:08:23.201Z"
+  }
+}

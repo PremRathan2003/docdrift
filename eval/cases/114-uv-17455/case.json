@@ -1,0 +1,63 @@
+{
+  "id": "114-uv-17455",
+  "title": "Support referencing indexes by name via `--index` and `--default-index`",
+  "body": "## Summary\n\nImplement #13974.\n\nThis PR makes `uv ... --index name` attempt to look up the index by name in filesystem configuration (workspace `pyproject.toml` or adjacent `uv.toml` (for project commands), then user config, then system config). The only difference is that the index will be passed with `explicit` and `default` set to `false` for that invocation.\n\nAdditionally, `uv ... --default-index name` acts in the same way, except the `default` setting is forcibly set to `true`.\n\nThis will work for `uv add --index name package...` pinning, with the same caveats that already apply when doing `uv add --index name=<location> package...`.\n\nWithout `--preview-features index-by-name`, named index references will prefer a directory of the same name, it will continue to warn about the potential ambiguity (now with all invocations, not just `uv add`). In case no index or directory of that name exists, the existing error will be emitted. Lastly, if only an index of that name exists, it will be resolved with a preview warning.\n\nWith `--preview-features index-by-name`, named index references will prefer an index of that name over any directory, but will continue to resolve to directories (with a warning as usual). In case no index or directory of that name exists, a new `index name` focused error will be emitted.\n\nThere are fundamental quirks with how `--index` and `--default-index` interact with `uv add` which mean this feature doesn't fully work as we would like. Expect some changes before it stabilises.\n\n## Test Plan\n\nA number of relevant tests have been added. They're trying to strike a balance between abstraction and simplicity. I found it was easier to keep track of what was actually being tested if you didn't have to dig through a haystack of setup code and snapshot every time you glanced at the tests.",
+  "group": "drift",
+  "category": "real: docs updated with code",
+  "expected": [
+    {
+      "path": "docs/concepts/indexes.md",
+      "mustContain": [
+        "--preview-features",
+        "index-by-name"
+      ],
+      "mustNotContain": [],
+      "anchors": [
+        "## Defining an index",
+        "## Pinning a package to an index"
+      ]
+    },
+    {
+      "path": "docs/concepts/projects/dependencies.md",
+      "mustContain": [
+        "--preview-features",
+        "index-by-name"
+      ],
+      "mustNotContain": [],
+      "anchors": [
+        "### Index"
+      ]
+    },
+    {
+      "path": "docs/guides/integration/pytorch.md",
+      "mustContain": [
+        "index-by-name"
+      ],
+      "mustNotContain": [],
+      "anchors": [
+        "## Using a PyTorch index"
+      ]
+    }
+  ],
+  "acceptable": [],
+  "added": [],
+  "trimmedFiles": [
+    "crates/uv-cli/src/lib.rs",
+    "crates/uv-cli/src/options.rs",
+    "crates/uv-preview/src/lib.rs",
+    "crates/uv-static/src/env_vars.rs",
+    "crates/uv/src/settings.rs",
+    "crates/uv/tests/sync/show_settings.rs",
+    "uv.schema.json"
+  ],
+  "notes": "The PR author updated these documents in the same PR; the case removes those edits. Content checks are words the author added/removed. Review them before relying on the case. Labels reviewed by hand against the developer’s own diff: dropped the word \"matching\".",
+  "source": "real",
+  "origin": {
+    "url": "https://github.com/astral-sh/uv/pull/17455",
+    "repository": "astral-sh/uv",
+    "license": "Apache-2.0",
+    "baseSha": "298dda41bff49bbd0a2f397e1662ab09b9cd148e",
+    "headSha": "6d67b225e18779ab0e72d817bab1db315bde4a54",
+    "importedAt": "2026-09-24T17:09:32.706Z"
+  }
+}

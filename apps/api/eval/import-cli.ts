@@ -1,13 +1,15 @@
 /**
  * Adds real pull requests to the evaluation dataset.
  *
- *   npm run eval:import -- find tj/commander.js           recent merged PRs and what they touched
+ *   npm run eval:import -- find tj/commander.js           pull requests that touched docs/ and what else they changed
+ *   npm run eval:import -- find encode/httpx docs/advanced  the same, for another documentation folder
  *   npm run eval:import -- https://github.com/o/r/pull/12  import one or more PRs as cases
  *
  * Public repositories only. Without GITHUB_TOKEN, GitHub allows 60 API
  * requests per hour (about 3 per imported PR, 1 per PR listed by `find`).
  * Always review a new case (case.json) before committing it.
  */
+import { existsSync } from 'node:fs';
 import { readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import {
@@ -19,6 +21,9 @@ import {
 
 // DOCDRIFT_CASES_DIR lets the bundled tool run from anywhere (see eval/README.md).
 const CASES = process.env.DOCDRIFT_CASES_DIR ?? join(import.meta.dirname, '../../../eval/cases');
+
+// GITHUB_TOKEN lifts GitHub's 60 requests/hour to 5 000; it lives in apps/api/.env.
+if (existsSync('.env')) process.loadEnvFile('.env');
 
 async function nextId(slug: string) {
   const used = (await readdir(CASES)).map((d) => Number(d.slice(0, 3))).filter((n) => n >= 101);
@@ -32,8 +37,10 @@ async function main() {
 
   if (args[0] === 'find') {
     const [owner, repo] = (args[1] ?? '').split('/');
-    if (!owner || !repo) throw new Error('Usage: find owner/repo [limit]');
-    const rows = await findCandidates(gh, owner, repo, Number(args[2] ?? 20));
+    if (!owner || !repo) throw new Error('Usage: find owner/repo [docs path] [limit]');
+    const docPath = args[2] && !/^\d+$/.test(args[2]) ? args[2] : 'docs';
+    const limit = Number(args.find((a, i) => i > 1 && /^\d+$/.test(a)) ?? 20);
+    const rows = await findCandidates(gh, owner, repo, limit, docPath);
     for (const r of rows) {
       const kind = r.code && r.docs.length ? 'CODE+DOCS' : r.code ? 'code only' : 'no code';
       console.warn(`${kind.padEnd(10)} ${r.url}  ${r.title}`);

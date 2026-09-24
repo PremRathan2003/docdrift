@@ -1,0 +1,81 @@
+            "pylock",
+            "add-bounds",
+            "package-conflicts",
+            "extra-build-dependencies",
+            "detect-module-conflicts",
+            "format-command",
+            "native-auth",
+            "s3-endpoint",
+            "cache-size",
+            "cache-physical-space",
+            "init-project-flag",
+            "workspace-metadata",
+            "workspace-dir",
+            "workspace-list",
+            "sbom-export",
+            "auth-helper",
+            "direct-publish",
+            "target-workspace-discovery",
+            "metadata-json",
+            "gcs-endpoint",
+            "adjust-ulimit",
+            "special-conda-env-names",
+            "relocatable-envs-default",
+            "publish-require-normalized",
+            "audit-command",
+            "project-directory-must-exist",
+            "index-exclude-newer",
+            "azure-endpoint",
+            "toml-backwards-compatibility",
+            "malware-check",
+            "venv-safe-clear",
+            "check-command",
+            "packaged-init",
+            "centralized-project-envs",
+            "tool-install-locks",
+            "workspace-list-scripts",
+            "no-distutils-patch",
+            "index-hash-algorithm",
+            "lockfile-format-check",
+            "lock-without-metadata",
+            "tar-codec"
+          ]
+        },
+        {
+          "pattern": "\\S"
+        }
+      ]
+    },
+    "PreviewFeaturesOption": {
+      "description": "Represents the `preview-features` configuration option.",
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PreviewFeature"
+          }
+        }
+      ]
+    },
+    "ProxyUrl": {
+      "description": "A proxy URL (e.g., `http://proxy.example.com:8080`).",
+      "type": "string",
+      "format": "uri"
+    },
+    "PythonDownloads": {
+      "oneOf": [
+        {
+          "description": "Automatically download managed Python installations when needed.",
+          "type": "string",
+          "const": "automatic"
+        },
+        {
+          "description": "Do not automatically download managed Python installations; require explicit installation.",
+          "type": "string",
+          "const": "manual"
+        },
+        {
+          "description": "Do not ever allow Python downloads.",

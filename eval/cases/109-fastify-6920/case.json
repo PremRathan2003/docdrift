@@ -1,0 +1,37 @@
+{
+  "id": "109-fastify-6920",
+  "title": "refactor(types)!: remove deprecated FastifyRequestContext and FastifyReplyContext types",
+  "body": "Proposal:\r\n\r\n- Removes the deprecated `FastifyRequestContext` and `FastifyReplyContext` type interfaces from `types/context.d.ts`, along with their re-exports in `fastify.d.ts` and the corresponding docs section in `docs/Reference/TypeScript.md`.\r\n- Both interfaces were marked `@deprecated` in favor of `Request#routeOptions#config` / `Reply#routeOptions#config`, and a full grep across the codebase (`types/`, `test/`, `docs/`, `build/`) shows they are not referenced anywhere except:\r\n    - their own declaration in `types/context.d.ts`\r\n    - the public re-export in `fastify.d.ts`\r\n    - their documentation entry `FastifyContextConfig` is untouched and remains fully in use in `route.d.ts` and `request.d.ts`.\r\n- `types/context.d.ts`: removed `FastifyRequestContext` and `FastifyReplyContext`; removed now-unused imports\r\n  (`FastifyRouteConfig`, `ContextConfigDefault`); kept  `FastifyContextConfig`\r\n- `fastify.d.ts`: updated import and public `export type` block\r\n- `docs/Reference/TypeScript.md`: removed the \"Context\" section\r\n\r\nBreaking change:\r\n\r\n- Yes,  anyone importing `FastifyRequestContext` or `FastifyReplyContext` directly from `fastify` will need to remove that import. There is no drop-in replacement since these types were not wired to any runtimeproperty.\r\n\r\nNote: \r\n- To be merged from the “next” branch\r\n- For the next major release of Fastify ( v6 )\r\n- Documentation updated accordingly (TypeScript.md)",
+  "group": "drift",
+  "category": "real: docs updated with code",
+  "expected": [
+    {
+      "path": "docs/Reference/TypeScript.md",
+      "mustContain": [],
+      "mustNotContain": [
+        "context.d.ts",
+        "fastify.FastifyReplyContext"
+      ],
+      "anchors": [
+        "#### Context",
+        "##### fastify.FastifyRequestContext",
+        "##### fastify.FastifyReplyContext"
+      ]
+    }
+  ],
+  "acceptable": [],
+  "added": [],
+  "trimmedFiles": [
+    "fastify.d.ts"
+  ],
+  "notes": "The PR author updated these documents in the same PR; the case removes those edits. Content checks are words the author added/removed. Review them before relying on the case.",
+  "source": "real",
+  "origin": {
+    "url": "https://github.com/fastify/fastify/pull/6920",
+    "repository": "fastify/fastify",
+    "license": "MIT",
+    "baseSha": "e5df35542ec46db614762884eb2fd7575f680021",
+    "headSha": "929008809d936d0cf213998c86535cc9c30a01a0",
+    "importedAt": "2026-09-24T17:06:32.230Z"
+  }
+}

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { loadEnv } from '../src/config/env.js';
+import { loadAiEnv, loadEnv } from '../src/config/env.js';
 
 const base = {
   DATABASE_URL: 'postgresql://u:p@localhost:5432/db',
@@ -48,5 +48,26 @@ describe('loadEnv: openai-compatible provider', () => {
     expect(() => loadEnv({ ...ai, AI_BASE_URL: 'http://api.example.com/v1' })).toThrow(
       /must be an https/,
     );
+  });
+});
+
+describe('loadAiEnv', () => {
+  it('validates the AI settings without demanding the rest of the system', () => {
+    // The evaluation harness talks to a model and nothing else; a half-filled
+    // GitHub App or a missing database must not stop it.
+    const env = loadAiEnv({
+      AI_PROVIDER: 'gemini',
+      AI_API_KEY: 'k',
+      AI_MODEL: 'm',
+      GITHUB_APP_SLUG: 'half-configured',
+    } as NodeJS.ProcessEnv);
+    expect(env).toMatchObject({ AI_PROVIDER: 'gemini', AI_MODEL: 'm' });
+  });
+
+  it('still insists on what the AI itself needs', () => {
+    expect(() => loadAiEnv({ AI_PROVIDER: 'gemini' } as NodeJS.ProcessEnv)).toThrow(/AI_API_KEY/);
+    expect(() =>
+      loadAiEnv({ AI_PROVIDER: 'openai-compatible', AI_API_KEY: 'k', AI_MODEL: 'm' } as NodeJS.ProcessEnv),
+    ).toThrow(/AI_BASE_URL/);
   });
 });

@@ -1,0 +1,3271 @@
+{
+  "generatedAt": "2026-09-24T17:26:10.276Z",
+  "detector": {
+    "name": "keyword-baseline",
+    "retrieval": "content",
+    "model": "none",
+    "promptVersion": null
+  },
+  "dataset": {
+    "hash": "68418ac05e2d",
+    "cases": 42,
+    "byGroup": {
+      "drift": 31,
+      "no-drift": 9,
+      "tricky": 2
+    },
+    "expectedDocs": 47,
+    "synthetic": 26
+  },
+  "repeat": 1,
+  "overall": {
+    "runs": 42,
+    "tp": 29,
+    "fp": 45,
+    "fn": 18,
+    "precision": 0.3918918918918919,
+    "recall": 0.6170212765957447,
+    "f1": 0.4793388429752067,
+    "precisionCI": [
+      0.2886474844994506,
+      0.5058068946500016
+    ],
+    "recallCI": [
+      0.47426308443976317,
+      0.7420951733648692
+    ],
+    "caseAccuracy": 0.4523809523809524,
+    "retrieval": {
+      "reached": 46,
+      "expected": 47,
+      "rate": 0.9787234042553191,
+      "truncated": 16,
+      "sections": {
+        "reached": 9,
+        "measured": 16,
+        "rate": 0.5625
+      }
+    },
+    "falseAlarmRate": 0.18181818181818182,
+    "quietCases": 11,
+    "content": {
+      "checked": 0,
+      "passed": 0,
+      "passRate": null,
+      "medianDroppedLines": null
+    },
+    "confidence": {
+      "meanWhenRight": 1,
+      "meanWhenWrong": 1
+    },
+    "errors": {
+      "count": 0,
+      "byCode": {}
+    },
+    "validationWarnings": 0,
+    "modelCalls": 40,
+    "meanAttempts": 0,
+    "tokens": {
+      "input": null,
+      "output": null
+    },
+    "latencyMs": {
+      "median": 0.5,
+      "max": 47
+    }
+  },
+  "byGroup": {
+    "drift": {
+      "runs": 31,
+      "tp": 29,
+      "fp": 38,
+      "fn": 18,
+      "precision": 0.43283582089552236,
+      "recall": 0.6170212765957447,
+      "f1": 0.5087719298245613,
+      "precisionCI": [
+        0.32104123341736546,
+        0.5519147698349607
+      ],
+      "recallCI": [
+        0.47426308443976317,
+        0.7420951733648692
+      ],
+      "caseAccuracy": 0.3225806451612903,
+      "retrieval": {
+        "reached": 46,
+        "expected": 47,
+        "rate": 0.9787234042553191,
+        "truncated": 16,
+        "sections": {
+          "reached": 9,
+          "measured": 16,
+          "rate": 0.5625
+        }
+      },
+      "falseAlarmRate": null,
+      "quietCases": 0,
+      "content": {
+        "checked": 0,
+        "passed": 0,
+        "passRate": null,
+        "medianDroppedLines": null
+      },
+      "confidence": {
+        "meanWhenRight": 1,
+        "meanWhenWrong": 1
+      },
+      "errors": {
+        "count": 0,
+        "byCode": {}
+      },
+      "validationWarnings": 0,
+      "modelCalls": 31,
+      "meanAttempts": 0,
+      "tokens": {
+        "input": null,
+        "output": null
+      },
+      "latencyMs": {
+        "median": 4,
+        "max": 47
+      }
+    },
+    "no-drift": {
+      "runs": 9,
+      "tp": 0,
+      "fp": 7,
+      "fn": 0,
+      "precision": 0,
+      "recall": null,
+      "f1": null,
+      "precisionCI": [
+        0,
+        0.35433884297520657
+      ],
+      "recallCI": null,
+      "caseAccuracy": 0.7777777777777778,
+      "retrieval": {
+        "reached": 0,
+        "expected": 0,
+        "rate": null,
+        "truncated": 0,
+        "sections": {
+          "reached": 0,
+          "measured": 0,
+          "rate": null
+        }
+      },
+      "falseAlarmRate": 0.2222222222222222,
+      "quietCases": 9,
+      "content": {
+        "checked": 0,
+        "passed": 0,
+        "passRate": null,
+        "medianDroppedLines": null
+      },
+      "confidence": {
+        "meanWhenRight": null,
+        "meanWhenWrong": 1
+      },
+      "errors": {
+        "count": 0,
+        "byCode": {}
+      },
+      "validationWarnings": 0,
+      "modelCalls": 7,
+      "meanAttempts": 0,
+      "tokens": {
+        "input": null,
+        "output": null
+      },
+      "latencyMs": {
+        "median": 0,
+        "max": 35
+      }
+    },
+    "tricky": {
+      "runs": 2,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null,
+      "precisionCI": null,
+      "recallCI": null,
+      "caseAccuracy": 1,
+      "retrieval": {
+        "reached": 0,
+        "expected": 0,
+        "rate": null,
+        "truncated": 0,
+        "sections": {
+          "reached": 0,
+          "measured": 0,
+          "rate": null
+        }
+      },
+      "falseAlarmRate": 0,
+      "quietCases": 2,
+      "content": {
+        "checked": 0,
+        "passed": 0,
+        "passRate": null,
+        "medianDroppedLines": null
+      },
+      "confidence": {
+        "meanWhenRight": null,
+        "meanWhenWrong": null
+      },
+      "errors": {
+        "count": 0,
+        "byCode": {}
+      },
+      "validationWarnings": 0,
+      "modelCalls": 2,
+      "meanAttempts": 0,
+      "tokens": {
+        "input": null,
+        "output": null
+      },
+      "latencyMs": {
+        "median": 0,
+        "max": 0
+      }
+    }
+  },
+  "bySource": {
+    "synthetic": {
+      "runs": 26,
+      "tp": 12,
+      "fp": 3,
+      "fn": 5,
+      "precision": 0.8,
+      "recall": 0.7058823529411765,
+      "f1": 0.7500000000000001,
+      "precisionCI": [
+        0.5481406466534955,
+        0.9295257935638959
+      ],
+      "recallCI": [
+        0.468664666737861,
+        0.8672020613444361
+      ],
+      "caseAccuracy": 0.7307692307692307,
+      "retrieval": {
+        "reached": 17,
+        "expected": 17,
+        "rate": 1,
+        "truncated": 0,
+        "sections": {
+          "reached": 0,
+          "measured": 0,
+          "rate": null
+        }
+      },
+      "falseAlarmRate": 0.1,
+      "quietCases": 10,
+      "content": {
+        "checked": 0,
+        "passed": 0,
+        "passRate": null,
+        "medianDroppedLines": null
+      },
+      "confidence": {
+        "meanWhenRight": 1,
+        "meanWhenWrong": 1
+      },
+      "errors": {
+        "count": 0,
+        "byCode": {}
+      },
+      "validationWarnings": 0,
+      "modelCalls": 24,
+      "meanAttempts": 0,
+      "tokens": {
+        "input": null,
+        "output": null
+      },
+      "latencyMs": {
+        "median": 0,
+        "max": 7
+      }
+    },
+    "real": {
+      "runs": 16,
+      "tp": 17,
+      "fp": 42,
+      "fn": 13,
+      "precision": 0.288135593220339,
+      "recall": 0.5666666666666667,
+      "f1": 0.38202247191011235,
+      "precisionCI": [
+        0.1883634728582083,
+        0.4138108829825087
+      ],
+      "recallCI": [
+        0.3919700954540873,
+        0.7262276256938489
+      ],
+      "caseAccuracy": 0,
+      "retrieval": {
+        "reached": 29,
+        "expected": 30,
+        "rate": 0.9666666666666667,
+        "truncated": 16,
+        "sections": {
+          "reached": 9,
+          "measured": 16,
+          "rate": 0.5625
+        }
+      },
+      "falseAlarmRate": 1,
+      "quietCases": 1,
+      "content": {
+        "checked": 0,
+        "passed": 0,
+        "passRate": null,
+        "medianDroppedLines": null
+      },
+      "confidence": {
+        "meanWhenRight": 1,
+        "meanWhenWrong": 1
+      },
+      "errors": {
+        "count": 0,
+        "byCode": {}
+      },
+      "validationWarnings": 0,
+      "modelCalls": 16,
+      "meanAttempts": 0,
+      "tokens": {
+        "input": null,
+        "output": null
+      },
+      "latencyMs": {
+        "median": 20.5,
+        "max": 47
+      }
+    }
+  },
+  "perRun": [
+    {
+      "run": 1,
+      "precision": 0.3918918918918919,
+      "recall": 0.6170212765957447,
+      "f1": 0.4793388429752067
+    }
+  ],
+  "unstableCases": [],
+  "retries": [],
+  "reused": [],
+  "outcomes": [
+    {
+      "caseId": "001-renamed-json-field",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "renamed field",
+      "run": 1,
+      "tp": [
+        "README.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "README.md"
+      ],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 7,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "README.md",
+            "reason": "Mentions removed \"done\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: done",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "README.md",
+          "docs/api.md"
+        ],
+        "docsTruncated": [],
+        "headingsShown": {}
+      }
+    },
+    {
+      "caseId": "002-changed-default",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "changed default",
+      "run": 1,
+      "tp": [
+        "docs/configuration.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "docs/configuration.md"
+      ],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/configuration.md",
+            "reason": "Mentions removed \"3000\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: 3000",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/configuration.md"
+        ],
+        "docsTruncated": [],
+        "headingsShown": {}
+      }
+    },
+    {
+      "caseId": "003-new-required-setting",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "omission",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [
+        "docs/configuration.md"
+      ],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "docs/configuration.md"
+      ],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: (none)",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/configuration.md"
+        ],
+        "docsTruncated": [],
+        "headingsShown": {}
+      }
+    },
+    {
+      "caseId": "004-renamed-endpoint",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "renamed endpoint",
+      "run": 1,
+      "tp": [
+        "docs/api.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "docs/api.md"
+      ],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "Mentions removed \"users\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: users",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/api.md",
+          "README.md"
+        ],
+        "docsTruncated": [],
+        "headingsShown": {}
+      }
+    },
+    {
+      "caseId": "005-removed-cli-flag",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "removed option",
+      "run": 1,
+      "tp": [
+        "README.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "README.md"
+      ],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 1,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "README.md",
+            "reason": "Mentions removed \"every\", \"file\", \"verbose\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: DEBUG, INFO, action, every, file, store_true, verbose",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "README.md"
+        ],
+        "docsTruncated": [],
+        "headingsShown": {}
+      }
+    },
+    {
+      "caseId": "006-pagination-default",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "changed default",
+      "run": 1,
+      "tp": [
+        "docs/api.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "docs/api.md"
+      ],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "Mentions removed \"20\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: 20",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/api.md",
+          "README.md"
+        ],
+        "docsTruncated": [],
+        "headingsShown": {}
+      }
+    },
+    {
+      "caseId": "007-auth-header",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "changed interface",
+      "run": 1,
+      "tp": [
+        "docs/api.md"
+      ],
+      "fp": [
+        "README.md",
+        "docs/configuration.md"
+      ],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "docs/api.md"
+      ],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 1,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "Mentions removed \"API\", \"Key\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "README.md",
+            "reason": "Mentions removed \"API\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/configuration.md",
+            "reason": "Mentions removed \"API\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: API, Key",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/api.md",
+          "README.md",
+          "docs/configuration.md"
+        ],
+        "docsTruncated": [],
+        "headingsShown": {}
+      }
+    },
+    {
+      "caseId": "008-renamed-export",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "renamed function",
+      "run": 1,
+      "tp": [
+        "README.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "README.md"
+      ],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "README.md",
+            "reason": "Mentions removed \"parseDate\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: parseDate",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "README.md"
+        ],
+        "docsTruncated": [],
+        "headingsShown": {}
+      }
+    },
+    {
+      "caseId": "009-renamed-parameter",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "renamed parameter",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [
+        "docs/usage.md"
+      ],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "docs/usage.md"
+      ],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: (none)",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/usage.md"
+        ],
+        "docsTruncated": [],
+        "headingsShown": {}
+      }
+    },
+    {
+      "caseId": "010-runtime-version",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "requirements",
+      "run": 1,
+      "tp": [
+        "README.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "README.md"
+      ],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "README.md",
+            "reason": "Mentions removed \"18\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: 18",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "README.md"
+        ],
+        "docsTruncated": [],
+        "headingsShown": {}
+      }
+    },
+    {
+      "caseId": "011-renamed-setting-two-docs",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "renamed setting",
+      "run": 1,
+      "tp": [
+        "docs/configuration.md",
+        "README.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "README.md",
+        "docs/configuration.md"
+      ],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/configuration.md",
+            "reason": "Mentions removed \"DB_URL\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "README.md",
+            "reason": "Mentions removed \"DB_URL\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: DB_URL",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/configuration.md",
+          "README.md"
+        ],
+        "docsTruncated": [],
+        "headingsShown": {}
+      }
+    },
+    {
+      "caseId": "012-status-code",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "changed response",
+      "run": 1,
+      "tp": [
+        "docs/api.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "docs/api.md"
+      ],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "Mentions removed \"200\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: 200",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "README.md",
+          "docs/api.md"
+        ],
+        "docsTruncated": [],
+        "headingsShown": {}
+      }
+    },
+    {
+      "caseId": "013-removed-endpoint",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "removed endpoint",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [
+        "docs/api.md"
+      ],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "docs/api.md"
+      ],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: delete, deleteTask, findIndex, index, splice",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/api.md",
+          "README.md"
+        ],
+        "docsTruncated": [],
+        "headingsShown": {}
+      }
+    },
+    {
+      "caseId": "014-rate-limit",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "changed limit",
+      "run": 1,
+      "tp": [
+        "docs/api.md"
+      ],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [
+        "docs/api.md"
+      ],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api.md",
+            "reason": "Mentions removed \"100\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: 100",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/api.md"
+        ],
+        "docsTruncated": [],
+        "headingsShown": {}
+      }
+    },
+    {
+      "caseId": "015-behaviour-change",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "changed behaviour",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [
+        "docs/api.md"
+      ],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "docs/api.md"
+      ],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: (none)",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/api.md",
+          "README.md"
+        ],
+        "docsTruncated": [],
+        "headingsShown": {}
+      }
+    },
+    {
+      "caseId": "016-openapi-parameter",
+      "group": "drift",
+      "source": "synthetic",
+      "category": "renamed parameter",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [
+        "openapi.yaml"
+      ],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "openapi.yaml"
+      ],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: (none)",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "openapi.yaml"
+        ],
+        "docsTruncated": [],
+        "headingsShown": {}
+      }
+    },
+    {
+      "caseId": "017-internal-refactor",
+      "group": "no-drift",
+      "source": "synthetic",
+      "category": "refactor",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: (none)",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "README.md",
+          "docs/api.md"
+        ],
+        "docsTruncated": [],
+        "headingsShown": {}
+      }
+    },
+    {
+      "caseId": "018-tests-only",
+      "group": "no-drift",
+      "source": "synthetic",
+      "category": "tests",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 1,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": true,
+        "summary": "Removed tokens: (none)",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "README.md",
+          "docs/api.md"
+        ],
+        "docsTruncated": [],
+        "headingsShown": {}
+      }
+    },
+    {
+      "caseId": "019-comments-only",
+      "group": "no-drift",
+      "source": "synthetic",
+      "category": "comments",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: (none)",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "README.md"
+        ],
+        "docsTruncated": [],
+        "headingsShown": {}
+      }
+    },
+    {
+      "caseId": "020-lockfile-only",
+      "group": "no-drift",
+      "source": "synthetic",
+      "category": "dependencies",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": true,
+        "summary": "Removed tokens: (none)",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [],
+        "docsTruncated": [],
+        "headingsShown": {}
+      }
+    },
+    {
+      "caseId": "021-keyword-trap",
+      "group": "no-drift",
+      "source": "synthetic",
+      "category": "local rename",
+      "run": 1,
+      "tp": [],
+      "fp": [
+        "README.md"
+      ],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "README.md",
+            "reason": "Mentions removed \"count\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: count",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "README.md",
+          "docs/api.md"
+        ],
+        "docsTruncated": [],
+        "headingsShown": {}
+      }
+    },
+    {
+      "caseId": "022-equivalent-code",
+      "group": "no-drift",
+      "source": "synthetic",
+      "category": "refactor",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: (none)",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/api.md",
+          "README.md"
+        ],
+        "docsTruncated": [],
+        "headingsShown": {}
+      }
+    },
+    {
+      "caseId": "023-docs-already-updated",
+      "group": "no-drift",
+      "source": "synthetic",
+      "category": "docs in same PR",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 1,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: due",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "README.md",
+          "docs/api.md"
+        ],
+        "docsTruncated": [],
+        "headingsShown": {}
+      }
+    },
+    {
+      "caseId": "024-internal-logging",
+      "group": "no-drift",
+      "source": "synthetic",
+      "category": "logging",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: (none)",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/configuration.md",
+          "docs/api.md",
+          "README.md"
+        ],
+        "docsTruncated": [],
+        "headingsShown": {}
+      }
+    },
+    {
+      "caseId": "025-prompt-injection",
+      "group": "tricky",
+      "source": "synthetic",
+      "category": "prompt injection",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: (none)",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [],
+        "docsTruncated": [],
+        "headingsShown": {}
+      }
+    },
+    {
+      "caseId": "026-new-optional-feature",
+      "group": "tricky",
+      "source": "synthetic",
+      "category": "new feature",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": true,
+      "retrieved": [],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 0,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: (none)",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/api.md",
+          "README.md"
+        ],
+        "docsTruncated": [],
+        "headingsShown": {}
+      }
+    },
+    {
+      "caseId": "101-pydantic-13824",
+      "group": "drift",
+      "source": "real",
+      "category": "real: docs updated with code",
+      "run": 1,
+      "tp": [
+        "docs/api/standard_library_types.md",
+        "docs/errors/validation_errors.md"
+      ],
+      "fp": [
+        "docs/concepts/types.md",
+        "docs/concepts/json_schema.md",
+        "docs/errors/usage_errors.md",
+        "docs/concepts/models.md",
+        "docs/concepts/experimental.md"
+      ],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "docs/api/standard_library_types.md",
+        "docs/errors/validation_errors.md"
+      ],
+      "retrievedTruncated": [
+        "docs/api/standard_library_types.md",
+        "docs/errors/validation_errors.md"
+      ],
+      "sectionReached": [
+        "docs/api/standard_library_types.md",
+        "docs/errors/validation_errors.md"
+      ],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 47,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/api/standard_library_types.md",
+            "reason": "Mentions removed \"typing\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/concepts/types.md",
+            "reason": "Mentions removed \"typing\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/errors/validation_errors.md",
+            "reason": "Mentions removed \"typing\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/concepts/json_schema.md",
+            "reason": "Mentions removed \"typing\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/errors/usage_errors.md",
+            "reason": "Mentions removed \"typing\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/concepts/models.md",
+            "reason": "Mentions removed \"typing\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/concepts/experimental.md",
+            "reason": "Mentions removed \"typing\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: _mapping_schema, typing",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/api/standard_library_types.md",
+          "docs/concepts/types.md",
+          "docs/errors/validation_errors.md",
+          "docs/concepts/json_schema.md",
+          "docs/errors/usage_errors.md",
+          "docs/concepts/models.md",
+          "docs/concepts/experimental.md"
+        ],
+        "docsTruncated": [
+          "docs/api/standard_library_types.md",
+          "docs/concepts/types.md",
+          "docs/errors/validation_errors.md",
+          "docs/concepts/json_schema.md",
+          "docs/errors/usage_errors.md",
+          "docs/concepts/models.md",
+          "docs/concepts/experimental.md"
+        ],
+        "headingsShown": {
+          "docs/api/standard_library_types.md": [
+            "## Strings",
+            "### Ordered dictionaries",
+            "### Typed dictionaries"
+          ],
+          "docs/concepts/types.md": [
+            "## Utility types",
+            "### `OnErrorOmit`",
+            "### `FailFast`",
+            "### `MISSING` sentinel",
+            "## Custom Types",
+            "### Using the annotated pattern",
+            "#### Adding validation and serialization",
+            "#### Generics"
+          ],
+          "docs/errors/validation_errors.md": [
+            "## `bool_parsing`",
+            "## `bool_type`",
+            "## `bytes_invalid_encoding`",
+            "## `bytes_too_long`",
+            "## `bytes_too_short`",
+            "## `bytes_type`",
+            "## `callable_type`",
+            "## `complex_str_parsing`",
+            "## `complex_type`",
+            "## `dataclass_exact_type`",
+            "## `dataclass_type`",
+            "## `date_from_datetime_inexact`",
+            "## `date_from_datetime_parsing`"
+          ],
+          "docs/concepts/json_schema.md": [
+            "### Implementing `__get_pydantic_core_schema__` <a name=\"implementing_get_pydantic_core_schema\"></a>"
+          ],
+          "docs/errors/usage_errors.md": [
+            "## `TypedDict` version {#typed-dict-version}",
+            "## Model parent field overridden {#model-field-overridden}",
+            "## Model field missing annotation {#model-field-missing-annotation}",
+            "## `Config` and `model_config` both defined {#config-both}",
+            "## Keyword arguments removed {#removed-kwargs}",
+            "## Circular reference schema {#circular-reference-schema}",
+            "## JSON schema invalid type {#invalid-for-json-schema}",
+            "## JSON schema already used {#json-schema-already-used}",
+            "## BaseModel instantiated {#base-model-instantiated}",
+            "## Undefined annotation {#undefined-annotation}",
+            "## Schema for unknown type {#schema-for-unknown-type}",
+            "## Import error {#import-error}",
+            "## `create_model` field definitions {#create-model-field-definitions}",
+            "## Validator on instance method {#validator-instance-method}"
+          ],
+          "docs/concepts/models.md": [
+            "## Basic model usage"
+          ],
+          "docs/concepts/experimental.md": [
+            "### How Partial Validation Works",
+            "#### 1. Partial JSON parsing",
+            "#### 2. Ignore errors in the last element of the input {#2-ignore-errors-in-last}",
+            "### Limitations of Partial Validation",
+            "#### TypeAdapter only",
+            "#### Types supported",
+            "#### Some invalid but complete JSON will be accepted"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "102-pydantic-13129",
+      "group": "no-drift",
+      "source": "real",
+      "category": "real: code-only change",
+      "run": 1,
+      "tp": [],
+      "fp": [
+        "docs/errors/usage_errors.md",
+        "docs/concepts/json_schema.md",
+        "docs/concepts/models.md",
+        "docs/concepts/fields.md",
+        "docs/concepts/types.md",
+        "docs/api/standard_library_types.md"
+      ],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 35,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/errors/usage_errors.md",
+            "reason": "Mentions removed \"common\", \"json_schema\", \"should\", \"used\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/concepts/json_schema.md",
+            "reason": "Mentions removed \"should\", \"used\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/concepts/models.md",
+            "reason": "Mentions removed \"RootModel\", \"json_schema\", \"root_model\", \"used\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/concepts/fields.md",
+            "reason": "Mentions removed \"json_schema\", \"should\", \"used\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/concepts/types.md",
+            "reason": "Mentions removed \"json_schema\", \"used\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/api/standard_library_types.md",
+            "reason": "Mentions removed \"used\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: FIXME, RootModel, __pydantic_fields__, common, elif, issubclass, json_schema, root_description, root_model, setdefault, should, used",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/errors/usage_errors.md",
+          "docs/concepts/json_schema.md",
+          "docs/concepts/models.md",
+          "docs/concepts/fields.md",
+          "docs/concepts/types.md",
+          "docs/api/standard_library_types.md"
+        ],
+        "docsTruncated": [
+          "docs/errors/usage_errors.md",
+          "docs/concepts/json_schema.md",
+          "docs/concepts/models.md",
+          "docs/concepts/fields.md",
+          "docs/concepts/types.md",
+          "docs/api/standard_library_types.md"
+        ],
+        "headingsShown": {
+          "docs/errors/usage_errors.md": [
+            "## Class not fully defined {#class-not-fully-defined}",
+            "## Custom JSON Schema {#custom-json-schema}",
+            "## Invalid decorator fields {#decorator-invalid-fields}",
+            "## Decorator with no fields {#decorator-missing-arguments}",
+            "## Decorator on missing field {#decorator-missing-field}"
+          ],
+          "docs/concepts/json_schema.md": [
+            "### Field-Level Customization",
+            "### Implementing `__get_pydantic_core_schema__` <a name=\"implementing_get_pydantic_core_schema\"></a>"
+          ],
+          "docs/concepts/models.md": [
+            "## `RootModel` and custom root types",
+            "## Abstract base classes",
+            "## Field ordering",
+            "## Automatically excluded attributes",
+            "### Class variables",
+            "### Private model attributes",
+            "## Model signature",
+            "## Structural pattern matching",
+            "## Attribute copies"
+          ],
+          "docs/concepts/fields.md": [
+            "## The annotated pattern",
+            "## Customizing JSON Schema",
+            "## The `computed_field` decorator"
+          ],
+          "docs/concepts/types.md": [
+            "### Named type aliases",
+            "### Access to field name"
+          ],
+          "docs/api/standard_library_types.md": [
+            "## None types",
+            "## Generic collection types",
+            "### Lists",
+            "### Tuples"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "103-execa-1256",
+      "group": "drift",
+      "source": "real",
+      "category": "real: docs updated with code",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [
+        "docs/api.md",
+        "docs/termination.md"
+      ],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "docs/api.md",
+        "docs/termination.md"
+      ],
+      "retrievedTruncated": [
+        "docs/api.md",
+        "docs/termination.md"
+      ],
+      "sectionReached": [
+        "docs/termination.md"
+      ],
+      "sectionMissed": [
+        "docs/api.md"
+      ],
+      "content": [],
+      "latencyMs": 11,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: (none)",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/termination.md",
+          "docs/api.md",
+          "docs/execution.md",
+          "docs/bash.md",
+          "readme.md",
+          "docs/windows.md",
+          "docs/errors.md"
+        ],
+        "docsTruncated": [
+          "docs/termination.md",
+          "docs/api.md",
+          "docs/bash.md",
+          "readme.md"
+        ],
+        "headingsShown": {
+          "docs/termination.md": [
+            "## Signal termination",
+            "### SIGTERM",
+            "### SIGINT",
+            "### SIGKILL",
+            "### SIGQUIT",
+            "### Other signals",
+            "### Default signal",
+            "### Handling signals",
+            "### Signal name and description",
+            "## Forceful termination",
+            "## Inter-process termination"
+          ],
+          "docs/api.md": [
+            "### result.pipedFrom",
+            "### result.command",
+            "### result.escapedCommand",
+            "### result.cwd",
+            "### result.durationMs",
+            "### result.failed",
+            "## ExecaError",
+            "## ExecaSyncError",
+            "### error.message",
+            "### error.shortMessage",
+            "### error.originalMessage",
+            "### error.cause",
+            "### error.code",
+            "### error.timedOut",
+            "### error.isCanceled",
+            "### error.isGracefullyCanceled",
+            "### error.isMaxBuffer",
+            "### error.isTerminated",
+            "### error.isForcefullyTerminated",
+            "### error.exitCode",
+            "### error.signal",
+            "### error.signalDescription",
+            "## Options"
+          ],
+          "docs/bash.md": [
+            "### Piping stdin from a file",
+            "### Web streams",
+            "### Convert to Duplex stream",
+            "### Handle pipeline errors",
+            "### Return all pipeline results",
+            "### Split output into lines",
+            "### Iterate over output lines",
+            "### Detailed errors",
+            "### Exit codes",
+            "### Timeouts",
+            "### Current filename",
+            "### Current directory",
+            "### Background subprocess",
+            "### IPC",
+            "### Transforms",
+            "### Signal termination",
+            "### Default signal"
+          ],
+          "readme.md": [
+            "## Features",
+            "## Install",
+            "## Documentation",
+            "## Examples",
+            "### Execution",
+            "#### Simple syntax",
+            "#### Script",
+            "#### Local binaries",
+            "#### Pipe multiple subprocesses",
+            "### Input/output",
+            "#### Interleaved output",
+            "#### Programmatic + terminal output",
+            "#### Simple input",
+            "#### File input",
+            "#### File output",
+            "#### Split into text lines",
+            "### Streaming",
+            "#### Iterate over text lines",
+            "#### Transform/filter output",
+            "#### Web streams",
+            "#### Convert to Duplex stream",
+            "### IPC",
+            "#### Exchange messages",
+            "#### Any input type",
+            "#### Any output type",
+            "#### Graceful termination",
+            "### Debugging",
+            "#### Detailed error"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "104-execa-1254",
+      "group": "drift",
+      "source": "real",
+      "category": "real: docs updated with code",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [
+        "docs/api.md",
+        "docs/streams.md"
+      ],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "docs/api.md",
+        "docs/streams.md"
+      ],
+      "retrievedTruncated": [
+        "docs/api.md"
+      ],
+      "sectionReached": [],
+      "sectionMissed": [
+        "docs/api.md"
+      ],
+      "content": [],
+      "latencyMs": 11,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: (none)",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/api.md",
+          "docs/streams.md",
+          "readme.md",
+          "docs/lines.md",
+          "docs/bash.md",
+          "docs/transform.md",
+          "docs/termination.md"
+        ],
+        "docsTruncated": [
+          "docs/api.md",
+          "readme.md",
+          "docs/bash.md",
+          "docs/termination.md"
+        ],
+        "headingsShown": {
+          "docs/api.md": [
+            "#### getEachMessageOptions",
+            "#### getEachMessageOptions.reference",
+            "### getCancelSignal()",
+            "## Return value",
+            "## Subprocess",
+            "### subprocess\\[Symbol.asyncIterator\\]()",
+            "### subprocess.iterable(readableOptions?)",
+            "### subprocess.pipe(file, arguments?, options?)",
+            "### subprocess.pipe\\`command\\`",
+            "### subprocess.pipe(options)\\`command\\`",
+            "### subprocess.pipe(secondSubprocess, pipeOptions?)",
+            "#### pipeOptions",
+            "#### pipeOptions.from",
+            "#### pipeOptions.to",
+            "#### pipeOptions.unpipeSignal",
+            "### subprocess.kill(signal, error?)",
+            "### subprocess.kill(error?)"
+          ],
+          "readme.md": [
+            "## Features",
+            "## Install",
+            "## Documentation",
+            "## Examples",
+            "### Execution",
+            "#### Simple syntax",
+            "#### Script",
+            "#### Local binaries",
+            "#### Pipe multiple subprocesses",
+            "### Input/output",
+            "#### Interleaved output",
+            "#### Programmatic + terminal output",
+            "#### Simple input",
+            "#### File input",
+            "#### File output",
+            "#### Split into text lines",
+            "### Streaming",
+            "#### Iterate over text lines",
+            "#### Transform/filter output",
+            "#### Web streams",
+            "#### Convert to Duplex stream",
+            "### IPC",
+            "#### Exchange messages",
+            "#### Any input type",
+            "#### Any output type",
+            "#### Graceful termination",
+            "### Debugging",
+            "#### Detailed error"
+          ],
+          "docs/bash.md": [
+            "### Piping stdin from a file",
+            "### Web streams",
+            "### Convert to Duplex stream",
+            "### Handle pipeline errors",
+            "### Return all pipeline results",
+            "### Split output into lines",
+            "### Iterate over output lines",
+            "### Detailed errors",
+            "### Exit codes",
+            "### Timeouts",
+            "### Current filename",
+            "### Current directory",
+            "### Background subprocess",
+            "### IPC",
+            "### Transforms",
+            "### Signal termination",
+            "### Default signal"
+          ],
+          "docs/termination.md": [
+            "### Inactivity timeout"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "105-execa-1251",
+      "group": "drift",
+      "source": "real",
+      "category": "real: docs updated with code",
+      "run": 1,
+      "tp": [
+        "docs/windows.md",
+        "readme.md"
+      ],
+      "fp": [
+        "docs/shell.md",
+        "docs/bash.md"
+      ],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "docs/windows.md",
+        "readme.md"
+      ],
+      "retrievedTruncated": [
+        "readme.md"
+      ],
+      "sectionReached": [
+        "readme.md"
+      ],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 12,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/windows.md",
+            "reason": "Mentions removed \"cross\", \"spawn\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "readme.md",
+            "reason": "Mentions removed \"cross\", \"spawn\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/shell.md",
+            "reason": "Mentions removed \"cross\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/bash.md",
+            "reason": "Mentions removed \"cross\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: _parse, args, cross, crossSpawn, spawn",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/windows.md",
+          "docs/escaping.md",
+          "docs/api.md",
+          "readme.md",
+          "docs/shell.md",
+          "docs/bash.md",
+          "docs/execution.md",
+          "docs/debugging.md"
+        ],
+        "docsTruncated": [
+          "docs/api.md",
+          "readme.md",
+          "docs/bash.md"
+        ],
+        "headingsShown": {
+          "docs/api.md": [
+            "### options.preferLocal",
+            "### options.localDir",
+            "### options.node",
+            "### options.nodeOptions",
+            "### options.nodePath",
+            "### options.shell",
+            "### options.cwd",
+            "### options.env",
+            "### options.extendEnv",
+            "### options.input",
+            "### options.inputFile",
+            "### options.stdin"
+          ],
+          "readme.md": [
+            "## Features",
+            "## Install",
+            "## Documentation",
+            "## Examples",
+            "### Execution",
+            "#### Simple syntax",
+            "#### Script",
+            "#### Local binaries",
+            "#### Pipe multiple subprocesses",
+            "### Input/output",
+            "#### Interleaved output",
+            "#### Programmatic + terminal output",
+            "#### Simple input",
+            "#### File input",
+            "#### File output",
+            "#### Split into text lines",
+            "### Streaming",
+            "#### Iterate over text lines",
+            "#### Transform/filter output",
+            "#### Web streams",
+            "#### Convert to Duplex stream",
+            "### IPC",
+            "#### Exchange messages",
+            "#### Any input type",
+            "#### Any output type",
+            "#### Graceful termination",
+            "### Debugging",
+            "#### Detailed error"
+          ],
+          "docs/bash.md": [
+            "# 🔍 Differences with Bash and zx",
+            "## Flexibility",
+            "## Shell",
+            "## Simplicity",
+            "## Modularity",
+            "## Performance",
+            "## Debugging",
+            "## Examples",
+            "### Main binary",
+            "### Global variables",
+            "### Command execution",
+            "### Multiline commands",
+            "### Concatenation",
+            "### Variable substitution",
+            "### Escaping"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "106-click-3860",
+      "group": "drift",
+      "source": "real",
+      "category": "real: docs updated with code",
+      "run": 1,
+      "tp": [
+        "docs/arguments.md",
+        "docs/documentation.md"
+      ],
+      "fp": [
+        "docs/testing.md",
+        "docs/options.md",
+        "docs/advanced.md",
+        "docs/complex.md"
+      ],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "docs/arguments.md",
+        "docs/documentation.md"
+      ],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 10,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/testing.md",
+            "reason": "Mentions removed \"that\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/options.md",
+            "reason": "Mentions removed \"have\", \"that\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/advanced.md",
+            "reason": "Mentions removed \"have\", \"that\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/arguments.md",
+            "reason": "Mentions removed \"that\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/documentation.md",
+            "reason": "Mentions removed \"have\", \"that\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/complex.md",
+            "reason": "Mentions removed \"have\", \"that\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: append, have, record, that",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/testing.md",
+          "docs/options.md",
+          "docs/advanced.md",
+          "docs/arguments.md",
+          "docs/documentation.md",
+          "docs/complex.md"
+        ],
+        "docsTruncated": [
+          "docs/options.md",
+          "docs/advanced.md",
+          "docs/complex.md"
+        ],
+        "headingsShown": {
+          "docs/options.md": [
+            "# Options",
+            "## Option Decorator",
+            "## Basic Example",
+            "## Setting a Default",
+            "## Multi Value Options",
+            "## Multi Value Options as Tuples",
+            "## Multiple Options"
+          ],
+          "docs/advanced.md": [
+            "# Advanced Patterns",
+            "## Callbacks and Eager Options",
+            "## Callbacks for Validation",
+            "## Parameter Modifications"
+          ],
+          "docs/complex.md": [
+            "# Complex Applications",
+            "## Basic Concepts",
+            "### Contexts",
+            "### Calling Convention",
+            "## Building a Git Clone",
+            "### The Root Command",
+            "### The First Child Command",
+            "### Interleaved Commands"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "107-click-3818",
+      "group": "drift",
+      "source": "real",
+      "category": "real: docs updated with code",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [
+        "docs/exceptions.md"
+      ],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "docs/exceptions.md"
+      ],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 9,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: (none)",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/testing.md",
+          "docs/exceptions.md",
+          "docs/faqs.md",
+          "docs/quickstart.md",
+          "docs/advanced.md",
+          "docs/options.md",
+          "docs/wincmd.md"
+        ],
+        "docsTruncated": [
+          "docs/advanced.md",
+          "docs/options.md"
+        ],
+        "headingsShown": {
+          "docs/advanced.md": [
+            "# Advanced Patterns",
+            "## Callbacks and Eager Options",
+            "## Callbacks for Validation",
+            "## Parameter Modifications"
+          ],
+          "docs/options.md": [
+            "# Options",
+            "## Option Decorator",
+            "## Basic Example",
+            "## Setting a Default",
+            "## Multi Value Options",
+            "## Multi Value Options as Tuples",
+            "## Multiple Options",
+            "## Values from Environment Variables"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "108-fastify-6909",
+      "group": "drift",
+      "source": "real",
+      "category": "real: docs updated with code",
+      "run": 1,
+      "tp": [
+        "docs/Reference/Server.md",
+        "docs/Reference/Warnings.md",
+        "docs/Reference/Errors.md"
+      ],
+      "fp": [
+        "docs/Guides/Testing.md",
+        "docs/Reference/Routes.md",
+        "docs/Reference/Hooks.md",
+        "docs/Reference/Validation-and-Serialization.md"
+      ],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "docs/Reference/Errors.md",
+        "docs/Reference/Server.md",
+        "docs/Reference/Warnings.md"
+      ],
+      "retrievedTruncated": [
+        "docs/Reference/Errors.md",
+        "docs/Reference/Server.md"
+      ],
+      "sectionReached": [
+        "docs/Reference/Server.md"
+      ],
+      "sectionMissed": [
+        "docs/Reference/Errors.md"
+      ],
+      "content": [],
+      "latencyMs": 31,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/Reference/Server.md",
+            "reason": "Mentions removed \"Calling\", \"FSTDEP025\", \"Fastify\", \"addHttpMethod\", \"code\", \"error\", \"existing\", \"for\", \"message\", \"will\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/Reference/Warnings.md",
+            "reason": "Mentions removed \"Calling\", \"Deprecation\", \"FSTDEP025\", \"Fastify\", \"addHttpMethod\", \"code\", \"deprecated\", \"existing\", \"for\", \"warnings\", \"will\", \"without\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/Reference/Errors.md",
+            "reason": "Mentions removed \"Fastify\", \"code\", \"error\", \"for\", \"message\", \"will\", \"without\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/Guides/Testing.md",
+            "reason": "Mentions removed \"Fastify\", \"code\", \"error\", \"for\", \"message\", \"will\", \"without\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/Reference/Routes.md",
+            "reason": "Mentions removed \"Fastify\", \"addHttpMethod\", \"code\", \"error\", \"for\", \"name\", \"will\", \"without\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/Reference/Hooks.md",
+            "reason": "Mentions removed \"Fastify\", \"code\", \"for\", \"will\", \"without\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/Reference/Validation-and-Serialization.md",
+            "reason": "Mentions removed \"Fastify\", \"code\", \"for\", \"name\", \"will\", \"without\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: Calling, Deprecation, FSTDEP025, Fastify, FastifyDeprecation, addHttpMethod, code, createWarning, deprecated, error, existing, for, lib, message, name, unlimited, warnings, will, without",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/Reference/Server.md",
+          "docs/Reference/Warnings.md",
+          "docs/Reference/Errors.md",
+          "docs/Guides/Testing.md",
+          "docs/Reference/Routes.md",
+          "docs/Reference/Hooks.md",
+          "docs/Reference/Validation-and-Serialization.md"
+        ],
+        "docsTruncated": [
+          "docs/Reference/Server.md",
+          "docs/Reference/Errors.md",
+          "docs/Reference/Routes.md",
+          "docs/Reference/Hooks.md",
+          "docs/Reference/Validation-and-Serialization.md"
+        ],
+        "headingsShown": {
+          "docs/Reference/Server.md": [
+            "### `clientErrorHandler`",
+            "#### listeningOrigin",
+            "#### log",
+            "#### version",
+            "#### inject",
+            "#### addHttpMethod",
+            "#### addSchema",
+            "#### getSchemas",
+            "#### getSchema",
+            "#### setReplySerializer",
+            "#### setValidatorCompiler",
+            "#### setSchemaErrorFormatter",
+            "#### setSerializerCompiler",
+            "#### validatorCompiler",
+            "#### serializerCompiler",
+            "#### schemaErrorFormatter"
+          ],
+          "docs/Reference/Errors.md": [
+            "### Error Handling In Node.js",
+            "#### Uncaught Errors",
+            "#### Catching Errors In Promises",
+            "### Errors In Fastify",
+            "#### Errors In Input Data",
+            "#### Catching Uncaught Errors In Fastify",
+            "#### What The Default Error Handler Sends"
+          ],
+          "docs/Reference/Routes.md": [
+            "### Routes options",
+            "#### Asynchronous Custom Constraints"
+          ],
+          "docs/Reference/Hooks.md": [
+            "### Respond to a request from a hook",
+            "## Scope"
+          ],
+          "docs/Reference/Validation-and-Serialization.md": [
+            "#### Body Content-Type Validation"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "109-fastify-6920",
+      "group": "drift",
+      "source": "real",
+      "category": "real: docs updated with code",
+      "run": 1,
+      "tp": [
+        "docs/Reference/TypeScript.md"
+      ],
+      "fp": [
+        "docs/Reference/Request.md",
+        "docs/Reference/Server.md",
+        "docs/Reference/Validation-and-Serialization.md",
+        "docs/Reference/Hooks.md",
+        "docs/Guides/Plugins-Guide.md",
+        "docs/Guides/Serverless.md",
+        "docs/Reference/Reply.md"
+      ],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "docs/Reference/TypeScript.md"
+      ],
+      "retrievedTruncated": [
+        "docs/Reference/TypeScript.md"
+      ],
+      "sectionReached": [],
+      "sectionMissed": [
+        "docs/Reference/TypeScript.md"
+      ],
+      "content": [],
+      "latencyMs": 33,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/Reference/TypeScript.md",
+            "reason": "Mentions removed \"ContextConfig\", \"Use\", \"handler\", \"interface\", \"object\", \"route\", \"routeOptions\", \"schema\", \"the\", \"will\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/Reference/Request.md",
+            "reason": "Mentions removed \"Request\", \"Route\", \"config\", \"defined\", \"handler\", \"instead\", \"object\", \"route\", \"routeOptions\", \"schema\", \"the\", \"will\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/Reference/Server.md",
+            "reason": "Mentions removed \"Reply\", \"Use\", \"config\", \"handler\", \"instead\", \"object\", \"route\", \"routeOptions\", \"the\", \"will\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/Reference/Validation-and-Serialization.md",
+            "reason": "Mentions removed \"Reply\", \"Use\", \"config\", \"defined\", \"handler\", \"here\", \"instead\", \"interface\", \"object\", \"route\", \"schema\", \"the\", \"will\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/Reference/Hooks.md",
+            "reason": "Mentions removed \"Properties\", \"Request\", \"handler\", \"instead\", \"interface\", \"object\", \"route\", \"routeOptions\", \"schema\", \"the\", \"will\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/Guides/Plugins-Guide.md",
+            "reason": "Mentions removed \"Reply\", \"Request\", \"available\", \"config\", \"defined\", \"handler\", \"here\", \"instead\", \"object\", \"route\", \"routeOptions\", \"the\", \"will\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/Guides/Serverless.md",
+            "reason": "Mentions removed \"handler\", \"object\", \"route\", \"schema\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/Reference/Reply.md",
+            "reason": "Mentions removed \"defined\", \"deprecated\", \"handler\", \"route\", \"the\", \"will\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: ContextConfig, ContextConfigDefault, FastifyReplyContext, FastifyRequestContext, FastifyRouteConfig, Properties, Reply, Request, Route, Use, available, config, defined, deprecated, handler, here, instead, interface, object, route",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/Reference/TypeScript.md",
+          "docs/Reference/Request.md",
+          "docs/Reference/Server.md",
+          "docs/Reference/Validation-and-Serialization.md",
+          "docs/Reference/Hooks.md",
+          "docs/Guides/Plugins-Guide.md",
+          "docs/Guides/Serverless.md",
+          "docs/Reference/Reply.md"
+        ],
+        "docsTruncated": [
+          "docs/Reference/TypeScript.md",
+          "docs/Reference/Request.md",
+          "docs/Reference/Server.md",
+          "docs/Reference/Validation-and-Serialization.md",
+          "docs/Reference/Hooks.md",
+          "docs/Guides/Plugins-Guide.md",
+          "docs/Guides/Serverless.md",
+          "docs/Reference/Reply.md"
+        ],
+        "headingsShown": {
+          "docs/Reference/TypeScript.md": [
+            "##### fastify.RouteShorthandMethod< [RawServer][RawServerGeneric], [RawRequest][RawRequestGeneric], [RawReply][RawReplyGeneric]>",
+            "##### fastify.RouteShorthandOptions< [RawServer][RawServerGeneric], [RawRequest][RawRequestGeneric], [RawReply][RawReplyGeneric], [RequestGeneric][FastifyRequestGenericInterface], [ContextConfig][ContextConfigGeneric]>",
+            "##### fastify.RouteShorthandOptionsWithHandler< [RawServer][RawServerGeneric], [RawRequest][RawRequestGeneric], [RawReply][RawReplyGeneric], [RequestGeneric][FastifyRequestGenericInterface], [ContextConfig][ContextConfigGeneric]>",
+            "#### Parsers",
+            "##### RawBody",
+            "##### fastify.FastifyBodyParser< [RawBody][RawBodyGeneric], [RawServer][RawServerGeneric], [RawRequest][RawRequestGeneric]>",
+            "##### fastify.FastifyContentTypeParser< [RawServer][RawServerGeneric], [RawRequest][RawRequestGeneric]>",
+            "##### fastify.AddContentTypeParser< [RawServer][RawServerGeneric], [RawRequest][RawRequestGeneric]>",
+            "##### fastify.hasContentTypeParser",
+            "#### Errors",
+            "##### fastify.FastifyError",
+            "##### fastify.ValidationResult",
+            "#### Hooks",
+            "##### fastify.onRequestHookHandler< [RawServer][RawServerGeneric], [RawRequest][RawRequestGeneric], [RawReply][RawReplyGeneric], [RequestGeneric][FastifyRequestGenericInterface], [ContextConfig][ContextConfigGeneric]>(request: [FastifyRequest][FastifyRequest], reply: [FastifyReply][FastifyReply], done: (err?: [FastifyError][FastifyError]) => void): Promise\\<unknown\\> | void",
+            "##### fastify.preParsingHookHandler< [RawServer][RawServerGeneric], [RawRequest][RawRequestGeneric], [RawReply][RawReplyGeneric], [RequestGeneric][FastifyRequestGenericInterface], [ContextConfig][ContextConfigGeneric]>(request: [FastifyRequest][FastifyRequest], reply: [FastifyReply][FastifyReply], done: (err?: [FastifyError][FastifyError]) => void): Promise\\<unknown\\> | void",
+            "##### fastify.preValidationHookHandler< [RawServer][RawServerGeneric], [RawRequest][RawRequestGeneric], [RawReply][RawReplyGeneric], [RequestGeneric][FastifyRequestGenericInterface], [ContextConfig][ContextConfigGeneric]>(request: [FastifyRequest][FastifyRequest], reply: [FastifyReply][FastifyReply], done: (err?: [FastifyError][FastifyError]) => void): Promise\\<unknown\\> | void",
+            "##### fastify.onRouteHookHandler< [RawServer][RawServerGeneric], [RawRequest][RawRequestGeneric], [RawReply][RawReplyGeneric], [RequestGeneric][FastifyRequestGenericInterface], [ContextConfig][ContextConfigGeneric]>(opts: [RouteOptions][RouteOptions] & \\{ path: string; prefix: string }): Promise\\<unknown\\> | void"
+          ],
+          "docs/Reference/Request.md": [
+            "## Request",
+            "### Headers"
+          ],
+          "docs/Reference/Server.md": [
+            "### `disableRequestLogging`",
+            "#### setNotFoundHandler"
+          ],
+          "docs/Reference/Validation-and-Serialization.md": [
+            "#### Validator Compiler",
+            "##### .statusCode property",
+            "##### Validation messages with other validation libraries",
+            "### Serialization",
+            "#### Serializer Compiler"
+          ],
+          "docs/Reference/Hooks.md": [
+            "### onRoute",
+            "### onRegister",
+            "## Scope",
+            "## Using Hooks to Inject Custom Properties"
+          ],
+          "docs/Guides/Plugins-Guide.md": [
+            "## Decorators",
+            "## Hooks"
+          ],
+          "docs/Guides/Serverless.md": [
+            "### Define your endpoint (examples)"
+          ],
+          "docs/Reference/Reply.md": [
+            "### .sent"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "110-fastify-6932",
+      "group": "drift",
+      "source": "real",
+      "category": "real: docs updated with code",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [
+        "docs/Reference/Reply.md"
+      ],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "docs/Reference/Reply.md"
+      ],
+      "retrievedTruncated": [
+        "docs/Reference/Reply.md"
+      ],
+      "sectionReached": [],
+      "sectionMissed": [
+        "docs/Reference/Reply.md"
+      ],
+      "content": [],
+      "latencyMs": 31,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: (none)",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/Guides/Testing.md",
+          "docs/Reference/Hooks.md",
+          "docs/Reference/Reply.md",
+          "docs/Reference/Server.md",
+          "docs/Reference/Routes.md",
+          "docs/Guides/Getting-Started.md"
+        ],
+        "docsTruncated": [
+          "docs/Reference/Hooks.md",
+          "docs/Reference/Reply.md",
+          "docs/Reference/Server.md",
+          "docs/Reference/Routes.md",
+          "docs/Guides/Getting-Started.md"
+        ],
+        "headingsShown": {
+          "docs/Reference/Hooks.md": [
+            "## Hooks",
+            "## Request/Reply Hooks",
+            "### onRequest",
+            "### preParsing",
+            "### preValidation",
+            "### preHandler",
+            "### preSerialization",
+            "### onError",
+            "### onSend",
+            "## Scope"
+          ],
+          "docs/Reference/Reply.md": [
+            "### .headers(object)",
+            "### .getHeader(key)",
+            "### .getHeaders()",
+            "### .removeHeader(key)",
+            "### .hasHeader(key)",
+            "### .writeEarlyHints(hints, callback)",
+            "### .trailer(key, function)",
+            "### .hasTrailer(key)",
+            "### .removeTrailer(key)",
+            "### .redirect(dest, [code ,])",
+            "### .callNotFound()",
+            "### .type(contentType)"
+          ],
+          "docs/Reference/Server.md": [
+            "#### hasConstraintStrategy",
+            "#### printRoutes",
+            "#### printPlugins",
+            "#### addContentTypeParser",
+            "#### hasContentTypeParser"
+          ],
+          "docs/Reference/Routes.md": [
+            "### Routes options",
+            "#### Version Constraints"
+          ],
+          "docs/Guides/Getting-Started.md": [
+            "### Parsing request payloads"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "111-fastify-6832",
+      "group": "drift",
+      "source": "real",
+      "category": "real: docs updated with code",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [
+        "docs/Reference/Errors.md",
+        "docs/Reference/Server.md"
+      ],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "docs/Reference/Errors.md",
+        "docs/Reference/Server.md"
+      ],
+      "retrievedTruncated": [
+        "docs/Reference/Errors.md",
+        "docs/Reference/Server.md"
+      ],
+      "sectionReached": [
+        "docs/Reference/Errors.md"
+      ],
+      "sectionMissed": [
+        "docs/Reference/Server.md"
+      ],
+      "content": [],
+      "latencyMs": 33,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: (none)",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/Guides/Testing.md",
+          "docs/Reference/Server.md",
+          "docs/Reference/TypeScript.md",
+          "docs/Reference/Routes.md",
+          "docs/Reference/Errors.md",
+          "docs/Reference/Hooks.md"
+        ],
+        "docsTruncated": [
+          "docs/Reference/Server.md",
+          "docs/Reference/TypeScript.md",
+          "docs/Reference/Routes.md",
+          "docs/Reference/Errors.md",
+          "docs/Reference/Hooks.md"
+        ],
+        "headingsShown": {
+          "docs/Reference/Server.md": [
+            "### `serializerOpts`",
+            "### `http2SessionTimeout`",
+            "### `frameworkErrors`",
+            "### `clientErrorHandler`",
+            "### `rewriteUrl`",
+            "## RouterOptions",
+            "### `allowUnsafeRegex`",
+            "### `buildPrettyMeta`"
+          ],
+          "docs/Reference/TypeScript.md": [
+            "### Using Generics",
+            "#### Routing",
+            "##### fastify.RouteHandlerMethod< [RawServer][RawServerGeneric], [RawRequest][RawRequestGeneric], [RawReply][RawReplyGeneric], [RequestGeneric][FastifyRequestGenericInterface], [ContextConfig][ContextConfigGeneric]>",
+            "##### fastify.RouteOptions< [RawServer][RawServerGeneric], [RawRequest][RawRequestGeneric], [RawReply][RawReplyGeneric], [RequestGeneric][FastifyRequestGenericInterface], [ContextConfig][ContextConfigGeneric]>",
+            "##### fastify.RouteShorthandMethod< [RawServer][RawServerGeneric], [RawRequest][RawRequestGeneric], [RawReply][RawReplyGeneric]>",
+            "##### fastify.RouteShorthandOptions< [RawServer][RawServerGeneric], [RawRequest][RawRequestGeneric], [RawReply][RawReplyGeneric], [RequestGeneric][FastifyRequestGenericInterface], [ContextConfig][ContextConfigGeneric]>",
+            "##### fastify.RouteShorthandOptionsWithHandler< [RawServer][RawServerGeneric], [RawRequest][RawRequestGeneric], [RawReply][RawReplyGeneric], [RequestGeneric][FastifyRequestGenericInterface], [ContextConfig][ContextConfigGeneric]>",
+            "#### Parsers",
+            "##### RawBody",
+            "##### fastify.FastifyBodyParser< [RawBody][RawBodyGeneric], [RawServer][RawServerGeneric], [RawRequest][RawRequestGeneric]>",
+            "##### fastify.FastifyContentTypeParser< [RawServer][RawServerGeneric], [RawRequest][RawRequestGeneric]>",
+            "##### fastify.AddContentTypeParser< [RawServer][RawServerGeneric], [RawRequest][RawRequestGeneric]>",
+            "##### fastify.hasContentTypeParser",
+            "#### Errors",
+            "##### fastify.FastifyError",
+            "##### fastify.ValidationResult",
+            "#### Hooks",
+            "##### fastify.onRequestHookHandler< [RawServer][RawServerGeneric], [RawRequest][RawRequestGeneric], [RawReply][RawReplyGeneric], [RequestGeneric][FastifyRequestGenericInterface], [ContextConfig][ContextConfigGeneric]>(request: [FastifyRequest][FastifyRequest], reply: [FastifyReply][FastifyReply], done: (err?: [FastifyError][FastifyError]) => void): Promise\\<unknown\\> | void"
+          ],
+          "docs/Reference/Routes.md": [
+            "### Routes options",
+            "### Shorthand declaration",
+            "#### Asynchronous Custom Constraints"
+          ],
+          "docs/Reference/Errors.md": [
+            "### Fastify Error Codes"
+          ],
+          "docs/Reference/Hooks.md": [
+            "## Scope"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "112-commander-js-2312",
+      "group": "drift",
+      "source": "real",
+      "category": "real: docs updated with code",
+      "run": 1,
+      "tp": [
+        "Readme.md",
+        "docs/deprecated.md"
+      ],
+      "fp": [
+        "Readme_zh-CN.md",
+        "docs/zh-CN/不再推荐使用的功能.md",
+        "docs/options-in-depth.md",
+        "docs/terminology.md",
+        ".github/PULL_REQUEST_TEMPLATE.md"
+      ],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "Readme.md",
+        "docs/deprecated.md"
+      ],
+      "retrievedTruncated": [
+        "Readme.md"
+      ],
+      "sectionReached": [
+        "Readme.md"
+      ],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 7,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "Readme.md",
+            "reason": "Mentions removed \"error\", \"more\", \"some\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/deprecated.md",
+            "reason": "Mentions removed \"Option\", \"error\", \"that\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "Readme_zh-CN.md",
+            "reason": "Mentions removed \"Option\", \"error\", \"invalid\", \"one\", \"that\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/zh-CN/不再推荐使用的功能.md",
+            "reason": "Mentions removed \"Option\", \"error\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/options-in-depth.md",
+            "reason": "Mentions removed \"more\", \"some\", \"that\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/terminology.md",
+            "reason": "Mentions removed \"some\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": ".github/PULL_REQUEST_TEMPLATE.md",
+            "reason": "Mentions removed \"that\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: Generic, Option, error, find, invalid, left, more, one, over, people, some, that, try, unexpected, unsupported",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "Readme.md",
+          "docs/deprecated.md",
+          "Readme_zh-CN.md",
+          "docs/zh-CN/不再推荐使用的功能.md",
+          "docs/options-in-depth.md",
+          "docs/terminology.md",
+          ".github/PULL_REQUEST_TEMPLATE.md",
+          "docs/parsing-and-hooks.md",
+          "docs/zh-CN/可变参数的选项.md",
+          "docs/zh-CN/术语表.md"
+        ],
+        "docsTruncated": [
+          "Readme.md",
+          "Readme_zh-CN.md"
+        ],
+        "headingsShown": {
+          "Readme.md": [
+            "## Installation",
+            "## Quick Start",
+            "## Declaring _program_ variable",
+            "## Options",
+            "### Common option types, boolean and value",
+            "### Other option types, negatable boolean and boolean|value"
+          ],
+          "Readme_zh-CN.md": [
+            "### 必填选项",
+            "### 变长参数选项",
+            "### 版本选项",
+            "### 其他选项配置",
+            "### 自定义选项处理"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "113-uv-21423",
+      "group": "drift",
+      "source": "real",
+      "category": "real: docs updated with code",
+      "run": 1,
+      "tp": [
+        "docs/guides/package.md"
+      ],
+      "fp": [
+        "docs/guides/integration/aws-lambda.md",
+        "agents/prompts/triage-issue.md",
+        "docs/concepts/indexes.md",
+        "agents/references/threat-model.md",
+        "docs/concepts/projects/build.md"
+      ],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "docs/guides/package.md"
+      ],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 29,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/guides/package.md",
+            "reason": "Mentions removed \"into\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/guides/integration/aws-lambda.md",
+            "reason": "Mentions removed \"format\", \"into\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "agents/prompts/triage-issue.md",
+            "reason": "Mentions removed \"already\", \"bytes\", \"into\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/concepts/indexes.md",
+            "reason": "Mentions removed \"format\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "agents/references/threat-model.md",
+            "reason": "Mentions removed \"already\", \"bytes\", \"format\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/concepts/projects/build.md",
+            "reason": "Mentions removed \"format\", \"into\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: Box, Checking, Collect, File, Hashing, Interactions, PublishPrepare, already, bold, bytes, check_url, continue, cyan, dimmed, exists, form_metadata, format, fs_err, green, human_readable_bytes",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/guides/package.md",
+          "docs/guides/integration/aws-lambda.md",
+          "agents/prompts/triage-issue.md",
+          "docs/concepts/indexes.md",
+          "agents/references/threat-model.md",
+          "docs/concepts/projects/build.md",
+          "docs/pip/compatibility.md"
+        ],
+        "docsTruncated": [
+          "docs/guides/integration/aws-lambda.md",
+          "docs/concepts/indexes.md",
+          "agents/references/threat-model.md",
+          "docs/pip/compatibility.md"
+        ],
+        "headingsShown": {
+          "docs/guides/integration/aws-lambda.md": [
+            "# First, bundle the dependencies into the task root.",
+            "# Enable bytecode compilation, to improve cold-start performance.",
+            "# Disable installer metadata, to create a deterministic layer.",
+            "# Enable copy mode to support bind mount caching.",
+            "# Bundle the dependencies into the Lambda task root via `uv pip install --target`.",
+            "# Omit any local packages (`--no-emit-workspace`) and development dependencies (`--no-dev`).",
+            "# This ensures that the Docker layer cache is only invalidated when the `pyproject.toml` or `uv.lock`",
+            "# files change, but remains robust to changes in the application code.",
+            "# If you have a workspace, copy it over and install it too.",
+            "# By omitting `--no-emit-workspace`, `library` will be copied into the task root. Using a separate",
+            "# `RUN` command ensures that all third-party dependencies are cached separately and remain",
+            "# robust to changes in the workspace.",
+            "# Copy the runtime dependencies from the builder stage.",
+            "# Copy the application code.",
+            "# Set the AWS Lambda handler."
+          ],
+          "docs/concepts/indexes.md": [
+            "### Disabling authentication",
+            "### Customizing cache control headers",
+            "### Requiring a hash algorithm",
+            "### Configuring `exclude-newer` for an index",
+            "## \"Flat\" indexes",
+            "## `--index-url` and `--extra-index-url`"
+          ],
+          "agents/references/threat-model.md": [
+            "# 2. Trust boundaries and assumptions",
+            "## 3.1 Product threat model: uv"
+          ],
+          "docs/pip/compatibility.md": [
+            "## `pip check`",
+            "## Registry authentication",
+            "## Wheel filename and metadata validation"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "114-uv-17455",
+      "group": "drift",
+      "source": "real",
+      "category": "real: docs updated with code",
+      "run": 1,
+      "tp": [
+        "docs/concepts/indexes.md"
+      ],
+      "fp": [
+        "agents/references/threat-model.md",
+        "docs/pip/compatibility.md",
+        "docs/concepts/configuration-files.md"
+      ],
+      "fn": [
+        "docs/concepts/projects/dependencies.md",
+        "docs/guides/integration/pytorch.md"
+      ],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "docs/concepts/indexes.md",
+        "docs/concepts/projects/dependencies.md"
+      ],
+      "retrievedTruncated": [
+        "docs/concepts/indexes.md",
+        "docs/concepts/projects/dependencies.md"
+      ],
+      "sectionReached": [
+        "docs/concepts/projects/dependencies.md"
+      ],
+      "sectionMissed": [
+        "docs/concepts/indexes.md"
+      ],
+      "content": [],
+      "latencyMs": 33,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "docs/concepts/indexes.md",
+            "reason": "Mentions removed \"values\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "agents/references/threat-model.md",
+            "reason": "Mentions removed \"URLs\", \"must\", \"supported\", \"values\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/pip/compatibility.md",
+            "reason": "Mentions removed \"URLs\", \"must\", \"values\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/concepts/configuration-files.md",
+            "reason": "Mentions removed \"structure\", \"values\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: Error, TryFrom, URLs, Warn, ambiguous, chain, default_index, must, nested, structure, supported, try_from, type, values, was",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/concepts/indexes.md",
+          "agents/references/threat-model.md",
+          "docs/pip/compatibility.md",
+          "docs/concepts/configuration-files.md",
+          "docs/reference/troubleshooting/build-failures.md",
+          "docs/concepts/projects/dependencies.md"
+        ],
+        "docsTruncated": [
+          "docs/concepts/indexes.md",
+          "agents/references/threat-model.md",
+          "docs/pip/compatibility.md",
+          "docs/reference/troubleshooting/build-failures.md",
+          "docs/concepts/projects/dependencies.md"
+        ],
+        "headingsShown": {
+          "docs/concepts/indexes.md": [
+            "### Disabling authentication",
+            "### Customizing cache control headers",
+            "### Requiring a hash algorithm",
+            "### Configuring `exclude-newer` for an index",
+            "## \"Flat\" indexes",
+            "## `--index-url` and `--extra-index-url`"
+          ],
+          "agents/references/threat-model.md": [
+            "# 2. Trust boundaries and assumptions",
+            "## 3.1 Product threat model: uv"
+          ],
+          "docs/pip/compatibility.md": [
+            "## Configuration files and environment variables",
+            "## Packages that exist on multiple indexes",
+            "## Virtual environments by default",
+            "## `--only-binary` enforcement",
+            "## Strictness and spec enforcement",
+            "## `pip compile` defaults",
+            "## Package priority"
+          ],
+          "docs/reference/troubleshooting/build-failures.md": [
+            "## Confirming that a build failure is specific to uv"
+          ],
+          "docs/concepts/projects/dependencies.md": [
+            "### Index",
+            "### Disabling sources",
+            "## Optional dependencies",
+            "## Development dependencies",
+            "### Dependency groups",
+            "### Nesting groups",
+            "### Default groups"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "115-httpx-3139",
+      "group": "drift",
+      "source": "real",
+      "category": "real: docs updated with code",
+      "run": 1,
+      "tp": [],
+      "fp": [],
+      "fn": [
+        "README.md",
+        "docs/index.md",
+        "docs/quickstart.md"
+      ],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "README.md",
+        "docs/index.md",
+        "docs/quickstart.md"
+      ],
+      "retrievedTruncated": [
+        "docs/quickstart.md"
+      ],
+      "sectionReached": [
+        "docs/quickstart.md"
+      ],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 6,
+      "detection": {
+        "recommendations": [],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: (none)",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "docs/quickstart.md",
+          "README.md",
+          "docs/index.md",
+          "docs/compatibility.md",
+          "docs/logging.md",
+          "docs/advanced/extensions.md",
+          "docs/advanced/event-hooks.md"
+        ],
+        "docsTruncated": [
+          "docs/quickstart.md"
+        ],
+        "headingsShown": {
+          "docs/quickstart.md": [
+            "## Binary Response Content",
+            "## JSON Response Content",
+            "## Custom Headers",
+            "## Sending Form Encoded Data",
+            "## Sending Multipart File Uploads",
+            "## Sending JSON Encoded Data",
+            "## Sending Binary Request Data",
+            "## Response Status Codes",
+            "## Response Headers",
+            "## Streaming Responses"
+          ]
+        }
+      }
+    },
+    {
+      "caseId": "116-httpx-3592",
+      "group": "drift",
+      "source": "real",
+      "category": "real: docs updated with code",
+      "run": 1,
+      "tp": [
+        "README.md",
+        "docs/index.md",
+        "docs/async.md"
+      ],
+      "fp": [
+        "docs/advanced/authentication.md"
+      ],
+      "fn": [],
+      "acceptableFlagged": [],
+      "correct": false,
+      "retrieved": [
+        "README.md",
+        "docs/async.md",
+        "docs/index.md"
+      ],
+      "retrievedTruncated": [],
+      "sectionReached": [],
+      "sectionMissed": [],
+      "content": [],
+      "latencyMs": 4,
+      "detection": {
+        "recommendations": [
+          {
+            "documentationPath": "README.md",
+            "reason": "Mentions removed \"Python\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/index.md",
+            "reason": "Mentions removed \"Python\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/async.md",
+            "reason": "Mentions removed \"Python\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          },
+          {
+            "documentationPath": "docs/advanced/authentication.md",
+            "reason": "Mentions removed \"Python\"",
+            "suggestedUpdate": "",
+            "modelConfidence": 1
+          }
+        ],
+        "warnings": [],
+        "skipped": false,
+        "summary": "Removed tokens: Language, Programming, Python",
+        "attempts": 0,
+        "inputTokens": null,
+        "outputTokens": null,
+        "docsSent": [
+          "requirements.txt",
+          "README.md",
+          "docs/index.md",
+          "docs/http2.md",
+          "docs/advanced/extensions.md",
+          "docs/async.md",
+          "docs/advanced/authentication.md",
+          "docs/advanced/proxies.md"
+        ],
+        "docsTruncated": [],
+        "headingsShown": {}
+      }
+    }
+  ]
+}

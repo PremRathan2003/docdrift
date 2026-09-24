@@ -1,0 +1,61 @@
+{
+  "id": "116-httpx-3592",
+  "title": "Drop Python 3.8 support",
+  "body": "<!-- Thanks for contributing to HTTPX! 💚\r\nGiven this is a project maintained by volunteers, please read this template to not waste your time, or ours! 😁 -->\r\n\r\n# Summary\r\n\r\n<!-- Write a small summary about what is happening here. -->\r\n\r\n# Checklist\r\n\r\n- [X] I understand that this PR may be closed in case there was no previous discussion. (This doesn't apply to typos!)\r\n- [ ] I've added a test for each change that was introduced, and I tried as much as possible to make a single atomic change.\r\n- [X] I've updated the documentation accordingly.\r\n",
+  "group": "drift",
+  "category": "real: docs updated with code",
+  "expected": [
+    {
+      "path": "README.md",
+      "mustContain": [
+        "3.9"
+      ],
+      "mustNotContain": [
+        "3.8"
+      ],
+      "anchors": [
+        "## Installation"
+      ]
+    },
+    {
+      "path": "docs/async.md",
+      "mustContain": [
+        "3.9"
+      ],
+      "mustNotContain": [
+        "3.8"
+      ],
+      "anchors": [
+        "## Making Async requests"
+      ]
+    },
+    {
+      "path": "docs/index.md",
+      "mustContain": [
+        "3.9"
+      ],
+      "mustNotContain": [
+        "3.8"
+      ],
+      "anchors": [
+        "## Installation"
+      ]
+    }
+  ],
+  "acceptable": [
+    "CHANGELOG.md",
+    "requirements.txt"
+  ],
+  "added": [],
+  "trimmedFiles": [],
+  "notes": "The PR author updated these documents in the same PR; the case removes those edits. Content checks are words the author added/removed. Review them before relying on the case. Labels reviewed by hand against the developer’s own diff: the automatic extraction found no distinctive tokens; the change is \"Python 3.8+\" becoming \"3.9+\" in each document, so that is what the checks say. requirements.txt moved to acceptable.",
+  "source": "real",
+  "origin": {
+    "url": "https://github.com/encode/httpx/pull/3592",
+    "repository": "encode/httpx",
+    "license": "BSD-3-Clause",
+    "baseSha": "336204f0121a9aefdebac5cacd81f912bafe8057",
+    "headSha": "3fa326b2b0ab737274709334fe771d1aceb99101",
+    "importedAt": "2026-09-24T17:09:59.085Z"
+  }
+}

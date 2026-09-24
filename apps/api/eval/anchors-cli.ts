@@ -7,12 +7,16 @@
  *   npm run eval:anchors            every real case
  *   npm run eval:anchors -- 103     just this one
  */
+import { existsSync } from 'node:fs';
 import { readFile, writeFile } from 'node:fs/promises';
 import { readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { anchorHeadings } from './anchors.js';
 import { caseSchema } from './dataset.js';
 import { gitHubReader, parsePullRequestUrl } from './github-import.js';
+
+// GITHUB_TOKEN lifts GitHub's 60 requests/hour to 5 000; it lives in apps/api/.env.
+if (existsSync('.env')) process.loadEnvFile('.env');
 
 const CASES = new URL('../../../eval/cases', import.meta.url).pathname;
 const only = process.argv.slice(2);

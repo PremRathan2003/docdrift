@@ -5,6 +5,7 @@ import { describe, expect, it } from 'vitest';
 import { loadCase, problemsWith } from './dataset.js';
 import {
   deriveContentChecks,
+  findCandidates,
   TRIM_ABOVE_BYTES,
   trimToChanges,
   importPullRequest,
@@ -160,5 +161,66 @@ describe('importPullRequest', () => {
         { id: '101-x', casesDir: '/tmp' },
       ),
     ).rejects.toThrow(/not merged/);
+  });
+});
+
+describe('findCandidates', () => {
+  /** Answers only the calls a run should make, so a wrong call shows up as a failure. */
+  const reader = (responses: Record<string, unknown>): GitHubReader => ({
+    async api(path: string) {
+      const key = Object.keys(responses).find((k) => path.startsWith(k));
+      if (!key) throw new Error(`unexpected call: ${path}`);
+      return responses[key] as never;
+    },
+    async raw() {
+      return null;
+    },
+  });
+
+  const files = [
+    { filename: 'src/cli.js', status: 'modified' },
+    { filename: 'docs/guide.md', status: 'modified' },
+    { filename: 'test/cli.test.js', status: 'modified' },
+  ];
+
+  it('follows the commits that touched the documentation', async () => {
+    // Listing recent pull requests instead would spend the hourly budget on
+    // pull requests that changed no documentation at all.
+    const found = await findCandidates(
+      reader({
+        '/repos/o/r/commits': [
+          { commit: { message: 'feat: add --log-level (#12)\n\nbody' } },
+          { commit: { message: 'docs: fix a typo (#11)' } },
+          { commit: { message: 'chore: no pull request number here' } },
+        ],
+        '/repos/o/r/pulls/12/files': files,
+        '/repos/o/r/pulls/11/files': files,
+      }),
+      'o',
+      'r',
+      5,
+    );
+    expect(found.map((f) => f.url)).toEqual([
+      'https://github.com/o/r/pull/12',
+      'https://github.com/o/r/pull/11',
+    ]);
+    expect(found[0]).toMatchObject({ code: 1, tests: 1, docs: ['docs/guide.md'] });
+  });
+
+  it('falls back to recent merged pull requests when merges are not squashed', async () => {
+    const found = await findCandidates(
+      reader({
+        '/repos/o/r/commits': [{ commit: { message: 'Merge pull request from a branch' } }],
+        '/repos/o/r/pulls?': [
+          { number: 7, title: 'Add a flag', merged_at: '2026-01-01T00:00:00Z', html_url: 'u7' },
+          { number: 8, title: 'Never merged', merged_at: null, html_url: 'u8' },
+        ],
+        '/repos/o/r/pulls/7/files': files,
+      }),
+      'o',
+      'r',
+      5,
+    );
+    expect(found.map((f) => f.url)).toEqual(['u7']);
   });
 });

@@ -4,12 +4,12 @@
  */
 import { analysisOutputSchema } from '@docdrift/shared';
 import { z } from 'zod';
-import { loadEnv } from '../src/config/env.js';
+import { loadAiEnv } from '../src/config/env.js';
 import { AIProviderError, createAIProvider } from '../src/modules/ai/index.js';
 import { parseModelOutput } from '../src/modules/analysis/validate.js';
 
 async function main() {
-  const env = loadEnv();
+  const env = loadAiEnv();
   const ai = createAIProvider(env);
   if (!ai) {
     console.error(
