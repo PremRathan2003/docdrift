@@ -198,6 +198,20 @@ answers 503 while everything else works. What the webhook does NOT do is start a
 spends the user's AI quota and writes suggestions against their documentation, so it stays a
 decision someone makes. Keeping the cached pull request list fresh is the half that costs nothing.
 
+**D19 — Documentation pull requests (Phase 3.3).** The only code that writes to a user's repository.
+It builds ONE commit through git's object model (a blob per document, one tree, one commit, then the
+branch) rather than calling the update-a-file endpoint per file, which would make a commit each time
+and could leave a branch half-updated. The branch is DocDrift's own — `docdrift/pr-<n>-<run>` — so
+force-updating it can never touch someone's work, and naming it after the analysis run makes a
+second attempt idempotent: same branch, same open pull request, updated content. It targets the pull
+request's **own** branch, not the default branch, so merging puts the documentation alongside the
+code change that made it necessary. What it refuses is as important as what it does: a suggestion
+nobody approved, an analysis of a commit the branch has moved past (the suggestions may describe code
+that no longer exists), and two approved suggestions for the same document (each holds a complete
+file, so applying both would silently lose one). Suggestions are marked APPLIED only after the pull
+request exists, so nothing is ever recorded as applied without somewhere to point at. Reaching this
+endpoint requires a signed-in person pressing a button; no webhook or schedule leads to it.
+
 **D13 — Evaluation.** `npm run eval` runs the same `runPipeline` as the app (context selection,
 prompt, retries, validation), only reading repositories from `eval/cases` instead of GitHub, so it
 measures what users get. Cases are small repositories (`head/` + the changed files' `base/`) with

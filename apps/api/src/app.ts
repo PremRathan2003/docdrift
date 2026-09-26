@@ -25,6 +25,8 @@ import { createAnalysisService, type AnalysisConfig } from './modules/analysis/a
 import { pullRequestsRouter } from './modules/pull-requests/pull-requests.routes.js';
 import { repositoriesRouter } from './modules/repositories/repositories.routes.js';
 import { suggestionsRouter } from './modules/suggestions/suggestions.routes.js';
+import { docsPullRequestRouter } from './modules/suggestions/docs-pr.routes.js';
+import { createDocsPullRequestService } from './modules/suggestions/docs-pr.service.js';
 import { healthRouter } from './routes/health.js';
 
 /**
@@ -157,6 +159,16 @@ export function createApp(deps: AppDeps) {
   );
 
   app.use('/api', suggestionsRouter({ db, github, sessions, audit, cookie }));
+  app.use(
+    '/api',
+    docsPullRequestRouter({
+      db,
+      docsPr: github ? createDocsPullRequestService({ db, github, logger: deps.logger }) : null,
+      sessions,
+      audit,
+      cookie,
+    }),
+  );
 
   app.use(notFoundHandler);
   app.use(errorHandler);

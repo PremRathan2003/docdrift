@@ -21,7 +21,8 @@ export type AuditAction =
   | 'suggestion.request_changes'
   | 'suggestion.approve'
   | 'suggestion.reject'
-  | 'suggestion.reopen';
+  | 'suggestion.reopen'
+  | 'docs_pr.create';
 
 export interface AuditEvent {
   action: AuditAction;

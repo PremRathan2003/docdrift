@@ -2,6 +2,7 @@ import {
   aiStatusSchema,
   analysisListResponseSchema,
   analysisResponseSchema,
+  docsPullRequestResponseSchema,
 } from '@docdrift/shared';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiFetch } from './api';
@@ -63,6 +64,31 @@ export function useStartAnalysis(pullRequestId: string) {
     onSuccess: ({ analysis }) => {
       qc.setQueryData(['analysis', analysis.id], analysis);
       void qc.invalidateQueries({ queryKey: ['analyses', pullRequestId] });
+    },
+  });
+}
+
+/**
+ * Opens (or updates) the documentation pull request for a run.
+ *
+ * Deliberately a mutation with no automatic retry: it writes to the user's
+ * repository, and a retry that looks free to us is a second attempt at changing
+ * someone's code. The server is idempotent per run, but the decision to try
+ * again belongs to the person.
+ */
+export function useCreateDocsPullRequest(runId: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    retry: false,
+    mutationFn: () =>
+      apiFetch(
+        `/api/analyses/${encodeURIComponent(runId)}/docs-pull-request`,
+        docsPullRequestResponseSchema,
+        { method: 'POST' },
+      ),
+    onSuccess: () => {
+      // The run now carries the pull request, and its suggestions are APPLIED.
+      void qc.invalidateQueries({ queryKey: ['analysis', runId] });
     },
   });
 }

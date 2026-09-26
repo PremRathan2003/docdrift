@@ -4,6 +4,7 @@ import { SuggestionStatusBadge } from './SuggestionStatusBadge';
 import { buttonClass } from './ui/Button';
 import { AnalysisBadge, FileKindBadge } from './Badges';
 import { Alert } from './ui/Alert';
+import { DocsPullRequestPanel } from './DocsPullRequestPanel';
 
 const card = 'rounded-lg border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900';
 
@@ -84,6 +85,8 @@ export function AnalysisResults({
       {run.suggestions.map((s) => (
         <SuggestionCard key={s.id} suggestion={s} />
       ))}
+
+      <DocsPullRequestPanel run={run} />
 
       {(run.status === 'SUCCEEDED' || run.status === 'FAILED') && <RunDetails run={run} />}
     </div>

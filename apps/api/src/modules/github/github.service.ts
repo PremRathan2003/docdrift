@@ -4,6 +4,12 @@ import type { Db } from '../../lib/prisma.js';
 import { createAppJwt } from './app-jwt.js';
 import type { GitHubAppConfig } from './config.js';
 import { GitHubError, type GitHubClient } from './github-client.js';
+import {
+  createCommit,
+  findOpenPullRequest,
+  openPullRequest,
+  setBranch,
+} from './repo-write.github.js';
 import { createInstallationTokenProvider } from './installation-tokens.js';
 import { fetchPullRequestFiles, fetchPullRequests } from './pull-requests.github.js';
 import { fetchBlob, fetchTextFile, fetchTreePaths } from './repo-content.github.js';
@@ -80,6 +86,45 @@ export function createGitHubService({ db, config, client, oauthFetch }: GitHubSe
         db.repository.update({ where: { id: repo.id }, data: { lastSyncedAt: syncedAt } }),
       ]);
       return prs.length;
+    },
+
+    // ---- writing (Phase 3: documentation pull requests)
+
+    /** One commit containing every changed document, on top of `parentSha`. */
+    async commitDocuments(
+      repo: { owner: string; name: string; installationId: bigint },
+      opts: { parentSha: string; message: string; files: { path: string; content: string }[] },
+    ) {
+      const token = await tokens.get(repo.installationId);
+      return createCommit(client, token, repo.owner, repo.name, opts);
+    },
+
+    /** Points DocDrift's own branch at a commit, creating it if needed. */
+    async setBranch(
+      repo: { owner: string; name: string; installationId: bigint },
+      branch: string,
+      sha: string,
+    ) {
+      const token = await tokens.get(repo.installationId);
+      return setBranch(client, token, repo.owner, repo.name, branch, sha);
+    },
+
+    /** An open pull request from that branch, if one is already there. */
+    async findDocsPullRequest(
+      repo: { owner: string; name: string; installationId: bigint },
+      branch: string,
+      base: string,
+    ) {
+      const token = await tokens.get(repo.installationId);
+      return findOpenPullRequest(client, token, repo.owner, repo.name, branch, base);
+    },
+
+    async openDocsPullRequest(
+      repo: { owner: string; name: string; installationId: bigint },
+      opts: { branch: string; base: string; title: string; body: string },
+    ) {
+      const token = await tokens.get(repo.installationId);
+      return openPullRequest(client, token, repo.owner, repo.name, opts);
     },
 
     /** Paths of all files at a commit. */

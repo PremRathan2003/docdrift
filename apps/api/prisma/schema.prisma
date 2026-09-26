@@ -66,6 +66,7 @@ model User {
   installations GithubInstallation[]
   repositories  Repository[]
   analysisRuns  AnalysisRun[]
+  docsPullRequests DocsPullRequest[]
   reviews       Review[]
   auditLogs     AuditLog[]
 }
@@ -205,9 +206,10 @@ model AnalysisRun {
   startedAt  DateTime?
   finishedAt DateTime?
 
-  pullRequest PullRequest  @relation(fields: [pullRequestId], references: [id], onDelete: Cascade)
-  triggeredBy User?        @relation(fields: [triggeredById], references: [id], onDelete: SetNull)
+  pullRequest PullRequest      @relation(fields: [pullRequestId], references: [id], onDelete: Cascade)
+  triggeredBy User?            @relation(fields: [triggeredById], references: [id], onDelete: SetNull)
   suggestions Suggestion[]
+  docsPullRequest DocsPullRequest?
 
   @@index([pullRequestId, createdAt(sort: Desc)])
   @@index([status])
@@ -318,4 +320,29 @@ model WebhookDelivery {
   updatedAt  DateTime @updatedAt
 
   @@index([receivedAt])
+}
+
+/// The documentation pull request opened from one analysis run.
+///
+/// Unique on the run, which is what makes "open the docs PR" idempotent: a
+/// second attempt updates this row, moves the same branch and finds the same
+/// open pull request, instead of opening another one.
+model DocsPullRequest {
+  id            String   @id @default(cuid())
+  analysisRunId String   @unique
+  /// DocDrift's own branch (docdrift/pr-<n>-<run>), never anyone else's.
+  branch        String
+  /// The branch it targets: the pull request's own, so docs land with the code.
+  baseRef       String
+  number        Int
+  htmlUrl       String
+  commitSha     String
+  /// Paths written, for the audit trail.
+  documents     String[]
+  createdById   String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  analysisRun AnalysisRun @relation(fields: [analysisRunId], references: [id], onDelete: Cascade)
+  createdBy   User?       @relation(fields: [createdById], references: [id], onDelete: SetNull)
 }

@@ -29,7 +29,13 @@ export function toSuggestionDto(s: SuggestionRow) {
   });
 }
 
-export function toRunDto(r: RunRow, suggestions: SuggestionRow[] = []): AnalysisRunDto {
+type DocsPrRow = Awaited<ReturnType<Db['docsPullRequest']['findFirstOrThrow']>>;
+
+export function toRunDto(
+  r: RunRow,
+  suggestions: SuggestionRow[] = [],
+  docsPullRequest: DocsPrRow | null = null,
+): AnalysisRunDto {
   const manifest = inputManifestSchema.safeParse(r.inputManifest);
   return {
     id: r.id,
@@ -54,6 +60,16 @@ export function toRunDto(r: RunRow, suggestions: SuggestionRow[] = []): Analysis
     startedAt: r.startedAt?.toISOString() ?? null,
     finishedAt: r.finishedAt?.toISOString() ?? null,
     suggestions: suggestions.map(toSuggestionDto),
+    docsPullRequest: docsPullRequest
+      ? {
+          number: docsPullRequest.number,
+          htmlUrl: docsPullRequest.htmlUrl,
+          branch: docsPullRequest.branch,
+          base: docsPullRequest.baseRef,
+          documents: docsPullRequest.documents,
+          createdAt: docsPullRequest.createdAt.toISOString(),
+        }
+      : null,
   };
 }
 
@@ -130,11 +146,11 @@ export function analysisRouter(deps: {
     const { id } = idParam.parse(req.params);
     const run = await db.analysisRun.findFirst({
       where: { id, pullRequest: { repository: { userId: req.auth!.user.id } } },
-      include: { suggestions: { orderBy: { createdAt: 'asc' } } },
+      include: { suggestions: { orderBy: { createdAt: 'asc' } }, docsPullRequest: true },
     });
     if (!run) throw new AppError(404, 'NOT_FOUND', 'Analysis not found');
-    const { suggestions, ...row } = run;
-    res.json({ analysis: toRunDto(row, suggestions) });
+    const { suggestions, docsPullRequest, ...row } = run;
+    res.json({ analysis: toRunDto(row, suggestions, docsPullRequest) });
   });
 
   return router;

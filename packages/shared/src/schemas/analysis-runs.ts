@@ -38,6 +38,16 @@ export const inputManifestSchema = z.object({
   promptChars: z.number().int(),
 });
 
+/** The documentation pull request opened from a run, once one exists. */
+export const docsPullRequestSchema = z.object({
+  number: z.number().int().positive(),
+  htmlUrl: z.string(),
+  branch: z.string(),
+  base: z.string(),
+  documents: z.array(z.string()),
+  createdAt: z.iso.datetime(),
+});
+
 export const analysisRunSchema = z.object({
   id: z.string(),
   pullRequestId: z.string(),
@@ -62,6 +72,8 @@ export const analysisRunSchema = z.object({
   startedAt: z.iso.datetime().nullable(),
   finishedAt: z.iso.datetime().nullable(),
   suggestions: z.array(suggestionSchema),
+  /** Null until someone opens one from the approved suggestions. */
+  docsPullRequest: docsPullRequestSchema.nullable().default(null),
 });
 
 export const analysisResponseSchema = z.object({ analysis: analysisRunSchema });
@@ -78,6 +90,9 @@ export const aiStatusSchema = z.object({
   model: z.string().nullable(),
 });
 
+export const docsPullRequestResponseSchema = z.object({ docsPullRequest: docsPullRequestSchema });
+
 export type AnalysisRunDto = z.infer<typeof analysisRunSchema>;
+export type DocsPullRequestDto = z.infer<typeof docsPullRequestSchema>;
 export type SuggestionDto = z.infer<typeof suggestionSchema>;
 export type InputManifest = z.infer<typeof inputManifestSchema>;
