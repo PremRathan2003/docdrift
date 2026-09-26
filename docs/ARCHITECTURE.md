@@ -183,6 +183,21 @@ buys sections by pushing other documents out of the prompt entirely, and simply 
 changes nothing while the per-document cap binds. The denominator is therefore every expected
 document, not only the sectioned ones.
 
+**D18 — Webhooks (Phase 3).** `POST /api/webhooks/github` is mounted before the JSON body parser
+and reads the raw bytes, because the signature GitHub sends covers exactly what it sent:
+re-serialising parsed JSON reorders nothing visible but changes the hash. The HMAC comparison is
+timing-safe and happens before the payload is parsed at all. Every delivery is recorded by GitHub's
+own `X-GitHub-Delivery` id, and the `outcome` column is what makes that guard safe to retry: a
+delivery recorded but never finished (`received`, `failed`) may be processed again, while one that
+completed is skipped — otherwise a crash halfway through would make an event permanently
+unrepeatable. Anything the endpoint cannot use (a `ping`, a `labeled` action, an unreadable body) is
+recorded with the reason and answered 2xx, because GitHub disables a webhook that keeps failing.
+`GITHUB_WEBHOOK_SECRET` is deliberately not part of the all-or-nothing `GITHUB_APP_*` group: a
+server can read pull requests long before webhooks are wired up, and without the secret the endpoint
+answers 503 while everything else works. What the webhook does NOT do is start an analysis: that
+spends the user's AI quota and writes suggestions against their documentation, so it stays a
+decision someone makes. Keeping the cached pull request list fresh is the half that costs nothing.
+
 **D13 — Evaluation.** `npm run eval` runs the same `runPipeline` as the app (context selection,
 prompt, retries, validation), only reading repositories from `eval/cases` instead of GitHub, so it
 measures what users get. Cases are small repositories (`head/` + the changed files' `base/`) with

@@ -299,3 +299,23 @@ model DocumentBlob {
   @@unique([repositoryId, blobSha])
   @@index([repositoryId, lastUsedAt])
 }
+
+/// One received webhook delivery, so GitHub's redeliveries do no work twice.
+///
+/// `outcome` is what makes the guard safe: a delivery that was recorded but
+/// never finished ("received", "failed") may be processed again, while one that
+/// completed is skipped. Otherwise a crash halfway through would make the
+/// delivery permanently unrepeatable.
+model WebhookDelivery {
+  /// GitHub's X-GitHub-Delivery header (a UUID).
+  id         String   @id
+  event      String
+  action     String?
+  repository String?
+  outcome    String   @default("received")
+  detail     String?
+  receivedAt DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([receivedAt])
+}

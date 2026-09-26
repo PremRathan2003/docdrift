@@ -37,7 +37,13 @@ Measure first, then improve: every later change is judged against the evaluation
 
 ## Phase 3 — Engineering (≈ 2–3 weeks)
 
-Webhooks (signature verification, dedup by delivery id, smee.io for local testing),
+| #   | Milestone                  | What                                                                                                                                  |
+| --- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| 3.1 | **Webhook endpoint** ✅    | `POST /api/webhooks/github`: timing-safe signature check over the raw body, deduplication by delivery id that still allows a retry after a failure, pull request cache kept fresh. No analysis is started automatically (D18) |
+| 3.2 | Background jobs            | pg-boss if the work outgrows a request: analysis queued rather than run inline                                                          |
+| 3.3 | Documentation PR creation  | After explicit approval: a branch named from the run, the approved suggestions committed, a pull request opened — idempotent on re-run  |
+
+Original plan: webhooks (signature verification, dedup by delivery id, smee.io for local testing),
 pg-boss background jobs if needed, docs PR creation after explicit confirmation
 (idempotent branch naming), broader tests.
 

@@ -17,6 +17,7 @@ import { createSessionService } from './modules/auth/session.service.js';
 import type { GitHubAppConfig } from './modules/github/config.js';
 import { createGitHubClient } from './modules/github/github-client.js';
 import { githubRouter } from './modules/github/github.routes.js';
+import { webhooksRouter } from './modules/github/webhooks.routes.js';
 import { createGitHubService } from './modules/github/github.service.js';
 import type { AIProvider } from './modules/ai/provider.js';
 import { analysisRouter } from './modules/analysis/analysis.routes.js';
@@ -37,7 +38,10 @@ export function redactUrl(url: string): string {
 }
 
 export interface AppDeps {
-  env: Pick<Env, 'WEB_ORIGIN' | 'NODE_ENV' | 'SESSION_SECRET'>;
+  env: Pick<Env, 'WEB_ORIGIN' | 'NODE_ENV' | 'SESSION_SECRET'> &
+    // Optional so existing callers (and tests of other routes) need not mention
+    // it; without it the webhook endpoint answers 503 and nothing else changes.
+    Partial<Pick<Env, 'GITHUB_WEBHOOK_SECRET'>>;
   logger: Logger;
   version: string;
   db: Db;
@@ -95,6 +99,19 @@ export function createApp(deps: AppDeps) {
     }),
   );
   app.use(originCheck(env.WEB_ORIGIN));
+
+  // Before express.json, and with the raw bytes: a webhook signature is over
+  // exactly what GitHub sent, and re-serialising parsed JSON changes it.
+  app.use(
+    '/api/webhooks',
+    express.raw({ type: 'application/json', limit: '5mb' }),
+    webhooksRouter({
+      db,
+      secret: env.GITHUB_WEBHOOK_SECRET ?? null,
+      logger: deps.logger,
+    }),
+  );
+
   app.use(express.json({ limit: '1mb' }));
   app.use(cookieParser());
 

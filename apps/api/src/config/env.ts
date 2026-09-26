@@ -111,6 +111,14 @@ const envSchema = z
     GITHUB_APP_CLIENT_ID: optionalString,
     GITHUB_APP_CLIENT_SECRET: optionalString,
     GITHUB_APP_PRIVATE_KEY_BASE64: optionalString,
+    /**
+     * Signs webhook deliveries. Deliberately not one of GITHUB_VARS above: a
+     * server can read pull requests long before webhooks are wired up, and
+     * making it part of the all-or-nothing group would stop the API starting
+     * for anyone who has not set a webhook up yet. Without it the endpoint
+     * answers 503 and everything else works.
+     */
+    GITHUB_WEBHOOK_SECRET: optionalString,
 
     ...aiFields,
   })
