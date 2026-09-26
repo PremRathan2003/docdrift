@@ -3,15 +3,55 @@
 DocDrift analyses GitHub pull requests, identifies documentation that may no longer match
 the code, and drafts documentation updates that a human reviews before anything changes.
 
-> **Status: Phase 1 complete (milestones 1.1–1.7).** Working today:
-> accounts (sessions, rate limiting, audit log), GitHub App connection with verified installations,
-> repositories and pull requests with a diff viewer, AI analysis that suggests documentation updates
-> with evidence, and a human review workflow — diff against the current doc, edit in Monaco,
-> approve/reject/request changes with history, and an approved-patch download. A dashboard with a
-> getting-started checklist built from real data, and Playwright end-to-end tests of the whole flow.
-> Phase 2 has started with an evaluation harness (2.1): `npm run eval` scores the pipeline on
-> labelled cases — see [eval/README.md](eval/README.md). Next: real-world cases and better
-> retrieval — see [docs/ROADMAP.md](docs/ROADMAP.md).
+> **Status: Phases 1–3 largely complete.** DocDrift connects to a GitHub App, reads a pull
+> request, works out which documentation the change made out of date, drafts the updates,
+> and — once a person approves them — opens a documentation pull request on the repository.
+> A webhook keeps pull requests current. Every claim below about accuracy comes from
+> [the evaluation](#what-the-evaluation-says), not from impressions.
+> Remaining: a job queue (3.2), deployment and polish (Phase 4). See [docs/ROADMAP.md](docs/ROADMAP.md).
+
+## What it does
+
+1. **Reads the pull request** — the diff, and every documentation file in the repository.
+2. **Chooses what to show the model** — BM25 over the text of all documents, and for a long
+   reference file, the sections that match the change rather than the whole thing.
+3. **Asks for specific updates** — each recommendation must cite a changed file as evidence and
+   rewrite one section, which the API splices back into the complete document.
+4. **Validates the answer** — schema, then semantics: invented paths, evidence that isn't in the
+   diff, and sections that were never shown are dropped with a warning rather than displayed.
+5. **Waits for a person** — diff against the current file, edit in Monaco, approve or reject.
+6. **Opens a pull request** with only the approved changes, into the branch of the pull request
+   that caused the drift, so documentation lands with the code.
+
+## What the evaluation says
+
+`npm run eval` scores the pipeline on 42 labelled cases — 26 written by hand, 16 rebuilt from
+merged pull requests in pydantic, execa, click, fastify, commander and httpx, where the developer's
+own documentation edit is the ground truth ([how they are built](eval/README.md)).
+
+Most recent full run (gemini-3.5-flash-lite, prompt v3.2):
+
+| | precision | recall | cases exactly right |
+| --- | --- | --- | --- |
+| synthetic (26) | 100% | 100% | 26 of 26 |
+| real pull requests (16) | 94% | 63%¹ | 6 of 16 |
+
+¹ Measured over three runs (60%, 63%, 67%), because single runs of a model vary by more than the
+changes being measured — an early version of this project drew a conclusion from one run and had to
+retract it.
+
+Two numbers mattered more than the headline ones while building it:
+
+- **Documents reaching the model: 27% → 98%.** Filename heuristics were replaced with content
+  ranking; this was the binding constraint for two milestones and no prompt work would have moved it.
+- **The right *section* reaching the model: 56% → 81%**, by cutting long documents into 2 kB pieces
+  instead of 6 kB. Chosen by `npm run eval:sections`, which measures it against the sections the
+  developers actually edited — without calling a model, so the setting was picked from evidence
+  rather than intuition.
+
+The evaluation also found four real bugs, including a suggestion that would have written the
+prompt's line numbers into a README, and a matcher that silently discarded correct answers.
+Reports for every run are committed under `eval/reports/`.
 
 ## Architecture
 
@@ -73,6 +113,8 @@ bash tools/seed-sandbox.sh ~/docdrift-sandbox
 | `npm run test:integration` | API tests against the `_test` database                                    |
 | `npm run test:e2e`         | Browser tests of the whole flow (fake GitHub + scripted AI)               |
 | `npm run eval`             | Score the AI on the labelled cases in `eval/` ([details](eval/README.md)) |
+| `npm run eval:sections`    | Sweep document-chunking settings against the developers' own edits (no model, no cost) |
+| `npm run eval:import`      | Turn a merged public pull request into a labelled case                    |
 | `npm run check`            | Lint + format check + typecheck + tests (what CI runs)                    |
 | `npm run build`            | Production builds of all packages                                         |
 | `npm run db:migrate`       | Create/apply a migration after editing `schema.prisma`                    |
@@ -125,6 +167,21 @@ no secrets; anything prefixed `VITE_` would be public, so secrets never go there
 - AI-generated analysis can be wrong. Confidence values are the model's own estimate, not a
   calibrated probability. Every suggestion requires human review. Parts of a PR diff are sent
   to the configured LLM provider — only connect repositories you're allowed to share with it.
+- **It misses things.** On real pull requests it finds roughly two thirds of the documents a
+  developer updated. Most of what it misses is the same drift written in a second place, or a
+  document that is still accurate but no longer complete. Treat a quiet result as "nothing found",
+  not "nothing to find".
+- Two known retrieval gaps, both measured: a reference table with no internal headings cannot be
+  split into sections sensibly (fastify's error table), and document ranking occasionally misses a
+  file entirely. `npm run eval:sections` reports both.
+
+## Webhooks
+
+`POST /api/webhooks/github` verifies GitHub's signature over the raw body (timing-safe, before
+parsing), records every delivery by its id so redeliveries do no work twice — while still allowing
+a delivery that failed halfway to be retried — and keeps the cached pull requests current.
+It deliberately does **not** start an analysis: that spends AI quota and writes suggestions against
+someone's documentation, so it stays a decision a person makes.
 
 ## Deployment · Screenshots · Demo
 
