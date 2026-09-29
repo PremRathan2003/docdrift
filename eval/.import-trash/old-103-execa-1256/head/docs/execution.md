@@ -9,7 +9,7 @@
 ## Array syntax
 
 ```js
-import {execa} from 'execa';
+import { execa } from 'execa';
 
 await execa('npm', ['run', 'build']);
 ```
@@ -95,7 +95,7 @@ By default, any shell-specific syntax has no special meaning and does not need t
 
 ```js
 // This prints `$TASK_NAME`, not `build`
-await execa({env: {TASK_NAME: 'build'}})`echo $TASK_NAME`;
+await execa({ env: { TASK_NAME: 'build' } })`echo $TASK_NAME`;
 ```
 
 ## Options
@@ -105,19 +105,19 @@ await execa({env: {TASK_NAME: 'build'}})`echo $TASK_NAME`;
 ### Array syntax
 
 ```js
-await execa('npm', ['run', 'build'], {timeout: 5000});
+await execa('npm', ['run', 'build'], { timeout: 5000 });
 ```
 
 ### Template string syntax
 
 ```js
-await execa({timeout: 5000})`npm run build`;
+await execa({ timeout: 5000 })`npm run build`;
 ```
 
 ### Global/shared options
 
 ```js
-const timedExeca = execa({timeout: 5000});
+const timedExeca = execa({ timeout: 5000 });
 
 await timedExeca('npm', ['run', 'build']);
 await timedExeca`npm run test`;
@@ -139,7 +139,7 @@ console.log(subprocess.pid);
 The subprocess resolves with the [`result`](api.md#result).
 
 ```js
-const {stdout} = await execa`npm run build`;
+const { stdout } = await execa`npm run build`;
 ```
 
 ### Synchronous execution
@@ -147,12 +147,13 @@ const {stdout} = await execa`npm run build`;
 [`execaSync()`](api.md#execasyncfile-arguments-options) and [`$.sync()`](api.md#syncfile-arguments-options) return the [`result`](api.md#result) without needing to `await`. The [`subprocess`](#subprocess) is not returned: its methods and properties are not available.
 
 ```js
-import {execaSync} from 'execa';
+import { execaSync } from 'execa';
 
-const {stdout} = execaSync`npm run build`;
+const { stdout } = execaSync`npm run build`;
 ```
 
 Synchronous execution is generally discouraged as it holds the CPU and prevents parallelization. Also, the following features cannot be used:
+
 - Streams: [`subprocess.stdin`](api.md#subprocessstdin), [`subprocess.stdout`](api.md#subprocessstdout), [`subprocess.stderr`](api.md#subprocessstderr), [`subprocess.readable()`](api.md#subprocessreadablereadableoptions), [`subprocess.writable()`](api.md#subprocesswritablewritableoptions), [`subprocess.duplex()`](api.md#subprocessduplexduplexoptions).
 - The [`stdin`](api.md#optionsstdin), [`stdout`](api.md#optionsstdout), [`stderr`](api.md#optionsstderr) and [`stdio`](api.md#optionsstdio) options cannot be [`'overlapped'`](api.md#optionsstdout), an [async iterable](lines.md#progressive-splitting), an async [transform](transform.md), a [`Duplex`](transform.md#duplextransform-streams), nor a [web stream](streams.md#web-streams). Node.js streams can be passed but only if either they [have a file descriptor](streams.md#file-descriptors), or the [`input`](api.md#optionsinput) option is used.
 - Signal termination: [`subprocess.kill()`](api.md#subprocesskillerror), [`subprocess.pid`](api.md#subprocesspid), [`cleanup`](api.md#optionscleanup) option, [`cancelSignal`](api.md#optionscancelsignal) option, [`forceKillAfterDelay`](api.md#optionsforcekillafterdelay) option.

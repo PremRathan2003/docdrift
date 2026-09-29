@@ -58,7 +58,9 @@ describe('parseModelOutput', () => {
     const cutShort = parseModelOutput('{"summary": "The pull request renames a fie');
     expect(cutShort).toMatchObject({ reason: 'invalid_json' });
     expect(cutShort.ok === false && cutShort.detail).toContain('renames a fie');
-    const badEscape = parseModelOutput('{"summary": "Use C:\\Users\\app to start", "recommendations": []}');
+    const badEscape = parseModelOutput(
+      '{"summary": "Use C:\\Users\\app to start", "recommendations": []}',
+    );
     expect(badEscape.ok === false && badEscape.detail).toContain('Users');
   });
 

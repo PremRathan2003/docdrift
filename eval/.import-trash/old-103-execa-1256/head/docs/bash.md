@@ -6,7 +6,8 @@
 
 # 🔍 Differences with Bash and zx
 
-This page describes the differences between [Bash](https://en.wikipedia.org/wiki/Bash_(Unix_shell)), Execa, and [zx](https://github.com/google/zx). Execa intends to be more:
+This page describes the differences between [Bash](<https://en.wikipedia.org/wiki/Bash_(Unix_shell)>), Execa, and [zx](https://github.com/google/zx). Execa intends to be more:
+
 - [Simple](#simplicity): minimalistic API, no [globals](#global-variables), no [binary](#main-binary), no builtin CLI utilities.
 - [Cross-platform](#shell): [no shell](shell.md) is used, only JavaScript.
 - [Secure](#escaping): no shell injection.
@@ -85,7 +86,7 @@ await $`npm run build`;
 
 ```js
 // Execa
-import {$} from 'execa';
+import { $ } from 'execa';
 
 await $`npm run build`;
 ```
@@ -122,10 +123,7 @@ npm run build \
 
 ```js
 // zx
-await $`npm run build ${[
-	'--example-flag-one',
-	'--example-flag-two',
-]}`;
+await $`npm run build ${['--example-flag-one', '--example-flag-two']}`;
 ```
 
 ```js
@@ -147,13 +145,13 @@ mkdir "$tmpDirectory/filename"
 
 ```js
 // zx
-const tmpDirectory = '/tmp'
+const tmpDirectory = '/tmp';
 await $`mkdir ${tmpDirectory}/filename`;
 ```
 
 ```js
 // Execa
-const tmpDirectory = '/tmp'
+const tmpDirectory = '/tmp';
 await $`mkdir ${tmpDirectory}/filename`;
 ```
 
@@ -285,7 +283,7 @@ $options npm run test
 
 ```js
 // zx
-const $$ = $({verbose: true});
+const $$ = $({ verbose: true });
 
 await $$`npm run init`;
 await $$`npm run build`;
@@ -294,9 +292,9 @@ await $$`npm run test`;
 
 ```js
 // Execa
-import {$ as $_} from 'execa';
+import { $ as $_ } from 'execa';
 
-const $ = $_({verbose: true});
+const $ = $_({ verbose: true });
 
 await $`npm run init`;
 await $`npm run build`;
@@ -314,12 +312,12 @@ EXAMPLE=1 npm run build
 
 ```js
 // zx
-await $({env: {EXAMPLE: '1'}})`npm run build`;
+await $({ env: { EXAMPLE: '1' } })`npm run build`;
 ```
 
 ```js
 // Execa
-await $({env: {EXAMPLE: '1'}})`npm run build`;
+await $({ env: { EXAMPLE: '1' } })`npm run build`;
 ```
 
 [More info.](input.md#environment-variables)
@@ -333,12 +331,12 @@ npx tsc --version
 
 ```js
 // zx
-await $({preferLocal: true})`tsc --version`;
+await $({ preferLocal: true })`tsc --version`;
 ```
 
 ```js
 // Execa
-await $({preferLocal: true})`tsc --version`;
+await $({ preferLocal: true })`tsc --version`;
 ```
 
 [More info.](environment.md#local-binaries)
@@ -373,12 +371,12 @@ cat <<<"example"
 
 ```js
 // zx
-$({input: 'example'})`cat`;
+$({ input: 'example' })`cat`;
 ```
 
 ```js
 // Execa
-$({input: 'example'})`cat`;
+$({ input: 'example' })`cat`;
 ```
 
 ### Pass any input type
@@ -394,15 +392,15 @@ $({input: 'example'})`cat`;
 ```js
 // Execa - main.js
 const ipcInput = [
-	{task: 'lint', ignore: /test\.js/},
-	{task: 'copy', files: new Set(['main.js', 'index.js']),
-}];
-await $({ipcInput})`node build.js`;
+  { task: 'lint', ignore: /test\.js/ },
+  { task: 'copy', files: new Set(['main.js', 'index.js']) },
+];
+await $({ ipcInput })`node build.js`;
 ```
 
 ```js
 // Execa - build.js
-import {getOneMessage} from 'execa';
+import { getOneMessage } from 'execa';
 
 const ipcInput = await getOneMessage();
 ```
@@ -421,18 +419,18 @@ const ipcInput = await getOneMessage();
 
 ```js
 // Execa - main.js
-const {ipcOutput} = await $({ipc: true})`node build.js`;
+const { ipcOutput } = await $({ ipc: true })`node build.js`;
 console.log(ipcOutput[0]); // {kind: 'start', timestamp: date}
 console.log(ipcOutput[1]); // {kind: 'stop', timestamp: date}
 ```
 
 ```js
 // Execa - build.js
-import {sendMessage} from 'execa';
+import { sendMessage } from 'execa';
 
-await sendMessage({kind: 'start', timestamp: new Date()});
+await sendMessage({ kind: 'start', timestamp: new Date() });
 await runBuild();
-await sendMessage({kind: 'stop', timestamp: new Date()});
+await sendMessage({ kind: 'stop', timestamp: new Date() });
 ```
 
 [More info.](ipc.md#retrieve-all-messages)
@@ -485,7 +483,7 @@ const stdout = await $`zip -r - input.txt`.buffer();
 
 ```js
 // Execa
-const {stdout} = await $({encoding: 'buffer'})`zip -r - input.txt`;
+const { stdout } = await $({ encoding: 'buffer' })`zip -r - input.txt`;
 ```
 
 [More info.](binary.md#binary-output)
@@ -506,7 +504,7 @@ await $`npm run build`.verbose();
 
 ```js
 // Execa
-await $({verbose: 'full'})`npm run build`;
+await $({ verbose: 'full' })`npm run build`;
 ```
 
 [More info.](debugging.md#verbose-mode)
@@ -546,16 +544,12 @@ echo npm run build | sort | head -n2
 
 ```js
 // zx
-await $`npm run build`
-	.pipe($`sort`)
-	.pipe($`head -n2`);
+await $`npm run build`.pipe($`sort`).pipe($`head -n2`);
 ```
 
 ```js
 // Execa
-await $`npm run build`
-	.pipe`sort`
-	.pipe`head -n2`;
+await $`npm run build`.pipe`sort`.pipe`head -n2`;
 ```
 
 [More info.](pipe.md)
@@ -578,8 +572,7 @@ await Promise.all([subprocess, cat]);
 
 ```js
 // Execa
-await $({all: true})`npm run build`
-	.pipe({from: 'all'})`cat`;
+await $({ all: true })`npm run build`.pipe({ from: 'all' })`cat`;
 ```
 
 [More info.](pipe.md#source-file-descriptor)
@@ -593,14 +586,14 @@ npm run build > output.txt
 
 ```js
 // zx
-import {createWriteStream} from 'node:fs';
+import { createWriteStream } from 'node:fs';
 
 await $`npm run build`.pipe(createWriteStream('output.txt'));
 ```
 
 ```js
 // Execa
-await $({stdout: {file: 'output.txt'}})`npm run build`;
+await $({ stdout: { file: 'output.txt' } })`npm run build`;
 ```
 
 [More info.](output.md#file-output)
@@ -614,14 +607,14 @@ npm run build >> output.txt
 
 ```js
 // zx
-import {createWriteStream} from 'node:fs';
+import { createWriteStream } from 'node:fs';
 
-await $`npm run build`.pipe(createWriteStream('output.txt', {flags: 'a'}));
+await $`npm run build`.pipe(createWriteStream('output.txt', { flags: 'a' }));
 ```
 
 ```js
 // Execa
-await $({stdout: {file: 'output.txt', append: true}})`npm run build`;
+await $({ stdout: { file: 'output.txt', append: true } })`npm run build`;
 ```
 
 [More info.](output.md#file-output)
@@ -635,7 +628,7 @@ npm run build &> output.txt
 
 ```js
 // zx
-import {createWriteStream} from 'node:fs';
+import { createWriteStream } from 'node:fs';
 
 const subprocess = $`npm run build`;
 const fileStream = createWriteStream('output.txt');
@@ -646,8 +639,8 @@ await subprocess;
 
 ```js
 // Execa
-const output = {file: 'output.txt'};
-await $({stdout: output, stderr: output})`npm run build`;
+const output = { file: 'output.txt' };
+await $({ stdout: output, stderr: output })`npm run build`;
 ```
 
 [More info.](output.md#file-output)
@@ -668,7 +661,7 @@ await cat;
 
 ```js
 // Execa
-await $({inputFile: 'input.txt'})`cat`;
+await $({ inputFile: 'input.txt' })`cat`;
 ```
 
 [More info.](input.md#file-input)
@@ -682,7 +675,7 @@ await $({inputFile: 'input.txt'})`cat`;
 ```js
 // Execa
 const response = await fetch('https://example.com');
-await $({stdin: response.body})`npm run build`;
+await $({ stdin: response.body })`npm run build`;
 ```
 
 [More info.](streams.md#web-streams)
@@ -695,13 +688,13 @@ await $({stdin: response.body})`npm run build`;
 
 ```js
 // Execa
-import {pipeline} from 'node:stream/promises';
-import {createReadStream, createWriteStream} from 'node:fs';
+import { pipeline } from 'node:stream/promises';
+import { createReadStream, createWriteStream } from 'node:fs';
 
 await pipeline(
-	createReadStream('./input.txt'),
-	$`node ./transform.js`.duplex(),
-	createWriteStream('./output.txt'),
+  createReadStream('./input.txt'),
+  $`node ./transform.js`.duplex(),
+  createWriteStream('./output.txt'),
 );
 ```
 
@@ -718,24 +711,20 @@ npm run crash | sort | head -n2
 ```js
 // zx
 try {
-	await $`npm run crash`
-		.pipe($`sort`)
-		.pipe($`head -n2`);
-// This is never reached.
-// The process crashes instead.
+  await $`npm run crash`.pipe($`sort`).pipe($`head -n2`);
+  // This is never reached.
+  // The process crashes instead.
 } catch (error) {
-	console.error(error);
+  console.error(error);
 }
 ```
 
 ```js
 // Execa
 try {
-	await $`npm run build`
-		.pipe`sort`
-		.pipe`head -n2`;
+  await $`npm run build`.pipe`sort`.pipe`head -n2`;
 } catch (error) {
-	console.error(error);
+  console.error(error);
 }
 ```
 
@@ -756,8 +745,7 @@ echo "${PIPESTATUS[@]}"
 
 ```js
 // Execa
-const destinationResult = await execa`npm run build`
-	.pipe`head -n 2`;
+const destinationResult = await execa`npm run build`.pipe`head -n 2`;
 console.log(destinationResult.stdout); // First 2 lines of `npm run build`
 
 const sourceResult = destinationResult.pipedFrom[0];
@@ -780,7 +768,7 @@ const lines = await $`npm run build`.lines();
 
 ```js
 // Execa
-const lines = await $({lines: true})`npm run build`;
+const lines = await $({ lines: true })`npm run build`;
 ```
 
 [More info.](lines.md#simple-splitting)
@@ -806,9 +794,9 @@ done < <(npm run build)
 ```js
 // Execa
 for await (const line of $`npm run build`) {
-	if (line.includes('ERROR')) {
-		console.log(line);
-	}
+  if (line.includes('ERROR')) {
+    console.log(line);
+  }
 }
 ```
 
@@ -833,7 +821,7 @@ await $`sleep 2`.timeout('1ms');
 
 ```js
 // Execa
-await $({timeout: 1})`sleep 2`;
+await $({ timeout: 1 })`sleep 2`;
 // ExecaError: Command timed out after 1 milliseconds: sleep 2
 //     at file:///home/me/Desktop/example.js:2:20
 //     at ... {
@@ -869,12 +857,12 @@ echo $?
 
 ```js
 // zx
-const {exitCode} = await $`npm run build`.nothrow();
+const { exitCode } = await $`npm run build`.nothrow();
 ```
 
 ```js
 // Execa
-const {exitCode} = await $({reject: false})`npm run build`;
+const { exitCode } = await $({ reject: false })`npm run build`;
 ```
 
 [More info.](errors.md#exit-code)
@@ -893,7 +881,7 @@ await $`npm run build`.timeout('5s');
 
 ```js
 // Execa
-await $({timeout: 5000})`npm run build`;
+await $({ timeout: 5000 })`npm run build`;
 ```
 
 [More info.](termination.md#timeout)
@@ -924,7 +912,7 @@ cd project
 
 ```js
 // zx
-const $$ = $({cwd: 'project'});
+const $$ = $({ cwd: 'project' });
 
 // Or:
 cd('project');
@@ -932,7 +920,7 @@ cd('project');
 
 ```js
 // Execa
-const $$ = $({cwd: 'project'});
+const $$ = $({ cwd: 'project' });
 ```
 
 [More info.](environment.md#current-directory)
@@ -946,12 +934,12 @@ npm run build &
 
 ```js
 // zx
-await $({detached: true})`npm run build`;
+await $({ detached: true })`npm run build`;
 ```
 
 ```js
 // Execa
-await $({detached: true})`npm run build`;
+await $({ detached: true })`npm run build`;
 ```
 
 [More info.](environment.md#background-subprocess)
@@ -991,13 +979,13 @@ for await (const message of subprocess.getEachMessage()) {
 
 ```js
 // Execa
-const transform = function * (line) {
-	if (!line.includes('secret')) {
-		yield line;
-	}
+const transform = function* (line) {
+  if (!line.includes('secret')) {
+    yield line;
+  }
 };
 
-await $({stdout: [transform, 'inherit']})`echo ${'This is a secret.'}`;
+await $({ stdout: [transform, 'inherit'] })`echo ${'This is a secret.'}`;
 ```
 
 [More info.](transform.md)
@@ -1032,12 +1020,12 @@ subprocess.kill(error);
 
 ```js
 // zx only allows changing the signal used for timeouts
-const $$ = $({timeoutSignal: 'SIGINT'});
+const $$ = $({ timeoutSignal: 'SIGINT' });
 ```
 
 ```js
 // Execa
-const $ = $_({killSignal: 'SIGINT'});
+const $ = $_({ killSignal: 'SIGINT' });
 ```
 
 [More info.](termination.md#default-signal)
@@ -1052,13 +1040,13 @@ kill $PID
 ```js
 // zx
 const controller = new AbortController();
-await $({signal: controller.signal})`node long-script.js`;
+await $({ signal: controller.signal })`node long-script.js`;
 ```
 
 ```js
 // Execa
 const controller = new AbortController();
-await $({cancelSignal: controller.signal})`node long-script.js`;
+await $({ cancelSignal: controller.signal })`node long-script.js`;
 ```
 
 [More info.](termination.md#canceling)
@@ -1074,7 +1062,7 @@ trap cleanup SIGTERM
 // zx
 // This does not work on Windows
 process.on('SIGTERM', () => {
-	// ...
+  // ...
 });
 ```
 
@@ -1082,17 +1070,17 @@ process.on('SIGTERM', () => {
 // Execa - main.js
 const controller = new AbortController();
 await $({
-	cancelSignal: controller.signal,
-	gracefulCancel: true,
+  cancelSignal: controller.signal,
+  gracefulCancel: true,
 })`node build.js`;
 ```
 
 ```js
 // Execa - build.js
-import {getCancelSignal} from 'execa';
+import { getCancelSignal } from 'execa';
 
 const cancelSignal = await getCancelSignal();
-await fetch('https://example.com', {signal: cancelSignal});
+await fetch('https://example.com', { signal: cancelSignal });
 ```
 
 ### Interleaved output
@@ -1108,7 +1096,7 @@ const all = String(await $`node example.js`);
 
 ```js
 // Execa
-const {all} = await $({all: true})`node example.js`;
+const { all } = await $({ all: true })`node example.js`;
 ```
 
 [More info.](output.md#interleaved-output)
@@ -1127,7 +1115,7 @@ echo $!
 
 ```js
 // Execa
-const {pid} = $`npm run build`;
+const { pid } = $`npm run build`;
 ```
 
 [More info.](termination.md#inter-process-termination)
@@ -1136,14 +1124,14 @@ const {pid} = $`npm run build`;
 
 ```js
 // zx
-const {myCliFlag} = argv;
+const { myCliFlag } = argv;
 ```
 
 ```js
 // Execa
-import {parseArgs} from 'node:util';
+import { parseArgs } from 'node:util';
 
-const {myCliFlag} = parseArgs({strict: false}).values;
+const { myCliFlag } = parseArgs({ strict: false }).values;
 ```
 
 [More info.](https://nodejs.org/api/util.html#utilparseargsconfig)
@@ -1164,7 +1152,7 @@ const answer = await question('Question? ');
 // Execa
 import input from '@inquirer/input';
 
-const answer = await input({message: 'Question?'});
+const answer = await input({ message: 'Question?' });
 ```
 
 [More info.](https://github.com/SBoudrias/Inquirer.js)
@@ -1182,7 +1170,7 @@ await spinner(() => $`node script.js`);
 
 ```js
 // Execa
-import {oraPromise} from 'ora';
+import { oraPromise } from 'ora';
 
 await oraPromise($`node script.js`);
 ```
@@ -1203,7 +1191,7 @@ await sleep(5000);
 
 ```js
 // Execa
-import {setTimeout} from 'node:timers/promises';
+import { setTimeout } from 'node:timers/promises';
 
 await setTimeout(5000);
 ```
@@ -1224,7 +1212,7 @@ const files = await glob(['packages/*']);
 
 ```js
 // Execa
-import {glob} from 'node:fs/promises';
+import { glob } from 'node:fs/promises';
 
 const files = await Array.fromAsync(glob('packages/*'));
 ```
@@ -1270,20 +1258,14 @@ await fetch('https://github.com');
 
 ```js
 // zx
-await retry(
-	5,
-	() => $`curl -sSL https://sindresorhus.com/unicorn`,
-)
+await retry(5, () => $`curl -sSL https://sindresorhus.com/unicorn`);
 ```
 
 ```js
 // Execa
 import pRetry from 'p-retry';
 
-await pRetry(
-	() => $`curl -sSL https://sindresorhus.com/unicorn`,
-	{retries: 5},
-);
+await pRetry(() => $`curl -sSL https://sindresorhus.com/unicorn`, { retries: 5 });
 ```
 
 [More info.](https://github.com/sindresorhus/p-retry)

@@ -174,7 +174,7 @@ reaches the model (28 of 28, six as sections), and prompts got smaller.
 a question v3 left open: which parts? The answer needs ground truth for "the right part", and the
 pull request has it — diffing each expected document as it was before and after the developer's own
 edit gives the sections they touched (`npm run eval:anchors`, stored as `anchors` in each case, and
-computed at import from then on). The evaluation reports a *section ceiling* beside the document
+computed at import from then on). The evaluation reports a _section ceiling_ beside the document
 one: a section that was never shown cannot be updated, whatever the model does. Because this needs
 no model, `npm run eval:sections` sweeps the settings for nothing — the loop that chose 2 kB over
 the original 6 kB (26 of 30 documents against 22, for 3% more prompt). Two findings from the same
@@ -233,6 +233,23 @@ Verified against real GitHub, not only against the test double: a pull request o
 accepts the percent-encoded ref path `setBranch` builds — `git/ref/heads%2Fdocdrift%2Fpr-1`. That last
 one needed its own probe precisely because the fake was written to match what our code sends, so it
 would have agreed with the encoding whether or not GitHub did.
+
+**D20 — One service, one origin (Phase 4).** The deployed API also serves the built web app
+(`webDist` in `createApp`), rather than a static host proxying `/api/*` to a separate API service.
+The reason is the session cookie: on one origin it is plainly first-party, with no rewrite rule to
+get right and no CORS exception, which is the part of a split deployment most likely to break
+silently as browsers tighten third-party cookie rules (risk R3). It also removes the one value a
+blueprint cannot express — the other service's URL, which does not exist until that service is
+created. The single-page fallback is mounted AFTER the API routes and their 404 handler, so an
+unknown `/api/...` path still answers JSON rather than the app shell; `test/static-web.test.ts` pins
+that boundary, because getting it wrong gives clients HTML where they expect an error.
+
+Two production-only defects surfaced by running the built server rather than trusting it. Helmet
+sends `script-src 'self'`, which blocks inline scripts: the theme script that ran before first paint
+to avoid a flash was inline in `index.html`, so it was silently refused in every deployed build and
+never in development. It now lives in `public/theme.js`. And `index.html` must be served with
+`no-cache` while the hashed assets beside it are cached for a year — the reverse leaves a browser
+holding an old shell that asks for assets a deploy has already replaced.
 
 **D13 — Evaluation.** `npm run eval` runs the same `runPipeline` as the app (context selection,
 prompt, retries, validation), only reading repositories from `eval/cases` instead of GitHub, so it

@@ -49,7 +49,9 @@ This is the preferred method when executing Node.js files.
 [More info.](node.md)
 
 ### execaSync(file, arguments?, options?)
+
 ### $.sync(file, arguments?, options?)
+
 ### $.s(file, arguments?, options?)
 
 `file`: `string | URL`\
@@ -66,10 +68,15 @@ Those methods are discouraged as they hold the CPU and lack multiple features.
 [More info.](execution.md#synchronous-execution)
 
 ### execa\`command\`
+
 ### $\`command\`
+
 ### execaNode\`command\`
+
 ### execaSync\`command\`
+
 ### $.sync\`command\`
+
 ### $.s\`command\`
 
 `command`: `string`\
@@ -80,25 +87,35 @@ Same as [`execa()`](#execafile-arguments-options), [`$()`](#file-arguments-optio
 More info on the [syntax](execution.md#template-string-syntax) and [escaping](escaping.md#template-string-syntax).
 
 ### execa(options)\`command\`
+
 ### $(options)\`command\`
+
 ### execaNode(options)\`command\`
+
 ### execaSync(options)\`command\`
+
 ### $.sync(options)\`command\`
+
 ### $.s(options)\`command\`
 
 `command`: `string`\
 `options`: [`Options`](#options-1), [`SyncOptions`](#options-1)\
 _Returns_: [`ResultPromise`](#return-value), [`SyncResult`](#return-value)
 
-Same as [```execa`command` ```](#execacommand) but with [options](#options-1).
+Same as [``execa`command` ``](#execacommand) but with [options](#options-1).
 
 [More info.](execution.md#template-string-syntax)
 
 ### execa(options)
+
 ### $(options)
+
 ### execaNode(options)
+
 ### execaSync(options)
+
 ### $.sync(options)
+
 ### $.s(options)
 
 `options`: [`Options`](#options-1), [`SyncOptions`](#options-1)\
@@ -214,6 +231,7 @@ _TypeScript:_ [`ResultPromise`](typescript.md)\
 _Type:_ `Promise<object> | Subprocess`
 
 The return value of all [asynchronous methods](#methods) is both:
+
 - the [subprocess](#subprocess).
 - a `Promise` either resolving with its successful [`result`](#result), or rejecting with its [`error`](#execaerror).
 
@@ -256,6 +274,7 @@ This follows the same syntax as [`execa(file, arguments?, options?)`](#execafile
 [More info.](pipe.md#array-syntax)
 
 ### subprocess.pipe\`command\`
+
 ### subprocess.pipe(options)\`command\`
 
 `command`: `string`\
@@ -309,6 +328,7 @@ Unpipe the subprocess when the signal aborts.
 [More info.](pipe.md#unpipe)
 
 ### subprocess.kill(signal, error?)
+
 ### subprocess.kill(error?)
 
 `signal`: `string | number`\
@@ -371,7 +391,7 @@ This requires the [`ipc`](#optionsipc) option to be `true`. The [type](ipc.md#me
 
 _Type:_ [`Writable | null`](https://nodejs.org/api/stream.html#class-streamwritable)
 
-The subprocess [`stdin`](https://en.wikipedia.org/wiki/Standard_streams#Standard_input_(stdin)) as a stream.
+The subprocess [`stdin`](<https://en.wikipedia.org/wiki/Standard_streams#Standard_input_(stdin)>) as a stream.
 
 This is `null` if the [`stdin`](#optionsstdin) option is set to [`'inherit'`](input.md#terminal-input), [`'ignore'`](input.md#ignore-input), [`Readable`](streams.md#input) or [`integer`](input.md#terminal-input).
 
@@ -381,7 +401,7 @@ This is `null` if the [`stdin`](#optionsstdin) option is set to [`'inherit'`](in
 
 _Type:_ [`Readable | null`](https://nodejs.org/api/stream.html#class-streamreadable)
 
-The subprocess [`stdout`](https://en.wikipedia.org/wiki/Standard_streams#Standard_output_(stdout)) as a stream.
+The subprocess [`stdout`](<https://en.wikipedia.org/wiki/Standard_streams#Standard_output_(stdout)>) as a stream.
 
 This is `null` if the [`stdout`](#optionsstdout) option is set to [`'inherit'`](output.md#terminal-output), [`'ignore'`](output.md#ignore-output), [`Writable`](streams.md#output) or [`integer`](output.md#terminal-output), or if the [`buffer`](#optionsbuffer) option is `false`.
 
@@ -391,7 +411,7 @@ This is `null` if the [`stdout`](#optionsstdout) option is set to [`'inherit'`](
 
 _Type:_ [`Readable | null`](https://nodejs.org/api/stream.html#class-streamreadable)
 
-The subprocess [`stderr`](https://en.wikipedia.org/wiki/Standard_streams#Standard_error_(stderr)) as a stream.
+The subprocess [`stderr`](<https://en.wikipedia.org/wiki/Standard_streams#Standard_error_(stderr)>) as a stream.
 
 This is `null` if the [`stderr`](#optionsstdout) option is set to [`'inherit'`](output.md#terminal-output), [`'ignore'`](output.md#ignore-output), [`Writable`](streams.md#output) or [`integer`](output.md#terminal-output), or if the [`buffer`](#optionsbuffer) option is `false`.
 
@@ -509,7 +529,7 @@ When the subprocess [fails](errors.md#subprocess-failure), it is rejected with a
 
 _Type:_ `string | Uint8Array | string[] | Uint8Array[] | unknown[] | undefined`
 
-The output of the subprocess on [`stdout`](https://en.wikipedia.org/wiki/Standard_streams#Standard_output_(stdout)).
+The output of the subprocess on [`stdout`](<https://en.wikipedia.org/wiki/Standard_streams#Standard_output_(stdout)>).
 
 This is `undefined` if the [`stdout`](#optionsstdout) option is set to only [`'inherit'`](output.md#terminal-output), [`'ignore'`](output.md#ignore-output), [`Writable`](streams.md#output) or [`integer`](output.md#terminal-output), or if the [`buffer`](#optionsbuffer) option is `false`.
 
@@ -521,7 +541,7 @@ This is an array if the [`lines`](#optionslines) option is `true`, or if the `st
 
 _Type:_ `string | Uint8Array | string[] | Uint8Array[] | unknown[] | undefined`
 
-The output of the subprocess on [`stderr`](https://en.wikipedia.org/wiki/Standard_streams#Standard_error_(stderr)).
+The output of the subprocess on [`stderr`](<https://en.wikipedia.org/wiki/Standard_streams#Standard_error_(stderr)>).
 
 This is `undefined` if the [`stderr`](#optionsstderr) option is set to only [`'inherit'`](output.md#terminal-output), [`'ignore'`](output.md#ignore-output), [`Writable`](streams.md#output) or [`integer`](output.md#terminal-output), or if the [`buffer`](#optionsbuffer) option is `false`.
 
@@ -618,6 +638,7 @@ When this is `true`, the result is an [`ExecaError`](#execaerror) instance with 
 [More info.](errors.md#subprocess-failure)
 
 ## ExecaError
+
 ## ExecaSyncError
 
 _Type:_ `Error`
@@ -707,6 +728,7 @@ Whether the subprocess failed because its output was larger than the [`maxBuffer
 _Type:_ `boolean`
 
 Whether the subprocess was terminated by a [signal](termination.md#signal-termination) (like [`SIGTERM`](termination.md#sigterm)) sent by either:
+
 - The current process.
 - [Another process](termination.md#inter-process-termination). This case is [not supported on Windows](https://nodejs.org/api/process.html#signal-events).
 
@@ -735,6 +757,7 @@ This is `undefined` when the subprocess could not be spawned or was terminated b
 _Type:_ `string | undefined`
 
 The name of the [signal](termination.md#signal-termination) (like [`SIGTERM`](termination.md#sigterm)) that terminated the subprocess, sent by either:
+
 - The current process.
 - [Another process](termination.md#inter-process-termination). This case is [not supported on Windows](https://nodejs.org/api/process.html#signal-events).
 
@@ -817,7 +840,7 @@ Requires the [`node`](#optionsnode) option to be `true`.
 _Type:_ `boolean | string | URL`\
 _Default:_ `false`
 
-If `true`, runs the command inside of a [shell](https://en.wikipedia.org/wiki/Shell_(computing)).
+If `true`, runs the command inside of a [shell](<https://en.wikipedia.org/wiki/Shell_(computing)>).
 
 Uses [`/bin/sh`](https://en.wikipedia.org/wiki/Unix_shell) on UNIX and [`cmd.exe`](https://en.wikipedia.org/wiki/Cmd.exe) on Windows. A different shell can be specified as a string. The shell should understand the `-c` switch on UNIX or `/d /s /c` on Windows.
 
@@ -861,7 +884,7 @@ If `false`, only the `env` option is used, not `process.env`.
 
 _Type:_ `string | Uint8Array | stream.Readable`
 
-Write some input to the subprocess' [`stdin`](https://en.wikipedia.org/wiki/Standard_streams#Standard_input_(stdin)).
+Write some input to the subprocess' [`stdin`](<https://en.wikipedia.org/wiki/Standard_streams#Standard_input_(stdin)>).
 
 See also the [`inputFile`](#optionsinputfile) and [`stdin`](#optionsstdin) options.
 
@@ -871,7 +894,7 @@ See also the [`inputFile`](#optionsinputfile) and [`stdin`](#optionsstdin) optio
 
 _Type:_ `string | URL`
 
-Use a file as input to the subprocess' [`stdin`](https://en.wikipedia.org/wiki/Standard_streams#Standard_input_(stdin)).
+Use a file as input to the subprocess' [`stdin`](<https://en.wikipedia.org/wiki/Standard_streams#Standard_input_(stdin)>).
 
 See also the [`input`](#optionsinput) and [`stdin`](#optionsstdin) options.
 
@@ -883,7 +906,7 @@ _TypeScript:_ [`StdinOption`](typescript.md) or [`StdinSyncOption`](typescript.m
 _Type:_ `string | number | stream.Readable | ReadableStream | TransformStream | URL | {file: string} | Uint8Array | Iterable<string | Uint8Array | unknown> | AsyncIterable<string | Uint8Array | unknown> | GeneratorFunction<string | Uint8Array | unknown> | AsyncGeneratorFunction<string | Uint8Array | unknown> | {transform: GeneratorFunction | AsyncGeneratorFunction | Duplex | TransformStream}` (or a tuple of those types)\
 _Default:_ `'inherit'` with [`$`](#file-arguments-options), `'pipe'` otherwise
 
-How to setup the subprocess' [standard input](https://en.wikipedia.org/wiki/Standard_streams#Standard_input_(stdin)). This can be [`'pipe'`](streams.md#manual-streaming), [`'overlapped'`](windows.md#asynchronous-io), [`'ignore`](input.md#ignore-input), [`'inherit'`](input.md#terminal-input), a [file descriptor integer](input.md#terminal-input), a [Node.js `Readable` stream](streams.md#input), a web [`ReadableStream`](streams.md#web-streams), a [`{ file: 'path' }` object](input.md#file-input), a [file URL](input.md#file-input), an [`Iterable`](streams.md#iterables-as-input) (including an [array of strings](input.md#string-input)), an [`AsyncIterable`](streams.md#iterables-as-input), an [`Uint8Array`](binary.md#binary-input), a [generator function](transform.md), a [`Duplex`](transform.md#duplextransform-streams) or a web [`TransformStream`](transform.md#duplextransform-streams).
+How to setup the subprocess' [standard input](<https://en.wikipedia.org/wiki/Standard_streams#Standard_input_(stdin)>). This can be [`'pipe'`](streams.md#manual-streaming), [`'overlapped'`](windows.md#asynchronous-io), [`'ignore`](input.md#ignore-input), [`'inherit'`](input.md#terminal-input), a [file descriptor integer](input.md#terminal-input), a [Node.js `Readable` stream](streams.md#input), a web [`ReadableStream`](streams.md#web-streams), a [`{ file: 'path' }` object](input.md#file-input), a [file URL](input.md#file-input), an [`Iterable`](streams.md#iterables-as-input) (including an [array of strings](input.md#string-input)), an [`AsyncIterable`](streams.md#iterables-as-input), an [`Uint8Array`](binary.md#binary-input), a [generator function](transform.md), a [`Duplex`](transform.md#duplextransform-streams) or a web [`TransformStream`](transform.md#duplextransform-streams).
 
 This can be an [array of values](output.md#multiple-targets) such as `['inherit', 'pipe']` or `[fileUrl, 'pipe']`.
 
@@ -895,7 +918,7 @@ _TypeScript:_ [`StdoutStderrOption`](typescript.md) or [`StdoutStderrSyncOption`
 _Type:_ `string | number | stream.Writable | WritableStream | TransformStream | URL | {file: string} | GeneratorFunction<string | Uint8Array | unknown> | AsyncGeneratorFunction<string | Uint8Array | unknown>  | {transform: GeneratorFunction | AsyncGeneratorFunction | Duplex | TransformStream}` (or a tuple of those types)\
 _Default:_ `pipe`
 
-How to setup the subprocess' [standard output](https://en.wikipedia.org/wiki/Standard_streams#Standard_input_(stdin)). This can be [`'pipe'`](output.md#stdout-and-stderr), [`'overlapped'`](windows.md#asynchronous-io), [`'ignore`](output.md#ignore-output), [`'inherit'`](output.md#terminal-output), a [file descriptor integer](output.md#terminal-output), a [Node.js `Writable` stream](streams.md#output), a web [`WritableStream`](streams.md#web-streams), a [`{ file: 'path' }` object](output.md#file-output), a [file URL](output.md#file-output), a [generator function](transform.md), a [`Duplex`](transform.md#duplextransform-streams) or a web [`TransformStream`](transform.md#duplextransform-streams).
+How to setup the subprocess' [standard output](<https://en.wikipedia.org/wiki/Standard_streams#Standard_input_(stdin)>). This can be [`'pipe'`](output.md#stdout-and-stderr), [`'overlapped'`](windows.md#asynchronous-io), [`'ignore`](output.md#ignore-output), [`'inherit'`](output.md#terminal-output), a [file descriptor integer](output.md#terminal-output), a [Node.js `Writable` stream](streams.md#output), a web [`WritableStream`](streams.md#web-streams), a [`{ file: 'path' }` object](output.md#file-output), a [file URL](output.md#file-output), a [generator function](transform.md), a [`Duplex`](transform.md#duplextransform-streams) or a web [`TransformStream`](transform.md#duplextransform-streams).
 
 This can be an [array of values](output.md#multiple-targets) such as `['inherit', 'pipe']` or `[fileUrl, 'pipe']`.
 
@@ -907,7 +930,7 @@ _TypeScript:_ [`StdoutStderrOption`](typescript.md) or [`StdoutStderrSyncOption`
 _Type:_ `string | number | stream.Writable | WritableStream | TransformStream | URL | {file: string} | GeneratorFunction<string | Uint8Array | unknown> | AsyncGeneratorFunction<string | Uint8Array | unknown> | {transform: GeneratorFunction | AsyncGeneratorFunction | Duplex | TransformStream}` (or a tuple of those types)\
 _Default:_ `pipe`
 
-How to setup the subprocess' [standard error](https://en.wikipedia.org/wiki/Standard_streams#Standard_input_(stdin)). This can be [`'pipe'`](output.md#stdout-and-stderr), [`'overlapped'`](windows.md#asynchronous-io), [`'ignore`](output.md#ignore-output), [`'inherit'`](output.md#terminal-output), a [file descriptor integer](output.md#terminal-output), a [Node.js `Writable` stream](streams.md#output), a web [`WritableStream`](streams.md#web-streams), a [`{ file: 'path' }` object](output.md#file-output), a [file URL](output.md#file-output), a [generator function](transform.md), a [`Duplex`](transform.md#duplextransform-streams) or a web [`TransformStream`](transform.md#duplextransform-streams).
+How to setup the subprocess' [standard error](<https://en.wikipedia.org/wiki/Standard_streams#Standard_input_(stdin)>). This can be [`'pipe'`](output.md#stdout-and-stderr), [`'overlapped'`](windows.md#asynchronous-io), [`'ignore`](output.md#ignore-output), [`'inherit'`](output.md#terminal-output), a [file descriptor integer](output.md#terminal-output), a [Node.js `Writable` stream](streams.md#output), a web [`WritableStream`](streams.md#web-streams), a [`{ file: 'path' }` object](output.md#file-output), a [file URL](output.md#file-output), a [generator function](transform.md), a [`Duplex`](transform.md#duplextransform-streams) or a web [`TransformStream`](transform.md#duplextransform-streams).
 
 This can be an [array of values](output.md#multiple-targets) such as `['inherit', 'pipe']` or `[fileUrl, 'pipe']`.
 
@@ -944,6 +967,7 @@ _Default:_ `'utf8'`
 If the subprocess outputs text, specifies its character encoding, either [`'utf8'`](https://en.wikipedia.org/wiki/UTF-8) or [`'utf16le'`](https://en.wikipedia.org/wiki/UTF-16).
 
 If it outputs binary data instead, this should be either:
+
 - `'buffer'`: returns the binary output as an [`Uint8Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array).
 - [`'hex'`](https://en.wikipedia.org/wiki/Hexadecimal), [`'base64'`](https://en.wikipedia.org/wiki/Base64), [`'base64url'`](https://en.wikipedia.org/wiki/Base64#RFC_4648), [`'latin1'`](https://nodejs.org/api/buffer.html#buffers-and-character-encodings) or [`'ascii'`](https://nodejs.org/api/buffer.html#buffers-and-character-encodings): encodes the binary output as a string.
 
@@ -1036,9 +1060,9 @@ More info [here](ipc.md#send-an-initial-message) and [there](input.md#any-input-
 _Type:_ `'none' | 'short' | 'full' | Function`\
 _Default:_ `'none'`
 
-If `verbose` is `'short'`, prints the command on [`stderr`](https://en.wikipedia.org/wiki/Standard_streams#Standard_error_(stderr)): its file, arguments, duration and (if it failed) error message.
+If `verbose` is `'short'`, prints the command on [`stderr`](<https://en.wikipedia.org/wiki/Standard_streams#Standard_error_(stderr)>): its file, arguments, duration and (if it failed) error message.
 
-If `verbose` is `'full'` or a function, the command's [`stdout`](https://en.wikipedia.org/wiki/Standard_streams#Standard_output_(stdout)), `stderr` and [IPC messages](ipc.md) are also printed.
+If `verbose` is `'full'` or a function, the command's [`stdout`](<https://en.wikipedia.org/wiki/Standard_streams#Standard_output_(stdout)>), `stderr` and [IPC messages](ipc.md) are also printed.
 
 A [function](#verbose-function) can be passed to customize logging. Please see [this page](debugging.md#custom-logging) for more information.
 
@@ -1094,7 +1118,7 @@ When aborted, [`error.isGracefullyCanceled`](#errorisgracefullycanceled) becomes
 _Type:_ `number | false`\
 _Default:_ `5000`
 
-If the subprocess is terminated but does not exit, forcefully exit it by sending [`SIGKILL`](https://en.wikipedia.org/wiki/Signal_(IPC)#SIGKILL).
+If the subprocess is terminated but does not exit, forcefully exit it by sending [`SIGKILL`](<https://en.wikipedia.org/wiki/Signal_(IPC)#SIGKILL>).
 
 When this happens, [`error.isForcefullyTerminated`](#errorisforcefullyterminated) becomes `true`.
 
@@ -1105,7 +1129,7 @@ When this happens, [`error.isForcefullyTerminated`](#errorisforcefullyterminated
 _Type:_ `string | number`\
 _Default:_ `'SIGTERM'`
 
-Default [signal](https://en.wikipedia.org/wiki/Signal_(IPC)) used to terminate the subprocess.
+Default [signal](<https://en.wikipedia.org/wiki/Signal_(IPC)>) used to terminate the subprocess.
 
 This can be either a name (like [`'SIGTERM'`](termination.md#sigterm)) or a number (like `9`).
 
@@ -1191,6 +1215,7 @@ Subprocess event object, for logging purpose, using the [`verbose`](#optionsverb
 _Type_: `string`
 
 Event type. This can be:
+
 - `'command'`: subprocess start
 - `'output'`: `stdout`/`stderr` [output](output.md#stdout-and-stderr)
 - `'ipc'`: IPC [output](ipc.md#retrieve-all-messages)
@@ -1202,6 +1227,7 @@ Event type. This can be:
 _Type_: `string`
 
 Depending on [`verboseObject.type`](#verboseobjecttype), this is:
+
 - `'command'`: the [`result.escapedCommand`](#resultescapedcommand)
 - `'output'`: one line from [`result.stdout`](#resultstdout) or [`result.stderr`](#resultstderr)
 - `'ipc'`: one IPC message from [`result.ipcOutput`](#resultipcoutput)

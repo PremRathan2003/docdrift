@@ -426,9 +426,11 @@ export async function findCandidates(
   docPath = 'docs',
 ) {
   let numbers: { number: number; title: string; url: string }[];
-  const commits = await gh.api<CommitListItem[]>(
-    `/repos/${owner}/${repo}/commits?path=${encodeURIComponent(docPath)}&per_page=${Math.min(limit * 2, 100)}`,
-  ).catch(() => []);
+  const commits = await gh
+    .api<CommitListItem[]>(
+      `/repos/${owner}/${repo}/commits?path=${encodeURIComponent(docPath)}&per_page=${Math.min(limit * 2, 100)}`,
+    )
+    .catch(() => []);
   const fromCommits = commits
     .map((c) => {
       const subject = c.commit.message.split('\n')[0]!;

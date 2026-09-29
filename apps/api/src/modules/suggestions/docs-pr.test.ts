@@ -51,7 +51,12 @@ describe('planDocsPullRequest', () => {
       input({
         suggestions: [
           { id: 's1', documentationPath: 'README.md', currentContent: 'first', status: 'APPLIED' },
-          { id: 's2', documentationPath: 'docs/a.md', currentContent: 'second', status: 'APPROVED' },
+          {
+            id: 's2',
+            documentationPath: 'docs/a.md',
+            currentContent: 'second',
+            status: 'APPROVED',
+          },
         ],
       }),
     );
@@ -107,7 +112,12 @@ describe('planDocsPullRequest', () => {
       input({
         suggestions: [
           { id: 's1', documentationPath: 'README.md', currentContent: 'first', status: 'APPROVED' },
-          { id: 's2', documentationPath: 'README.md', currentContent: 'second', status: 'APPROVED' },
+          {
+            id: 's2',
+            documentationPath: 'README.md',
+            currentContent: 'second',
+            status: 'APPROVED',
+          },
         ],
       }),
     );

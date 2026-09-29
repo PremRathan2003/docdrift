@@ -16,11 +16,7 @@
     },
     {
       "path": "docs/streams.md",
-      "mustContain": [
-        "readableStream",
-        "subprocess.readableStream",
-        "subprocess.transformStream"
-      ],
+      "mustContain": ["readableStream", "subprocess.readableStream", "subprocess.transformStream"],
       "mustNotContain": []
     }
   ],
@@ -32,10 +28,7 @@
     "test-d/convert/writable-stream.test-d.ts",
     "test/convert/web.js"
   ],
-  "trimmedFiles": [
-    "test-d/pipe.test-d.ts",
-    "test/pipe/methods.js"
-  ],
+  "trimmedFiles": ["test-d/pipe.test-d.ts", "test/pipe/methods.js"],
   "notes": "The PR author updated these documents in the same PR; the case removes those edits. Content checks are words the author added/removed. Review them before relying on the case. Labels reviewed by hand: automatic checks that were link fragments or ordinary English words were removed.",
   "source": "real",
   "origin": {

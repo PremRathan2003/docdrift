@@ -15,14 +15,14 @@
 Since the escaping is fairly basic, neither `error.command` nor `error.escapedCommand` should be executed directly, including using [`execa()`](api.md#execafile-arguments-options) or [`parseCommandString()`](api.md#parsecommandstringcommand).
 
 ```js
-import {execa} from 'execa';
+import { execa } from 'execa';
 
 try {
-	await execa`npm run build\ntask`;
+  await execa`npm run build\ntask`;
 } catch (error) {
-	console.error(error.command); // "npm run build\ntask"
-	console.error(error.escapedCommand); // "npm run 'build\\ntask'"
-	throw error;
+  console.error(error.command); // "npm run build\ntask"
+  console.error(error.escapedCommand); // "npm run 'build\\ntask'"
+  throw error;
 }
 ```
 
@@ -30,11 +30,11 @@ try {
 
 ```js
 try {
-	const result = await execa`npm run build`;
-	console.log('Command duration:', result.durationMs); // 150
+  const result = await execa`npm run build`;
+  console.log('Command duration:', result.durationMs); // 150
 } catch (error) {
-	console.error('Command duration:', error.durationMs); // 150
-	throw error;
+  console.error('Command duration:', error.durationMs); // 150
+  throw error;
 }
 ```
 
@@ -42,11 +42,11 @@ try {
 
 ### Short mode
 
-When the [`verbose`](api.md#optionsverbose) option is `'short'`, the [command](#command), [duration](#duration) and [error messages](errors.md#error-message) are printed on [`stderr`](https://en.wikipedia.org/wiki/Standard_streams#Standard_error_(stderr)).
+When the [`verbose`](api.md#optionsverbose) option is `'short'`, the [command](#command), [duration](#duration) and [error messages](errors.md#error-message) are printed on [`stderr`](<https://en.wikipedia.org/wiki/Standard_streams#Standard_error_(stderr)>).
 
 ```js
 // build.js
-await execa({verbose: 'short'})`npm run build`;
+await execa({ verbose: 'short' })`npm run build`;
 ```
 
 ```
@@ -57,17 +57,18 @@ $ node build.js
 
 ### Full mode
 
-When the [`verbose`](api.md#optionsverbose) option is `'full'`, the subprocess' [`stdout`, `stderr`](output.md) and [IPC messages](ipc.md) are also logged. They are all printed on [`stderr`](https://en.wikipedia.org/wiki/Standard_streams#Standard_error_(stderr)).
+When the [`verbose`](api.md#optionsverbose) option is `'full'`, the subprocess' [`stdout`, `stderr`](output.md) and [IPC messages](ipc.md) are also logged. They are all printed on [`stderr`](<https://en.wikipedia.org/wiki/Standard_streams#Standard_error_(stderr)>).
 
 The output is not logged if either:
+
 - The [`stdout`](api.md#optionsstdout)/[`stderr`](api.md#optionsstderr) option is [`'ignore'`](output.md#ignore-output) or [`'inherit'`](output.md#terminal-output).
 - The `stdout`/`stderr` is redirected to [a stream](streams.md#output), [a file](output.md#file-output), [a file descriptor](output.md#terminal-output), or [another subprocess](pipe.md).
 - The [`encoding`](api.md#optionsencoding) option is [binary](binary.md#binary-output).
 
 ```js
 // build.js
-await execa({verbose: 'full'})`npm run build`;
-await execa({verbose: 'full'})`npm run test`;
+await execa({ verbose: 'full' })`npm run build`;
+await execa({ verbose: 'full' })`npm run test`;
 ```
 
 ```
@@ -93,7 +94,7 @@ When the `NODE_DEBUG=execa` [environment variable](https://en.wikipedia.org/wiki
 // This is logged by default
 await execa`npm run build`;
 // This is not logged
-await execa({verbose: 'none'})`npm run test`;
+await execa({ verbose: 'none' })`npm run test`;
 ```
 
 ```
@@ -119,39 +120,39 @@ If a string is returned, it is printed on `stderr`. If `undefined` is returned, 
 ### Filter logs
 
 ```js
-import {execa as execa_} from 'execa';
+import { execa as execa_ } from 'execa';
 
 // Only print log lines showing the subprocess duration
 const execa = execa_({
-	verbose(verboseLine, {type}) {
-		return type === 'duration' ? verboseLine : undefined;
-	},
+  verbose(verboseLine, { type }) {
+    return type === 'duration' ? verboseLine : undefined;
+  },
 });
 ```
 
 ### Transform logs
 
 ```js
-import {execa as execa_} from 'execa';
+import { execa as execa_ } from 'execa';
 
 // Prepend current process' PID
 const execa = execa_({
-	verbose(verboseLine) {
-		return `[${process.pid}] ${verboseLine}`;
-	},
+  verbose(verboseLine) {
+    return `[${process.pid}] ${verboseLine}`;
+  },
 });
 ```
 
 ### Custom log format
 
 ```js
-import {execa as execa_} from 'execa';
+import { execa as execa_ } from 'execa';
 
 // Use a different format for the timestamp
 const execa = execa_({
-	verbose(verboseLine, {timestamp}) {
-		return verboseLine.replace(timestampRegExp, timestamp.toISOString());
-	},
+  verbose(verboseLine, { timestamp }) {
+    return verboseLine.replace(timestampRegExp, timestamp.toISOString());
+  },
 });
 
 // Timestamp at the start of each log line
@@ -161,37 +162,37 @@ const timestampRegExp = /\d{2}:\d{2}:\d{2}\.\d{3}/;
 ### JSON logging
 
 ```js
-import {execa as execa_} from 'execa';
+import { execa as execa_ } from 'execa';
 
 const execa = execa_({
-	verbose(verboseLine, verboseObject) {
-		return JSON.stringify(verboseObject);
-	},
+  verbose(verboseLine, verboseObject) {
+    return JSON.stringify(verboseObject);
+  },
 });
 ```
 
 ### Advanced logging
 
 ```js
-import {execa as execa_} from 'execa';
-import {createLogger, transports} from 'winston';
+import { execa as execa_ } from 'execa';
+import { createLogger, transports } from 'winston';
 
 // Log to a file using Winston
-const transport = new transports.File({filename: 'logs.txt'});
-const logger = createLogger({transports: [transport]});
+const transport = new transports.File({ filename: 'logs.txt' });
+const logger = createLogger({ transports: [transport] });
 const LOG_LEVELS = {
-	command: 'info',
-	output: 'verbose',
-	ipc: 'verbose',
-	error: 'error',
-	duration: 'info',
+  command: 'info',
+  output: 'verbose',
+  ipc: 'verbose',
+  error: 'error',
+  duration: 'info',
 };
 
 const execa = execa_({
-	verbose(verboseLine, {message, ...verboseObject}) {
-		const level = LOG_LEVELS[verboseObject.type];
-		logger[level](message, verboseObject);
-	},
+  verbose(verboseLine, { message, ...verboseObject }) {
+    const level = LOG_LEVELS[verboseObject.type];
+    logger[level](message, verboseObject);
+  },
 });
 ```
 

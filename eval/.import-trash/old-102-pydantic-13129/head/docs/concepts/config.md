@@ -6,43 +6,43 @@ specified for Pydantic's supported types.
 
 On Pydantic models, configuration can be specified in two ways:
 
-* Using the [`model_config`][pydantic.BaseModel.model_config] class attribute:
+- Using the [`model_config`][pydantic.BaseModel.model_config] class attribute:
 
-    ```python
-    from pydantic import BaseModel, ConfigDict, ValidationError
-
-
-    class Model(BaseModel):
-        model_config = ConfigDict(str_max_length=5)  # (1)!
-
-        v: str
+  ```python
+  from pydantic import BaseModel, ConfigDict, ValidationError
 
 
-    try:
-        m = Model(v='abcdef')
-    except ValidationError as e:
-        print(e)
-        """
-        1 validation error for Model
-        v
-          String should have at most 5 characters [type=string_too_long, input_value='abcdef', input_type=str]
-        """
-    ```
+  class Model(BaseModel):
+      model_config = ConfigDict(str_max_length=5)  # (1)!
 
-    1. A plain dictionary (i.e. `{'str_max_length': 5}`) can also be used.
-
-    !!! note
-        In Pydantic V1, the `Config` class was used. This is still supported, but **deprecated**.
-
-* Using class arguments:
-
-    ```python
-    from pydantic import BaseModel
+      v: str
 
 
-    class Model(BaseModel, frozen=True):
-        a: str
-    ```
+  try:
+      m = Model(v='abcdef')
+  except ValidationError as e:
+      print(e)
+      """
+      1 validation error for Model
+      v
+        String should have at most 5 characters [type=string_too_long, input_value='abcdef', input_type=str]
+      """
+  ```
+
+  1. A plain dictionary (i.e. `{'str_max_length': 5}`) can also be used.
+
+  !!! note
+  In Pydantic V1, the `Config` class was used. This is still supported, but **deprecated**.
+
+- Using class arguments:
+
+  ```python
+  from pydantic import BaseModel
+
+
+  class Model(BaseModel, frozen=True):
+      a: str
+  ```
 
   Unlike the [`model_config`][pydantic.BaseModel.model_config] class attribute,
   static type checkers will recognize class arguments. For `frozen`, any instance
@@ -98,35 +98,35 @@ The [configuration propagation](#configuration-propagation) rules also apply.
 If you are using [standard library dataclasses][dataclasses] or [`TypedDict`][typing.TypedDict] classes,
 the configuration can be set in two ways:
 
-* Using the `__pydantic_config__` class attribute:
+- Using the `__pydantic_config__` class attribute:
 
-    ```python
-    from dataclasses import dataclass
+  ```python
+  from dataclasses import dataclass
 
-    from pydantic import ConfigDict
+  from pydantic import ConfigDict
 
 
-    @dataclass
-    class User:
-        __pydantic_config__ = ConfigDict(strict=True)
+  @dataclass
+  class User:
+      __pydantic_config__ = ConfigDict(strict=True)
 
-        id: int
-        name: str = 'John Doe'
-    ```
+      id: int
+      name: str = 'John Doe'
+  ```
 
-* Using the [`@with_config`][pydantic.config.with_config] decorator (this avoids static type checking errors with
+- Using the [`@with_config`][pydantic.config.with_config] decorator (this avoids static type checking errors with
   [`TypedDict`][typing.TypedDict]):
 
-    ```python
-    from typing_extensions import TypedDict
+  ```python
+  from typing_extensions import TypedDict
 
-    from pydantic import ConfigDict, with_config
+  from pydantic import ConfigDict, with_config
 
 
-    @with_config(ConfigDict(str_to_lower=True))
-    class Model(TypedDict):
-        x: str
-    ```
+  @with_config(ConfigDict(str_to_lower=True))
+  class Model(TypedDict):
+      x: str
+  ```
 
 ## Configuration on the `@validate_call` decorator
 
@@ -155,7 +155,7 @@ print(m.model_dump())
 #> {'x': 'foo', 'y': 'bar'}
 ```
 
-If you provide configuration to the subclasses, it will be *merged* with the parent configuration:
+If you provide configuration to the subclasses, it will be _merged_ with the parent configuration:
 
 ```python
 from pydantic import BaseModel, ConfigDict
@@ -179,8 +179,8 @@ print(Model.model_config)
 ```
 
 !!! warning
-    If your model inherits from multiple bases, Pydantic currently *doesn't* follow the
-    [MRO]. For more details, see [this issue](https://github.com/pydantic/pydantic/issues/9992).
+If your model inherits from multiple bases, Pydantic currently _doesn't_ follow the
+[MRO]. For more details, see [this issue](https://github.com/pydantic/pydantic/issues/9992).
 
     [MRO]: https://docs.python.org/3/glossary.html#term-method-resolution-order
 
@@ -188,54 +188,54 @@ print(Model.model_config)
 
 When using types that support configuration as field annotations, configuration may not be propagated:
 
-* For Pydantic models and dataclasses, configuration will *not* be propagated, each model has its own
+- For Pydantic models and dataclasses, configuration will _not_ be propagated, each model has its own
   "configuration boundary":
 
-    ```python
-    from pydantic import BaseModel, ConfigDict
+  ```python
+  from pydantic import BaseModel, ConfigDict
 
 
-    class User(BaseModel):
-        name: str
+  class User(BaseModel):
+      name: str
 
 
-    class Parent(BaseModel):
-        user: User
+  class Parent(BaseModel):
+      user: User
 
-        model_config = ConfigDict(str_to_lower=True)
+      model_config = ConfigDict(str_to_lower=True)
 
 
-    print(Parent(user={'name': 'JOHN'}))
-    #> user=User(name='JOHN')
-    ```
+  print(Parent(user={'name': 'JOHN'}))
+  #> user=User(name='JOHN')
+  ```
 
-* For stdlib types (dataclasses and typed dictionaries), configuration will be propagated, unless
+- For stdlib types (dataclasses and typed dictionaries), configuration will be propagated, unless
   the type has its own configuration set:
 
-    ```python
-    from dataclasses import dataclass
+  ```python
+  from dataclasses import dataclass
 
-    from pydantic import BaseModel, ConfigDict, with_config
-
-
-    @dataclass
-    class UserWithoutConfig:
-        name: str
+  from pydantic import BaseModel, ConfigDict, with_config
 
 
-    @dataclass
-    @with_config(str_to_lower=False)
-    class UserWithConfig:
-        name: str
+  @dataclass
+  class UserWithoutConfig:
+      name: str
 
 
-    class Parent(BaseModel):
-        user_1: UserWithoutConfig
-        user_2: UserWithConfig
+  @dataclass
+  @with_config(str_to_lower=False)
+  class UserWithConfig:
+      name: str
 
-        model_config = ConfigDict(str_to_lower=True)
+
+  class Parent(BaseModel):
+      user_1: UserWithoutConfig
+      user_2: UserWithConfig
+
+      model_config = ConfigDict(str_to_lower=True)
 
 
-    print(Parent(user_1={'name': 'JOHN'}, user_2={'name': 'JOHN'}))
-    #> user_1=UserWithoutConfig(name='john') user_2=UserWithConfig(name='JOHN')
-    ```
+  print(Parent(user_1={'name': 'JOHN'}, user_2={'name': 'JOHN'}))
+  #> user_1=UserWithoutConfig(name='john') user_2=UserWithConfig(name='JOHN')
+  ```

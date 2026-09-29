@@ -7,28 +7,18 @@
   "expected": [
     {
       "path": "docs/api.md",
-      "mustContain": [
-        "options.killDescendants"
-      ],
+      "mustContain": ["options.killDescendants"],
       "mustNotContain": []
     },
     {
       "path": "docs/termination.md",
-      "mustContain": [
-        "killDescendants"
-      ],
+      "mustContain": ["killDescendants"],
       "mustNotContain": []
     }
   ],
   "acceptable": [],
-  "added": [
-    "lib/terminate/kill-descendants.js",
-    "test/terminate/kill-descendants.js"
-  ],
-  "trimmedFiles": [
-    "test-d/arguments/options.test-d.ts",
-    "types/arguments/options.d.ts"
-  ],
+  "added": ["lib/terminate/kill-descendants.js", "test/terminate/kill-descendants.js"],
+  "trimmedFiles": ["test-d/arguments/options.test-d.ts", "types/arguments/options.d.ts"],
   "notes": "The PR author updated these documents in the same PR; the case removes those edits. Content checks are words the author added/removed. Review them before relying on the case. Labels reviewed by hand: automatic checks that were link fragments or ordinary English words were removed.",
   "source": "real",
   "origin": {

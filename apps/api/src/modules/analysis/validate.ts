@@ -93,7 +93,6 @@ export function stripLineNumbers(text: string): { text: string; stripped: boolea
   return { text: numbered.map((m) => m![2]!).join('\n'), stripped: true };
 }
 
-
 /**
  * Step 2: semantic checks against what we actually sent. The model may
  * invent paths or cite files that weren't changed; such items are removed

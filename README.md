@@ -31,10 +31,10 @@ own documentation edit is the ground truth ([how they are built](eval/README.md)
 
 Most recent full run (gemini-3.5-flash-lite, prompt v3.2):
 
-| | precision | recall | cases exactly right |
-| --- | --- | --- | --- |
-| synthetic (26) | 100% | 100% | 26 of 26 |
-| real pull requests (16) | 94% | 63%¹ | 6 of 16 |
+|                         | precision | recall | cases exactly right |
+| ----------------------- | --------- | ------ | ------------------- |
+| synthetic (26)          | 100%      | 100%   | 26 of 26            |
+| real pull requests (16) | 94%       | 63%¹   | 6 of 16             |
 
 ¹ Measured over three runs (60%, 63%, 67%), because single runs of a model vary by more than the
 changes being measured — an early version of this project drew a conclusion from one run and had to
@@ -44,7 +44,7 @@ Two numbers mattered more than the headline ones while building it:
 
 - **Documents reaching the model: 27% → 98%.** Filename heuristics were replaced with content
   ranking; this was the binding constraint for two milestones and no prompt work would have moved it.
-- **The right *section* reaching the model: 56% → 81%**, by cutting long documents into 2 kB pieces
+- **The right _section_ reaching the model: 56% → 81%**, by cutting long documents into 2 kB pieces
   instead of 6 kB. Chosen by `npm run eval:sections`, which measures it against the sections the
   developers actually edited — without calling a model, so the setting was picked from evidence
   rather than intuition.
@@ -106,18 +106,18 @@ bash tools/seed-sandbox.sh ~/docdrift-sandbox
 
 ## Scripts
 
-| Command                    | What it does                                                              |
-| -------------------------- | ------------------------------------------------------------------------- |
-| `npm run dev`              | Run everything in watch mode                                              |
-| `npm test`                 | Unit tests (no network, no database, no real LLM)                         |
-| `npm run test:integration` | API tests against the `_test` database                                    |
-| `npm run test:e2e`         | Browser tests of the whole flow (fake GitHub + scripted AI)               |
-| `npm run eval`             | Score the AI on the labelled cases in `eval/` ([details](eval/README.md)) |
+| Command                    | What it does                                                                           |
+| -------------------------- | -------------------------------------------------------------------------------------- |
+| `npm run dev`              | Run everything in watch mode                                                           |
+| `npm test`                 | Unit tests (no network, no database, no real LLM)                                      |
+| `npm run test:integration` | API tests against the `_test` database                                                 |
+| `npm run test:e2e`         | Browser tests of the whole flow (fake GitHub + scripted AI)                            |
+| `npm run eval`             | Score the AI on the labelled cases in `eval/` ([details](eval/README.md))              |
 | `npm run eval:sections`    | Sweep document-chunking settings against the developers' own edits (no model, no cost) |
-| `npm run eval:import`      | Turn a merged public pull request into a labelled case                    |
-| `npm run check`            | Lint + format check + typecheck + tests (what CI runs)                    |
-| `npm run build`            | Production builds of all packages                                         |
-| `npm run db:migrate`       | Create/apply a migration after editing `schema.prisma`                    |
+| `npm run eval:import`      | Turn a merged public pull request into a labelled case                                 |
+| `npm run check`            | Lint + format check + typecheck + tests (what CI runs)                                 |
+| `npm run build`            | Production builds of all packages                                                      |
+| `npm run db:migrate`       | Create/apply a migration after editing `schema.prisma`                                 |
 
 ## Testing
 

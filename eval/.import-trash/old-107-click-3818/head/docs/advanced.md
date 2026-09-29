@@ -1,6 +1,7 @@
 # Advanced Patterns
 
 ```{currentmodule} click
+
 ```
 
 In addition to common functionality, Click offers some advanced features.
@@ -60,6 +61,7 @@ What it looks like:
     invoke(hello)
     invoke(hello, args=['--version'])
 ```
+
 The `expose_value` parameter prevents the pretty pointless `version`
 parameter from being passed to the callback. If that was not specified, a
 boolean would be passed to the `hello` script. The `resilient_parsing`
@@ -70,6 +72,7 @@ this case, because we would exit the program, we instead do nothing.
 ## Callbacks for Validation
 
 ```{versionchanged} 2.0
+
 ```
 
 If you want to apply custom validation logic, you can do this in the
@@ -181,6 +184,7 @@ What's more recommended is to pass the information in a wrapper, however:
 ## Token Normalization
 
 ```{versionadded} 2.0
+
 ```
 
 Starting with Click 2.0, it's possible to provide a function used
@@ -334,7 +338,7 @@ are important to know about how this ignoring of unhandled flag happens:
   disabling interspersed arguments
   ({attr}`~Context.allow_interspersed_args`) which instructs the parser
   to not allow arguments and options to be mixed. Depending on your
-   situation, this might improve your results.
+  situation, this might improve your results.
 
 Generally, combining the handling of options and arguments from your own
 commands with those from another application is discouraged, and you

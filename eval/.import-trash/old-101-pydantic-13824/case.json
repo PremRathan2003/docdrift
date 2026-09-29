@@ -7,25 +7,16 @@
   "expected": [
     {
       "path": "docs/api/standard_library_types.md",
-      "mustContain": [
-        "collections.Counter",
-        "counter_type",
-        "typing.Counter"
-      ],
+      "mustContain": ["collections.Counter", "counter_type", "typing.Counter"],
       "mustNotContain": []
     },
     {
       "path": "docs/errors/validation_errors.md",
-      "mustContain": [
-        "collections.Counter",
-        "counter_type"
-      ],
+      "mustContain": ["collections.Counter", "counter_type"],
       "mustNotContain": []
     }
   ],
-  "acceptable": [
-    "docs/plugins/conversion_table.py"
-  ],
+  "acceptable": ["docs/plugins/conversion_table.py"],
   "added": [
     "pydantic-core/src/common/counter.rs",
     "pydantic-core/src/serializers/type_serializers/counter.rs",

@@ -13,7 +13,12 @@ function evalCase(over: Partial<EvalCase> = {}): EvalCase {
     group: 'drift',
     category: 'c',
     expected: [
-      { path: 'docs/api.md', mustContain: ['Authorization'], mustNotContain: ['X-Key'], anchors: [] },
+      {
+        path: 'docs/api.md',
+        mustContain: ['Authorization'],
+        mustNotContain: ['X-Key'],
+        anchors: [],
+      },
     ],
     acceptable: ['CHANGELOG.md'],
     added: [],

@@ -67,7 +67,11 @@ describe('loadAiEnv', () => {
   it('still insists on what the AI itself needs', () => {
     expect(() => loadAiEnv({ AI_PROVIDER: 'gemini' } as NodeJS.ProcessEnv)).toThrow(/AI_API_KEY/);
     expect(() =>
-      loadAiEnv({ AI_PROVIDER: 'openai-compatible', AI_API_KEY: 'k', AI_MODEL: 'm' } as NodeJS.ProcessEnv),
+      loadAiEnv({
+        AI_PROVIDER: 'openai-compatible',
+        AI_API_KEY: 'k',
+        AI_MODEL: 'm',
+      } as NodeJS.ProcessEnv),
     ).toThrow(/AI_BASE_URL/);
   });
 });

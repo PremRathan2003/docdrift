@@ -249,9 +249,10 @@ export function createFakeGitHub(state: FakeGitHubState) {
 
     const written = (state.written ??= { commits: [], branches: {}, pulls: [] });
 
-    const write = /^\/repos\/([^/]+)\/([^/]+)\/(git\/blobs|git\/trees|git\/commits|git\/refs|git\/ref\/.+|pulls)$/.exec(
-      url.pathname,
-    );
+    const write =
+      /^\/repos\/([^/]+)\/([^/]+)\/(git\/blobs|git\/trees|git\/commits|git\/refs|git\/ref\/.+|pulls)$/.exec(
+        url.pathname,
+      );
     const writeRepo = write ? `${write[1]}/${write[2]}` : null;
     if (write && writeRepo && !canRead(writeRepo)) return json(404, { message: 'Not Found' });
     if (write && state.readOnly && method !== 'GET')
@@ -273,7 +274,10 @@ export function createFakeGitHub(state: FakeGitHubState) {
         tree: { path: string; sha: string }[];
       };
       const sha = `tree-${body.tree.map((t) => t.path).join('|')}`;
-      pendingTrees.set(sha, body.tree.map((t) => ({ path: t.path, sha: t.sha })));
+      pendingTrees.set(
+        sha,
+        body.tree.map((t) => ({ path: t.path, sha: t.sha })),
+      );
       return json(201, { sha });
     }
 
@@ -294,7 +298,8 @@ export function createFakeGitHub(state: FakeGitHubState) {
     }
 
     const commitRead = /^\/repos\/([^/]+)\/([^/]+)\/git\/commits\/([^/]+)$/.exec(url.pathname);
-    if (method === 'GET' && commitRead) return json(200, { tree: { sha: `tree-of-${commitRead[3]}` } });
+    if (method === 'GET' && commitRead)
+      return json(200, { tree: { sha: `tree-of-${commitRead[3]}` } });
 
     const refRead = /^\/repos\/([^/]+)\/([^/]+)\/git\/ref\/(.+)$/.exec(url.pathname);
     if (method === 'GET' && refRead) {
@@ -325,7 +330,10 @@ export function createFakeGitHub(state: FakeGitHubState) {
       const found = written.pulls.filter((p) => p.branch === head && p.base === base);
       return json(
         200,
-        found.map((p) => ({ number: p.number, html_url: `https://github.com/${writeRepo}/pull/${p.number}` })),
+        found.map((p) => ({
+          number: p.number,
+          html_url: `https://github.com/${writeRepo}/pull/${p.number}`,
+        })),
       );
     }
     if (pullsPath && method === 'POST') {
@@ -336,7 +344,13 @@ export function createFakeGitHub(state: FakeGitHubState) {
         body: string;
       };
       const number = 900 + written.pulls.length + 1;
-      written.pulls.push({ branch: body.head, base: body.base, title: body.title, body: body.body, number });
+      written.pulls.push({
+        branch: body.head,
+        base: body.base,
+        title: body.title,
+        body: body.body,
+        number,
+      });
       return json(201, { number, html_url: `https://github.com/${writeRepo}/pull/${number}` });
     }
 

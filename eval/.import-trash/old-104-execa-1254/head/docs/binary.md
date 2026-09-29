@@ -13,10 +13,10 @@ There are multiple ways to pass binary input using the [`stdin`](api.md#optionss
 This is required if the subprocess input includes [null bytes](https://en.wikipedia.org/wiki/Null_character).
 
 ```js
-import {execa} from 'execa';
+import { execa } from 'execa';
 
 const binaryData = new Uint8Array([/* ... */]);
-await execa({stdin: binaryData})`hexdump`;
+await execa({ stdin: binaryData })`hexdump`;
 ```
 
 ## Binary output
@@ -24,7 +24,7 @@ await execa({stdin: binaryData})`hexdump`;
 By default, the subprocess [output](api.md#resultstdout) is a [UTF8](https://en.wikipedia.org/wiki/UTF-8) string. If it is binary, the [`encoding`](api.md#optionsencoding) option should be set to `'buffer'` instead. The output will be an [`Uint8Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array).
 
 ```js
-const {stdout} = await execa({encoding: 'buffer'})`zip -r - input.txt`;
+const { stdout } = await execa({ encoding: 'buffer' })`zip -r - input.txt`;
 console.log(stdout.byteLength);
 ```
 
@@ -33,7 +33,7 @@ console.log(stdout.byteLength);
 When the output is binary, the [`encoding`](api.md#optionsencoding) option can also be set to [`'hex'`](https://en.wikipedia.org/wiki/Hexadecimal), [`'base64'`](https://en.wikipedia.org/wiki/Base64) or [`'base64url'`](https://en.wikipedia.org/wiki/Base64#RFC_4648). The output will be a string then.
 
 ```js
-const {stdout} = await execa({encoding: 'hex'})`zip -r - input.txt`;
+const { stdout } = await execa({ encoding: 'hex' })`zip -r - input.txt`;
 console.log(stdout); // Hexadecimal string
 ```
 
@@ -42,8 +42,8 @@ console.log(stdout); // Hexadecimal string
 By default, the subprocess [iterates](lines.md#progressive-splitting) over line strings. However, if the [`encoding`](api.md#optionsencoding) subprocess option is binary, or if the [`binary`](api.md#readableoptionsbinary) iterable option is `true`, it iterates over arbitrary chunks of [`Uint8Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array) data instead.
 
 ```js
-for await (const data of execa({encoding: 'buffer'})`zip -r - input.txt`) {
-	/* ... */
+for await (const data of execa({ encoding: 'buffer' })`zip -r - input.txt`) {
+  /* ... */
 }
 ```
 
@@ -54,11 +54,11 @@ The same applies to transforms. When the [`encoding`](api.md#optionsencoding) su
 However, transforms can always `yield` either a `string` or an `Uint8Array`, regardless of whether the output is binary or not.
 
 ```js
-const transform = function * (data) {
-	/* ... */
-}
+const transform = function* (data) {
+  /* ... */
+};
 
-await execa({stdout: {transform, binary: true}})`zip -r - input.txt`;
+await execa({ stdout: { transform, binary: true } })`zip -r - input.txt`;
 ```
 
 ## Streams
@@ -66,9 +66,9 @@ await execa({stdout: {transform, binary: true}})`zip -r - input.txt`;
 [Streams produced](streams.md#converting-a-subprocess-to-a-stream) by [`subprocess.readable()`](api.md#subprocessreadablereadableoptions) and [`subprocess.duplex()`](api.md#subprocessduplexduplexoptions) are binary by default, which means they iterate over arbitrary [`Buffer`](https://nodejs.org/api/buffer.html#class-buffer) chunks. However, if the [`binary`](api.md#readableoptionsbinary) option is `false`, they iterate over line strings instead, and the stream is [in object mode](https://nodejs.org/api/stream.html#object-mode).
 
 ```js
-const readable = execa`npm run build`.readable({binary: false});
-readable.on('data', lineString => {
-	/* ... */
+const readable = execa`npm run build`.readable({ binary: false });
+readable.on('data', (lineString) => {
+  /* ... */
 });
 ```
 

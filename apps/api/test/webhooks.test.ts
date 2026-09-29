@@ -33,13 +33,7 @@ function fakeDb(connectedRepoIds: bigint[] = [7n]) {
         deliveries.set(where.id, existing ? { ...existing, ...update } : { ...create });
         return deliveries.get(where.id);
       },
-      update: async ({
-        where,
-        data,
-      }: {
-        where: { id: string };
-        data: { outcome: string };
-      }) => {
+      update: async ({ where, data }: { where: { id: string }; data: { outcome: string } }) => {
         deliveries.set(where.id, { ...deliveries.get(where.id), ...data });
         return deliveries.get(where.id);
       },

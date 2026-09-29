@@ -1,6 +1,7 @@
 # Basic Commands, Groups, Context
 
 ```{currentmodule} click
+
 ```
 
 Commands and Groups are the building blocks for Click applications.
@@ -37,7 +38,7 @@ A simple command decorator takes no arguments.
 ### Renaming Commands
 
 By default the command is the function name with underscores replaced by dashes.
-To change this pass the  desired name into the first positional argument.
+To change this pass the desired name into the first positional argument.
 
 ```{eval-rst}
 .. click:example::
@@ -191,8 +192,8 @@ Command {ref}`parameters` attached to a command belong only to that command.
 
 Additionally parameters for a given group belong only to that group and not to
 the commands under it. What this means is that options and arguments for a
-specific command have to be specified *after* the command name itself, but
-*before* any other command names.
+specific command have to be specified _after_ the command name itself, but
+_before_ any other command names.
 
 This behavior is observable with the `--help` option. Suppose we have a group
 called `tool` containing a command called `sub`.
@@ -263,14 +264,15 @@ invoked identically.
 ```
 
 ## Context Object
+
 The {class}`Context` object is how commands and groups communicate.
 
 ### Auto Envvar Prefix
 
 Automatically built environment variables are supported for options only. To
 enable this feature, the `auto_envvar_prefix` parameter needs to be passed to
-the script that is invoked.  Each command and parameter is then added as an
-uppercase underscore-separated variable.  If you have a subcommand
+the script that is invoked. Each command and parameter is then added as an
+uppercase underscore-separated variable. If you have a subcommand
 called `run` taking an option called `reload` and the prefix is `WEB`, then the
 variable is `WEB_RUN_RELOAD`.
 
@@ -297,7 +299,7 @@ And from the command line:
 
 When using `auto_envvar_prefix` with command groups, the command name
 needs to be included in the environment variable, between the prefix and
-the parameter name, *i.e.* `PREFIX_COMMAND_VARIABLE`. If you have a
+the parameter name, _i.e._ `PREFIX_COMMAND_VARIABLE`. If you have a
 subcommand called `run-server` taking an option called `host` and
 the prefix is `WEB`, then the variable is `WEB_RUN_SERVER_HOST`.
 
@@ -327,13 +329,14 @@ the prefix is `WEB`, then the variable is `WEB_RUN_SERVER_HOST`.
 ### Global Context Access
 
 ```{versionadded} 5.0
+
 ```
 
 Starting with Click 5.0 it is possible to access the current context from
 anywhere within the same thread through the use of the
-{func}`get_current_context` function which returns it.  This is primarily
+{func}`get_current_context` function which returns it. This is primarily
 useful for accessing the context bound object as well as some flags that
-are stored on it to customize the runtime behavior.  For instance the
+are stored on it to customize the runtime behavior. For instance the
 {func}`echo` function does this to infer the default value of the `color`
 flag.
 
@@ -344,9 +347,9 @@ Example usage:
         return click.get_current_context().info_name
 ```
 
-It should be noted that this only works within the current thread.  If you
+It should be noted that this only works within the current thread. If you
 spawn additional threads then those threads will not have the ability to
-refer to the current context.  If you want to give another thread the
+refer to the current context. If you want to give another thread the
 ability to refer to this context you need to use the context within the
 thread as a context manager:
 
@@ -361,11 +364,10 @@ thread as a context manager:
 ```
 
 Now the thread function can access the context like the main thread would
-do.  However if you do use this for threading you need to be very careful
-as the vast majority of the context is not thread safe!  You are only
+do. However if you do use this for threading you need to be very careful
+as the vast majority of the context is not thread safe! You are only
 allowed to read from the context, but not to perform any modifications on
 it.
-
 
 ### Parameter Source Priority
 
@@ -394,7 +396,6 @@ if source < click.ParameterSource.DEFAULT_MAP:
 if source >= click.ParameterSource.DEFAULT_MAP:
     ...
 ```
-
 
 ### Detecting the Source of a Parameter
 

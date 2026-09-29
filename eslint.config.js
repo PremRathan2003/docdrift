@@ -22,7 +22,8 @@ export default tseslint.config(
     languageOptions: { globals: globals.node },
   },
   {
-    files: ['apps/web/**/*.{ts,tsx}'],
+    // .js too: apps/web/public/theme.js is plain browser script, not bundled.
+    files: ['apps/web/**/*.{ts,tsx,js}'],
     languageOptions: { globals: globals.browser },
     plugins: { 'react-hooks': reactHooks },
     rules: {

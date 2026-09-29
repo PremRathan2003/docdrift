@@ -86,7 +86,12 @@ export function toPullRequestRow(e: PullRequestEvent) {
     title: pr.title,
     body: pr.body,
     authorLogin: pr.user?.login ?? 'unknown',
-    state: pr.state === 'open' ? ('OPEN' as const) : pr.merged_at ? ('MERGED' as const) : ('CLOSED' as const),
+    state:
+      pr.state === 'open'
+        ? ('OPEN' as const)
+        : pr.merged_at
+          ? ('MERGED' as const)
+          : ('CLOSED' as const),
     isDraft: pr.draft,
     headSha: pr.head.sha,
     headRef: pr.head.ref,

@@ -1,6 +1,7 @@
 # Advanced Groups and Context
 
 ```{currentmodule} click
+
 ```
 
 In addition to the capabilities covered in the previous section, Groups have
@@ -17,11 +18,11 @@ local: true
 
 For a regular command, the callback is executed whenever the command runs.
 If the script is the only command, it will always fire (unless a parameter
-callback prevents it.  This for instance happens if someone passes
+callback prevents it. This for instance happens if someone passes
 `--help` to the script).
 
 For groups, the situation looks different. In this case, the callback fires
-whenever a subcommand fires.  What this means in practice is that an outer
+whenever a subcommand fires. What this means in practice is that an outer
 command runs when an inner command runs:
 
 ```{eval-rst}
@@ -49,21 +50,21 @@ Here is what this looks like:
 
 As you can see from the earlier example, the basic command group accepts a
 debug argument which is passed to its callback, but not to the sync
-command itself.  The sync command only accepts its own arguments.
+command itself. The sync command only accepts its own arguments.
 
 This allows tools to act completely independent of each other, but how
-does one command talk to a nested one?  The answer to this is the
+does one command talk to a nested one? The answer to this is the
 {class}`Context`.
 
 Each time a command is invoked, a new context is created and linked with the
-parent context.  Normally, you can't see these contexts, but they are
-there.  Contexts are passed to parameter callbacks together with the
-value automatically.  Commands can also ask for the context to be passed
-by marking themselves with the {func}`pass_context` decorator.  In that
+parent context. Normally, you can't see these contexts, but they are
+there. Contexts are passed to parameter callbacks together with the
+value automatically. Commands can also ask for the context to be passed
+by marking themselves with the {func}`pass_context` decorator. In that
 case, the context is passed as first argument.
 
 The context can also carry a program specified object that can be
-used for the program's purposes.  What this means is that you can build a
+used for the program's purposes. What this means is that you can build a
 script like this:
 
 ```{eval-rst}
@@ -89,22 +90,22 @@ script like this:
 ```
 
 If the object is provided, each context will pass the object onwards to
-its children, but at any level a context's object can be overridden.  To
+its children, but at any level a context's object can be overridden. To
 reach to a parent, `context.parent` can be used.
 
 In addition to that, instead of passing an object down, nothing stops the
-application from modifying global state.  For instance, you could just flip
+application from modifying global state. For instance, you could just flip
 a global `DEBUG` variable and be done with it.
 
 ## Decorating Commands
 
 As you have seen in the earlier example, a decorator can change how a
-command is invoked.  What actually happens behind the scenes is that
+command is invoked. What actually happens behind the scenes is that
 callbacks are always invoked through the {meth}`Context.invoke` method
 which automatically invokes a command correctly (by either passing the
 context or not).
 
-This is very useful when you want to write custom decorators.  For
+This is very useful when you want to write custom decorators. For
 instance, a common pattern would be to configure an object representing
 state and then storing it on the context and then to use a custom
 decorator to find the most recent object of this sort and pass it as first
@@ -260,15 +261,15 @@ def make_strip():
 
 That's a lot in one go, so let's go through it step by step.
 
-1. The first thing is to make a {func}`group` that is chainable.  In
+1. The first thing is to make a {func}`group` that is chainable. In
    addition to that we also instruct Click to invoke even if no
-   subcommand is defined.  If this would not be done, then invoking an
+   subcommand is defined. If this would not be done, then invoking an
    empty pipeline would produce the help page instead of running the
    result callbacks.
 2. The next thing we do is to register a result callback on our group.
    This callback will be invoked with an argument which is the list of
    all return values of all subcommands and then the same keyword
-   parameters as our group itself.  This means we can access the input
+   parameters as our group itself. This means we can access the input
    file easily there without having to use the context object.
 3. In this result callback we create an iterator of all the lines in the
    input file and then pass this iterator through all the returned
@@ -279,10 +280,10 @@ After that point we can register as many subcommands as we want and each
 subcommand can return a processor function to modify the stream of lines.
 
 One important thing of note is that Click shuts down the context after
-each callback has been run.  This means that for instance file types
+each callback has been run. This means that for instance file types
 cannot be accessed in the `processor` functions as the files will already
-be closed there.  This limitation is unlikely to change because it would
-make resource handling much more complicated.  For such it's recommended
+be closed there. This limitation is unlikely to change because it would
+make resource handling much more complicated. For such it's recommended
 to not use the file type and manually open the file through
 {func}`open_file`.
 
@@ -295,8 +296,8 @@ that has a nice internal structure.
 
 By default, the default value for a parameter is pulled from the
 `default` flag that is provided when it's defined, but that's not the
-only place defaults can be loaded from.  The other place is the
-{attr}`Context.default_map` (a dictionary) on the context.  This allows
+only place defaults can be loaded from. The other place is the
+{attr}`Context.default_map` (a dictionary) on the context. This allows
 defaults to be loaded from a configuration file to override the regular
 defaults.
 
@@ -383,11 +384,12 @@ default_map = {
 ## Context Defaults
 
 ```{versionadded} 2.0
+
 ```
 
 Starting with Click 2.0 you can override defaults for contexts not just
 when calling your script, but also in the decorator that declares a
-command.  For instance given the previous example which defines a custom
+command. For instance given the previous example which defines a custom
 `default_map` this can also be accomplished in the decorator now.
 
 This example does the same as the previous example:
@@ -423,14 +425,15 @@ And again the example in action:
 ## Command Return Values
 
 ```{versionadded} 3.0
+
 ```
 
 One of the new introductions in Click 3.0 is the full support for return
-values from command callbacks.  This enables a whole range of features
+values from command callbacks. This enables a whole range of features
 that were previously hard to implement.
 
-In essence any command callback can now return a value.  This return value
-is bubbled to certain receivers.  One usecase for this has already been
+In essence any command callback can now return a value. This return value
+is bubbled to certain receivers. One usecase for this has already been
 show in the example of {ref}`command-chaining` where it has been
 demonstrated that chained groups can have callbacks that process
 all return values.
@@ -439,26 +442,26 @@ When working with command return values in Click, this is what you need to
 know:
 
 - The return value of a command callback is generally returned from the
-  {meth}`Command.invoke` method.  The exception to this rule has to
+  {meth}`Command.invoke` method. The exception to this rule has to
   do with {class}`Group`s:
 
   - In a group the return value is generally the return value of the
-    subcommand invoked.  The only exception to this rule is that the
+    subcommand invoked. The only exception to this rule is that the
     return value is the return value of the group callback if it's
     invoked without arguments and `invoke_without_command` is enabled.
   - If a group is set up for chaining then the return value is a list
     of all subcommands' results.
   - Return values of groups can be processed through a
-    {attr}`Group.result_callback`.  This is invoked with the
+    {attr}`Group.result_callback`. This is invoked with the
     list of all return values in chain mode, or the single return
     value in case of non chained commands.
 
 - The return value is bubbled through from the {meth}`Context.invoke`
-  and {meth}`Context.forward` methods.  This is useful in situations
+  and {meth}`Context.forward` methods. This is useful in situations
   where you internally want to call into another command.
 
 - Click does not have any hard requirements for the return values and
-  does not use them itself.  This allows return values to be used for
+  does not use them itself. This allows return values to be used for
   custom decorators or workflows (like in the command chaining
   example).
 

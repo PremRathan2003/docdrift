@@ -83,7 +83,10 @@ async function setup(output = two) {
   const auth = await agent.get('/api/github/authorize');
   const state = new URL(auth.headers.location!).searchParams.get('state')!;
   await agent.get(`/api/github/callback?code=good-code&state=${state}`).expect(303);
-  const { body: repo } = await agent.post('/api/repositories').send({ githubRepoId: '9001' }).expect(201);
+  const { body: repo } = await agent
+    .post('/api/repositories')
+    .send({ githubRepoId: '9001' })
+    .expect(201);
   const { body: list } = await agent.get(`/api/repositories/${repo.repository.id}/pull-requests`);
   const prId = list.pullRequests[0].id;
   const { body: started } = await agent.post(`/api/pull-requests/${prId}/analyses`).expect(202);
@@ -93,7 +96,10 @@ async function setup(output = two) {
 }
 
 const approve = (agent: request.Agent, s: { id: string; version: number }) =>
-  agent.post(`/api/suggestions/${s.id}/decision`).send({ action: 'APPROVE', version: s.version }).expect(200);
+  agent
+    .post(`/api/suggestions/${s.id}/decision`)
+    .send({ action: 'APPROVE', version: s.version })
+    .expect(200);
 
 describe('opening a documentation pull request', () => {
   it('commits the approved documents and opens one pull request into the code branch', async () => {
@@ -135,10 +141,7 @@ describe('opening a documentation pull request', () => {
     const { analysis: after } = analysisResponseSchema.parse(
       (await agent.get(`/api/analyses/${runId}`).expect(200)).body,
     );
-    expect(after.suggestions.map((s) => s.status)).toEqual([
-      'APPLIED',
-      'APPLIED',
-    ]);
+    expect(after.suggestions.map((s) => s.status)).toEqual(['APPLIED', 'APPLIED']);
     expect(after.docsPullRequest).toMatchObject({ base: 'feature-7', number: 901 });
   });
 

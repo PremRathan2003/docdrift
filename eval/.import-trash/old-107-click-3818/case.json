@@ -7,23 +7,13 @@
   "expected": [
     {
       "path": "docs/exceptions.md",
-      "mustContain": [
-        "click.Abort",
-        "click.ClickException",
-        "e.exit_code"
-      ],
+      "mustContain": ["click.Abort", "click.ClickException", "e.exit_code"],
       "mustNotContain": []
     }
   ],
-  "acceptable": [
-    "CHANGES.md"
-  ],
-  "added": [
-    "tests/test_abort_interrupt.py"
-  ],
-  "trimmedFiles": [
-    "src/click/core.py"
-  ],
+  "acceptable": ["CHANGES.md"],
+  "added": ["tests/test_abort_interrupt.py"],
+  "trimmedFiles": ["src/click/core.py"],
   "notes": "The PR author updated these documents in the same PR; the case removes those edits. Content checks are words the author added/removed. Review them before relying on the case. Labels reviewed by hand: automatic checks that were link fragments or ordinary English words were removed.",
   "source": "real",
   "origin": {

@@ -29,8 +29,8 @@ creating a pull request. Any pull request fixing an existing issue without being
 automatically closed.
 
 !!! note "Pydantic V1 is in maintenance mode"
-    Pydantic v1 is in maintenance mode, meaning that only bug fixes and security fixes will be accepted.
-    New features should be targeted at Pydantic v2.
+Pydantic v1 is in maintenance mode, meaning that only bug fixes and security fixes will be accepted.
+New features should be targeted at Pydantic v2.
 
     To submit a fix to Pydantic v1, use the [`1.10.X-fixes`](https://github.com/pydantic/pydantic/tree/1.10.X-fixes) as a target branch.
 
@@ -39,17 +39,17 @@ Pydantic has few dependencies, doesn't require compiling and tests don't need ac
 Because of this, setting up and running the tests should be very simple.
 
 !!! tip
-    **tl;dr**: use `make format` to fix formatting, `make` to run tests and linting and `make docs`
-    to build the docs.
+**tl;dr**: use `make format` to fix formatting, `make` to run tests and linting and `make docs`
+to build the docs.
 
 ## AI policy
 
 We welcome the use of AI when contributing to Pydantic. However, users should certify that they fully understand the code being submitted.
 We reserve the right to close any pull request at our discretion, without further justification. This includes, but is not limited to, cases where:
 
-* the contribution does not meet our quality standards,
-* the author appears to be mass-submitting pull requests across multiple repositories (spam),
-* the pull request description is AI generated *and* incoherent or nonsensical.
+- the contribution does not meet our quality standards,
+- the author appears to be mass-submitting pull requests across multiple repositories (spam),
+- the pull request description is AI generated _and_ incoherent or nonsensical.
 
 Such behavior can also result in a permanent ban from the organization.
 
@@ -57,11 +57,11 @@ Such behavior can also result in a permanent ban from the organization.
 
 You'll need the following prerequisites:
 
-* Any Python version between **Python 3.10 and 3.14**
-* [**uv**](https://docs.astral.sh/uv/getting-started/installation/)
-* [**git**](https://git-scm.com/) - For version control
-* [**make**](https://www.gnu.org/software/make/) - For running development commands (or use `nmake` on Windows)
-* [**Rust**](https://rustup.rs/) - Rust stable (or nightly for coverage)
+- Any Python version between **Python 3.10 and 3.14**
+- [**uv**](https://docs.astral.sh/uv/getting-started/installation/)
+- [**git**](https://git-scm.com/) - For version control
+- [**make**](https://www.gnu.org/software/make/) - For running development commands (or use `nmake` on Windows)
+- [**Rust**](https://rustup.rs/) - Rust stable (or nightly for coverage)
 
 ### Installation and setup
 
@@ -134,13 +134,13 @@ do the following:
 
 1. Open a PR against `main` with your docs changes
 2. Once the PR is merged, checkout the `docs-update` branch. This branch should be up to date with the latest patch release.
-For example, if the latest release is `v2.9.2`, you should make sure `docs-update` is up to date with the `v2.9.2` tag.
+   For example, if the latest release is `v2.9.2`, you should make sure `docs-update` is up to date with the `v2.9.2` tag.
 3. Checkout a new branch from `docs-update` and cherry-pick your changes onto this branch.
 4. Push your changes and open a PR against `docs-update`.
 5. Once the PR is merged, the new docs will be built and deployed.
 
 !!! note
-    Maintainer shortcut - as a maintainer, you can skip the second PR and just cherry pick directly onto the `docs-update` branch.
+Maintainer shortcut - as a maintainer, you can skip the second PR and just cherry pick directly onto the `docs-update` branch.
 
 ### Commit and push your changes
 
@@ -158,10 +158,10 @@ Documentation is written in Markdown and built using [Material for MkDocs](https
 
 When contributing to Pydantic, please make sure that all code is well documented. The following should be documented using properly formatted docstrings:
 
-* Modules
-* Class definitions
-* Function definitions
-* Module-level variables
+- Modules
+- Class definitions
+- Function definitions
+- Module-level variables
 
 Pydantic uses [Google-style docstrings](https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings) formatted according to [PEP 257](https://www.python.org/dev/peps/pep-0257/) guidelines. (See [Example Google Style Python Docstrings](https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html) for further examples.)
 
@@ -199,7 +199,7 @@ def bar(self, baz: int) -> str:
 You may include example code in docstrings. This code should be complete, self-contained, and runnable. Docstring examples are tested, so make sure they are correct and complete. See [`BeforeValidator`][pydantic.functional_validators.AfterValidator] for an example.
 
 !!! note "Class and instance attributes"
-    Class attributes should be documented in the class docstring.
+Class attributes should be documented in the class docstring.
 
     Instance attributes should be documented as "Args" in the `__init__` docstring.
 
@@ -256,9 +256,19 @@ Pydantic has a badge that you can use to show that your project uses Pydantic. Y
 ### With HTML
 
 ```html
-<a href="https://pydantic.dev"><img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/pydantic/pydantic/main/docs/badge/v1.json" alt="Pydantic Version 1" style="max-width:100%;"></a>
+<a href="https://pydantic.dev"
+  ><img
+    src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/pydantic/pydantic/main/docs/badge/v1.json"
+    alt="Pydantic Version 1"
+    style="max-width:100%;"
+/></a>
 
-<a href="https://pydantic.dev"><img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/pydantic/pydantic/main/docs/badge/v2.json" alt="Pydantic Version 2" style="max-width:100%;"></a>
+<a href="https://pydantic.dev"
+  ><img
+    src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/pydantic/pydantic/main/docs/badge/v2.json"
+    alt="Pydantic Version 2"
+    style="max-width:100%;"
+/></a>
 ```
 
 ## Adding your library as part of Pydantic's third party test suite
@@ -266,10 +276,10 @@ Pydantic has a badge that you can use to show that your project uses Pydantic. Y
 To be able to identify regressions early during development, Pydantic runs tests on various third-party projects
 using Pydantic. We consider adding support for testing new open source projects (that rely heavily on Pydantic) if your said project matches some of the following criteria:
 
-* The project is actively maintained.
-* The project makes use of Pydantic internals (e.g. relying on the [`BaseModel`][pydantic.BaseModel] metaclass, typing utilities).
-* The project is popular enough (although small projects can still be included depending on how Pydantic is being used).
-* The project CI is simple enough to be ported into Pydantic's testing workflow.
+- The project is actively maintained.
+- The project makes use of Pydantic internals (e.g. relying on the [`BaseModel`][pydantic.BaseModel] metaclass, typing utilities).
+- The project is popular enough (although small projects can still be included depending on how Pydantic is being used).
+- The project CI is simple enough to be ported into Pydantic's testing workflow.
 
 If your project meets some of these criteria, you can [open feature request][open feature request]
 to discuss the inclusion of your project.

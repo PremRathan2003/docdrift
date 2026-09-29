@@ -8,16 +8,12 @@
     {
       "path": "docs/windows.md",
       "mustContain": [],
-      "mustNotContain": [
-        "cross-spawn"
-      ]
+      "mustNotContain": ["cross-spawn"]
     },
     {
       "path": "readme.md",
       "mustContain": [],
-      "mustNotContain": [
-        "cross-spawn"
-      ]
+      "mustNotContain": ["cross-spawn"]
     }
   ],
   "acceptable": [],

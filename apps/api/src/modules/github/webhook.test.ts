@@ -100,6 +100,6 @@ describe('toPullRequestRow', () => {
     const row = toPullRequestRow(eventOf(merged));
     expect(row).toMatchObject({ state: 'MERGED', authorLogin: 'unknown' });
     const closed = event({ state: 'closed' });
-    expect(toPullRequestRow(eventOf(event({ state: 'closed' }))).state).toBe('CLOSED');
+    expect(toPullRequestRow(eventOf(closed)).state).toBe('CLOSED');
   });
 });

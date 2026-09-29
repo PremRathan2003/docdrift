@@ -11,24 +11,24 @@ guide](https://palletsprojects.com/contributing/).
 
 Click includes some extra test environments:
 
--   `tox r -e stress` runs stress tests for race conditions
-    in Click's test runner.
+- `tox r -e stress` runs stress tests for race conditions
+  in Click's test runner.
 
-    ```shell-session
-    $ tox r -e stress
-    ```
+  ```shell-session
+  $ tox r -e stress
+  ```
 
--   `tox r -e random` runs tests in parallel in a random
-    order to detect test pollution.
+- `tox r -e random` runs tests in parallel in a random
+  order to detect test pollution.
 
-    ```shell-session
-    $ tox r -e random
-    ```
+  ```shell-session
+  $ tox r -e random
+  ```
 
--   The nightly workflow
-    (`.github/workflows/nightly.yaml`) runs Flask's test
-    suite against `main` and `stable` to catch downstream
-    regressions.
+- The nightly workflow
+  (`.github/workflows/nightly.yaml`) runs Flask's test
+  suite against `main` and `stable` to catch downstream
+  regressions.
 
 ## Code Style
 

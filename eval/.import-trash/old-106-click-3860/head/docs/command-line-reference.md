@@ -1,6 +1,7 @@
 # General Command Line Topics
 
 ```{currentmodule} click
+
 ```
 
 ```{contents}
@@ -11,12 +12,13 @@ local: true
 ```
 
 (exit-codes)=
+
 ## Exit Codes
 
 When a command is executed from the command line, then an exit code is return. The exit code, also called exit status or exit status code, is a positive integer that tells you whether the command executed with or without errors.
 
 | Exit Code | Meaning                                         |
-|-----------|-------------------------------------------------|
+| --------- | ----------------------------------------------- |
 | 0         | Success — the command completed without errors. |
 | > 0       | Executed with errors                            |
 

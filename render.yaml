@@ -1,0 +1,75 @@
+# Render Blueprint — one web service and one database.
+#
+# The API also serves the built web app (see src/server.ts), so the browser
+# talks to a single origin. That is not a shortcut: it means the session cookie
+# is first-party with no proxy rewrite and no CORS exception, which is the part
+# of a split deployment most likely to break silently in a browser that blocks
+# third-party cookies (docs/ARCHITECTURE.md, risk R3).
+#
+# Values marked `sync: false` are not in this file on purpose — they are secrets
+# or depend on the URL Render assigns. Render asks for them when the blueprint
+# is applied. See docs/DEPLOYMENT.md.
+
+databases:
+  - name: docdrift-db
+    databaseName: docdrift
+    user: docdrift
+    plan: free
+    region: frankfurt
+
+services:
+  - type: web
+    name: docdrift
+    runtime: node
+    plan: free
+    region: frankfurt
+    # Shared must build before the two apps that import it.
+    buildCommand: >-
+      npm ci &&
+      npm run build -w @docdrift/shared &&
+      npm run build -w @docdrift/api &&
+      npm run build -w @docdrift/web
+    # Migrations run before the server accepts traffic. `migrate deploy` applies
+    # only committed migrations and never generates or resets anything.
+    startCommand: >-
+      npm run db:deploy -w @docdrift/api &&
+      npm run start -w @docdrift/api
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: '22'
+      - key: NODE_ENV
+        value: production
+      - key: LOG_LEVEL
+        value: info
+      - key: DATABASE_URL
+        fromDatabase:
+          name: docdrift-db
+          property: connectionString
+      # Generated once by Render and never shown in this repository.
+      - key: SESSION_SECRET
+        generateValue: true
+      # This service's own https:// URL — known only after Render creates it.
+      - key: WEB_ORIGIN
+        sync: false
+      - key: AI_PROVIDER
+        value: gemini
+      - key: AI_MODEL
+        value: gemini-3.5-flash-lite
+      - key: AI_API_KEY
+        sync: false
+      # The GitHub App. All five are required together, or the API refuses to
+      # start — half a configuration is worse than none.
+      - key: GITHUB_APP_ID
+        sync: false
+      - key: GITHUB_APP_SLUG
+        sync: false
+      - key: GITHUB_APP_CLIENT_ID
+        sync: false
+      - key: GITHUB_APP_CLIENT_SECRET
+        sync: false
+      - key: GITHUB_APP_PRIVATE_KEY_BASE64
+        sync: false
+      # Optional: without it the webhook endpoint answers 503 and the rest works.
+      - key: GITHUB_WEBHOOK_SECRET
+        sync: false

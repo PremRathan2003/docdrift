@@ -1,4 +1,5 @@
 import { randomUUID } from 'node:crypto';
+import { join } from 'node:path';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
@@ -57,6 +58,13 @@ export interface AppDeps {
   ai?: AIProvider | null;
   analysisConfig?: Partial<AnalysisConfig>;
   maxAnalysesPerHour?: number;
+  /**
+   * Absolute path to the built web app. When set, the API also serves it, so
+   * the browser only ever talks to ONE origin and the session cookie is
+   * first-party with no proxy rule and no CORS exception. Unset in development
+   * (Vite serves the app and proxies /api here) and in tests.
+   */
+  webDist?: string;
 }
 
 /**
@@ -169,6 +177,21 @@ export function createApp(deps: AppDeps) {
       cookie,
     }),
   );
+
+  // Anything under /api that got this far is genuinely unrouted, and must
+  // answer JSON rather than the single-page app's HTML.
+  app.use('/api', notFoundHandler);
+
+  if (deps.webDist) {
+    const dist = deps.webDist;
+    // Hashed asset filenames make long caching safe; index.html must not be
+    // cached, or a deploy leaves browsers loading assets that no longer exist.
+    app.use(express.static(dist, { index: false, maxAge: '1y', immutable: true }));
+    app.get(/.*/, (_req, res) => {
+      res.setHeader('Cache-Control', 'no-cache');
+      res.sendFile(join(dist, 'index.html'));
+    });
+  }
 
   app.use(notFoundHandler);
   app.use(errorHandler);

@@ -34,8 +34,7 @@ export interface DocsPullRequestPlan {
 }
 
 export type PlanResult =
-  | { ok: true; plan: DocsPullRequestPlan }
-  | { ok: false; code: string; message: string };
+  { ok: true; plan: DocsPullRequestPlan } | { ok: false; code: string; message: string };
 
 /**
  * A branch of our own, named after the pull request alone — so one code change

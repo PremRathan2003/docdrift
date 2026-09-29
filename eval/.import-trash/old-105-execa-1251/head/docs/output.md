@@ -11,9 +11,9 @@
 The [`stdout`](api.md#optionsstdout) and [`stderr`](api.md#optionsstderr) options redirect the subprocess output. They default to `'pipe'`, which returns the output using [`result.stdout`](api.md#resultstdout) and [`result.stderr`](api.md#resultstderr).
 
 ```js
-import {execa} from 'execa';
+import { execa } from 'execa';
 
-const {stdout, stderr} = await execa`npm run build`;
+const { stdout, stderr } = await execa`npm run build`;
 console.log(stdout);
 console.log(stderr);
 ```
@@ -21,7 +21,7 @@ console.log(stderr);
 ## Ignore output
 
 ```js
-const {stdout, stderr} = await execa({stdout: 'ignore'})`npm run build`;
+const { stdout, stderr } = await execa({ stdout: 'ignore' })`npm run build`;
 console.log(stdout); // undefined
 console.log(stderr); // string with errors
 ```
@@ -29,20 +29,20 @@ console.log(stderr); // string with errors
 ## File output
 
 ```js
-await execa({stdout: {file: 'output.txt'}})`npm run build`;
+await execa({ stdout: { file: 'output.txt' } })`npm run build`;
 // Or:
-await execa({stdout: new URL('file:///path/to/output.txt')})`npm run build`;
+await execa({ stdout: new URL('file:///path/to/output.txt') })`npm run build`;
 ```
 
 ```js
 // Redirect interleaved stdout and stderr to same file
-const output = {file: 'output.txt'};
-await execa({stdout: output, stderr: output})`npm run build`;
+const output = { file: 'output.txt' };
+await execa({ stdout: output, stderr: output })`npm run build`;
 ```
 
 ```js
 // Append instead of overwriting
-await execa({stdout: {file: 'output.txt', append: true}})`npm run build`;
+await execa({ stdout: { file: 'output.txt', append: true } })`npm run build`;
 ```
 
 ## Terminal output
@@ -50,16 +50,16 @@ await execa({stdout: {file: 'output.txt', append: true}})`npm run build`;
 The parent process' output can be re-used in the subprocess by passing `'inherit'`. This is especially useful to print to the terminal in command line applications.
 
 ```js
-await execa({stdout: 'inherit', stderr: 'inherit'})`npm run build`;
+await execa({ stdout: 'inherit', stderr: 'inherit' })`npm run build`;
 ```
 
 To redirect from/to a different [file descriptor](https://en.wikipedia.org/wiki/File_descriptor), pass its [number](https://en.wikipedia.org/wiki/Standard_streams) or [`process.stdout`](https://nodejs.org/api/process.html#processstdout)/[`process.stderr`](https://nodejs.org/api/process.html#processstderr).
 
 ```js
 // Print both stdout/stderr to the parent stdout
-await execa({stdout: process.stdout, stderr: process.stdout})`npm run build`;
+await execa({ stdout: process.stdout, stderr: process.stdout })`npm run build`;
 // Or:
-await execa({stdout: 1, stderr: 1})`npm run build`;
+await execa({ stdout: 1, stderr: 1 })`npm run build`;
 ```
 
 ## Any output type
@@ -68,20 +68,20 @@ If the subprocess uses Node.js, [IPC](ipc.md) can be used to return [almost any 
 
 ```js
 // main.js
-import {execaNode} from 'execa';
+import { execaNode } from 'execa';
 
-const {ipcOutput} = await execaNode`build.js`;
+const { ipcOutput } = await execaNode`build.js`;
 console.log(ipcOutput[0]); // {kind: 'start', timestamp: date}
 console.log(ipcOutput[1]); // {kind: 'stop', timestamp: date}
 ```
 
 ```js
 // build.js
-import {sendMessage} from 'execa';
+import { sendMessage } from 'execa';
 
-await sendMessage({kind: 'start', timestamp: new Date()});
+await sendMessage({ kind: 'start', timestamp: new Date() });
 await runBuild();
-await sendMessage({kind: 'stop', timestamp: new Date()});
+await sendMessage({ kind: 'stop', timestamp: new Date() });
 ```
 
 ## Multiple targets
@@ -91,15 +91,18 @@ The output can be redirected to multiple targets by setting the [`stdout`](api.m
 The following example redirects `stdout` to both the [terminal](#terminal-output) and an `output.txt` [file](#file-output), while also retrieving its value [programmatically](#stdout-and-stderr).
 
 ```js
-const {stdout} = await execa({stdout: ['inherit', {file: 'output.txt'}, 'pipe']})`npm run build`;
+const { stdout } = await execa({
+  stdout: ['inherit', { file: 'output.txt' }, 'pipe'],
+})`npm run build`;
 console.log(stdout);
 ```
 
-__Loss of TTY control:__ Please note that when a file descriptor is configured with a combination of 'inherit' and other values, this file descriptor will never refer to a TTY in the subprocess, even if in the current process it does.
+**Loss of TTY control:** Please note that when a file descriptor is configured with a combination of 'inherit' and other values, this file descriptor will never refer to a TTY in the subprocess, even if in the current process it does.
 
 ## Interleaved output
 
-If the [`all`](api.md#optionsall) option is `true`, [`stdout`](https://en.wikipedia.org/wiki/Standard_streams#Standard_output_(stdout)) and [`stderr`](https://en.wikipedia.org/wiki/Standard_streams#Standard_error_(stderr)) are combined:
+If the [`all`](api.md#optionsall) option is `true`, [`stdout`](<https://en.wikipedia.org/wiki/Standard_streams#Standard_output_(stdout)>) and [`stderr`](<https://en.wikipedia.org/wiki/Standard_streams#Standard_error_(stderr)>) are combined:
+
 - [`result.all`](api.md#resultall): [`result.stdout`](api.md#resultstdout) + [`result.stderr`](api.md#resultstderr)
 - [`subprocess.all`](api.md#subprocessall): [`subprocess.stdout`](api.md#subprocessstdout) + [`subprocess.stderr`](api.md#subprocessstderr)
 
@@ -108,7 +111,7 @@ If the [`all`](api.md#optionsall) option is `true`, [`stdout`](https://en.wikipe
 For example, this prints `1 3 2` instead of `1 2 3` because both `console.log()` are merged into a single write.
 
 ```js
-const {all} = await execa({all: true})`node example.js`;
+const { all } = await execa({ all: true })`node example.js`;
 ```
 
 ```js
@@ -121,7 +124,7 @@ console.log('3'); // writes to stdout
 This can be worked around by using `setTimeout()`.
 
 ```js
-import {setTimeout} from 'timers/promises';
+import { setTimeout } from 'timers/promises';
 
 console.log('1');
 console.error('2');
@@ -131,14 +134,14 @@ console.log('3');
 
 ## Stdout/stderr-specific options
 
-Some options are related to the subprocess output: [`verbose`](api.md#optionsverbose), [`lines`](api.md#optionslines), [`stripFinalNewline`](api.md#optionsstripfinalnewline), [`buffer`](api.md#optionsbuffer), [`maxBuffer`](api.md#optionsmaxbuffer). By default, those options apply to all [file descriptors](https://en.wikipedia.org/wiki/File_descriptor) ([`stdout`](https://en.wikipedia.org/wiki/Standard_streams#Standard_output_(stdout)), [`stderr`](https://en.wikipedia.org/wiki/Standard_streams#Standard_error_(stderr)), and [others](#additional-file-descriptors)) and [IPC messages](ipc.md). A plain object can be passed instead to apply them to only `stdout`, `stderr`, `all` (both stdout and stderr), [`ipc`](ipc.md), [`fd3`](#additional-file-descriptors), etc.
+Some options are related to the subprocess output: [`verbose`](api.md#optionsverbose), [`lines`](api.md#optionslines), [`stripFinalNewline`](api.md#optionsstripfinalnewline), [`buffer`](api.md#optionsbuffer), [`maxBuffer`](api.md#optionsmaxbuffer). By default, those options apply to all [file descriptors](https://en.wikipedia.org/wiki/File_descriptor) ([`stdout`](<https://en.wikipedia.org/wiki/Standard_streams#Standard_output_(stdout)>), [`stderr`](<https://en.wikipedia.org/wiki/Standard_streams#Standard_error_(stderr)>), and [others](#additional-file-descriptors)) and [IPC messages](ipc.md). A plain object can be passed instead to apply them to only `stdout`, `stderr`, `all` (both stdout and stderr), [`ipc`](ipc.md), [`fd3`](#additional-file-descriptors), etc.
 
 ```js
 // Same value for stdout and stderr
-await execa({verbose: 'full'})`npm run build`;
+await execa({ verbose: 'full' })`npm run build`;
 
 // Different values for stdout and stderr
-await execa({verbose: {stdout: 'none', stderr: 'full'}})`npm run build`;
+await execa({ verbose: { stdout: 'none', stderr: 'full' } })`npm run build`;
 ```
 
 ## Additional file descriptors
@@ -149,8 +152,8 @@ The [`stdio`](api.md#optionsstdio) option is an array combining [`stdin`](api.md
 
 ```js
 // Retrieve output from file descriptor number 3
-const {stdio} = await execa({
-	stdio: ['pipe', 'pipe', 'pipe', 'pipe'],
+const { stdio } = await execa({
+  stdio: ['pipe', 'pipe', 'pipe', 'pipe'],
 })`npm run build`;
 console.log(stdio[3]);
 ```
@@ -160,9 +163,9 @@ console.log(stdio[3]);
 The [`stdio`](api.md#optionsstdio) option can also be a single value [`'pipe'`](#stdout-and-stderr), [`'overlapped'`](windows.md#asynchronous-io), [`'ignore'`](#ignore-output) or [`'inherit'`](#terminal-output). This is a shortcut for setting that same value with the [`stdin`](api.md#optionsstdin), [`stdout`](api.md#optionsstdout) and [`stderr`](api.md#optionsstderr) options.
 
 ```js
-await execa({stdio: 'ignore'})`npm run build`;
+await execa({ stdio: 'ignore' })`npm run build`;
 // Same as:
-await execa({stdin: 'ignore', stdout: 'ignore', stderr: 'ignore'})`npm run build`;
+await execa({ stdin: 'ignore', stdout: 'ignore', stderr: 'ignore' })`npm run build`;
 ```
 
 ## Big output
@@ -172,6 +175,7 @@ To prevent high memory consumption, a maximum output size can be set using the [
 When this threshold is hit, the subprocess fails and [`error.isMaxBuffer`](api.md#errorismaxbuffer) becomes `true`. The truncated output is still available using [`error.stdout`](api.md#resultstdout), [`error.stderr`](api.md#resultstderr) and [`error.ipcOutput`](api.md#resultipcoutput).
 
 This is measured:
+
 - By default: in [characters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/length).
 - If the [`encoding`](binary.md#encoding) option is `'buffer'`: in bytes.
 - If the [`lines`](lines.md#simple-splitting) option is `true`: in lines.
@@ -180,15 +184,15 @@ This is measured:
 
 ```js
 try {
-	await execa({maxBuffer: 1_000_000})`npm run build`;
+  await execa({ maxBuffer: 1_000_000 })`npm run build`;
 } catch (error) {
-	if (error.isMaxBuffer) {
-		console.error('Error: output larger than 1MB.');
-		console.error(error.stdout);
-		console.error(error.stderr);
-	}
+  if (error.isMaxBuffer) {
+    console.error('Error: output larger than 1MB.');
+    console.error(error.stdout);
+    console.error(error.stderr);
+  }
 
-	throw error;
+  throw error;
 }
 ```
 

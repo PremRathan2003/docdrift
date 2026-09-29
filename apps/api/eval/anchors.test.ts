@@ -21,7 +21,10 @@ describe('anchorHeadings', () => {
   });
 
   it('names every section touched', () => {
-    const after = DOC.replace('`done` field', '`completed` field').replace('Limit is 20', 'Limit is 50');
+    const after = DOC.replace('`done` field', '`completed` field').replace(
+      'Limit is 20',
+      'Limit is 50',
+    );
     expect(anchorHeadings(DOC, after)).toEqual(['## Tasks', '## Options']);
   });
 
@@ -32,9 +35,9 @@ describe('anchorHeadings', () => {
   });
 
   it('reports a change above the first heading as an empty heading', () => {
-    expect(anchorHeadings('Preamble.\n\n# Title\n\nBody.\n', 'Changed.\n\n# Title\n\nBody.\n')).toEqual([
-      '',
-    ]);
+    expect(
+      anchorHeadings('Preamble.\n\n# Title\n\nBody.\n', 'Changed.\n\n# Title\n\nBody.\n'),
+    ).toEqual(['']);
   });
 
   it('returns nothing when the document did not change', () => {

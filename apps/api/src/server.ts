@@ -1,4 +1,5 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { createApp } from './app.js';
 import { loadEnv } from './config/env.js';
 import { createLogger } from './lib/logger.js';
@@ -10,6 +11,14 @@ import { loadGitHubConfig } from './modules/github/config.js';
 const { version } = JSON.parse(
   readFileSync(new URL('../package.json', import.meta.url), 'utf8'),
 ) as { version: string };
+
+/**
+ * In production one service serves both the API and the web app, so the browser
+ * stays on a single origin: no CORS exception, and the session cookie is
+ * first-party without a proxy rewrite. In development Vite serves the app and
+ * proxies /api here, so this path does not exist and is skipped.
+ */
+const webDist = fileURLToPath(new URL('../../web/dist/', import.meta.url));
 
 const env = loadEnv();
 const logger = createLogger(env.LOG_LEVEL);
@@ -23,6 +32,7 @@ const app = createApp({
   db: prisma,
   github: githubConfig ? { config: githubConfig } : null,
   ai: createAIProvider(env),
+  webDist: env.NODE_ENV === 'production' && existsSync(webDist) ? webDist : undefined,
   analysisConfig: {
     timeoutMs: env.AI_TIMEOUT_MS,
     maxInputTokens: env.AI_MAX_INPUT_TOKENS,
@@ -40,6 +50,8 @@ void app.services.analysis.failInterruptedRuns().then((n) => {
 const server = app.listen(env.PORT, () => {
   logger.info({ port: env.PORT }, `API listening on http://localhost:${env.PORT}`);
   if (!githubConfig) logger.warn('GitHub App not configured: GitHub features are disabled');
+  if (env.NODE_ENV === 'production' && existsSync(webDist))
+    logger.info('Serving the web app from this service');
   if (env.AI_PROVIDER === 'none') logger.warn('AI provider not configured: analysis is disabled');
   else logger.info({ provider: env.AI_PROVIDER, model: env.AI_MODEL }, 'AI provider configured');
 });

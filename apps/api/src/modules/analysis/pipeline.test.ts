@@ -6,7 +6,8 @@ const SECTIONS = Array.from(
   { length: 12 },
   // Many short lines: packSections never cuts mid-line, so a section made of
   // one enormous line could not be split however small the limit.
-  (_, i) => `## options.setting${i}\n\n${Array.from({ length: 60 }, () => `Text about what setting${i} does and when to use it.`).join('\n')}`,
+  (_, i) =>
+    `## options.setting${i}\n\n${Array.from({ length: 60 }, () => `Text about what setting${i} does and when to use it.`).join('\n')}`,
 ).join('\n\n');
 const DOC = `# API\n\n${SECTIONS}\n`;
 
@@ -34,8 +35,16 @@ const base: PipelineConfig = { timeoutMs: 1_000, maxInputTokens: 30_000 };
 describe('buildContext section settings', () => {
   it('shows a long document in parts, and more parts when given more room', async () => {
     const size = { min: 400, max: 3_000 };
-    const tight = await buildContext(source, pr, { ...base, sectionSize: size, sectionBudget: 3_000 });
-    const roomy = await buildContext(source, pr, { ...base, sectionSize: size, sectionBudget: 20_000 });
+    const tight = await buildContext(source, pr, {
+      ...base,
+      sectionSize: size,
+      sectionBudget: 3_000,
+    });
+    const roomy = await buildContext(source, pr, {
+      ...base,
+      sectionSize: size,
+      sectionBudget: 20_000,
+    });
 
     expect(tight.sectionedDocs).toEqual(['docs/api.md']);
     const fewer = tight.docs[0]!.sections!.chosen.length;

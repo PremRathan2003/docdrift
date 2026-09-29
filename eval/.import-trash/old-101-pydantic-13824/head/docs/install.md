@@ -14,10 +14,10 @@ Installation is as simple as:
 
 Pydantic has a few dependencies:
 
-* [`pydantic-core`](https://pypi.org/project/pydantic-core/): Core validation logic for Pydantic written in Rust.
-* [`typing-extensions`](https://pypi.org/project/typing-extensions/): Backport of the standard library [typing][] module.
-* [`annotated-types`](https://pypi.org/project/annotated-types/): Reusable constraint types to use with [`typing.Annotated`][].
-* [`typing-inspection`](https://pypi.org/project/typing-inspection/): Runtime typing introspection tools.
+- [`pydantic-core`](https://pypi.org/project/pydantic-core/): Core validation logic for Pydantic written in Rust.
+- [`typing-extensions`](https://pypi.org/project/typing-extensions/): Backport of the standard library [typing][] module.
+- [`annotated-types`](https://pypi.org/project/annotated-types/): Reusable constraint types to use with [`typing.Annotated`][].
+- [`typing-inspection`](https://pypi.org/project/typing-inspection/): Runtime typing introspection tools.
 
 If you've got Python 3.10+ and `pip` installed, you're good to go.
 
@@ -32,8 +32,8 @@ conda install pydantic -c conda-forge
 
 Pydantic has the following optional dependencies:
 
-* `email`: Email validation provided by the [email-validator](https://pypi.org/project/email-validator/) package.
-* `timezone`: Fallback IANA time zone database provided by the [tzdata](https://pypi.org/project/tzdata/) package.
+- `email`: Email validation provided by the [email-validator](https://pypi.org/project/email-validator/) package.
+- `timezone`: Fallback IANA time zone database provided by the [tzdata](https://pypi.org/project/tzdata/) package.
 
 To install optional dependencies along with Pydantic:
 

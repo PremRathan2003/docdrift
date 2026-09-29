@@ -3,22 +3,23 @@
 # Arguments
 
 ```{currentmodule} click
+
 ```
 
 Arguments are:
 
-* Are positional in nature.
-* Similar to a limited version of {ref}`options <options>` that
+- Are positional in nature.
+- Similar to a limited version of {ref}`options <options>` that
   can take an arbitrary number of inputs
-* Can take an optional `help` string shown in the `Positional arguments`
+- Can take an optional `help` string shown in the `Positional arguments`
   section of the help page, or be {ref}`documented in the command docstring
-  <documenting-arguments>`.
+<documenting-arguments>`.
 
 Useful and often used kwargs are:
 
-* `help`: Help text for the argument.
-* `default`: Passes a default.
-* `nargs`: Sets the number of arguments. Set to -1 to take an arbitrary number.
+- `help`: Help text for the argument.
+- `default`: Passes a default.
+- `nargs`: Sets the number of arguments. Set to -1 to take an arbitrary number.
 
 ## Basic Arguments
 

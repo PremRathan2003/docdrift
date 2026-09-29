@@ -74,9 +74,13 @@ export function docsPullRequestRouter(deps: {
   router.get('/analyses/:id/docs-pull-request', auth, async (req, res) => {
     const { id } = idParam.parse(req.params);
     const row = await db.docsPullRequest.findFirst({
-      where: { analysisRunId: id, analysisRun: { pullRequest: { repository: { userId: req.auth!.user.id } } } },
+      where: {
+        analysisRunId: id,
+        analysisRun: { pullRequest: { repository: { userId: req.auth!.user.id } } },
+      },
     });
-    if (!row) throw new AppError(404, 'NOT_FOUND', 'No documentation pull request for this analysis');
+    if (!row)
+      throw new AppError(404, 'NOT_FOUND', 'No documentation pull request for this analysis');
     res.json({
       docsPullRequest: {
         number: row.number,

@@ -18,7 +18,8 @@ import { splitIntoSections } from '../src/modules/analysis/sections.js';
 import { caseSource, loadCases } from './dataset.js';
 import { pullRequestOf } from './detectors.js';
 
-const CASES = process.env.DOCDRIFT_CASES_DIR ?? new URL('../../../eval/cases', import.meta.url).pathname;
+const CASES =
+  process.env.DOCDRIFT_CASES_DIR ?? new URL('../../../eval/cases', import.meta.url).pathname;
 
 interface Variant {
   label: string;
@@ -42,7 +43,12 @@ const VARIANTS: Variant[] = [
   { label: 'max 3k + 12k per doc', sectionSize: { min: 400, max: 3_000 }, sectionBudget: 12_000 },
   { label: 'max 2k + 12k per doc', sectionSize: { min: 400, max: 2_000 }, sectionBudget: 12_000 },
   // The expensive option, for reference: +30% prompt.
-  { label: 'max 3k + 18k per doc + half the budget', sectionSize: { min: 400, max: 3_000 }, sectionBudget: 18_000, docShare: 0.5 },
+  {
+    label: 'max 3k + 18k per doc + half the budget',
+    sectionSize: { min: 400, max: 3_000 },
+    sectionBudget: 18_000,
+    docShare: 0.5,
+  },
 ];
 
 const cases = (await loadCases(CASES)).filter((c) => c.expected.some((e) => e.anchors.length));
