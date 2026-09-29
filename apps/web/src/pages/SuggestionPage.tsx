@@ -346,24 +346,60 @@ export function SuggestionPage() {
               </>
             )}
 
-            {s.status === 'APPROVED' && data.originalDocument.status !== 'unavailable' && (
+            {/*
+              Approving is not the last step: the documentation pull request is
+              opened from the analysis, on the pull request page. Nothing used
+              to say so, so an approval ended here with no route onward.
+            */}
+            {s.status === 'APPROVED' && (
               <div className="mt-4 border-t border-zinc-200 pt-4 dark:border-zinc-800">
-                <Button
-                  variant="secondary"
-                  className="w-full"
-                  onClick={() =>
-                    downloadText(`${s.documentationPath.replace(/\//g, '_')}.patch`, patch)
-                  }
-                >
-                  Download approved patch
-                </Button>
-                <p className="mt-2 text-xs text-zinc-500">
-                  Apply it on the PR branch with{' '}
-                  <code>git apply {s.documentationPath.replace(/\//g, '_')}.patch</code>. Creating a
-                  documentation pull request directly from DocDrift comes in Phase 3.
+                <p className="text-sm">
+                  Approved. To open a documentation pull request with it, go to{' '}
+                  <Link
+                    to={`/pull-requests/${data.pullRequest.id}`}
+                    className="font-medium text-indigo-600 underline dark:text-indigo-400"
+                  >
+                    pull request #{data.pullRequest.number}
+                  </Link>{' '}
+                  — the button is under this analysis's results.
                 </p>
               </div>
             )}
+
+            {s.status === 'APPLIED' && (
+              <div className="mt-4 border-t border-zinc-200 pt-4 dark:border-zinc-800">
+                <p className="text-sm">
+                  Applied — this change is on the documentation branch for{' '}
+                  <Link
+                    to={`/pull-requests/${data.pullRequest.id}`}
+                    className="font-medium text-indigo-600 underline dark:text-indigo-400"
+                  >
+                    pull request #{data.pullRequest.number}
+                  </Link>
+                  .
+                </p>
+              </div>
+            )}
+
+            {(s.status === 'APPROVED' || s.status === 'APPLIED') &&
+              data.originalDocument.status !== 'unavailable' && (
+                <div className="mt-4">
+                  <Button
+                    variant="secondary"
+                    className="w-full"
+                    onClick={() =>
+                      downloadText(`${s.documentationPath.replace(/\//g, '_')}.patch`, patch)
+                    }
+                  >
+                    Download approved patch
+                  </Button>
+                  <p className="mt-2 text-xs text-zinc-500">
+                    For applying it by hand instead:{' '}
+                    <code>git apply {s.documentationPath.replace(/\//g, '_')}.patch</code> on the
+                    pull request's branch.
+                  </p>
+                </div>
+              )}
           </section>
 
           <section className={`${card} p-5`} aria-labelledby="history">
