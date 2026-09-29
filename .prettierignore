@@ -4,5 +4,7 @@ node_modules
 package-lock.json
 apps/api/src/generated
 apps/api/prisma/migrations
-eval/cases
-eval/reports
+# Evaluation fixtures are sample repositories, not our code — and their exact
+# bytes ARE the measurement, so reformatting them would quietly change what the
+# evaluation scores. The whole directory is excluded, not folder by folder.
+eval/

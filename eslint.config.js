@@ -11,8 +11,11 @@ export default tseslint.config(
       '**/coverage/**',
       '**/node_modules/**',
       'apps/api/src/generated/**',
-      // Evaluation fixtures: sample repositories, not our code.
-      'eval/cases/**',
+      // Evaluation fixtures: sample repositories, not our code. The whole
+      // directory, not `eval/cases/**` — `eval/.import-trash/` was added later
+      // and linting third-party sources reports dozens of irrelevant errors.
+      // (Our evaluation harness lives in apps/api/eval and is still linted.)
+      'eval/**',
     ],
   },
   js.configs.recommended,
