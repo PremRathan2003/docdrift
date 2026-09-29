@@ -228,6 +228,12 @@ accepted trade-off is that a later run REPLACES what an earlier one proposed —
 most recent analysis's approved output, not the union of every analysis. Because that silently changes
 an open pull request, the panel says so before the button is pressed rather than after.
 
+Verified against real GitHub, not only against the test double: a pull request opened from the UI onto
+`docdrift/pr-1`, and `scripts/github-probe-ref.ts` (`npm run github:probe-ref`) confirming that GitHub
+accepts the percent-encoded ref path `setBranch` builds — `git/ref/heads%2Fdocdrift%2Fpr-1`. That last
+one needed its own probe precisely because the fake was written to match what our code sends, so it
+would have agreed with the encoding whether or not GitHub did.
+
 **D13 — Evaluation.** `npm run eval` runs the same `runPipeline` as the app (context selection,
 prompt, retries, validation), only reading repositories from `eval/cases` instead of GitHub, so it
 measures what users get. Cases are small repositories (`head/` + the changed files' `base/`) with
