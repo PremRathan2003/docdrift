@@ -24,8 +24,11 @@ services:
     plan: free
     region: frankfurt
     # Shared must build before the two apps that import it.
+    # `--include=dev` because Render sets NODE_ENV=production, and npm then
+    # skips devDependencies — which is where typescript, @types/* and the
+    # prisma CLI live. Without it the build fails on missing type declarations.
     buildCommand: >-
-      npm ci &&
+      npm ci --include=dev &&
       npm run build -w @docdrift/shared &&
       npm run build -w @docdrift/api &&
       npm run build -w @docdrift/web
@@ -61,7 +64,7 @@ services:
       # evaluation number was measured on. Verified against this model with
       # `npm run ai:diagnose`; not every model accepts it.
       - key: AI_NATIVE_SCHEMA
-        value: "true"
+        value: 'true'
       - key: AI_API_KEY
         sync: false
       # The GitHub App. All five are required together, or the API refuses to
