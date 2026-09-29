@@ -29,6 +29,17 @@ export interface FakeGitHubState {
   pulls?: Record<string, FakePull[]>;
   /** "owner/name" -> file path -> content (same for every ref, which is enough for tests) */
   files?: Record<string, Record<string, string>>;
+  /** Refuse the write endpoints, as an App without "Contents: write" would. */
+  readOnly?: boolean;
+  /**
+   * Filled in by the fake as the docs pull request flow runs, so a test can
+   * assert what DocDrift actually pushed rather than only what it displayed.
+   */
+  written?: {
+    commits: { message: string; parent: string; files: { path: string; content: string }[] }[];
+    branches: Record<string, string>;
+    pulls: { branch: string; base: string; title: string; body: string; number: number }[];
+  };
 }
 
 export interface FakePull {
@@ -60,7 +71,27 @@ export const fakeGitHubConfig: GitHubAppConfig = {
 const json = (status: number, body: unknown) =>
   new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json' } });
 
+/**
+ * A view onto a state object the test still owns, so it can keep mutating the
+ * state after the fake was built (`gh.readOnly = true`) AND see what the fake
+ * records back into it (`gh.written`). A read-only proxy would silently send
+ * the fake's own writes to a throwaway object.
+ */
+export function liveState(current: () => FakeGitHubState): FakeGitHubState {
+  return new Proxy({} as FakeGitHubState, {
+    get: (_t, k) => (current() as unknown as Record<string | symbol, unknown>)[k],
+    set: (_t, k, v) => {
+      (current() as unknown as Record<string | symbol, unknown>)[k] = v;
+      return true;
+    },
+  });
+}
+
 export function createFakeGitHub(state: FakeGitHubState) {
+  /** Blobs and trees posted while building one commit. */
+  const pendingBlobs = new Map<string, string>();
+  const pendingTrees = new Map<string, { path: string; sha: string }[]>();
+
   const fetchImpl = (async (input: string | URL | Request, init: RequestInit = {}) => {
     const url = new URL(String(input));
     const method = init.method ?? 'GET';
@@ -212,6 +243,101 @@ export function createFakeGitHub(state: FakeGitHubState) {
         size: content.length,
         content: Buffer.from(content).toString('base64'),
       });
+    }
+
+    // ---- writing: the documentation pull request flow (Phase 3.3)
+
+    const written = (state.written ??= { commits: [], branches: {}, pulls: [] });
+
+    const write = /^\/repos\/([^/]+)\/([^/]+)\/(git\/blobs|git\/trees|git\/commits|git\/refs|git\/ref\/.+|pulls)$/.exec(
+      url.pathname,
+    );
+    const writeRepo = write ? `${write[1]}/${write[2]}` : null;
+    if (write && writeRepo && !canRead(writeRepo)) return json(404, { message: 'Not Found' });
+    if (write && state.readOnly && method !== 'GET')
+      return json(403, { message: 'Resource not accessible by integration' });
+
+    const blobs = /^\/repos\/([^/]+)\/([^/]+)\/git\/blobs$/.exec(url.pathname);
+    if (method === 'POST' && blobs) {
+      const { content } = JSON.parse(String(init.body)) as { content: string; encoding: string };
+      const text = Buffer.from(content, 'base64').toString('utf8');
+      const sha = blobSha(text);
+      pendingBlobs.set(sha, text);
+      return json(201, { sha });
+    }
+
+    const trees = /^\/repos\/([^/]+)\/([^/]+)\/git\/trees$/.exec(url.pathname);
+    if (method === 'POST' && trees) {
+      const body = JSON.parse(String(init.body)) as {
+        base_tree: string;
+        tree: { path: string; sha: string }[];
+      };
+      const sha = `tree-${body.tree.map((t) => t.path).join('|')}`;
+      pendingTrees.set(sha, body.tree.map((t) => ({ path: t.path, sha: t.sha })));
+      return json(201, { sha });
+    }
+
+    const commits = /^\/repos\/([^/]+)\/([^/]+)\/git\/commits$/.exec(url.pathname);
+    if (method === 'POST' && commits) {
+      const body = JSON.parse(String(init.body)) as {
+        message: string;
+        tree: string;
+        parents: string[];
+      };
+      const entries = pendingTrees.get(body.tree) ?? [];
+      written.commits.push({
+        message: body.message,
+        parent: body.parents[0]!,
+        files: entries.map((e) => ({ path: e.path, content: pendingBlobs.get(e.sha) ?? '' })),
+      });
+      return json(201, { sha: `commit-${written.commits.length}` });
+    }
+
+    const commitRead = /^\/repos\/([^/]+)\/([^/]+)\/git\/commits\/([^/]+)$/.exec(url.pathname);
+    if (method === 'GET' && commitRead) return json(200, { tree: { sha: `tree-of-${commitRead[3]}` } });
+
+    const refRead = /^\/repos\/([^/]+)\/([^/]+)\/git\/ref\/(.+)$/.exec(url.pathname);
+    if (method === 'GET' && refRead) {
+      const branch = decodeURIComponent(refRead[3]!).replace(/^heads\//, '');
+      const sha = written.branches[branch];
+      return sha ? json(200, { object: { sha } }) : json(404, { message: 'Not Found' });
+    }
+
+    const refCreate = /^\/repos\/([^/]+)\/([^/]+)\/git\/refs$/.exec(url.pathname);
+    if (method === 'POST' && refCreate) {
+      const body = JSON.parse(String(init.body)) as { ref: string; sha: string };
+      written.branches[body.ref.replace('refs/heads/', '')] = body.sha;
+      return json(201, { ref: body.ref, object: { sha: body.sha } });
+    }
+
+    const refUpdate = /^\/repos\/([^/]+)\/([^/]+)\/git\/refs\/(.+)$/.exec(url.pathname);
+    if (method === 'PATCH' && refUpdate) {
+      const body = JSON.parse(String(init.body)) as { sha: string };
+      written.branches[decodeURIComponent(refUpdate[3]!).replace(/^heads\//, '')] = body.sha;
+      return json(200, { object: { sha: body.sha } });
+    }
+
+    const pullsPath = /^\/repos\/([^/]+)\/([^/]+)\/pulls$/.exec(url.pathname);
+    if (pullsPath && method === 'GET') {
+      // "Is there already an open pull request from this branch?"
+      const head = (url.searchParams.get('head') ?? '').split(':').pop();
+      const base = url.searchParams.get('base');
+      const found = written.pulls.filter((p) => p.branch === head && p.base === base);
+      return json(
+        200,
+        found.map((p) => ({ number: p.number, html_url: `https://github.com/${writeRepo}/pull/${p.number}` })),
+      );
+    }
+    if (pullsPath && method === 'POST') {
+      const body = JSON.parse(String(init.body)) as {
+        head: string;
+        base: string;
+        title: string;
+        body: string;
+      };
+      const number = 900 + written.pulls.length + 1;
+      written.pulls.push({ branch: body.head, base: body.base, title: body.title, body: body.body, number });
+      return json(201, { number, html_url: `https://github.com/${writeRepo}/pull/${number}` });
     }
 
     return json(404, { message: 'Not Found' });

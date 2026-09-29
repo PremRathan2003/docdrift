@@ -8,6 +8,11 @@
  * is refused rather than applied to newer code; and two approved suggestions for
  * the same document are refused rather than silently letting one overwrite the
  * other, because each holds a complete file.
+ *
+ * APPLIED counts as approved here. Every attempt builds its commit on the pull
+ * request's head rather than on the previous documentation commit, so the plan
+ * must always describe the WHOLE branch: if a second attempt carried only the
+ * newly approved document, the ones applied first would disappear from it.
  */
 
 export interface PlanInput {
@@ -52,7 +57,8 @@ export function planDocsPullRequest(input: PlanInput): PlanResult {
       message: `This analysis is ${run.status.toLowerCase()}, so there is nothing to apply`,
     };
 
-  const approved = suggestions.filter((s) => s.status === 'APPROVED');
+  // APPLIED means "approved earlier and already on the branch" — see above.
+  const approved = suggestions.filter((s) => s.status === 'APPROVED' || s.status === 'APPLIED');
   if (approved.length === 0)
     return {
       ok: false,

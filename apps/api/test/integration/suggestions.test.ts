@@ -2,9 +2,10 @@ import request from 'supertest';
 import { afterAll, beforeEach, describe, expect, it } from 'vitest';
 import { dashboardResponseSchema, suggestionDetailResponseSchema } from '@docdrift/shared';
 import { FakeAI, reply } from '../helpers/fake-ai.js';
-import { createFakeGitHub, type FakeGitHubState } from '../helpers/fake-github.js';
+import { createFakeGitHub, liveState, type FakeGitHubState } from '../helpers/fake-github.js';
 import { createTestApp } from '../helpers/test-app.js';
 import { createTestDb, resetDb } from '../helpers/test-db.js';
+import { PROMPT_VERSION } from '../../src/modules/analysis/prompts/v3.js';
 
 const db = createTestDb();
 const creds = { email: 'prem@example.com', password: 'a-long-enough-password' };
@@ -58,9 +59,7 @@ const output = {
 };
 
 async function setup() {
-  const fake = createFakeGitHub(
-    new Proxy({} as FakeGitHubState, { get: (_t, k) => gh[k as keyof FakeGitHubState] }),
-  );
+  const fake = createFakeGitHub(liveState(() => gh));
   const app = createTestApp(db, undefined, fake, { ai: new FakeAI([reply(output)]) });
   const agent = request.agent(app);
   await agent.post('/api/auth/register').send(creds).expect(201);
@@ -102,7 +101,7 @@ describe('suggestion detail', () => {
       'APPROVE',
       'REJECT',
     ]);
-    expect(body.analysis.promptVersion).toBe('v3');
+    expect(body.analysis.promptVersion).toBe(PROMPT_VERSION);
     expect(body.repository.fullName).toBe(SANDBOX);
     expect(body.reviews).toEqual([]);
   });

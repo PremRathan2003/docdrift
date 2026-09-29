@@ -6,6 +6,7 @@ import { FakeAI, reply } from '../helpers/fake-ai.js';
 import { createFakeGitHub, type FakeGitHubState } from '../helpers/fake-github.js';
 import { createTestApp } from '../helpers/test-app.js';
 import { createTestDb, resetDb } from '../helpers/test-db.js';
+import { PROMPT_VERSION } from '../../src/modules/analysis/prompts/v3.js';
 
 const db = createTestDb();
 const creds = { email: 'prem@example.com', password: 'a-long-enough-password' };
@@ -119,7 +120,7 @@ describe('running an analysis', () => {
       status: 'SUCCEEDED',
       provider: 'fake',
       model: 'fake-model-1',
-      promptVersion: 'v3',
+      promptVersion: PROMPT_VERSION,
       summary: goodOutput.summary,
       attemptCount: 1,
       inputTokens: 1000,
@@ -424,7 +425,7 @@ describe('analysis API rules', () => {
         trigger: 'MANUAL',
         status: 'RUNNING',
         headSha: 'x',
-        promptVersion: 'v3',
+        promptVersion: PROMPT_VERSION,
         schemaVersion: '1',
         provider: 'fake',
         model: 'm',

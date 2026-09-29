@@ -212,6 +212,14 @@ file, so applying both would silently lose one). Suggestions are marked APPLIED 
 request exists, so nothing is ever recorded as applied without somewhere to point at. Reaching this
 endpoint requires a signed-in person pressing a button; no webhook or schedule leads to it.
 
+Because every attempt commits on the pull request's head rather than on the previous documentation
+commit, the plan must always describe the **whole** branch, so a suggestion already APPLIED still
+counts as approved when planning. Integration tests found this: the first version planned only
+APPROVED suggestions, which made the second attempt refuse with NOTHING_APPROVED — and had that
+refusal not been there, the second commit would have carried one file on a fresh parent and silently
+removed the documents committed first. The branch therefore always equals "everything approved right
+now", which also means rejecting something and re-running correctly takes it back off the branch.
+
 **D13 — Evaluation.** `npm run eval` runs the same `runPipeline` as the app (context selection,
 prompt, retries, validation), only reading repositories from `eval/cases` instead of GitHub, so it
 measures what users get. Cases are small repositories (`head/` + the changed files' `base/`) with

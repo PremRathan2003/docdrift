@@ -43,6 +43,37 @@ describe('planDocsPullRequest', () => {
     expect(result.plan.branch).toBe('docdrift/pr-42-12345678');
   });
 
+  it('keeps documents already applied, so a second attempt does not drop them', () => {
+    // Each attempt commits on the pull request's head, not on the previous
+    // documentation commit — so a plan that omitted the applied document would
+    // push a commit that silently removes it from the branch.
+    const result = planDocsPullRequest(
+      input({
+        suggestions: [
+          { id: 's1', documentationPath: 'README.md', currentContent: 'first', status: 'APPLIED' },
+          { id: 's2', documentationPath: 'docs/a.md', currentContent: 'second', status: 'APPROVED' },
+        ],
+      }),
+    );
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.plan.files).toEqual([
+      { path: 'README.md', content: 'first' },
+      { path: 'docs/a.md', content: 'second' },
+    ]);
+  });
+
+  it('refuses a run whose approved suggestions were all rejected afterwards', () => {
+    const result = planDocsPullRequest(
+      input({
+        suggestions: [
+          { id: 's1', documentationPath: 'README.md', currentContent: 'x', status: 'REJECTED' },
+        ],
+      }),
+    );
+    expect(result).toMatchObject({ ok: false, code: 'NOTHING_APPROVED' });
+  });
+
   it('names a branch of its own, stable for one run and different for the next', () => {
     expect(branchName(42, 'clz0000000run12345678')).toBe('docdrift/pr-42-12345678');
     expect(branchName(42, 'clz0000000run12345678')).toBe(branchName(42, 'clz0000000run12345678'));
