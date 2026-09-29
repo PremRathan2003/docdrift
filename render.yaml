@@ -56,6 +56,12 @@ services:
         value: gemini
       - key: AI_MODEL
         value: gemini-3.5-flash-lite
+      # Send the output schema to Gemini natively. It must match development,
+      # or the deployed app takes a different prompting path from the one every
+      # evaluation number was measured on. Verified against this model with
+      # `npm run ai:diagnose`; not every model accepts it.
+      - key: AI_NATIVE_SCHEMA
+        value: "true"
       - key: AI_API_KEY
         sync: false
       # The GitHub App. All five are required together, or the API refuses to
