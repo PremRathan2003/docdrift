@@ -8,10 +8,16 @@ import { createAppJwt } from '../src/modules/github/app-jwt.js';
 import { loadGitHubConfig } from '../src/modules/github/config.js';
 import { createGitHubClient, GitHubError } from '../src/modules/github/github-client.js';
 
+/**
+ * Write on contents and pull requests is what opening a documentation pull
+ * request needs (Phase 3.3). Everything DocDrift does to a repository is still
+ * gated on a person approving a suggestion first — the permission only makes it
+ * possible, it does not make it automatic.
+ */
 const EXPECTED_PERMISSIONS: Record<string, string> = {
-  contents: 'read',
+  contents: 'write',
   metadata: 'read',
-  pull_requests: 'read',
+  pull_requests: 'write',
 };
 
 async function main() {
@@ -55,15 +61,44 @@ async function main() {
   if (extra.length)
     console.warn(`! Extra permissions granted (not needed yet): ${extra.join(', ')}`);
 
-  const installations = await client.paginate<
-    { id: number; account: { login: string } }[],
-    { id: number; account: { login: string } }
-  >({ path: '/app/installations', token: jwt }, (page) => page);
+  type Installation = {
+    id: number;
+    account: { login: string };
+    permissions: Record<string, string>;
+  };
+  const installations = await client.paginate<Installation[], Installation>(
+    { path: '/app/installations', token: jwt },
+    (page) => page,
+  );
   console.warn(
     installations.length
       ? `✓ Installed on: ${installations.map((i) => i.account.login).join(', ')}`
       : `! Not installed anywhere yet — that's expected until milestone 1.3 step 2`,
   );
+
+  // Raising a permission on the app does NOT raise it on existing installations:
+  // GitHub asks the owner to accept the request, and until they do, the tokens
+  // DocDrift actually uses still carry the old, lower permissions. This is the
+  // easiest step to miss, and the symptom is a 403 at the last moment.
+  for (const inst of installations) {
+    const behind = Object.entries(EXPECTED_PERMISSIONS).filter(
+      ([perm, level]) => inst.permissions[perm] !== level,
+    );
+    if (behind.length) {
+      ok = false;
+      console.warn(
+        `✗ Installation on ${inst.account.login} has not accepted the current permissions: ` +
+          behind
+            .map(([p, l]) => `${p} is "${inst.permissions[p] ?? 'none'}", needs "${l}"`)
+            .join('; '),
+      );
+      console.warn(
+        `  Accept them here: https://github.com/settings/installations/${inst.id}/permissions/update`,
+      );
+    } else {
+      console.warn(`✓ Installation on ${inst.account.login} has the permissions it needs`);
+    }
+  }
   console.warn(`  Install page: https://github.com/apps/${config.slug}/installations/new`);
 
   if (!ok) process.exit(1);
