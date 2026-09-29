@@ -8,7 +8,15 @@ the code, and drafts documentation updates that a human reviews before anything 
 > and — once a person approves them — opens a documentation pull request on the repository.
 > A webhook keeps pull requests current. Every claim below about accuracy comes from
 > [the evaluation](#what-the-evaluation-says), not from impressions.
-> Remaining: a job queue (3.2), deployment and polish (Phase 4). See [docs/ROADMAP.md](docs/ROADMAP.md).
+> Remaining: a job queue (3.2) and portfolio polish. See [docs/ROADMAP.md](docs/ROADMAP.md).
+
+**Live: <https://docdrift-0uwo.onrender.com>**
+
+It runs on Render's free plan, which means two things worth saying before you click. The service
+sleeps after 15 minutes of inactivity, so a cold start takes roughly 50 seconds — the first page
+load may look like nothing is happening. And analysing a pull request needs a GitHub App
+installation on a repository you own, so the interesting part is not reachable as a visitor;
+[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) covers running it yourself.
 
 ## What it does
 
