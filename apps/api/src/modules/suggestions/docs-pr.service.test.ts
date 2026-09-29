@@ -39,7 +39,9 @@ function fakes(opts: { existingPr?: { number: number; htmlUrl: string } } = {}) 
       upsert: async ({ create }: { create: Record<string, unknown> }) => {
         calls.push('save');
         saved = create;
-        return create;
+        // Prisma answers with the stored row, and the service replies from it —
+        // so the mock has to include what the database adds.
+        return { ...create, createdAt: new Date('2026-09-29T10:00:00.000Z') };
       },
     },
     suggestion: {
@@ -49,7 +51,9 @@ function fakes(opts: { existingPr?: { number: number; htmlUrl: string } } = {}) 
         return where;
       },
     },
-    $transaction: async (ops: unknown[]) => ops,
+    // $transaction resolves its operations; returning them unresolved would
+    // hand the service promises where it expects rows.
+    $transaction: async (ops: unknown[]) => Promise.all(ops),
   } as unknown as Db;
 
   const github = {
@@ -86,7 +90,7 @@ describe('createDocsPullRequestService', () => {
 
     expect(result).toMatchObject({
       number: 7,
-      branch: 'docdrift/pr-42-12345678',
+      branch: 'docdrift/pr-42',
       base: 'feature',
       documents: ['README.md'],
       created: true,
@@ -94,7 +98,7 @@ describe('createDocsPullRequestService', () => {
     // Order matters: nothing is marked applied until a pull request exists.
     expect(f.calls).toEqual([
       'commit README.md',
-      'branch docdrift/pr-42-12345678',
+      'branch docdrift/pr-42',
       'look for an existing pull request',
       'open pull request',
       'mark applied',
@@ -111,6 +115,6 @@ describe('createDocsPullRequestService', () => {
     expect(result).toMatchObject({ number: 3, created: false });
     expect(f.calls).not.toContain('open pull request');
     // The branch is still moved: the approved content may have been edited.
-    expect(f.calls).toContain('branch docdrift/pr-42-12345678');
+    expect(f.calls).toContain('branch docdrift/pr-42');
   });
 });

@@ -83,6 +83,16 @@ export function DocsPullRequestPanel({ run }: { run: AnalysisRunDto }) {
               <li key={s.id}>{s.documentationPath}</li>
             ))}
           </ul>
+          {/*
+            One branch per pull request means a later analysis replaces what an
+            earlier one proposed. That is a change to somebody's open pull
+            request, so it is said plainly BEFORE the button, not discovered
+            afterwards.
+          */}
+          <p className="text-zinc-600 dark:text-zinc-400">
+            There is one documentation branch per pull request. If an earlier analysis already
+            opened one, this replaces its contents with the changes approved here.
+          </p>
         </div>
       )}
 

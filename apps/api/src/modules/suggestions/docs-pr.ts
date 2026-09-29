@@ -38,13 +38,22 @@ export type PlanResult =
   | { ok: false; code: string; message: string };
 
 /**
- * A branch of our own, named after the pull request and the analysis run, so a
- * second attempt at the same run reuses it (idempotent) while a later run gets
- * its own. The `docdrift/` prefix keeps it clearly ours: nothing else is ever
+ * A branch of our own, named after the pull request alone — so one code change
+ * has exactly one documentation pull request, however many times it is
+ * analysed. Naming it after the analysis run instead gave every re-run its own
+ * branch, and a repository quickly collected several open pull requests
+ * proposing different rewrites of the same file.
+ *
+ * The trade-off, deliberately taken: a later run REPLACES what an earlier run
+ * put on the branch. The branch always holds the approved output of the most
+ * recent analysis, not the union of every analysis. The UI says so before the
+ * button is pressed.
+ *
+ * The `docdrift/` prefix keeps it clearly ours: nothing else is ever
  * force-updated.
  */
-export function branchName(prNumber: number, runId: string) {
-  return `docdrift/pr-${prNumber}-${runId.slice(-8)}`;
+export function branchName(prNumber: number) {
+  return `docdrift/pr-${prNumber}`;
 }
 
 export function planDocsPullRequest(input: PlanInput): PlanResult {
@@ -88,7 +97,7 @@ export function planDocsPullRequest(input: PlanInput): PlanResult {
   return {
     ok: true,
     plan: {
-      branch: branchName(pr.number, run.id),
+      branch: branchName(pr.number),
       // Into the pull request's own branch, so merging this puts the
       // documentation alongside the code change that made it necessary —
       // rather than landing separately on the default branch.

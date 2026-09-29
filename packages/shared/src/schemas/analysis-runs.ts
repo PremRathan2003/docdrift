@@ -92,7 +92,19 @@ export const aiStatusSchema = z.object({
 
 export const docsPullRequestResponseSchema = z.object({ docsPullRequest: docsPullRequestSchema });
 
+/**
+ * Creating one answers with the same shape plus `created`: false means an open
+ * pull request was already there and its branch was updated, which the UI says
+ * out loud rather than implying a new pull request appeared.
+ */
+export const createDocsPullRequestResponseSchema = z.object({
+  docsPullRequest: docsPullRequestSchema.extend({ created: z.boolean() }),
+});
+
 export type AnalysisRunDto = z.infer<typeof analysisRunSchema>;
 export type DocsPullRequestDto = z.infer<typeof docsPullRequestSchema>;
+export type CreateDocsPullRequestDto = z.infer<
+  typeof createDocsPullRequestResponseSchema
+>['docsPullRequest'];
 export type SuggestionDto = z.infer<typeof suggestionSchema>;
 export type InputManifest = z.infer<typeof inputManifestSchema>;

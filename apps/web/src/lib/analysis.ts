@@ -2,7 +2,7 @@ import {
   aiStatusSchema,
   analysisListResponseSchema,
   analysisResponseSchema,
-  docsPullRequestResponseSchema,
+  createDocsPullRequestResponseSchema,
 } from '@docdrift/shared';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiFetch } from './api';
@@ -83,7 +83,7 @@ export function useCreateDocsPullRequest(runId: string) {
     mutationFn: () =>
       apiFetch(
         `/api/analyses/${encodeURIComponent(runId)}/docs-pull-request`,
-        docsPullRequestResponseSchema,
+        createDocsPullRequestResponseSchema,
         { method: 'POST' },
       ),
     onSuccess: () => {

@@ -201,9 +201,9 @@ decision someone makes. Keeping the cached pull request list fresh is the half t
 **D19 — Documentation pull requests (Phase 3.3).** The only code that writes to a user's repository.
 It builds ONE commit through git's object model (a blob per document, one tree, one commit, then the
 branch) rather than calling the update-a-file endpoint per file, which would make a commit each time
-and could leave a branch half-updated. The branch is DocDrift's own — `docdrift/pr-<n>-<run>` — so
-force-updating it can never touch someone's work, and naming it after the analysis run makes a
-second attempt idempotent: same branch, same open pull request, updated content. It targets the pull
+and could leave a branch half-updated. The branch is DocDrift's own — `docdrift/pr-<n>` — so
+force-updating it can never touch someone's work, and naming it after the pull request means one code
+change has exactly one documentation pull request, however often it is analysed. It targets the pull
 request's **own** branch, not the default branch, so merging puts the documentation alongside the
 code change that made it necessary. What it refuses is as important as what it does: a suggestion
 nobody approved, an analysis of a commit the branch has moved past (the suggestions may describe code
@@ -219,6 +219,14 @@ APPROVED suggestions, which made the second attempt refuse with NOTHING_APPROVED
 refusal not been there, the second commit would have carried one file on a fresh parent and silently
 removed the documents committed first. The branch therefore always equals "everything approved right
 now", which also means rejecting something and re-running correctly takes it back off the branch.
+
+The branch was first named `docdrift/pr-<n>-<run>`, one per analysis run, so that two runs could
+never overwrite each other. Using it against a real repository revealed the cost: six analyses of one
+pull request left six open documentation pull requests proposing competing rewrites of the same file,
+which is noise for whoever reviews that repository. It is now one branch per pull request, and the
+accepted trade-off is that a later run REPLACES what an earlier one proposed — the branch holds the
+most recent analysis's approved output, not the union of every analysis. Because that silently changes
+an open pull request, the panel says so before the button is pressed rather than after.
 
 **D13 — Evaluation.** `npm run eval` runs the same `runPipeline` as the app (context selection,
 prompt, retries, validation), only reading repositories from `eval/cases` instead of GitHub, so it

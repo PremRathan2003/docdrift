@@ -7,6 +7,7 @@
  */
 import request from 'supertest';
 import { afterAll, beforeEach, describe, expect, it } from 'vitest';
+import { analysisResponseSchema, createDocsPullRequestResponseSchema } from '@docdrift/shared';
 import { FakeAI, reply } from '../helpers/fake-ai.js';
 import { createFakeGitHub, liveState, type FakeGitHubState } from '../helpers/fake-github.js';
 import { createTestApp } from '../helpers/test-app.js';
@@ -100,8 +101,13 @@ describe('opening a documentation pull request', () => {
     await approve(agent, suggestions[0]);
     await approve(agent, suggestions[1]);
 
-    const { body } = await agent.post(`/api/analyses/${runId}/docs-pull-request`).expect(201);
-    expect(body.docsPullRequest).toMatchObject({
+    // Parsed with the shared schema, not just inspected: the web app parses the
+    // same way, so a field the client requires and the server omits fails here
+    // rather than on the screen after the repository has already been written to.
+    const { docsPullRequest: opened } = createDocsPullRequestResponseSchema.parse(
+      (await agent.post(`/api/analyses/${runId}/docs-pull-request`).expect(201)).body,
+    );
+    expect(opened).toMatchObject({
       base: 'feature-7',
       documents: ['README.md', 'docs/guide.md'],
       created: true,
@@ -120,18 +126,20 @@ describe('opening a documentation pull request', () => {
 
     // A branch of DocDrift's own, and a pull request into the PR's branch.
     const branch = Object.keys(gh.written!.branches)[0]!;
-    expect(branch).toMatch(/^docdrift\/pr-7-/);
+    expect(branch).toBe('docdrift/pr-7');
     expect(gh.written!.pulls).toHaveLength(1);
     expect(gh.written!.pulls[0]).toMatchObject({ branch, base: 'feature-7' });
     expect(gh.written!.pulls[0]!.body).toContain('approved by @prem');
 
     // The suggestions are now applied, and the run carries the pull request.
-    const { body: after } = await agent.get(`/api/analyses/${runId}`).expect(200);
-    expect(after.analysis.suggestions.map((s: { status: string }) => s.status)).toEqual([
+    const { analysis: after } = analysisResponseSchema.parse(
+      (await agent.get(`/api/analyses/${runId}`).expect(200)).body,
+    );
+    expect(after.suggestions.map((s) => s.status)).toEqual([
       'APPLIED',
       'APPLIED',
     ]);
-    expect(after.analysis.docsPullRequest).toMatchObject({ base: 'feature-7', number: 901 });
+    expect(after.docsPullRequest).toMatchObject({ base: 'feature-7', number: 901 });
   });
 
   it('commits only what was approved', async () => {
@@ -142,19 +150,25 @@ describe('opening a documentation pull request', () => {
       .send({ action: 'REJECT', version: suggestions[1].version })
       .expect(200);
 
-    const { body } = await agent.post(`/api/analyses/${runId}/docs-pull-request`).expect(201);
-    expect(body.docsPullRequest.documents).toEqual(['README.md']);
+    const { docsPullRequest } = createDocsPullRequestResponseSchema.parse(
+      (await agent.post(`/api/analyses/${runId}/docs-pull-request`).expect(201)).body,
+    );
+    expect(docsPullRequest.documents).toEqual(['README.md']);
     expect(gh.written!.commits[0]!.files.map((f) => f.path)).toEqual(['README.md']);
   });
 
   it('a second attempt updates the same branch instead of opening another pull request', async () => {
     const { agent, runId, suggestions } = await setup();
     await approve(agent, suggestions[0]);
-    const first = await agent.post(`/api/analyses/${runId}/docs-pull-request`).expect(201);
+    const first = createDocsPullRequestResponseSchema.parse(
+      (await agent.post(`/api/analyses/${runId}/docs-pull-request`).expect(201)).body,
+    );
 
-    const again = await agent.post(`/api/analyses/${runId}/docs-pull-request`).expect(200);
-    expect(again.body.docsPullRequest).toMatchObject({
-      number: first.body.docsPullRequest.number,
+    const again = createDocsPullRequestResponseSchema.parse(
+      (await agent.post(`/api/analyses/${runId}/docs-pull-request`).expect(200)).body,
+    );
+    expect(again.docsPullRequest).toMatchObject({
+      number: first.docsPullRequest.number,
       created: false,
     });
     expect(gh.written!.pulls).toHaveLength(1);

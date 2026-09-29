@@ -40,7 +40,7 @@ describe('planDocsPullRequest', () => {
     expect(result.plan.suggestionIds).toEqual(['s1']);
     // Merging into the PR's own branch keeps docs with the code.
     expect(result.plan.base).toBe('feature/rename');
-    expect(result.plan.branch).toBe('docdrift/pr-42-12345678');
+    expect(result.plan.branch).toBe('docdrift/pr-42');
   });
 
   it('keeps documents already applied, so a second attempt does not drop them', () => {
@@ -74,11 +74,10 @@ describe('planDocsPullRequest', () => {
     expect(result).toMatchObject({ ok: false, code: 'NOTHING_APPROVED' });
   });
 
-  it('names a branch of its own, stable for one run and different for the next', () => {
-    expect(branchName(42, 'clz0000000run12345678')).toBe('docdrift/pr-42-12345678');
-    expect(branchName(42, 'clz0000000run12345678')).toBe(branchName(42, 'clz0000000run12345678'));
-    expect(branchName(42, 'clz0000000run87654321')).not.toBe(branchName(42, 'clz0000000run12345678'));
-    expect(branchName(42, 'x'.repeat(25)).startsWith('docdrift/')).toBe(true);
+  it('names one branch per pull request, so re-analysing reuses it', () => {
+    expect(branchName(42)).toBe('docdrift/pr-42');
+    expect(branchName(42)).toBe(branchName(42));
+    expect(branchName(43)).not.toBe(branchName(42));
   });
 
   it('refuses when nothing was approved', () => {

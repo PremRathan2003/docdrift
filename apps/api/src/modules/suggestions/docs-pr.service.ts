@@ -20,6 +20,7 @@ export interface DocsPullRequestResult {
   branch: string;
   base: string;
   documents: string[];
+  createdAt: string;
   created: boolean;
 }
 
@@ -82,7 +83,7 @@ export function createDocsPullRequestService(deps: {
           { branch: plan.branch, base: plan.base, title: plan.title, body: plan.body },
         ));
 
-      await db.$transaction([
+      const [, row] = await db.$transaction([
         db.suggestion.updateMany({
           where: { id: { in: plan.suggestionIds } },
           data: { status: 'APPLIED' },
@@ -107,12 +108,15 @@ export function createDocsPullRequestService(deps: {
         { runId: run.id, branch: plan.branch, number: pr.number, documents: plan.files.length },
         existing ? 'Updated a documentation pull request' : 'Opened a documentation pull request',
       );
+      // Answered from the stored row, not from the plan, so what the client
+      // receives is what was written — the same shape the run carries.
       return {
-        number: pr.number,
-        htmlUrl: pr.htmlUrl,
-        branch: plan.branch,
-        base: plan.base,
-        documents: plan.files.map((f) => f.path),
+        number: row.number,
+        htmlUrl: row.htmlUrl,
+        branch: row.branch,
+        base: row.baseRef,
+        documents: row.documents,
+        createdAt: row.createdAt.toISOString(),
         created: !already,
       };
     },
